@@ -50,7 +50,16 @@
 
 <!-- storeItem 테이블 -->
 
-
+<!--  
+	<update id="updateStoreItem" parameterType="map">
+		update item set store_item_qty=store_item_qty-#{bundle} where store_item=#{item}
+	</update> 
+	
+	<update id="updateStoreItem" parameterType="map">
+		update item set store_item_qty=store_item_qty-#{qty} where store_item=#{item}
+	</update>
+	
+-->
 
 
 <!-- storeItem 테이블 -->
