@@ -3,4 +3,60 @@
 <!-- 사용 테이블 : 지점재고 / 지점재고history / 판매 / 상품레시피 -->
 <mapper namespace="site.bucks.mapper.StoreItemMapper">
 	
+<!-- record 테이블 -->
+
+	<!-- 재고 잔량 기록 -->
+	<update id="updateRecord" parameterType="map">
+	 	update record set item_rest=#{itemRest} where item=#{item}
+	</update>
+	
+	<!-- 특정 재고 잔량 검색 -->
+	<select id="selectItemRest" parameterType="string" resultType="int">
+		select item_rest from record where item=#{item}
+	</select>
+	
+<!-- record 테이블 -->	
+	
+	
+	
+<!-- sale 테이블 -->
+	
+	<!-- 판매 기록 -->
+	<insert id="insertSale" parameterType="Sale">
+		<selectKey resultType="int" keyProperty="saleNo" order="BEFORE">
+			select sale_seq.nextval from dual		
+		</selectKey>
+		insert into sale values(#{saleNo},#{saleProduct},#{saleQty},sysdate)
+	</insert>
+	
+	<!-- 판매 기록 검색 -->
+	<select id="selectSaleList" resultType="Sale">
+		select * from sale
+	</select>
+	
+<!-- sale 테이블 -->
+
+
+<!-- productRecipe 테이블 -->
+
+	<!-- 상품명을 통한 재료들 및 카테고리 검색 이용(커피종류만 해당) -->
+	<select id="selectProduct" parameterType="Sale" resultType="ProductRecipe">
+		select * from product_recipe where product=#{product}
+	</select>
+<!-- productRecipe 테이블 -->	
+	
+	
+	
+
+<!-- storeItem 테이블 -->
+
+
+
+
+<!-- storeItem 테이블 -->
+
+	
+	
+	
+	
 </mapper>
