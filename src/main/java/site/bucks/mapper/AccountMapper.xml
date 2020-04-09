@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 사용 테이블 :  (매퍼끼리는 성격 맞는거 묶어서 해주시면 감사) -->
+<mapper namespace="site.bucks.mapper.AccountMapper">
+	
+</mapper>

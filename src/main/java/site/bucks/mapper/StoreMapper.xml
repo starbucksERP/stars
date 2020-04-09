@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 사용 테이블 : 지점테이블, 점주테이블 -->
+<mapper namespace="site.bucks.mapper.StoreMapper">
+	<!-- 지점 등록(관리자만) -->
+	<!-- <insert id="insertStore">
+		<selectKey resultType="int" keyProperty="storeCode" order="BEFORE">
+			select concat(store_seq.nextval,substring(#{phone},3)) from dual		
+		</selectKey>
+		insert into STORE values(#{storeCode},#{storeName},#{storeAddress},#{storePhone},1,sysdate)
+	</insert> -->
+	<insert id="insertStore">
+		<selectKey resultType="int" keyProperty="storeCode" order="BEFORE">
+			select concat(store_seq.nextval,substring(#{phone},3)) from dual		
+		</selectKey>
+		insert into STORE values(#{code},#{name},#{address},#{phone},1,sysdate)
+	</insert>
+	
+	<!-- 지점 폐점->지점 -->
+	<!-- <update id="closeStore" parameterType="int">
+		update STORE set store_state=2 where store_code=#{storeCode}
+	</update> -->
+	<update id="closeStore" parameterType="int">
+		update STORE set store_state=2 where store_code=#{code}
+	</update>
+	
+	<!-- 지점 수정(관리자 및 각 지점주 -->
+	<!-- <update id="updateStore">
+		update STORE set store_address=#{storeAddress},store_phone=#{storePhone} where store_code=#{storeCode}
+	</update> -->
+	<update id="updateStore">
+		update STORE set store_address=#{address},store_phone=#{phone} where store_code=#{code}
+	</update>
+	
+	 
+	<!-- select문 ResultMap --> 
+	<resultMap type="store" id="StoreRM">
+		<id column="store_code" property="code"/>
+		<result column="store_name" property="name"/>
+		<result column="store_address" property="address"/>
+		<result column="store_phone" property="phone"/> 
+		<result column="store_state" property="state"/>
+		<result column="store_date" property="date"/>
+	</resultMap>
+	
+	<!-- 전체 지점 조건별 검색 -->
+	<select id="selectAllStore" resultMap="StoreRM">
+		select * from STORE 
+		<where>
+			<if test="code!=null and code!=''">
+				store_code=#{code}
+			</if>
+			<if test="name!=null and name!=''">
+				store_name like '%'||#{name}||'%'
+			</if>				
+			<if test="address!=null and address!=''">
+				store_address like '%'||#{address}||'%'
+			</if>				
+			<if test="phone!=null and phone!=''">
+				store_phone like '%'||#{phone}||'%'
+			</if>				
+			<if test="state!=null and state!=''">
+				store_state=#{state}
+			</if>				
+		</where>
+		order by store_state, store_date
+	</select>
+	
+	 <!-- 
+	 <select id="selectAllStore" resultType="store">
+		select * from STORE 
+		<where>
+			<if test="storeCode!=null and storeCode!=''">
+				store_code=#{code}
+			</if>
+			<if test="storeName!=null and storeName!=''">
+				store_name like '%'||#{name}||'%'
+			</if>				
+			<if test="storeAddress!=null and storeAddress!=''">
+				store_address like '%'||#{address}||'%'
+			</if>				
+			<if test="storePhone!=null and storePhone!=''">
+				store_phone like '%'||#{phone}||'%'
+			</if>				
+			<if test="storeState!=null and storeState!=''">
+				store_state=#{state}
+			</if>				
+		</where>
+		order by store_state, store_date
+	</select>
+	  -->
+</mapper>
