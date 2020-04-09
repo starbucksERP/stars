@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 //		브랜치 테스트1
 //		브랜치 테스트 2
 //		브랜치 테스트 3
+//		브랜치 테스트 4
 @Controller
 public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
