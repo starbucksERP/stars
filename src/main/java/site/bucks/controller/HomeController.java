@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 //		브랜치 테스트1
+//		브랜치 테스트 2
+//		브랜치 테스트 3
 @Controller
 public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
