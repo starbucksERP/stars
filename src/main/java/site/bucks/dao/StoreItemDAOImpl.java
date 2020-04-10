@@ -38,13 +38,8 @@ public class StoreItemDAOImpl implements StoreItemDAO {
 	}
 
 	@Override
-	public String selectCategory(String saleProduct) {
-		return sqlSession.getMapper(StoreItemMapper.class).selectCategory(saleProduct);
-	}
-	
-	@Override
-	public ProductRecipe selectProduct(Sale sale) {
-		return sqlSession.getMapper(StoreItemMapper.class).selectProduct(sale);
+	public ProductRecipe selectProduct(String product) {
+		return sqlSession.getMapper(StoreItemMapper.class).selectProduct(product);
 	}
 
 	@Override

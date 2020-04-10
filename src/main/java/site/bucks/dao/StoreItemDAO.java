@@ -11,8 +11,7 @@ public interface StoreItemDAO {
 	int selectItemRest(String item);
 	int insertSale(Sale sale);
 	List<Sale> selectSaleList();
-	String selectCategory(String saleProduct);
-	ProductRecipe selectProduct(Sale sale);
+	ProductRecipe selectProduct(String product);
 	int updateStoreItem1(Map<String, Object> map);
 	int updateStoreItem2(Map<String, Object> map);
 }

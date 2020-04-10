@@ -32,21 +32,18 @@ public class StoreItemServiceTest {
 	private StoreItemService storeItemService;
 	
 	
-	
+//	4/11 테스트 완료
+	/*
 	@Test
 	public void test1addSale() {
 		Sale sale= new Sale();
-		sale.setSaleProduct("원두");
-		sale.setSaleQty(100);
+		sale.setSaleProduct("바닐라 크림 콜드 브루");
+		sale.setSaleQty(99);
 		
 		storeItemService.addSale(sale);
 		
 	}
-	
-	
-	
-	
-	
+	*/
 	
 	
 	/*

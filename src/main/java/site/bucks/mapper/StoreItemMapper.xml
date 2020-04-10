@@ -26,7 +26,7 @@
 		<selectKey resultType="int" keyProperty="saleNo" order="BEFORE">
 			select sale_seq.nextval from dual		
 		</selectKey>
-		insert into sale values(#{saleNo},#{saleProduct},#{saleQty},sysdate)
+		insert into sale values(#{saleNo},#{storeCode},#{saleProduct},#{saleQty},sysdate)
 	</insert>
 	
 	<!-- 판매 기록 검색 -->
@@ -34,7 +34,35 @@
 		select * from sale
 	</select>
 	
-	<!-- 조인 association property 사용시 소문자 사용해야함!!  -->
+	<!--지점 검색하기(판매기록하기 위해서) -->
+	
+	
+<!-- sale 테이블 -->
+
+
+<!-- productRecipe 테이블 -->
+
+	<!-- 상품명을 통한 재료들 및 카테고리 검색 이용(커피종류만 해당) -->
+	<select id="selectProduct" resultType="ProductRecipe">
+		select * from product_recipe where product=#{product}
+	</select>
+<!-- productRecipe 테이블 -->	
+	
+	
+	<!--  store_code=#{storeCode} -->
+
+<!-- storeItem 테이블 -->
+	<!-- 원재료 들어올시 지점재고 업데이트 -->
+	<update id="updateStoreItem1" parameterType="map">
+		update store_item set store_item_qty=store_item_qty-#{bundle} where item_code=(select item_code from item where item_name=#{item})
+	</update> 
+	
+	<!-- 완제품 들어올시 지점재고 업데이트 -->
+	<update id="updateStoreItem2" parameterType="map">
+		update store_item set store_item_qty=store_item_qty-#{storeItemQty} where item_code=(select item_code from item where item_name=#{saleProduct})
+	</update>
+ 
+ 	<!-- 조인 association property 사용시 소문자 사용해야함!!  -->
 	<resultMap type="ProductSale" id="productSaleRM">
  		<association property="sale">
  			<id column="sale_no" property="saleNo"/>
@@ -47,34 +75,6 @@
  		</association>
  	</resultMap>
  	
-	<!-- 상품명을 통한 카테고리 검색-->
-	<select id="selectCategory" resultType="String">
-		select B.ITEM_CODE from SALE A JOIN item B on B.item_name=A.sale_product where sale_product=#{saleProduct}
-	</select>
-	<!-- select B.ITEM_CODE from STORE_ITEM A JOIN ITEM B on B.item_code=A.item_code where B.item_name='로고 코인 다크 초콜릿'; -->
-	
-<!-- sale 테이블 -->
-
-
-<!-- productRecipe 테이블 -->
-
-	<!-- 상품명을 통한 재료들 및 카테고리 검색 이용(커피종류만 해당) -->
-	<select id="selectProduct" parameterType="Sale" resultType="ProductRecipe">
-		select * from product_recipe where product=#{product}
-	</select>
-<!-- productRecipe 테이블 -->	
-	
-	
-	<!--  store_code=#{storeCode} -->
-
-<!-- storeItem 테이블 -->
-	<update id="updateStoreItem1" parameterType="map">
-		update store_item set store_item_qty=store_item_qty-#{bundle} where item_code=(select item_code from item where item_name=#{item})
-	</update> 
-	
-	<update id="updateStoreItem2" parameterType="map">
-		update store_item set store_item_qty=store_item_qty-#{storeItemQty} where store_item=#{saleProduct}
-	</update>
  
 <!-- storeItem 테이블 -->
 

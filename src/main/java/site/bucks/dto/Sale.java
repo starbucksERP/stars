@@ -13,6 +13,7 @@ SALE_DATE    NOT NULL DATE
 
 public class Sale {
 	private int saleNo;
+	private int storeCode;
 	private String saleProduct;
 	private int saleQty;
 	private String saleDate;
@@ -27,6 +28,14 @@ public class Sale {
 
 	public void setSaleNo(int saleNo) {
 		this.saleNo = saleNo;
+	}
+	
+	public int getStoreCode() {
+		return storeCode;
+	}
+
+	public void setStoreCode(int storeCode) {
+		this.storeCode = storeCode;
 	}
 
 	public String getSaleProduct() {

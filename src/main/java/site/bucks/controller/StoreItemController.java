@@ -22,6 +22,8 @@ public class StoreItemController {
 	@RequestMapping(value = "/sale_record", method =RequestMethod.POST)
 	public String record(@ModelAttribute SaleCollection saleCollection) {
 		
+//		sale 전달받을때 필요한 값 => 상품명, 상품개수, 지점명 (정확한 값으로 전달받아야함)
+		
 //		@SuppressWarnings("unchecked")
 //		List<Sale> list=(List<Sale>) saleCollection;
 //		
