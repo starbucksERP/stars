@@ -35,7 +35,7 @@
 	</select>
 	
 	<!-- 조인 association property 사용시 소문자 사용해야함!!  -->
-	<resultMap type="ProductSale" id="saleRM">
+	<resultMap type="ProductSale" id="productSaleRM">
  		<association property="sale">
  			<id column="sale_no" property="saleNo"/>
  			<result column="sale_product" property="saleProduct"/>
@@ -48,9 +48,10 @@
  	</resultMap>
  	
 	<!-- 상품명을 통한 카테고리 검색-->
-	<!-- <select id="selectCategory" resultType="saleRM">
-		select A.*,B.ITEM_CODE from SALE A JOIN item B on B.item_name=A.#{saleProduct}
-	</select> -->
+	<select id="selectCategory" resultType="String">
+		select B.ITEM_CODE from SALE A JOIN item B on B.item_name=A.sale_product where sale_product=#{saleProduct}
+	</select>
+	<!-- select B.ITEM_CODE from STORE_ITEM A JOIN ITEM B on B.item_code=A.item_code where B.item_name='로고 코인 다크 초콜릿'; -->
 	
 <!-- sale 테이블 -->
 
@@ -64,21 +65,17 @@
 <!-- productRecipe 테이블 -->	
 	
 	
-	
+	<!--  store_code=#{storeCode} -->
 
 <!-- storeItem 테이블 -->
-<!--  
 	<update id="updateStoreItem1" parameterType="map">
-		update store_item set store_item_qty=store_item_qty-#{bundle} where store_item=#{item}
+		update store_item set store_item_qty=store_item_qty-#{bundle} where item_code=(select item_code from item where item_name=#{item})
 	</update> 
 	
 	<update id="updateStoreItem2" parameterType="map">
-		update store_item set store_item_qty=store_item_qty-#{qty} where store_item=#{item}
+		update store_item set store_item_qty=store_item_qty-#{storeItemQty} where store_item=#{saleProduct}
 	</update>
- -->
  
- 	
-
 <!-- storeItem 테이블 -->
 
 	

@@ -21,10 +21,9 @@ public class StoreItemServiceImpl implements StoreItemService{
 //	HashMap<String, String> map;
 	
 	@Override
-	public void saleRecord(Sale sale) {
+	public void addSale(Sale sale) {
 //		sale을 통해 상품명으로 카테고리(상품코드 필요) 검색 ->
-//		String category=storeItemDAO.selectCategory(sale).substring(0,2);
-		String category="";
+		String category=storeItemDAO.selectCategory(sale.getSaleProduct()).substring(0,2);
 		if(!category.equals("A01")) {
 			saleRecord1(sale);
 		}else {
@@ -61,7 +60,8 @@ public class StoreItemServiceImpl implements StoreItemService{
 	public void calculator1(int qty, String item) {
 //		여기서 추가합 맵은 updateRecord 및 updateItem 두개의 메소드에 사용
 		Map<String, Object> map=new HashMap<String, Object>();
-		map.put("item", item);
+//		코드를 통해 item 검색
+		map.put("item", storeItemDAO.selectCategory(item));
 		int itemRest= storeItemDAO.selectItemRest(item);
 		
 //		남은 재고에 상품재고 합
@@ -74,7 +74,7 @@ public class StoreItemServiceImpl implements StoreItemService{
 		if(bundle>=1) {
 			map.put("bundle",bundle);
 //			store 재고 업데이트 메소드
-//			storeItemDAO.updateStoreItem1(map);
+			storeItemDAO.updateStoreItem1(map);
 		}
 		
 //		여기서 추가한 맵은 updateRecord에 사용
@@ -100,10 +100,10 @@ public class StoreItemServiceImpl implements StoreItemService{
 	public void calculator2(int qty,String item) {
 //		여기서 추가합 맵은 updateRecord 및 updateItem 두개의 메소드에 사용
 		Map<String, Object> map=new HashMap<String, Object>();
-		map.put("item", item);
+		map.put("saleProduct", item);
 		
 //		store 재고 업데이트 메소드
-//		storeItemDAO.updateStoreItem2(map);
+		storeItemDAO.updateStoreItem2(map);
 	}
 	
 	

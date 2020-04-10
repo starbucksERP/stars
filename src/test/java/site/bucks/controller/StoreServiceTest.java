@@ -26,11 +26,13 @@ public class StoreServiceTest {
 	
 //	@Autowired
 //	private StoreService storeService;
-	
-//	dao 메소드 
+	/*
+	dao 메소드 
 	@Autowired
 	private StoreDAO storeDAO;
 	
+	
+	4/10 테스트 완료 
 	@Test
 	public void testDAO() {
 		int storeCode=121;
@@ -41,8 +43,8 @@ public class StoreServiceTest {
 		
 		logger.info(store1.getStoreName() +"///"+store2.getStoreCode());
 	}
-	/*
-//	4/10 테스트 완료 
+	
+
 	@Test
 	public void test1addStore() {
 		Store store=new Store();
