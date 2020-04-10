@@ -1,5 +1,6 @@
 package site.bucks.service;
 
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,31 +17,48 @@ public class StoreItemServiceImpl implements StoreItemService{
 	@Autowired
 	private StoreItemDAO storeItemDAO;
 	
+//	@Autowired
+//	HashMap<String, String> map;
+	
 	@Override
 	public void saleRecord(Sale sale) {
+//		sale을 통해 상품명으로 카테고리(상품코드 필요) 검색 ->
+//		String category=storeItemDAO.selectCategory(sale).substring(0,2);
+		String category="";
+		if(!category.equals("A01")) {
+			saleRecord1(sale);
+		}else {
+			saleRecord2(sale);
+		}
+		
+	}
+	
+	
+//	재료로 받을때 조합
+	public void saleRecord1(Sale sale) {
 		
 		storeItemDAO.insertSale(sale);
 		
 		ProductRecipe pr=storeItemDAO.selectProduct(sale);
+		
 		String item1=pr.getItem1();
 		String item2=pr.getItem2();
 		String item3=pr.getItem3();
 		
 		int qty = sale.getSaleQty();
 		
-		calculator(qty,item1);
+		calculator1(qty,item1);
 		
 		if(item2!=null) {
-			calculator(qty, item2);
+			calculator1(qty, item2);
 		}
 		if(item3!=null) {
-			calculator(qty, item3);
+			calculator1(qty, item3);
 		}
 		
 	}
-	
-	
-	public void calculator(int qty, String item) {
+
+	public void calculator1(int qty, String item) {
 //		여기서 추가합 맵은 updateRecord 및 updateItem 두개의 메소드에 사용
 		Map<String, Object> map=new HashMap<String, Object>();
 		map.put("item", item);
@@ -56,12 +74,36 @@ public class StoreItemServiceImpl implements StoreItemService{
 		if(bundle>=1) {
 			map.put("bundle",bundle);
 //			store 재고 업데이트 메소드
+//			storeItemDAO.updateStoreItem1(map);
 		}
 		
 //		여기서 추가한 맵은 updateRecord에 사용
 		map.put("itemRest",itemRest);
 		
 		storeItemDAO.updateRecord(map);
+	}
+	
+	
+	
+	
+//	재료가 아닌 완제품일때
+	public void saleRecord2(Sale sale) {
+		
+		storeItemDAO.insertSale(sale);
+		
+		int qty = sale.getSaleQty();
+		String item =sale.getSaleProduct();
+		
+		calculator2(qty,item);
+	}
+	
+	public void calculator2(int qty,String item) {
+//		여기서 추가합 맵은 updateRecord 및 updateItem 두개의 메소드에 사용
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("item", item);
+		
+//		store 재고 업데이트 메소드
+//		storeItemDAO.updateStoreItem2(map);
 	}
 	
 	

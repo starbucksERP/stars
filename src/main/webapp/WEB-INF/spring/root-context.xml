@@ -37,7 +37,9 @@
 	<bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactoryBean">
 		<!-- configLocation 필드에 Mybatis 환경설정 파일 경로 인젝션 처리 -->
 		<!-- => Spring Container(WebApplicationContext)가 webapp 디렉토리(/)의 자원에만 접근 가능  -->
-		<property name="configLocation" value="/WEB-INF/spring/mybatis-config.xml"/>
+		<!-- <property name="configLocation" value="/WEB-INF/spring/mybatis-config.xml"/>  -->
+		<!-- => java 또는 resources 패키지 폴더의 자원에 접근하기 위한 classpath 접두사 사용 -->
+		<property name="configLocation" value="classpath:mybatis-config.xml"/>
 		<!-- dataSource 필드에 DataSource 관련 Spring Bean 인젝션 처리 -->
 		<property name="dataSource" ref="dataSource"/>
 		<!-- typeAliasesPackage 필드에 TypeAlias 기능을 제공할 패키지 경로를 인젝션 처리 -->
@@ -62,4 +64,11 @@
 	
 <!-- ★★★★★★★★★★★★★★★★★★★★★★★★★Mybatis 설정★★★★★★★★★★★★★★★★★★★★★★★★★  -->
 
+	<!-- TransactionManager 관련 클래스를 Spring Bean 으로 등록 -->
+	<!-- => beanName을 반드시 transactionManager로 설정  -->
+	<!-- => 서비스메소드에서 실행될때 포함되어 개입할 수 있도록 설정 <= AOP 이용 -->
+	<!-- ※※※※※※※※※※※※※※※※※※※id를 무조건 transactionManager※※※※※※※※※※※※※※※※※※※ -->
+	<bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager" id="transactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
 </beans>

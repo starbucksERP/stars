@@ -8,5 +8,7 @@ public interface StoreDAO {
 	int insertStore(Store store);
 	int closeStore(int storeCode);
 	int updateStore(Store store);
+	Store selectStoreCode(int storeCode);
+	Store selectStoreName(String storeName);
 	List<Store> selectAllStore(Store store);
 }
