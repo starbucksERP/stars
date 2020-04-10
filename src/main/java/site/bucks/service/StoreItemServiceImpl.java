@@ -20,8 +20,21 @@ public class StoreItemServiceImpl implements StoreItemService{
 //	@Autowired
 //	HashMap<String, String> map;
 	
-//	재료로 받을때 조합
 	@Override
+	public void saleRecord(Sale sale) {
+//		sale을 통해 상품명으로 카테고리 검색 ->
+		String category="".substring(0,3);
+		
+		if(!category.equals("A01")) {
+			saleRecord1(sale);
+		}else {
+			saleRecord2(sale);
+		}
+		
+	}
+	
+	
+//	재료로 받을때 조합
 	public void saleRecord1(Sale sale) {
 		
 		storeItemDAO.insertSale(sale);
@@ -73,7 +86,6 @@ public class StoreItemServiceImpl implements StoreItemService{
 	
 	
 //	재료가 아닌 완제품일때
-	@Override
 	public void saleRecord2(Sale sale) {
 		
 		storeItemDAO.insertSale(sale);
@@ -88,8 +100,6 @@ public class StoreItemServiceImpl implements StoreItemService{
 //		여기서 추가합 맵은 updateRecord 및 updateItem 두개의 메소드에 사용
 		Map<String, Object> map=new HashMap<String, Object>();
 		map.put("item", item);
-		int itemRest= storeItemDAO.selectItemRest(item);
-		
 		
 //		store 재고 업데이트 메소드
 	}
