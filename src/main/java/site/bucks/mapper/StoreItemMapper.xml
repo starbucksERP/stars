@@ -49,8 +49,7 @@
 	
 
 <!-- storeItem 테이블 -->
-
-<!--  
+<!-- 
 	<update id="updateStoreItem" parameterType="map">
 		update item set store_item_qty=store_item_qty-#{bundle} where store_item=#{item}
 	</update> 
@@ -58,9 +57,13 @@
 	<update id="updateStoreItem" parameterType="map">
 		update item set store_item_qty=store_item_qty-#{qty} where store_item=#{item}
 	</update>
-	
--->
-
+ -->
+ 
+	<!-- 상품명을 통한 카테고리 검색
+	<select id="selectCategory" parameterType="Sale" resultType="storeItem">
+		select * from store_item where store_item=#{saleProduct}
+	</select>
+	-->
 
 <!-- storeItem 테이블 -->
 
