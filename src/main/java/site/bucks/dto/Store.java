@@ -133,5 +133,10 @@ public class Store {
 		this.date = date;
 	}
 	
+//	테스트용으로 제작
+	@Override
+	public String toString() {
+		return code+", "+name+", "+address+", "+phone+", "+state+", "+date;
+	}
 	
 }

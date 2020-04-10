@@ -11,8 +11,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 @RunWith(SpringJUnit4ClassRunner.class)
+//@WebAppConfiguration
 @ContextConfiguration(locations = {"file:src/main/webapp/WEB-INF/spring/root-context.xml"})
 public class DataSourceTest {
 	
@@ -21,6 +23,7 @@ public class DataSourceTest {
 //	DataSource 관련 클래스의 Spring Bean을 제공받아 필드에 인젝션 처리
 	@Autowired
 	private DataSource dataSource;
+	
 	
 //	@Test : 테스트 메소드를 설정하는 어노테이션
 //	=> Runner 클래스에 의해 호출되어 실행되는 메소드 설정

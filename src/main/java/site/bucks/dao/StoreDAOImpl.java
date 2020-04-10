@@ -31,9 +31,21 @@ public class StoreDAOImpl implements StoreDAO {
 	}
 
 	@Override
+	public Store selectStoreCode(int storeCode) {
+		return sqlSession.getMapper(StoreMapper.class).selectStoreCode(storeCode);
+	}
+
+	@Override
+	public Store selectStoreName(String storeName) {
+		return sqlSession.getMapper(StoreMapper.class).selectStoreName(storeName);
+	}
+	
+	@Override
 	public List<Store> selectAllStore(Store store) {
 		return sqlSession.getMapper(StoreMapper.class).selectAllStore(store);
 	}
+
+
 
 
 }

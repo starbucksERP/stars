@@ -34,6 +34,23 @@
 		select * from sale
 	</select>
 	
+	<resultMap type="Sale" id="saleRM">
+ 		<association property="Sale">
+ 			<id column="sale_no" property="saleNo"/>
+ 			<result column="sale_product" property="saleProduct"/>
+ 			<result column="sale_qty" property="saleQty"/>
+ 			<result column="sale_date" property="saleDate"/>
+ 		</association>
+ 		<association property="Item">
+ 			<id column="item_code" property="itemNo"/>
+ 		</association>
+ 	</resultMap>
+ 	
+	<!-- 상품명을 통한 카테고리 검색-->
+	<select id="selectCategory" parameterType="Sale" resultType="saleRM">
+		select A.*,B.ITEM_CODE from SALE A JOIN item B on B.item_name=A.#{saleProduct}
+	</select>
+	
 <!-- sale 테이블 -->
 
 
@@ -49,21 +66,16 @@
 	
 
 <!-- storeItem 테이블 -->
-<!-- 
-	<update id="updateStoreItem" parameterType="map">
-		update item set store_item_qty=store_item_qty-#{bundle} where store_item=#{item}
+	<update id="updateStoreItem1" parameterType="map">
+		update store_item set store_item_qty=store_item_qty-#{bundle} where store_item=#{item}
 	</update> 
 	
-	<update id="updateStoreItem" parameterType="map">
-		update item set store_item_qty=store_item_qty-#{qty} where store_item=#{item}
+	<update id="updateStoreItem2" parameterType="map">
+		update store_item set store_item_qty=store_item_qty-#{qty} where store_item=#{item}
 	</update>
- -->
  
-	<!-- 상품명을 통한 카테고리 검색
-	<select id="selectCategory" parameterType="Sale" resultType="storeItem">
-		select * from store_item where store_item=#{saleProduct}
-	</select>
-	-->
+ 
+ 	
 
 <!-- storeItem 테이블 -->
 

@@ -18,19 +18,17 @@ public class StoreItemController {
 	@Autowired
 	private StoreItemService storeItemService;
 	
-	@Autowired
-	SaleCollection saleCollection;
 	
 	@RequestMapping(value = "/sale_record", method =RequestMethod.POST)
 	public String record(@ModelAttribute SaleCollection saleCollection) {
 		
-			@SuppressWarnings("unchecked")
-			List<Sale> list=(List<Sale>) saleCollection;
-			
-			for(Sale sale:list) {
-				storeItemService.saleRecord(sale);
-			}
-			
+//		@SuppressWarnings("unchecked")
+//		List<Sale> list=(List<Sale>) saleCollection;
+//		
+//		for(Sale sale:list) {
+//			storeItemService.saleRecord(sale);
+//		}
+//			
 		return "sale/record";
 	}
 

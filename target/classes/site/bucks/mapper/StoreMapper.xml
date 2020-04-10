@@ -10,10 +10,7 @@
 		insert into STORE values(#{storeCode},#{storeName},#{storeAddress},#{storePhone},1,sysdate)
 	</insert> -->
 	<insert id="insertStore">
-		<selectKey resultType="int" keyProperty="storeCode" order="BEFORE">
-			select concat(store_seq.nextval,substring(#{phone},3)) from dual		
-		</selectKey>
-		insert into STORE values(#{code},#{name},#{address},#{phone},1,sysdate)
+		insert into STORE values(concat(store_seq.nextval,SUBSTR(#{phone},0,3)),#{name},#{address},#{phone},1,sysdate)
 	</insert>
 	
 	<!-- 지점 폐점->지점 -->
@@ -21,7 +18,7 @@
 		update STORE set store_state=2 where store_code=#{storeCode}
 	</update> -->
 	<update id="closeStore" parameterType="int">
-		update STORE set store_state=2 where store_code=#{code}
+		update STORE set store_state=9 where store_code=#{code}
 	</update>
 	
 	<!-- 지점 수정(관리자 및 각 지점주 -->
@@ -42,6 +39,16 @@
 		<result column="store_state" property="state"/>
 		<result column="store_date" property="date"/>
 	</resultMap>
+	
+	<!-- 코드로 지점 검색	=> 외부에서 사용하시오. -->
+	<select id="selectStoreCode" resultMap="StoreRM" parameterType="int">
+		select * from STORE where store_code=#{code}
+	</select>
+	
+	<!-- 지점명으로 지점 검색	=> 외부에서 사용하시오. -->
+	<select id="selectStoreName" resultMap="StoreRM" parameterType="string">
+		select * from STORE where store_name like '%'||#{name}||'%'
+	</select>
 	
 	<!-- 전체 지점 조건별 검색 -->
 	<select id="selectAllStore" resultMap="StoreRM">
