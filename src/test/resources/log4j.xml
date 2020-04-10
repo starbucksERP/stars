@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE log4j:configuration PUBLIC "-//APACHE//DTD LOG4J 1.2//EN" "log4j.dtd">
+<!DOCTYPE log4j:configuration PUBLIC "-//APACHE//DTD LOG4J 1.2//EN" "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
 
 	<!-- Appenders -->
@@ -9,6 +9,29 @@
 			<param name="ConversionPattern" value="%-5p: %c - %m%n" />
 		</layout>
 	</appender>
+	
+<!-- ○○○○○○○○○○○○○○○○○○JDBC 등 마이바티스 로그기록을 위해 작성○○○○○○○○○○○○○○○○○○ -->
+	<!-- jsbs.sqltiming : SQL 걸린 시간 -->
+	<logger name="jdbc.sqltiming">
+		<level value="info"/>
+	</logger>
+	
+	<!-- jsbs.audit : ResultSet 관련 정보를 제외한 모든 JDBC 관련 정보 기록 -->
+	<logger name="jdbc.audit">
+		<level value="info"/>
+	</logger>
+	
+	<!-- jsbs.resultsettable : ResultSet 관련 정보를 테이블 형식으로 기록 -->
+	<logger name="jdbc.resultsettable">
+		<level value="info"/>
+	</logger>
+	
+	<!-- jsbs.connection : Connection 관련 정보를 기록 - Open 또는 Close 기록 -->
+	<logger name="jdbc.connection">
+		<level value="info"/>
+	</logger>
+<!-- ○○○○○○○○○○○○○○○○○○JDBC 등 마이바티스 로그기록을 위해 작성○○○○○○○○○○○○○○○○○○ -->
+	
 	
 	<!-- Application Loggers -->
 	<logger name="site.bucks.controller">
