@@ -19,17 +19,17 @@
 	
 	 
 	<!-- 코드로 지점 검색	=> 외부에서 사용하시오. -->
-	<select id="selectStoreCode" resultMap="StoreRM" parameterType="int">
+	<select id="selectStoreCode" resultType="Store" parameterType="int">
 		select * from STORE where store_code=#{storeCode}
 	</select>
 	
 	<!-- 지점명으로 지점 검색	=> 외부에서 사용하시오. -->
-	<select id="selectStoreName" resultMap="StoreRM" parameterType="string">
+	<select id="selectStoreName" resultType="Store" parameterType="string">
 		select * from STORE where store_name like '%'||#{storeName}||'%'
 	</select>
 	
 	<!-- 전체 지점 조건별 검색 -->
-	<select id="selectAllStore" resultMap="StoreRM">
+	<select id="selectAllStore" resultType="Store">
 		select * from STORE 
 		<where>
 			<if test="storeCode!=null and storeCode!=''">
