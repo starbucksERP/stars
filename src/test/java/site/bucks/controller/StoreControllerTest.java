@@ -42,7 +42,7 @@ private static final Logger logger = LoggerFactory.getLogger(StoreController.cla
 	
 	@Test
 	public void testStudentDisplay() throws Exception {
-//		MockMvc.perform(RequestBuilder request) : 가상으로 Frot Controller에게 원하는 기능을 요청하는 메소드 - ResultActions 객체 반환
+//		MockMvc.perform(RequestBuilder request) : 가상으로 Front Controller에게 원하는 기능을 요청하는 메소드 - ResultActions 객체 반환
 //		MockMvcRequestBuilders.get(String uri) : URL 주소를 전달하여 GET방식으로 요청하는 메소드
 //		ResultActions.andReturn() : 요청처리 메소드의 호출 결과를(MvcResult 객체) 반환하는 메소드 
 		MvcResult result= mvc.perform(MockMvcRequestBuilders.get("/storeSta")).andReturn();

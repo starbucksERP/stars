@@ -34,6 +34,24 @@
 		select * from sale
 	</select>
 	
+	<!-- 조인 association property 사용시 소문자 사용해야함!!  -->
+	<resultMap type="ProductSale" id="saleRM">
+ 		<association property="sale">
+ 			<id column="sale_no" property="saleNo"/>
+ 			<result column="sale_product" property="saleProduct"/>
+ 			<result column="sale_qty" property="saleQty"/>
+ 			<result column="sale_date" property="saleDate"/>
+ 		</association>
+ 		<association property="item">
+ 			<id column="item_code" property="itemCode"/>
+ 		</association>
+ 	</resultMap>
+ 	
+	<!-- 상품명을 통한 카테고리 검색-->
+	<!-- <select id="selectCategory" resultType="saleRM">
+		select A.*,B.ITEM_CODE from SALE A JOIN item B on B.item_name=A.#{saleProduct}
+	</select> -->
+	
 <!-- sale 테이블 -->
 
 
@@ -49,9 +67,17 @@
 	
 
 <!-- storeItem 테이블 -->
-
-
-
+<!--  
+	<update id="updateStoreItem1" parameterType="map">
+		update store_item set store_item_qty=store_item_qty-#{bundle} where store_item=#{item}
+	</update> 
+	
+	<update id="updateStoreItem2" parameterType="map">
+		update store_item set store_item_qty=store_item_qty-#{qty} where store_item=#{item}
+	</update>
+ -->
+ 
+ 	
 
 <!-- storeItem 테이블 -->
 

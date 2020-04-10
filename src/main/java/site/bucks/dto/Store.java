@@ -14,7 +14,6 @@ STORE_DATE             DATE
 
  */
 public class Store {
-	/*
 	private int storeCode;
 	private String storeName;
 	private String storeAddress;
@@ -73,65 +72,11 @@ public class Store {
 	public void setStoreDate(String storeDate) {
 		this.storeDate = storeDate;
 	}
-	*/
-	private int code;
-	private String name;
-	private String address;
-	private String phone;
-	private String state;
-	private String date;
 	
-	public Store() {
-		// TODO Auto-generated constructor stub
+//	테스트용으로 제작
+	@Override
+	public String toString() {
+		return storeCode+", "+storeName+", "+storeAddress+", "+storePhone+", "+storeState+", "+storeDate;
 	}
-
-	public int getCode() {
-		return code;
-	}
-
-	public void setCode(int code) {
-		this.code = code;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
-
-	public String getDate() {
-		return date;
-	}
-
-	public void setDate(String date) {
-		this.date = date;
-	}
-	
 	
 }

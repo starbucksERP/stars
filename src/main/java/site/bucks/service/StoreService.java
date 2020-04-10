@@ -6,7 +6,7 @@ import site.bucks.dto.Store;
 
 public interface StoreService {
 	void addStore(Store store);
-	void closeStore(int storeCode);
+	void removeStore(int storeCode);
 	void modifyStore(Store store);
 	List<Store> getStoreList(Store store);
 
