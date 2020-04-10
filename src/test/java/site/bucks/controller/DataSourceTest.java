@@ -23,7 +23,7 @@ public class DataSourceTest {
 //	DataSource 관련 클래스의 Spring Bean을 제공받아 필드에 인젝션 처리
 	@Autowired
 	private DataSource dataSource;
-	
+//	z코딩처
 	
 //	@Test : 테스트 메소드를 설정하는 어노테이션
 //	=> Runner 클래스에 의해 호출되어 실행되는 메소드 설정
