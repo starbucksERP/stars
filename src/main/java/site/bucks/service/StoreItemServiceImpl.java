@@ -23,8 +23,8 @@ public class StoreItemServiceImpl implements StoreItemService{
 	@Override
 	public void saleRecord(Sale sale) {
 //		sale을 통해 상품명으로 카테고리(상품코드 필요) 검색 ->
-		String category=storeItemDAO.selectCategory(sale).substring(0,2);
-		
+//		String category=storeItemDAO.selectCategory(sale).substring(0,2);
+		String category="";
 		if(!category.equals("A01")) {
 			saleRecord1(sale);
 		}else {
@@ -74,7 +74,7 @@ public class StoreItemServiceImpl implements StoreItemService{
 		if(bundle>=1) {
 			map.put("bundle",bundle);
 //			store 재고 업데이트 메소드
-			storeItemDAO.updateStoreItem1(map);
+//			storeItemDAO.updateStoreItem1(map);
 		}
 		
 //		여기서 추가한 맵은 updateRecord에 사용
@@ -103,7 +103,7 @@ public class StoreItemServiceImpl implements StoreItemService{
 		map.put("item", item);
 		
 //		store 재고 업데이트 메소드
-		storeItemDAO.updateStoreItem2(map);
+//		storeItemDAO.updateStoreItem2(map);
 	}
 	
 	

@@ -24,10 +24,10 @@ import site.bucks.service.StoreService;
 public class StoreServiceTest {
 	private static Logger logger= LoggerFactory.getLogger(StoreServiceTest.class);
 	
-	@Autowired
-	private StoreService storeService;
+//	@Autowired
+//	private StoreService storeService;
 	
-	/* dao 메소드 
+//	dao 메소드 
 	@Autowired
 	private StoreDAO storeDAO;
 	
@@ -39,12 +39,10 @@ public class StoreServiceTest {
 		Store store1=storeDAO.selectStoreCode(storeCode);
 		Store store2=storeDAO.selectStoreName(storeName);
 		
-		logger.info(store1.getName() +"///"+store2.getCode());
+		logger.info(store1.getStoreName() +"///"+store2.getStoreCode());
 	}
-	*/
-	
-//	4/10 테스트 완료 
 	/*
+//	4/10 테스트 완료 
 	@Test
 	public void test1addStore() {
 		Store store=new Store();
@@ -84,6 +82,5 @@ public class StoreServiceTest {
 		
 	}
 	*/
-	
 
 }

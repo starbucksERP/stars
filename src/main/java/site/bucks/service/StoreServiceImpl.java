@@ -20,7 +20,7 @@ public class StoreServiceImpl implements StoreService{
 	}
 
 	@Override
-	public void closeStore(int storeCode) {
+	public void removeStore(int storeCode) {
 		storeDAO.closeStore(storeCode);
 	}
 
