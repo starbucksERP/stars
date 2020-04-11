@@ -1,6 +1,8 @@
 package site.bucks.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 //		브랜치 테스트 1
@@ -68,6 +70,11 @@ public class HomeController {
 	}
 	
 	
+	@RequestMapping(value = "/saleList", method = RequestMethod.POST)
+	public String afer(@ModelAttribute String product, Model model) {
+		model.addAttribute("product", product);
+		return "sale/sale_list";
+	}
 	
 }
 

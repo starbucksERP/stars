@@ -37,25 +37,16 @@ public class StoreItemDAOImpl implements StoreItemDAO {
 		return sqlSession.getMapper(StoreItemMapper.class).selectSaleList();
 	}
 
-//	@Override
-//	public String selectCategory(Sale sale) {
-//		return sqlSession.getMapper(StoreItemMapper.class).selectCategory(sale);
-//	}
-	
 	@Override
-	public ProductRecipe selectProduct(Sale sale) {
-		return sqlSession.getMapper(StoreItemMapper.class).selectProduct(sale);
+	public ProductRecipe selectProduct(String product) {
+		return sqlSession.getMapper(StoreItemMapper.class).selectProduct(product);
 	}
 
-//	@Override
-//	public int updateStoreItem1(Map<String, Object> map) {
-//		return sqlSession.getMapper(StoreItemMapper.class).updateStoreItem1(map);
-//	}
-//
-//	@Override
-//	public int updateStoreItem2(Map<String, Object> map) {
-//		return sqlSession.getMapper(StoreItemMapper.class).updateStoreItem2(map);
-//	}
+	@Override
+	public int updateStoreItem(Map<String, Object> map) {
+		return sqlSession.getMapper(StoreItemMapper.class).updateStoreItem(map);
+	}
+
 
 	
 }
