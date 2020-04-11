@@ -5,6 +5,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import site.bucks.dto.Sale;
 //		브랜치 테스트 1
 //		브랜치 테스트 2
 //		브랜치 테스트 3
@@ -70,9 +72,8 @@ public class HomeController {
 	}
 	
 	
-	@RequestMapping(value = "/saleList", method = RequestMethod.POST)
-	public String afer(@ModelAttribute String product, Model model) {
-		model.addAttribute("product", product);
+	@RequestMapping(value = "/saleList")
+	public String afer() {
 		return "sale/sale_list";
 	}
 	
