@@ -376,6 +376,10 @@ legend {
 	background: rgb(163, 139, 124) !important;
 }
 
+.beige{
+	background: rgba(243, 156, 18, 0.19) !important;
+}
+
 .green-font{
 	color:  rgb(22, 160, 133) !important;
 }

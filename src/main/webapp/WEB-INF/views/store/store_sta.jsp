@@ -60,6 +60,7 @@
 							<th >매장코드</th>
 							<th >매장명</th>
 							<th >매장주소</th>
+							<th>매장점주</th>
 							<th >매장번호</th>
 							<th >점주명</th>
 							<th >매장 구분</th>
@@ -69,60 +70,32 @@
 							<c:choose>
 								<c:when test="${empty(storeList) }">
 									<tr align="center">
-										<td colspan="6">검색된 지점정보가 없습니다.</td>		
+										<td colspan="7">검색된 지점정보가 없습니다.</td>		
 									</tr>
 								</c:when>
 								<c:otherwise>
 									<c:forEach var="store" items="${storeList }">
 									<tr>
-										<td>${store.code }</td>				
-										<td>${store.name }</td>				
-										<td>${store.address }</td>
-										<td>${store.phone }</td>				
-										<td>점주테이블 </td>	
-									<c:if test="${store.state==0 }">
-										<td>본사</td>
-									</c:if>
-									<c:if test="${store.state==1 }">
-										<td>지점</td>
-									</c:if>
-									<c:if test="${store.state==9 } ">
-										<td>폐점</td>
-									</c:if>
-										<td>${fn:substring(store.date,0,10)}</td>				
-									</tr>	
-									</c:forEach>
-								</c:otherwise>
-							</c:choose>
-						<%-- 
-						<c:choose>
-								<c:when test="${empty(storeList) }">
-									<tr align="center">
-										<td colspan="6">검색된 지점정보가 없습니다.</td>		
-									</tr>
-								</c:when>
-								<c:otherwise>
-									<c:forEach var="store" items="${storeList }">
-									<tr>
-										<td>${store.storeCode }</td>				
+										<td>${store.storeId }</td>				
 										<td>${store.storeName }</td>				
-										<td>${store.storeAddress }</td>				
+										<td>${store.storeAddress }</td>
+										<td>${store.storeOwner }</td>
+										<td>${store.storePhone }</td>				
 										<td>점주테이블 </td>	
-									<c:if test="${store.storeState }==0">
+									<c:if test="${store.storeState==0 }">
 										<td>본사</td>
 									</c:if>
-									<c:if test="${store.storeState }==1">
+									<c:if test="${store.storeState==1 }">
 										<td>지점</td>
 									</c:if>
-									<c:if test="${store.storeState }==9">
+									<c:if test="${store.storeState==9 } ">
 										<td>폐점</td>
 									</c:if>
-										<td>${fn:substring(store.storeDate,0,10)}</td>				
+										<td>${fn:substring(store.storeOpen,0,10)}</td>				
 									</tr>	
 									</c:forEach>
 								</c:otherwise>
 							</c:choose>
-							--%>
 						</tr>
 					</tbody>
 				</table>
