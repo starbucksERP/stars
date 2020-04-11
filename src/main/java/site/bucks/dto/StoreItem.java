@@ -1,66 +1,68 @@
 package site.bucks.dto;
 
 /*
- 이름                 널?       유형           
------------------- -------- ------------ 
-ITEM_CODE                   VARCHAR2(50) 
-STORE_CODE                  NUMBER       
-STORE_ITEM_PRICE   NOT NULL NUMBER       
-STORE_ITEM_QTY     NOT NULL NUMBER(4)    
-STORE_ITEM_MIN_QTY NOT NULL NUMBER(4)    
+ 
+이름         널? 유형           
+---------- -- ------------ 
+ITEM_NUM      VARCHAR2(50) 
+STORE_ID      NUMBER       
+ITEM_QTY      NUMBER       
+ITEM_PRICE    NUMBER       
+MIN_QTY       NUMBER 
 
  */
 
 public class StoreItem {
-	private String itemCode;
-	private String storeCode;
-	private String storeItemPrice;
-	private String storeItemQty;
-	private String storeItemMinQty;
-
+	private String itemNum;
+	private int storeId;
+	private int itemQty;
+	private int itemPrice;
+	private int minQty;
+	
 	public StoreItem() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public String getItemCode() {
-		return itemCode;
+	public String getItemNum() {
+		return itemNum;
 	}
 
-	public void setItemCode(String itemCode) {
-		this.itemCode = itemCode;
+	public void setItemNum(String itemNum) {
+		this.itemNum = itemNum;
 	}
 
-	public String getStoreCode() {
-		return storeCode;
+	public int getStoreId() {
+		return storeId;
 	}
 
-	public void setStoreCode(String storeCode) {
-		this.storeCode = storeCode;
+	public void setStoreId(int storeId) {
+		this.storeId = storeId;
 	}
 
-	public String getStoreItemPrice() {
-		return storeItemPrice;
+	public int getItemQty() {
+		return itemQty;
 	}
 
-	public void setStoreItemPrice(String storeItemPrice) {
-		this.storeItemPrice = storeItemPrice;
+	public void setItemQty(int itemQty) {
+		this.itemQty = itemQty;
 	}
 
-	public String getStoreItemQty() {
-		return storeItemQty;
+	public int getItemPrice() {
+		return itemPrice;
 	}
 
-	public void setStoreItemQty(String storeItemQty) {
-		this.storeItemQty = storeItemQty;
+	public void setItemPrice(int itemPrice) {
+		this.itemPrice = itemPrice;
 	}
 
-	public String getStoreItemMinQty() {
-		return storeItemMinQty;
+	public int getMinQty() {
+		return minQty;
 	}
 
-	public void setStoreItemMinQty(String storeItemMinQty) {
-		this.storeItemMinQty = storeItemMinQty;
+	public void setMinQty(int minQty) {
+		this.minQty = minQty;
 	}
+	
 	
 	
 }

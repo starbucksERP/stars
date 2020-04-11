@@ -21,8 +21,8 @@ public class StoreDAOImpl implements StoreDAO {
 	}
 
 	@Override
-	public int closeStore(int storeCode) {
-		return sqlSession.getMapper(StoreMapper.class).closeStore(storeCode);
+	public int closeStore(int storeId) {
+		return sqlSession.getMapper(StoreMapper.class).closeStore(storeId);
 	}
 
 	@Override
@@ -31,8 +31,8 @@ public class StoreDAOImpl implements StoreDAO {
 	}
 
 	@Override
-	public Store selectStoreCode(int storeCode) {
-		return sqlSession.getMapper(StoreMapper.class).selectStoreCode(storeCode);
+	public Store selectstoreId(int storeId) {
+		return sqlSession.getMapper(StoreMapper.class).selectstoreId(storeId);
 	}
 
 	@Override

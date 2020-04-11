@@ -7,7 +7,7 @@
 
 	<!-- 재고 잔량 기록 -->
 	<update id="updateRecord" parameterType="map">
-	 	update record set item_rest=#{itemRest} where item=#{item}
+	 	update record set item_rest=#{itemRest} where item=#{itemName}
 	</update>
 	
 	<!-- 특정 재고 잔량 검색 -->
@@ -26,7 +26,7 @@
 		<selectKey resultType="int" keyProperty="saleNo" order="BEFORE">
 			select sale_seq.nextval from dual		
 		</selectKey>
-		insert into sale values(#{saleNo},#{saleProduct},#{saleQty},sysdate)
+		insert into sale values(#{saleNo},#{storeId},#{saleProduct},#{saleQty},sysdate)
 	</insert>
 	
 	<!-- 판매 기록 검색 -->
@@ -34,23 +34,8 @@
 		select * from sale
 	</select>
 	
-	<!-- 조인 association property 사용시 소문자 사용해야함!!  -->
-	<resultMap type="ProductSale" id="saleRM">
- 		<association property="sale">
- 			<id column="sale_no" property="saleNo"/>
- 			<result column="sale_product" property="saleProduct"/>
- 			<result column="sale_qty" property="saleQty"/>
- 			<result column="sale_date" property="saleDate"/>
- 		</association>
- 		<association property="item">
- 			<id column="item_code" property="itemCode"/>
- 		</association>
- 	</resultMap>
- 	
-	<!-- 상품명을 통한 카테고리 검색-->
-	<!-- <select id="selectCategory" resultType="saleRM">
-		select A.*,B.ITEM_CODE from SALE A JOIN item B on B.item_name=A.#{saleProduct}
-	</select> -->
+	<!--지점 검색하기(판매기록하기 위해서) -->
+	
 	
 <!-- sale 테이블 -->
 
@@ -58,27 +43,21 @@
 <!-- productRecipe 테이블 -->
 
 	<!-- 상품명을 통한 재료들 및 카테고리 검색 이용(커피종류만 해당) -->
-	<select id="selectProduct" parameterType="Sale" resultType="ProductRecipe">
+	<select id="selectProduct" resultType="ProductRecipe">
 		select * from product_recipe where product=#{product}
 	</select>
 <!-- productRecipe 테이블 -->	
 	
 	
-	
+	<!--  store_code=#{storeId} -->
 
 <!-- storeItem 테이블 -->
-<!--  
-	<update id="updateStoreItem1" parameterType="map">
-		update store_item set store_item_qty=store_item_qty-#{bundle} where store_item=#{item}
+	<!-- 원재료 들어올시 지점재고 업데이트 / 완제품 들어올시 지점재고 업데이트  - item 테이블 코드 로 item name 발췌 -->
+	<update id="updateStoreItem" parameterType="map">
+		update store_item B set B.item_qty=B.item_qty-#{itemQty} where B.item_num=(select item_code from item A where A.item_name=#{itemName})
 	</update> 
-	
-	<update id="updateStoreItem2" parameterType="map">
-		update store_item set store_item_qty=store_item_qty-#{qty} where store_item=#{item}
-	</update>
- -->
- 
- 	
 
+ 	
 <!-- storeItem 테이블 -->
 
 	

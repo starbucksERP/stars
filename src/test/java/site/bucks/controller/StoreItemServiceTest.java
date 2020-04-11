@@ -1,5 +1,8 @@
 package site.bucks.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +14,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import site.bucks.dao.StoreDAO;
+import site.bucks.dao.StoreItemDAO;
+import site.bucks.dto.ProductRecipe;
+import site.bucks.dto.Sale;
+import site.bucks.dto.StoreItem;
 import site.bucks.service.StoreItemService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -23,9 +31,38 @@ public class StoreItemServiceTest {
 	@Autowired
 	private StoreItemService storeItemService;
 	
+	
+//	4/11 테스트 완료
 	@Test
-	public void test1saleRecord() {
+	public void test1addSale() {
+		Sale sale= new Sale();
+		sale.setSaleProduct("에스프레소 마키아또");
+		sale.setSaleQty(2);
+		
+		storeItemService.addSale(sale);
 		
 	}
 	
+	
+	@Autowired
+	private StoreItemDAO storeItemDAO;
+	
+//	4/10 
+	/*
+	@Test
+	public void test1saleRecord() {
+		Sale sale = new Sale();
+		sale.setSaleProduct("로고 코인 다크 초콜릿");
+		logger.info(storeItemDAO.selectCategory(sale.getSaleProduct()));
+	}
+	
+	
+	@Test
+	public void test2saleRecord() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("itemName", "버터 가득 라이스 쿠키");
+		map.put("itemQty", 10);
+		storeItemDAO.updateStoreItem(map);
+	}
+	*/
 }
