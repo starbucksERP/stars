@@ -5,15 +5,16 @@ package site.bucks.dto;
 이름           널?       유형            
 ------------ -------- ------------- 
 SALE_NO      NOT NULL NUMBER        
-SALE_PRODUCT NOT NULL VARCHAR2(500) 
-SALE_QTY     NOT NULL NUMBER(4)     
-SALE_DATE    NOT NULL DATE    
-  
+STORE_ID              NUMBER        
+SALE_PRODUCT          VARCHAR2(100) 
+SALE_QTY              NUMBER        
+SALE_DATE             DATE  
+
  */
 
 public class Sale {
 	private int saleNo;
-	private int storeCode;
+	private int storeId;
 	private String saleProduct;
 	private int saleQty;
 	private String saleDate;
@@ -30,12 +31,12 @@ public class Sale {
 		this.saleNo = saleNo;
 	}
 	
-	public int getStoreCode() {
-		return storeCode;
+	public int getstoreId() {
+		return storeId;
 	}
 
-	public void setStoreCode(int storeCode) {
-		this.storeCode = storeCode;
+	public void setstoreId(int storeId) {
+		this.storeId = storeId;
 	}
 
 	public String getSaleProduct() {

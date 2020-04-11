@@ -36,12 +36,11 @@ public class StoreItemServiceImpl implements StoreItemService{
 	public void saleRecord(Sale sale, ProductRecipe pr) {
 		
 		storeItemDAO.insertSale(sale);
+		int qty = sale.getSaleQty();
 		
 		String item1=pr.getItem1();
 		String item2=pr.getItem2();
 		String item3=pr.getItem3();
-		
-		int qty = sale.getSaleQty();
 		
 		calculator1(qty,item1);
 		
@@ -57,9 +56,9 @@ public class StoreItemServiceImpl implements StoreItemService{
 	public void calculator1(int qty, String item) {
 //		여기서 추가합 맵은 updateRecord 및 updateItem 두개의 메소드에 사용
 		Map<String, Object> map=new HashMap<String, Object>();
-//		코드를 통해 item 검색
-		map.put("item", item);
 		int itemRest= storeItemDAO.selectItemRest(item);
+//		★여기서 item=재료
+		map.put("itemName", item);
 		
 //		남은 재고에 상품재고 합
 		itemRest=itemRest+qty;
@@ -69,15 +68,16 @@ public class StoreItemServiceImpl implements StoreItemService{
 		itemRest=itemRest-(bundle*100);
 		
 		if(bundle>=1) {
-			map.put("bundle",bundle);
+			map.put("itemQty",bundle);
 //			store 재고 업데이트 메소드
-			storeItemDAO.updateStoreItem1(map);
+			storeItemDAO.updateStoreItem(map);
+		}else {
+//			여기서 추가한 맵은 updateRecord에 사용
+			map.put("itemRest",itemRest);
+			
+			storeItemDAO.updateRecord(map);
 		}
-		
-//		여기서 추가한 맵은 updateRecord에 사용
-		map.put("itemRest",itemRest);
-		
-		storeItemDAO.updateRecord(map);
+
 	}
 	
 	
@@ -94,14 +94,15 @@ public class StoreItemServiceImpl implements StoreItemService{
 		calculator2(qty,item);
 	}
 	
-	public void calculator2(int qty,String item) {
+	public void calculator2(int qty,String product) {
 //		여기서 추가합 맵은 updateRecord 및 updateItem 두개의 메소드에 사용
 		Map<String, Object> map=new HashMap<String, Object>();
-		map.put("saleProduct", item);
-		map.put("storeItemQty",qty);
+//		★여기서 item=완제품
+		map.put("itemName", product);
+		map.put("itemQty",qty);
 		
 //		store 재고 업데이트 메소드
-		storeItemDAO.updateStoreItem2(map);
+		storeItemDAO.updateStoreItem(map);
 	}
 	
 	

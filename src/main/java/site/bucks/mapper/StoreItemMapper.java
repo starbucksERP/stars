@@ -12,6 +12,5 @@ public interface StoreItemMapper {
 	int insertSale(Sale sale);
 	List<Sale> selectSaleList();
 	ProductRecipe selectProduct(String product);
-	int updateStoreItem1(Map<String, Object> map);
-	int updateStoreItem2(Map<String, Object> map);
+	int updateStoreItem(Map<String, Object> map);
 }

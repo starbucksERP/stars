@@ -43,14 +43,10 @@ public class StoreItemDAOImpl implements StoreItemDAO {
 	}
 
 	@Override
-	public int updateStoreItem1(Map<String, Object> map) {
-		return sqlSession.getMapper(StoreItemMapper.class).updateStoreItem1(map);
+	public int updateStoreItem(Map<String, Object> map) {
+		return sqlSession.getMapper(StoreItemMapper.class).updateStoreItem(map);
 	}
 
-	@Override
-	public int updateStoreItem2(Map<String, Object> map) {
-		return sqlSession.getMapper(StoreItemMapper.class).updateStoreItem2(map);
-	}
 
 	
 }
