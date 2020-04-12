@@ -1,6 +1,6 @@
 package site.bucks.dto;
-
-/*
+ 
+/*a
 이름           널?       유형           
 ------------ -------- ------------ 
 ITEM_NUM     NOT NULL VARCHAR2(50) 123
