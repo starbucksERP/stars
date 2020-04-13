@@ -25,6 +25,7 @@
 		 #{itemQty}, <include refid="orderItemPprice"/>, <include refid="orderItemSprice"/>, 10, sysdate, null, 0)
 	</insert>
 <!-- 지점 발주시 -->
+
 <!-- 지점에서 발주 수정시 -->
 	<!-- 발주 해당 주문서(요청번호가 같음: 여러개일 경우) 리스트로 받아서 서비스 메소드 시행~ -->
 	<select id="selectOrderItemByStore" parameterType="StoreItemHistory">

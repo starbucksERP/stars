@@ -38,12 +38,12 @@
 	
 <!-- 지점에서 입고확인시 -->
 	<!-- store_item_history : 지점에서 입고확인시 기록상태 변화 -->
-	<update id="receiptProcess" parameterType="StoreItemHistory">
+	<update id="updateReceiptProcess" parameterType="StoreItemHistory">
 		update store_item_history set item_state=70 where request_num=#{requestNum}
 	</update>
 	
 	<!-- store_item_history : 지점에서 취소 요청시 기록상태 변화 -->
-	<update id="cancelProcess" parameterType="StoreItemHistory">
+	<update id="updateCancelProcess" parameterType="StoreItemHistory">
 		update store_item_history set item_state=99 where request_num=#{requestNum}
 	</update>
 <!-- 지점에서 입고확인시 -->
@@ -67,7 +67,7 @@
 	</select>
 	
 	<!-- 발주 검색해서 변화 없을시 수정파트 -->
-	<update id="updateStoreItemHistory" >
+	<update id="updateStoreItemHistory" parameterType="">
 		update store_item_history 
 		<set>
 			<if test="itemNum!=null and itemNum!='' and itemName!=null and itemName!=''">

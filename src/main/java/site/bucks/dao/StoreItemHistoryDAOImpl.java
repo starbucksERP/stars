@@ -14,8 +14,8 @@ public class StoreItemHistoryDAOImpl implements StoreItemHistoryDAO{
 	SqlSession sqlSession;
 	
 	@Override
-	public int receiptProcess(StoreItemHistory sih) {
-		return sqlSession.getMapper(StoreItemHistoryMapper.class).receiptProcess(sih);
+	public int updateReceiptProcess(StoreItemHistory sih) {
+		return sqlSession.getMapper(StoreItemHistoryMapper.class).updateReceiptProcess(sih);
 	}
 
 }
