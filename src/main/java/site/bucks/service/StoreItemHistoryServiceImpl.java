@@ -1,5 +1,7 @@
 package site.bucks.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,12 +22,59 @@ public class StoreItemHistoryServiceImpl implements StoreItemHistoryService{
 	@Autowired
 	private StoreItemHistoryDAO storeItemHistoryDAO;
 	
+//	발주 등록	(매개변수 배열로 받아서 처리 -  테스트 성공)
+	@Override
+	public void addRecipt(List<StoreItemHistory> sihList) {
+		for(StoreItemHistory sih:sihList) {
+			storeItemHistoryDAO.insertStoreItemHistory(sih);
+			orderItemDAO.insertOrderItemByStore(sih);
+		}
+	}
+	
+	
+//	발주 등록후 수정시 메소드	(매개변수 배열로 받아서 처리 -  테스트 성공)
+	@Override
+	public void modifyRecipt(List<StoreItemHistory> sihList) {
+		if(sihList.size()==0) {
+			throw new RuntimeException("수정할 발주가 없습니다.");	
+		}
+		
+		for(StoreItemHistory sih:sihList) {
+//			SIH 는 기존 저장 정보 		sih는 신규 저장 정보
+			StoreItemHistory SIH=storeItemHistoryDAO.selectReciptRequest(sih);
+			
+//			기존정보와 신규정보가 같다면 메소드 회귀
+			if(SIH.getItemNum().equals(sih.getItemNum()) && SIH.getItemQty()==sih.getItemQty()) {
+				continue;
+			}else {
+//				발주정보 변경하고
+				storeItemHistoryDAO.updateStoreItemHistory(sih);
+				
+				orderItemDAO.updateOrderItemByStore(sih);
+			}
+		
+		}
+		
+			
+		
+		
+	}
+	
+	
+//	지점에 물품 입하시 일어나는 메소드
 	@Override
 	public void modifyReceiptProcess(StoreItemHistory sih) {
-		storeItemHistoryDAO.receiptProcess(sih);
-		deliveryDAO.deliveryReceiptProcess(sih);
-		orderItemDAO.orderReceiptProcess(sih);
-		storeItemDAO.storeItemReceiptProcess(sih);
+//		지점발주상태변경
+		storeItemHistoryDAO.updateReceiptProcess(sih);
+//		배송상태변경
+		deliveryDAO.updateDeliveryReceiptProcess(sih);
+//		주문상태변경
+		orderItemDAO.updateOrderReceiptProcess(sih);
+//		지점재고수량변경
+		storeItemDAO.updateStoreItemReceiptProcess(sih);
 	}
+
+
+
 
 }
