@@ -5,17 +5,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import site.bucks.dto.StoreItemHistory;
-import site.bucks.mapper.StoreItemHistoryMapper;
+import site.bucks.mapper.DeliveryMapper;
 
 @Repository
-public class StoreItemHistoryDAOImpl implements StoreItemHistoryDAO{
-
+public class DeliveryDAOImpl implements DeliveryDAO {
 	@Autowired
 	SqlSession sqlSession;
-	
-	@Override
-	public int receiptProcess(StoreItemHistory sih) {
-		return sqlSession.getMapper(StoreItemHistoryMapper.class).receiptProcess(sih);
-	}
 
+	@Override
+	public int deliveryReceiptProcess(StoreItemHistory sih) {
+		return sqlSession.getMapper(DeliveryMapper.class).deliveryReceiptProcess(sih);
+	}
+	
+	
 }

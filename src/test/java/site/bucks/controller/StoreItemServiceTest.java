@@ -44,19 +44,10 @@ public class StoreItemServiceTest {
 	}
 	
 	
-	@Autowired
-	private StoreItemDAO storeItemDAO;
-	
+//	@Autowired
+//	private StoreItemDAO storeItemDAO;
 //	4/10 
 	/*
-	@Test
-	public void test1saleRecord() {
-		Sale sale = new Sale();
-		sale.setSaleProduct("로고 코인 다크 초콜릿");
-		logger.info(storeItemDAO.selectCategory(sale.getSaleProduct()));
-	}
-	
-	
 	@Test
 	public void test2saleRecord() {
 		Map<String, Object> map = new HashMap<String, Object>();

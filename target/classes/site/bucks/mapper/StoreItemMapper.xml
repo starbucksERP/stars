@@ -3,23 +3,11 @@
 <!-- 사용 테이블 : 지점재고 / 지점재고history / 판매 / 상품레시피 -->
 <mapper namespace="site.bucks.mapper.StoreItemMapper">
 	
-<!-- record 테이블 -->
-
-	<!-- 재고 잔량 기록 -->
-	<update id="updateRecord" parameterType="map">
-	 	update record set item_rest=#{itemRest} where item=#{itemName}
-	</update>
-	
-	<!-- 특정 재고 잔량 검색 -->
-	<select id="selectItemRest" parameterType="string" resultType="int">
-		select item_rest from record where item=#{item}
+<!-- 판매등록시 sql -->
+	<!-- 완제품인지 재료인지 구별용 -->
+	<select id="selectProduct" resultType="ProductRecipe">
+		select * from product_recipe where product=#{product}
 	</select>
-	
-<!-- record 테이블 -->	
-	
-	
-	
-<!-- sale 테이블 -->
 	
 	<!-- 판매 기록 -->
 	<insert id="insertSale" parameterType="Sale">
@@ -29,38 +17,35 @@
 		insert into sale values(#{saleNo},#{storeId},#{saleProduct},#{saleQty},sysdate)
 	</insert>
 	
+	<!-- 특정 재고 잔량 검색 -->
+	<select id="selectItemRest" parameterType="string" resultType="int">
+		select item_rest from record where item=#{item}
+	</select>
+	
+	<!-- 재고 잔량 기록 -->
+	<update id="updateRecord" parameterType="map">
+	 	update record set item_rest=#{itemRest} where item=#{itemName}
+	</update>
+	
+	<!-- 원재료 들어올시 지점재고 업데이트 / 완제품 들어올시 지점재고 업데이트  - item 테이블 코드 로 item name 발췌 -->
+	<update id="updateStoreItem" parameterType="map">
+		update store_item set item_qty=item_qty-#{itemQty} where item_name=#{itemName}
+	</update> 
+<!-- 판매등록시 sql -->	
+	
+	
+<!-- 입고 확인시 storeItemHistory 테이블에서 일어나는 일련의 메소드 -->
+	<!-- store_item : 지점에서 입고확인시 재고수량 변화 -->
+	<update id="storeItemReceiptProcess" parameterType="StoreItemHistory">
+		update store_item set item_qty=item_qty+#{itemQty} where item_num=#{itemNum} and store_id=#{storeId}
+	</update>
+<!-- 입고 확인시 storeItemHistory 테이블에서 일어나는 일련의 메소드 -->
+
+
 	<!-- 판매 기록 검색 -->
 	<select id="selectSaleList" resultType="Sale">
 		select * from sale
 	</select>
-	
-	<!--지점 검색하기(판매기록하기 위해서) -->
-	
-	
-<!-- sale 테이블 -->
-
-
-<!-- productRecipe 테이블 -->
-
-	<!-- 상품명을 통한 재료들 및 카테고리 검색 이용(커피종류만 해당) -->
-	<select id="selectProduct" resultType="ProductRecipe">
-		select * from product_recipe where product=#{product}
-	</select>
-<!-- productRecipe 테이블 -->	
-	
-	
-	<!--  store_code=#{storeId} -->
-
-<!-- storeItem 테이블 -->
-	<!-- 원재료 들어올시 지점재고 업데이트 / 완제품 들어올시 지점재고 업데이트  - item 테이블 코드 로 item name 발췌 -->
-	<update id="updateStoreItem" parameterType="map">
-		update store_item B set B.item_qty=B.item_qty-#{itemQty} where B.item_num=(select item_code from item A where A.item_name=#{itemName})
-	</update> 
-
- 	
-<!-- storeItem 테이블 -->
-
-	
 	
 	
 	

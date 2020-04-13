@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import site.bucks.dto.ProductRecipe;
 import site.bucks.dto.Sale;
+import site.bucks.dto.StoreItemHistory;
 import site.bucks.mapper.StoreItemMapper;
 
 @Repository
@@ -45,6 +46,13 @@ public class StoreItemDAOImpl implements StoreItemDAO {
 	@Override
 	public int updateStoreItem(Map<String, Object> map) {
 		return sqlSession.getMapper(StoreItemMapper.class).updateStoreItem(map);
+	}
+
+	
+	
+	@Override
+	public int storeItemReceiptProcess(StoreItemHistory sih) {
+		return sqlSession.getMapper(StoreItemMapper.class).storeItemReceiptProcess(sih);
 	}
 
 

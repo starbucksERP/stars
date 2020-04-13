@@ -1,7 +1,7 @@
-package site.bucks.dao;
+package site.bucks.mapper;
 
 import site.bucks.dto.StoreItemHistory;
 
-public interface StoreItemHistoryDAO {
+public interface StoreItemHistoryMapper {
 	int receiptProcess(StoreItemHistory sih);
 }

@@ -89,9 +89,9 @@ public class StoreItemServiceImpl implements StoreItemService{
 		storeItemDAO.insertSale(sale);
 		
 		int qty = sale.getSaleQty();
-		String item =sale.getSaleProduct();
+		String product =sale.getSaleProduct();
 		
-		calculator2(qty,item);
+		calculator2(qty,product);
 	}
 	
 	public void calculator2(int qty,String product) {
