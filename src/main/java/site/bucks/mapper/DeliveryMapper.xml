@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="site.bucks.mapper.DeliveryMapper">
+<!-- 지점에서 입고 확인시 storeItemHistory 테이블에서 일어나는 일련의 메소드 -->
 	<!-- delivery : 지점에서 입고확인시 배송상태 변화 -->
-	<update id="deliveryReceiptProcess" parameterType="StoreItemHistory">
+	<update id="updateDeliveryReceiptProcess" parameterType="StoreItemHistory">
 		update delivery set delivery_state=70, delivery_end=sysdate where request_num=#{requestNum}
 	</update>
+<!-- 지점에서 입고 확인시 storeItemHistory 테이블에서 일어나는 일련의 메소드 -->
 </mapper>

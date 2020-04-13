@@ -1,5 +1,7 @@
 package site.bucks.dao;
 
+
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -13,9 +15,23 @@ public class OrderItemDAOImpl implements OrderItemDAO {
 	SqlSession sqlSession;
 
 	@Override
-	public int orderReceiptProcess(StoreItemHistory sih) {
-		return sqlSession.getMapper(OrderItemMapper.class).orderReceiptProcess(sih);
+	public int insertOrderItemByStore(StoreItemHistory sih) {
+		return sqlSession.getMapper(OrderItemMapper.class).insertOrderItemByStore(sih);
 	}
+
+	@Override
+	public int updateOrderItemByStore(StoreItemHistory sih) {
+		return sqlSession.getMapper(OrderItemMapper.class).updateOrderItemByStore(sih);
+	}
+
+	@Override
+	public int updateOrderReceiptProcess(StoreItemHistory sih) {
+		return sqlSession.getMapper(OrderItemMapper.class).updateOrderReceiptProcess(sih);
+	}
+
+
+
+	
 	
 
 }

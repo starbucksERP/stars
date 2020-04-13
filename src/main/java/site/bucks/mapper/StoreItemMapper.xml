@@ -34,12 +34,12 @@
 <!-- 판매등록시 sql -->	
 	
 	
-<!-- 입고 확인시 storeItemHistory 테이블에서 일어나는 일련의 메소드 -->
+<!-- 지점에서 입고 확인시 storeItemHistory 테이블에서 일어나는 일련의 메소드 -->
 	<!-- store_item : 지점에서 입고확인시 재고수량 변화 -->
-	<update id="storeItemReceiptProcess" parameterType="StoreItemHistory">
+	<update id="updateStoreItemReceiptProcess" parameterType="StoreItemHistory">
 		update store_item set item_qty=item_qty+#{itemQty} where item_num=#{itemNum} and store_id=#{storeId}
 	</update>
-<!-- 입고 확인시 storeItemHistory 테이블에서 일어나는 일련의 메소드 -->
+<!-- 지점에서 입고 확인시 storeItemHistory 테이블에서 일어나는 일련의 메소드 -->
 
 
 	<!-- 판매 기록 검색 -->

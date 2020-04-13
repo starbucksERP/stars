@@ -19,41 +19,48 @@ public class StoreItemDAOImpl implements StoreItemDAO {
 	private SqlSession sqlSession;
 	
 	@Override
-	public int updateRecord(Map<String, Object> map) {
-		return sqlSession.getMapper(StoreItemMapper.class).updateRecord(map);
+	public ProductRecipe selectProduct(String product) {
+		return sqlSession.getMapper(StoreItemMapper.class).selectProduct(product);
 	}
-
-	@Override
-	public int selectItemRest(String item) {
-		return sqlSession.getMapper(StoreItemMapper.class).selectItemRest(item);
-	}
-
+	
 	@Override
 	public int insertSale(Sale sale) {
 		return sqlSession.getMapper(StoreItemMapper.class).insertSale(sale);
 	}
-
+	
 	@Override
-	public List<Sale> selectSaleList() {
-		return sqlSession.getMapper(StoreItemMapper.class).selectSaleList();
+	public int selectItemRest(String item) {
+		return sqlSession.getMapper(StoreItemMapper.class).selectItemRest(item);
 	}
-
+	
 	@Override
-	public ProductRecipe selectProduct(String product) {
-		return sqlSession.getMapper(StoreItemMapper.class).selectProduct(product);
+	public int updateRecord(Map<String, Object> map) {
+		return sqlSession.getMapper(StoreItemMapper.class).updateRecord(map);
 	}
-
+	
 	@Override
 	public int updateStoreItem(Map<String, Object> map) {
 		return sqlSession.getMapper(StoreItemMapper.class).updateStoreItem(map);
 	}
 
 	
+
+	@Override
+	public int updateStoreItemReceiptProcess(StoreItemHistory sih) {
+		return sqlSession.getMapper(StoreItemMapper.class).updateStoreItemReceiptProcess(sih);
+	}
+
 	
 	@Override
-	public int storeItemReceiptProcess(StoreItemHistory sih) {
-		return sqlSession.getMapper(StoreItemMapper.class).storeItemReceiptProcess(sih);
+	public List<Sale> selectSaleList() {
+		return sqlSession.getMapper(StoreItemMapper.class).selectSaleList();
 	}
+
+
+
+
+	
+	
 
 
 	
