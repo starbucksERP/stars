@@ -1,8 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="site.bucks.mapper.OrderItemMapper">
+
+<!-- 지점 입고확인시 -->
 	<!-- order_item : 지점에서 입고확인시 주문상태 변화 -->
 	<update id="orderReceiptProcess" parameterType="StoreItemHistory">
 		update order_item set request_state=70 where request_num=#{requestNum}
 	</update>
+<!-- 지점 입고확인시 -->
+
+<!-- 지점 발주시 -->
+	<!-- order_item : 지점 발주 테이블에 기록시 주문 기록 -->
+	<sql id="orderItemPprice">
+	 	select item_Pprice from item where item_num=#{itemNum}
+	</sql>
+	<sql id="orderItemSprice">
+	 	select item_Sprice from item where item_num=#{itemNum}
+	</sql>
+	<insert id="insertOrderItemByStore" parameterType="StoreItemHistory">
+		<selectKey resultType="int" keyProperty="orderSeq" order="BEFORE">
+			select ORDER_SEQ.nextval from dual
+		</selectKey>
+		insert into order_item values(#{orderSeq},#{requestNum}, #{storeId}, #{itemNum},
+		 #{itemQty}, <include refid="orderItemPprice"/>, <include refid="orderItemSprice"/>, 10, sysdate, null, 0)
+	</insert>
+<!-- 지점 발주시 -->
+<!-- 지점에서 발주 수정시 -->
+	<!-- 발주 해당 주문서(요청번호가 같음: 여러개일 경우) 리스트로 받아서 서비스 메소드 시행~ -->
+	<select id="selectOrderItemByStore" parameterType="StoreItemHistory">
+		select A.* from order_item A join store_item_history B on (A.request_num=B.request_num) where A.request_num=#{requestNum}
+	</select>
+	
+	<update id="updateOrderItemByStore" parameterType="OrderItem">
+		update order_item_history set item_num = #{itemNum} and item_name = #{itemName}
+			and order_qty = #{itemQty} and request_date=sysdate where store_history_seq=#{storeHistorySeq}
+	</update>
+<!-- 지점에서 발주 수정시 -->
+
+
+
+	
+	
 </mapper>
