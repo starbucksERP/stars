@@ -6,9 +6,9 @@ import site.bucks.dto.Store;
 
 public interface StoreMapper {
 	int insertStore(Store store);
-	int closeStore(int storeCode);
+	int closeStore(int storeId);
 	int updateStore(Store store);
-	Store selectStoreCode(int storeCode);
+	Store selectstoreId(int storeId);
 	Store selectStoreName(String storeName);
 	List<Store> selectAllStore(Store store);
 }

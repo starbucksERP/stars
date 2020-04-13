@@ -1,8 +1,12 @@
 package site.bucks.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import site.bucks.dto.Sale;
 //		브랜치 테스트 1
 //		브랜치 테스트 2
 //		브랜치 테스트 3
@@ -67,8 +71,61 @@ public class HomeController {
 		return "buy/buy_plan";
 	}
 	
+	@RequestMapping(value = "/saleRecord")
+	public String s1() {
+		return "sale/sale_record";
+	}
 	
+	@RequestMapping(value = "/saleList")
+	public String s2() {
+		return "sale/sale_list";
+	}
 	
+//	회계 
+	@RequestMapping(value = "/accountAccount")
+	public String a1() {
+		return "accounting/search_account";
+	}
+	
+	@RequestMapping(value = "/accountProduct")
+	public String a2() {
+		return "accounting/search_saleProduct";
+	}
+	
+	@RequestMapping(value = "/accountStore")
+	public String a3() {
+		return "accounting/search_store";
+	}
+	
+	@RequestMapping(value = "/accountIncome")
+	public String a4() {
+		return "accounting/account_income";
+	}
+	
+	@RequestMapping(value = "/accountPurchase")
+	public String a5() {
+		return "accounting/account_purchase";
+	}
+	
+	@RequestMapping(value = "/accountSales")
+	public String a6() {
+		return "accounting/account_sales";
+	}
+	
+	@RequestMapping(value = "/purchaseMonth")
+	public String a7() {
+		return "accounting/purchase_month";
+	}
+	
+	@RequestMapping(value = "/salesMonth")
+	public String a8() {
+		return "accounting/sales_month";
+	}
+	
+	@RequestMapping(value = "/incomeMonth")
+	public String a9() {
+		return "accounting/income_month";
+	}
 }
 
 
