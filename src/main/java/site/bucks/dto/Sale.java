@@ -8,34 +8,36 @@ SALE_NO      NOT NULL NUMBER
 STORE_ID              NUMBER        
 SALE_PRODUCT          VARCHAR2(100) 
 SALE_QTY              NUMBER        
+SALE_PRICE_SUM		  NUMBER
 SALE_DATE             DATE  
 
  */
 
 public class Sale {
-	private int saleNo;
+	private int saleSeq;
 	private int storeId;
 	private String saleProduct;
 	private int saleQty;
+	private int salePriceSum;
 	private String saleDate;
 	
 	public Sale() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public int getSaleNo() {
-		return saleNo;
+	public int getSaleSeq() {
+		return saleSeq;
 	}
 
-	public void setSaleNo(int saleNo) {
-		this.saleNo = saleNo;
+	public void setSaleSeq(int saleSeq) {
+		this.saleSeq = saleSeq;
 	}
-	
-	public int getstoreId() {
+
+	public int getStoreId() {
 		return storeId;
 	}
 
-	public void setstoreId(int storeId) {
+	public void setStoreId(int storeId) {
 		this.storeId = storeId;
 	}
 
@@ -55,6 +57,14 @@ public class Sale {
 		this.saleQty = saleQty;
 	}
 
+	public int getSalePriceSum() {
+		return salePriceSum;
+	}
+
+	public void setSalePriceSum(int salePriceSum) {
+		this.salePriceSum = salePriceSum;
+	}
+
 	public String getSaleDate() {
 		return saleDate;
 	}
@@ -62,5 +72,7 @@ public class Sale {
 	public void setSaleDate(String saleDate) {
 		this.saleDate = saleDate;
 	}
+	
+	
 	
 }

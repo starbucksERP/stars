@@ -32,7 +32,7 @@ public class StoreItemHistoryServiceImpl implements StoreItemHistoryService{
 	}
 	
 	
-//	발주 등록후 수정시 메소드	(매개변수 배열로 받아서 처리 -  테스트 성공)
+//	발주 등록후 수정시[상태 10인 경우만] 메소드	(매개변수 배열로 받아서 처리 -  테스트 성공)
 	@Override
 	public void modifyRecipt(List<StoreItemHistory> sihList) {
 		if(sihList.size()==0) {
@@ -40,8 +40,13 @@ public class StoreItemHistoryServiceImpl implements StoreItemHistoryService{
 		}
 		
 		for(StoreItemHistory sih:sihList) {
+			
 //			SIH 는 기존 저장 정보 		sih는 신규 저장 정보
-			StoreItemHistory SIH=storeItemHistoryDAO.selectReciptRequest(sih);
+			StoreItemHistory SIH=storeItemHistoryDAO.selectState10(sih);
+			
+			if(SIH==null) {
+				throw new RuntimeException("이미 발주가 접수됬습니다.");
+			}
 			
 //			기존정보와 신규정보가 같다면 메소드 회귀
 			if(SIH.getItemNum().equals(sih.getItemNum()) && SIH.getItemQty()==sih.getItemQty()) {
@@ -52,12 +57,22 @@ public class StoreItemHistoryServiceImpl implements StoreItemHistoryService{
 				
 				orderItemDAO.updateOrderItemByStore(sih);
 			}
-		
+		}
+	}
+	
+	@Override
+	public void modifyCancelRecipt(List<StoreItemHistory> sihList) {
+		if(sihList.size()==0) {
+			throw new RuntimeException("취소할 발주가 없습니다.");	
 		}
 		
-			
-		
-		
+		for(StoreItemHistory sih:sihList) {
+			if(storeItemHistoryDAO.selectState10(sih).getItemState()!=10) {
+				throw new RuntimeException("이미 발주가 접수됬습니다.");
+			}else {
+				storeItemHistoryDAO.updateCancelProcess(sih);
+			}
+		}
 	}
 	
 	
@@ -73,7 +88,6 @@ public class StoreItemHistoryServiceImpl implements StoreItemHistoryService{
 //		지점재고수량변경
 		storeItemDAO.updateStoreItemReceiptProcess(sih);
 	}
-
 
 
 
