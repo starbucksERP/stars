@@ -82,8 +82,6 @@ public class StoreServiceTest {
 		for(Store storeTest:storeList) {
 			logger.info(storeTest.toString());
 		}
-		
 	}
-	
 
 }

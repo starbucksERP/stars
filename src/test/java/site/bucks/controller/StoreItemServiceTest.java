@@ -31,8 +31,11 @@ public class StoreItemServiceTest {
 	@Autowired
 	private StoreItemService storeItemService;
 	
+	@Autowired
+	private StoreItemDAO storeItemDAO;
 	
 //	4/11 테스트 완료
+	/*
 	@Test
 	public void test1addSale() {
 		Sale sale= new Sale();
@@ -42,21 +45,12 @@ public class StoreItemServiceTest {
 		storeItemService.addSale(sale);
 		
 	}
+	*/
 	
-	
-	@Autowired
-	private StoreItemDAO storeItemDAO;
-	
+//	@Autowired
+//	private StoreItemDAO storeItemDAO;
 //	4/10 
 	/*
-	@Test
-	public void test1saleRecord() {
-		Sale sale = new Sale();
-		sale.setSaleProduct("로고 코인 다크 초콜릿");
-		logger.info(storeItemDAO.selectCategory(sale.getSaleProduct()));
-	}
-	
-	
 	@Test
 	public void test2saleRecord() {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -64,5 +58,19 @@ public class StoreItemServiceTest {
 		map.put("itemQty", 10);
 		storeItemDAO.updateStoreItem(map);
 	}
-	*/
+
+	
+	@Test
+	public void test1() {
+		Sale sale = new Sale();
+		sale.setSaleSeq(68);	
+		sale.setStoreId(02354);
+		sale.setSaleDate("20/04/14");
+		sale.setSaleQty(100);
+		sale.setSaleProduct("test");
+//		sale.setSalePriceSum(storeItemDAO.selectStoreItemPrice(sale).getItemPrice()*sale.getSaleQty());
+		System.out.println(storeItemDAO.selectStoreItemPrice(sale).getItemPrice()*sale.getSaleQty());
+	}
+	 */
+
 }
