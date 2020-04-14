@@ -3,7 +3,7 @@ package site.bucks.dto;
 /*
 이름           널?       유형           
 ------------ -------- ------------ 
-ITEM_NUM     NOT NULL VARCHAR2(50) 123
+ITEM_NUM     NOT NULL VARCHAR2(50)
 ITEM_NAME    NOT NULL VARCHAR2(20) 
 ITEM_QTY     NOT NULL NUMBER       
 ITEM_IMG     NOT NULL VARCHAR2(20) 
@@ -11,7 +11,7 @@ MIN_QTY      NOT NULL NUMBER
 ITEM_PPRICE  NOT NULL NUMBER       
 ITEM_SPRICE  NOT NULL NUMBER       
 ITEM_MARGIN           NUMBER       
-ITEM_PARTNER NOT NULL VARCHAR2(50) 
+ITEM_VENDOR NOT NULL VARCHAR2(50) 
 ITEM_DM               VARCHAR2(20) 
  
  */
@@ -26,7 +26,7 @@ public class Item {
 	private int itemPprice;
 	private int itemSprice;
 	private int itemMargin;
-	private String itemPartner;
+	private String itemVendor;
 	private String itemDm;
 	
 	public Item() {
@@ -97,12 +97,12 @@ public class Item {
 		this.itemMargin = itemMargin;
 	}
 
-	public String getItemPartner() {
-		return itemPartner;
+	public String getItemVendor() {
+		return itemVendor;
 	}
 
-	public void setItemPartner(String itemPartner) {
-		this.itemPartner = itemPartner;
+	public void setItemVendor(String itemVendor) {
+		this.itemVendor = itemVendor;
 	}
 
 	public String getItemDm() {
@@ -112,6 +112,7 @@ public class Item {
 	public void setItemDm(String itemDm) {
 		this.itemDm = itemDm;
 	}
+	
 	
 	
 
