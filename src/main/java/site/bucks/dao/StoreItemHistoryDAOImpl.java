@@ -36,14 +36,15 @@ public class StoreItemHistoryDAOImpl implements StoreItemHistoryDAO{
 	}
 
 	@Override
-	public StoreItemHistory selectReciptRequest(StoreItemHistory sih) {
-		return sqlSession.getMapper(StoreItemHistoryMapper.class).selectReciptRequest(sih);
+	public StoreItemHistory selectState10(StoreItemHistory sih) {
+		return sqlSession.getMapper(StoreItemHistoryMapper.class).selectState10(sih);
 	}
 
 	@Override
 	public int updateStoreItemHistory(StoreItemHistory sih) {
 		return sqlSession.getMapper(StoreItemHistoryMapper.class).updateStoreItemHistory(sih);
 	}
+
 	
 
 }

@@ -42,7 +42,7 @@
 
 <!-- 지점에서 발주 수정시 -->
 	<!-- 발주 검색 -->
-	<select id="selectReciptRequest" parameterType="StoreItemHistory" resultType="StoreItemHistory">
+	<select id="selectState10" parameterType="StoreItemHistory" resultType="StoreItemHistory">
 		select * from store_item_history where store_history_seq=#{storeHistorySeq} and item_state=10
 	</select>
 	
@@ -62,7 +62,8 @@
 
 	
 <!-- 지점에서 취소 요청시 storeItemHistory 테이블에서 일어나는 일련의 메소드 -->
-	<!-- store_item_history : 지점에서 취소 요청시 기록상태 변화 -->
+	<!-- store_item_history : 지점에서 취소 요청시 기록상태 변화 
+		selectReciptRequest sql이용하여 상태 10인지 확인 -->
 	<update id="updateCancelProcess" parameterType="StoreItemHistory">
 		update store_item_history set item_state=99 where request_num=#{requestNum}
 	</update>
