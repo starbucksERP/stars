@@ -1,6 +1,6 @@
 package site.bucks.dto;
 
-/*이름             널?       유형     
+/*이름 000            널?       유형     
 -------------- -------- ------ 
 DELIVERY_SEQ   NOT NULL NUMBER 
 REQUEST_NUM    NOT NULL VARCHAR2(20)
