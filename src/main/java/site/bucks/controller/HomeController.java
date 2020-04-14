@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import site.bucks.dto.Sale;
 //		브랜치 테스트 1
 //		브랜치 테스트 2
-//		브랜치 테스트
+//		브랜치 테스트4444
 @Controller
 public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
