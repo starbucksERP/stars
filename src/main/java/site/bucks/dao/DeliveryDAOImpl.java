@@ -13,8 +13,8 @@ public class DeliveryDAOImpl implements DeliveryDAO {
 	SqlSession sqlSession;
 
 	@Override
-	public int deliveryReceiptProcess(StoreItemHistory sih) {
-		return sqlSession.getMapper(DeliveryMapper.class).deliveryReceiptProcess(sih);
+	public int updateDeliveryReceiptProcess(StoreItemHistory sih) {
+		return sqlSession.getMapper(DeliveryMapper.class).updateDeliveryReceiptProcess(sih);
 	}
 	
 	
