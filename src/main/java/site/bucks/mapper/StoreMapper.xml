@@ -13,7 +13,7 @@
 	</update>
 	
 	<!-- 지점 수정(관리자 및 각 지점주 -->
-	<update id="updateStore">
+	<update id="updateStore" parameterType="Store">
 		update STORE set store_address=#{storeAddress},store_phone=#{storePhone} where store_id=#{storeId}
 	</update>
 	

@@ -1,10 +1,10 @@
-package site.bucks.dao;
+package site.bucks.mapper;
 
 import java.util.List;
 
 import site.bucks.dto.StoreItemHistory;
 
-public interface StoreItemHistoryDAO {
+public interface StoreItemHistoryMapper {
 	List<StoreItemHistory> selectReciptList();
 	int updateReceiptProcess(StoreItemHistory sih);
 	int updateCancelProcess(StoreItemHistory sih);

@@ -34,7 +34,9 @@ public class StoreItemServiceImpl implements StoreItemService{
 	
 //	재료로 받을때 조합
 	public void saleRecord(Sale sale, ProductRecipe pr) {
-		
+//		판매 등록 전 총합계 구하기
+		sale.setSalePriceSum(pr.getProductPrice()*sale.getSaleQty());
+//		판매등록
 		storeItemDAO.insertSale(sale);
 		int qty = sale.getSaleQty();
 		
@@ -85,13 +87,16 @@ public class StoreItemServiceImpl implements StoreItemService{
 	
 //	재료가 아닌 완제품일때
 	public void saleRecord(Sale sale) {
+//		판매 등록 전 총합계 구하기
+		sale.setSalePriceSum(storeItemDAO.selectStoreItemPrice(sale).getItemPrice()*sale.getSaleQty());
 		
+//		판매등록
 		storeItemDAO.insertSale(sale);
 		
 		int qty = sale.getSaleQty();
-		String item =sale.getSaleProduct();
+		String product =sale.getSaleProduct();
 		
-		calculator2(qty,item);
+		calculator2(qty,product);
 	}
 	
 	public void calculator2(int qty,String product) {

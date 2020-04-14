@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.bucks.mapper.StoreItemHistoryMapper">
+	<!-- store_item_history : 발주 현황 조회 -->
+	<select id="selectReciptList">
+		select * from store_item_history order by store_history_seq 
+	</select>
+	
+	<!-- store_item_history : 발주 현황 조건 조회
+	<select id="selectReciptConditionList" resultMap="StoreItemHistory" parameterType="map">
+		select * from store_item_history 
+		<where>
+			<if test="historyDate1=null and historyDate1!='' and historyDate2=null and historyDate2!=''">
+				history_date between historyDate1 and historyDate2
+			</if>
+			<if test="requestNum!=null and requestNum!=''">
+				request_num '%'||#{requestNum}||'%'
+			</if>
+			<if test="itemName!=null and itemName!=''">
+				item_name like '%'||#{itemName}||'%'
+			</if>
+			<if test="itemState!=null and itemState!=''">
+				item_state like '%'||#{itemState}||'%'
+			</if>
+			<if test="itemQty1=null and itemQty1!='' and itemQty2=null and itemQty2!=''">
+				item_qty between itemQty1 and itemQty2
+			</if>
+		</where>
+		order by store_history_seq 
+	</select>
+	 -->
+	
+<!-- 지점에서 발주 입력시 -->
+	<!-- store_item_history : 지점 발주 테이블 수정 -->
+	<insert id="insertStoreItemHistory" parameterType="StoreItemHistory">
+		<selectKey resultType="int" keyProperty="storeHistorySeq" order="BEFORE">
+			select STORE_HISTORY_SEQ.nextval from dual		
+		</selectKey>
+		insert into store_item_history values(#{storeHistorySeq}, #{storeId}, #{requestNum}, #{itemNum}, #{itemName}, 10, #{itemQty}, sysdate)
+	</insert>
+<!-- 지점에서 발주 입력시 -->	
+
+<!-- 지점에서 발주 수정시 -->
+	<!-- 발주 검색 -->
+	<select id="selectState10" parameterType="StoreItemHistory" resultType="StoreItemHistory">
+		select * from store_item_history where store_history_seq=#{storeHistorySeq} and item_state=10
+	</select>
+	
+	<!-- 발주 검색해서 변화 없을시 수정파트 -->
+	<update id="updateStoreItemHistory" parameterType="StoreItemHistory">
+		update store_item_history  set item_num = #{itemNum}, item_name = #{itemName}, item_qty=#{itemQty}, history_date=sysdate where store_history_seq=#{storeHistorySeq}
+	</update>
+<!-- 지점에서 발주 수정시 -->	
+	
+	
+<!-- 지점에서 입고 확인시 storeItemHistory 테이블에서 일어나는 일련의 메소드 -->
+	<!-- store_item_history : 지점에서 입고확인시 기록상태 변화 -->
+	<update id="updateReceiptProcess" parameterType="StoreItemHistory">
+		update store_item_history set item_state=70 where request_num=#{requestNum}
+	</update>
+<!-- 지점에서 입고 확인시 storeItemHistory 테이블에서 일어나는 일련의 메소드 -->
+
+	
+<!-- 지점에서 취소 요청시 storeItemHistory 테이블에서 일어나는 일련의 메소드 -->
+	<!-- store_item_history : 지점에서 취소 요청시 기록상태 변화 
+		selectReciptRequest sql이용하여 상태 10인지 확인 -->
+	<update id="updateCancelProcess" parameterType="StoreItemHistory">
+		update store_item_history set item_state=99 where request_num=#{requestNum}
+	</update>
+<!-- 지점에서 취소 요청시 storeItemHistory 테이블에서 일어나는 일련의 메소드 -->
+	
+
+
+	
+
+</mapper>

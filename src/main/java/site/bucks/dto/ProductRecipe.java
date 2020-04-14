@@ -3,11 +3,12 @@ package site.bucks.dto;
   
 이름       널?       유형            
 -------- -------- ------------- 
-PRODUCT  NOT NULL VARCHAR2(500) 
-CATEGORY NOT NULL VARCHAR2(200) 
-ITEM1    NOT NULL VARCHAR2(50)  
-ITEM2             VARCHAR2(50)  
-ITEM3             VARCHAR2(50)   
+PRODUCT       NOT NULL VARCHAR2(500) 
+CATEGORY      NOT NULL VARCHAR2(200) 
+ITEM1         NOT NULL VARCHAR2(50)  
+ITEM2                  VARCHAR2(50)  
+ITEM3                  VARCHAR2(50)  
+PRODUCT_PRICE          NUMBER          
  
  */
 public class ProductRecipe {
@@ -16,6 +17,7 @@ public class ProductRecipe {
 	private String item1;
 	private String item2;
 	private String item3;
+	private int productPrice;
 	
 	public ProductRecipe() {
 		// TODO Auto-generated constructor stub
@@ -59,6 +61,14 @@ public class ProductRecipe {
 
 	public void setItem3(String item3) {
 		this.item3 = item3;
+	}
+
+	public int getProductPrice() {
+		return productPrice;
+	}
+
+	public void setProductPrice(int productPrice) {
+		this.productPrice = productPrice;
 	}
 	
 	

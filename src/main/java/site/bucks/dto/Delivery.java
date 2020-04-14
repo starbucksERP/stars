@@ -3,14 +3,14 @@ package site.bucks.dto;
 /*이름             널?       유형     
 -------------- -------- ------ 
 DELIVERY_SEQ   NOT NULL NUMBER 
-REQUEST_NUM    NOT NULL NUMBER 
+REQUEST_NUM    NOT NULL VARCHAR2(20)
 STORE_ID       NOT NULL NUMBER 
 DELIVERY_STATE NOT NULL NUMBER 
 DELIVERY_START NOT NULL DATE   
 DELIVERY_END            DATE  */
 public class Delivery {
 	private int deliverySeq;
-	private int requestNum;
+	private String requestNum;
 	private int storeId;
 	private int deliverySate;
 	private String deliveryStart;
@@ -28,11 +28,11 @@ public class Delivery {
 		this.deliverySeq = deliverySeq;
 	}
 
-	public int getRequestNum() {
+	public String getRequestNum() {
 		return requestNum;
 	}
 
-	public void setRequestNum(int requestNum) {
+	public void setRequestNum(String requestNum) {
 		this.requestNum = requestNum;
 	}
 
