@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import site.bucks.dto.ProductRecipe;
 import site.bucks.dto.Sale;
+import site.bucks.dto.StoreItem;
 import site.bucks.dto.StoreItemHistory;
 import site.bucks.mapper.StoreItemMapper;
 
@@ -21,6 +22,11 @@ public class StoreItemDAOImpl implements StoreItemDAO {
 	@Override
 	public ProductRecipe selectProduct(String product) {
 		return sqlSession.getMapper(StoreItemMapper.class).selectProduct(product);
+	}
+	
+	@Override
+	public StoreItem selectStoreItemPrice(Sale sale) {
+		return sqlSession.getMapper(StoreItemMapper.class).selectStoreItemPrice(sale);
 	}
 	
 	@Override
@@ -52,9 +58,11 @@ public class StoreItemDAOImpl implements StoreItemDAO {
 
 	
 	@Override
-	public List<Sale> selectSaleList() {
-		return sqlSession.getMapper(StoreItemMapper.class).selectSaleList();
+	public List<Sale> selectSaleList(Map<String, Object> map) {
+		return sqlSession.getMapper(StoreItemMapper.class).selectSaleList(map);
 	}
+
+	
 
 
 

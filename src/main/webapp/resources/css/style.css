@@ -443,6 +443,38 @@ legend {
 	padding-bottom: 60px !important;
 }
 
+.inner-button{
+	border-radius: 4px !important;
+	width: 70px;
+}
+
+.order-sta{
+	list-style: none;
+	display: flex;
+ 	padding: 0px;
+   	margin: 0px;
+}
+
+.order-sta>li{
+	cursor: pointer;
+	background: rgb(190, 190, 190);
+	padding: 9px 17px;
+	font-size: 13px;
+	margin: 0px 3px;
+	color: white;
+	border-radius: 4px 4px 0px 0px !important;
+}
+
+.fChk{
+	position: relative;
+    top: 2.5px;
+    margin-left: 10px;
+}
+
+.date-output>input{
+	border: none;
+}
+
 /*	 
 	#2C2A29 : 스벅 스타일 검은색 
 	#f6f5ef   : 스벅 스타일 누렁색 

@@ -5,10 +5,12 @@ import java.util.Map;
 
 import site.bucks.dto.ProductRecipe;
 import site.bucks.dto.Sale;
+import site.bucks.dto.StoreItem;
 import site.bucks.dto.StoreItemHistory;
 
 public interface StoreItemDAO {
 	ProductRecipe selectProduct(String product);
+	StoreItem selectStoreItemPrice(Sale sale);
 	int insertSale(Sale sale);
 	int selectItemRest(String item);
 	int updateRecord(Map<String, Object> map);
@@ -16,5 +18,5 @@ public interface StoreItemDAO {
 	
 	int updateStoreItemReceiptProcess(StoreItemHistory sih);
 	
-	List<Sale> selectSaleList();
+	List<Sale> selectSaleList(Map<String, Object> map);
 }
