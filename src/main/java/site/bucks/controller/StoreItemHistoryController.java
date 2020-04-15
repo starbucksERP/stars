@@ -1,19 +1,16 @@
 package site.bucks.controller;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import site.bucks.appliedDto.StoreOrderSta;
-import site.bucks.dto.StoreItemHistory;
+import site.bucks.dto.AppliedOrderSta;
 import site.bucks.service.StoreItemHistoryService;
 
 @Controller
@@ -38,7 +35,7 @@ public class StoreItemHistoryController {
 		return "storeItem/order_req";
 	}
 	
-	
+	/*
 	@RequestMapping(value = "/storeOrderSta")
 	public String storeOrderSta(String historyDate1, String historyDate2, String storeHistorySeq, String itemName, String itemQty1, String itemQty2, Model model) {
 		
@@ -61,8 +58,19 @@ public class StoreItemHistoryController {
 		
 		return "storeItem/order_status";
 	}
+	*/
 	
 	
+	@RequestMapping(value = "/storeOrderSta")
+	public String storeOrderSta(@ModelAttribute(value="storeOrderSta") AppliedOrderSta storeOrderSta, Model model) {
+		
+		model.addAttribute("storeOrderStaList", storeItemHistoryService.getReciptSta(storeOrderSta));
+		return "storeItem/order_status";
+	}
 	
+	@ModelAttribute("itemStateList")
+	public List<String> itemStateList(){
+		return Arrays.asList("발주요청","발주완료","배송중","입고완료");
+	}
 	
 }

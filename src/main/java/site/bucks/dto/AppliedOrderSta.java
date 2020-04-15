@@ -1,14 +1,15 @@
-package site.bucks.appliedDto;
+package site.bucks.dto;
 
-public class StoreOrderSta {
+public class AppliedOrderSta {
 	private String historyDate1;
 	private String historyDate2;
 	private String historySeq;
 	private String itemName;
 	private String itemState;
+	private String itemQty1;
 	private String itemQty2;
 	
-	public StoreOrderSta() {
+	public AppliedOrderSta() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -28,11 +29,11 @@ public class StoreOrderSta {
 		this.historyDate2 = historyDate2;
 	}
 
-	public String gethistorySeq() {
+	public String getHistorySeq() {
 		return historySeq;
 	}
 
-	public void sethistorySeq(String historySeq) {
+	public void setHistorySeq(String historySeq) {
 		this.historySeq = historySeq;
 	}
 
@@ -50,6 +51,14 @@ public class StoreOrderSta {
 
 	public void setItemState(String itemState) {
 		this.itemState = itemState;
+	}
+
+	public String getItemQty1() {
+		return itemQty1;
+	}
+
+	public void setItemQty1(String itemQty1) {
+		this.itemQty1 = itemQty1;
 	}
 
 	public String getItemQty2() {

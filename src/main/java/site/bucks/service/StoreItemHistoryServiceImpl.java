@@ -10,6 +10,7 @@ import site.bucks.dao.DeliveryDAO;
 import site.bucks.dao.OrderItemDAO;
 import site.bucks.dao.StoreItemDAO;
 import site.bucks.dao.StoreItemHistoryDAO;
+import site.bucks.dto.AppliedOrderSta;
 import site.bucks.dto.StoreItemHistory;
 
 @Service
@@ -25,8 +26,8 @@ public class StoreItemHistoryServiceImpl implements StoreItemHistoryService{
 	
 //	발주 현황 조회 리스트
 	@Override
-	public List<StoreItemHistory> getReciptSta(Map<String, Object> map) {
-		return storeItemHistoryDAO.selectReciptConditionList(map);
+	public List<StoreItemHistory> getReciptSta(AppliedOrderSta orderSta) {
+		return storeItemHistoryDAO.selectReciptConditionList(orderSta);
 	}
 	
 	
