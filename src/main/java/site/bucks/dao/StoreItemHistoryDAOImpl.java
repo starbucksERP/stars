@@ -1,6 +1,7 @@
 package site.bucks.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,11 @@ public class StoreItemHistoryDAOImpl implements StoreItemHistoryDAO{
 	@Override
 	public List<StoreItemHistory> selectReciptList() {
 		return sqlSession.getMapper(StoreItemHistoryMapper.class).selectReciptList();
+	}
+	
+	@Override
+	public List<StoreItemHistory> selectReciptConditionList(Map<String, Object> map) {
+		return sqlSession.getMapper(StoreItemHistoryMapper.class).selectReciptConditionList(map);
 	}
 
 	@Override
@@ -44,6 +50,8 @@ public class StoreItemHistoryDAOImpl implements StoreItemHistoryDAO{
 	public int updateStoreItemHistory(StoreItemHistory sih) {
 		return sqlSession.getMapper(StoreItemHistoryMapper.class).updateStoreItemHistory(sih);
 	}
+
+	
 
 	
 

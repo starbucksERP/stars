@@ -1,6 +1,7 @@
 package site.bucks.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,14 @@ public class StoreItemHistoryServiceImpl implements StoreItemHistoryService{
 	@Autowired
 	private StoreItemHistoryDAO storeItemHistoryDAO;
 	
-//	¹ßÁÖ µî·Ï	(¸Å°³º¯¼ö ¹è¿­·Î ¹Ş¾Æ¼­ Ã³¸® -  Å×½ºÆ® ¼º°ø)
+//	ë°œì£¼ í˜„í™© ì¡°íšŒ ë¦¬ìŠ¤íŠ¸
+	@Override
+	public List<StoreItemHistory> getReciptSta(Map<String, Object> map) {
+		return storeItemHistoryDAO.selectReciptConditionList(map);
+	}
+	
+	
+//	ë°œì£¼ ë“±ë¡	(ë§¤ê°œë³€ìˆ˜ ë°°ì—´ë¡œ ë°›ì•„ì„œ ì²˜ë¦¬ -  í…ŒìŠ¤íŠ¸ ì„±ê³µ)
 	@Override
 	public void addRecipt(List<StoreItemHistory> sihList) {
 		for(StoreItemHistory sih:sihList) {
@@ -32,27 +40,27 @@ public class StoreItemHistoryServiceImpl implements StoreItemHistoryService{
 	}
 	
 	
-//	¹ßÁÖ µî·ÏÈÄ ¼öÁ¤½Ã[»óÅÂ 10ÀÎ °æ¿ì¸¸] ¸Ş¼Òµå	(¸Å°³º¯¼ö ¹è¿­·Î ¹Ş¾Æ¼­ Ã³¸® -  Å×½ºÆ® ¼º°ø)
+//	ë°œì£¼ ë“±ë¡í›„ ìˆ˜ì •ì‹œ[ìƒíƒœ 10ì¸ ê²½ìš°ë§Œ] ë©”ì†Œë“œ	(ë§¤ê°œë³€ìˆ˜ ë°°ì—´ë¡œ ë°›ì•„ì„œ ì²˜ë¦¬ -  í…ŒìŠ¤íŠ¸ ì„±ê³µ)
 	@Override
 	public void modifyRecipt(List<StoreItemHistory> sihList) {
 		if(sihList.size()==0) {
-			throw new RuntimeException("¼öÁ¤ÇÒ ¹ßÁÖ°¡ ¾ø½À´Ï´Ù.");	
+			throw new RuntimeException("ìˆ˜ì •í•  ë°œì£¼ê°€ ì—†ìŠµë‹ˆë‹¤.");	
 		}
 		
 		for(StoreItemHistory sih:sihList) {
 			
-//			SIH ´Â ±âÁ¸ ÀúÀå Á¤º¸ 		sih´Â ½Å±Ô ÀúÀå Á¤º¸
+//			SIH ëŠ” ê¸°ì¡´ ì €ì¥ ì •ë³´ 		sihëŠ” ì‹ ê·œ ì €ì¥ ì •ë³´
 			StoreItemHistory SIH=storeItemHistoryDAO.selectState10(sih);
 			
 			if(SIH==null) {
-				throw new RuntimeException("ÀÌ¹Ì ¹ßÁÖ°¡ Á¢¼ö‰ç½À´Ï´Ù.");
+				throw new RuntimeException("ì´ë¯¸ ë°œì£¼ê°€ ì ‘ìˆ˜ï¿½ç‡Ÿìœ±æ±‚ï¿½.");
 			}
 			
-//			±âÁ¸Á¤º¸¿Í ½Å±ÔÁ¤º¸°¡ °°´Ù¸é ¸Ş¼Òµå È¸±Í
+//			ê¸°ì¡´ì •ë³´ì™€ ì‹ ê·œì •ë³´ê°€ ê°™ë‹¤ë©´ ë©”ì†Œë“œ íšŒê·€
 			if(SIH.getItemNum().equals(sih.getItemNum()) && SIH.getItemQty()==sih.getItemQty()) {
 				continue;
 			}else {
-//				¹ßÁÖÁ¤º¸ º¯°æÇÏ°í
+//				ë°œì£¼ì •ë³´ ë³€ê²½í•˜ê³ 
 				storeItemHistoryDAO.updateStoreItemHistory(sih);
 				
 				orderItemDAO.updateOrderItemByStore(sih);
@@ -63,12 +71,12 @@ public class StoreItemHistoryServiceImpl implements StoreItemHistoryService{
 	@Override
 	public void modifyCancelRecipt(List<StoreItemHistory> sihList) {
 		if(sihList.size()==0) {
-			throw new RuntimeException("Ãë¼ÒÇÒ ¹ßÁÖ°¡ ¾ø½À´Ï´Ù.");	
+			throw new RuntimeException("ì·¨ì†Œí•  ë°œì£¼ê°€ ì—†ìŠµë‹ˆë‹¤.");	
 		}
 		
 		for(StoreItemHistory sih:sihList) {
 			if(storeItemHistoryDAO.selectState10(sih).getItemState()!=10) {
-				throw new RuntimeException("ÀÌ¹Ì ¹ßÁÖ°¡ Á¢¼ö‰ç½À´Ï´Ù.");
+				throw new RuntimeException("ì´ë¯¸ ë°œì£¼ê°€ ì ‘ìˆ˜ï¿½ç‡Ÿìœ±æ±‚ï¿½.");
 			}else {
 				storeItemHistoryDAO.updateCancelProcess(sih);
 			}
@@ -76,18 +84,21 @@ public class StoreItemHistoryServiceImpl implements StoreItemHistoryService{
 	}
 	
 	
-//	ÁöÁ¡¿¡ ¹°Ç° ÀÔÇÏ½Ã ÀÏ¾î³ª´Â ¸Ş¼Òµå
+//	ì§€ì ì— ë¬¼í’ˆ ì…í•˜ì‹œ ì¼ì–´ë‚˜ëŠ” ë©”ì†Œë“œ
 	@Override
 	public void modifyReceiptProcess(StoreItemHistory sih) {
-//		ÁöÁ¡¹ßÁÖ»óÅÂº¯°æ
+//		ì§€ì ë°œì£¼ìƒíƒœë³€ê²½
 		storeItemHistoryDAO.updateReceiptProcess(sih);
-//		¹è¼Û»óÅÂº¯°æ
+//		ë°°ì†¡ìƒíƒœë³€ê²½
 		deliveryDAO.updateDeliveryReceiptProcess(sih);
-//		ÁÖ¹®»óÅÂº¯°æ
+//		ì£¼ë¬¸ìƒíƒœë³€ê²½
 		orderItemDAO.updateOrderReceiptProcess(sih);
-//		ÁöÁ¡Àç°í¼ö·®º¯°æ
+//		ì§€ì ì¬ê³ ìˆ˜ëŸ‰ë³€ê²½
 		storeItemDAO.updateStoreItemReceiptProcess(sih);
 	}
+
+
+
 
 
 

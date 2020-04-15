@@ -28,8 +28,8 @@ import site.bucks.service.StoreItemService;
 public class StoreItemServiceTest {
 	private Logger logger=LoggerFactory.getLogger(StoreItemServiceTest.class);
 	
-	@Autowired
-	private StoreItemService storeItemService;
+//	@Autowired
+//	private StoreItemService storeItemService;
 	
 	@Autowired
 	private StoreItemDAO storeItemDAO;
@@ -72,5 +72,12 @@ public class StoreItemServiceTest {
 		System.out.println(storeItemDAO.selectStoreItemPrice(sale).getItemPrice()*sale.getSaleQty());
 	}
 	 */
+//	/*
+//	 * @Test public void test1() { Map<String, Object> map= new HashMap<String,
+//	 * Object>(); map.put("category", "B"); // map.put("subCategory", "01");
+//	 * storeItemDAO.selectSaleList(map);
+//	 * 
+//	 * }
+//	 */
 
 }

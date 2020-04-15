@@ -7,8 +7,10 @@
 <meta charset="UTF-8">
 <title>Star Bucks ERP</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/css/style.css?after" type="text/css">
-<script src="https://code.jquery.com/jquery.min.js"></script>
+<%-- <script src="https://code.jquery.com/jquery.min.js"></script> --%>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://kit.fontawesome.com/76211070e2.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js"></script>
 </head>
 <body>
 	<div id="header">

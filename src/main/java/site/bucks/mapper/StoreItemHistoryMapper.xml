@@ -6,29 +6,28 @@
 		select * from store_item_history order by store_history_seq 
 	</select>
 	
-	<!-- store_item_history : 발주 현황 조건 조회
-	<select id="selectReciptConditionList" resultMap="StoreItemHistory" parameterType="map">
+	<!-- store_item_history : 발주 현황 조건 조회 -->
+	<select id="selectReciptConditionList" resultType="StoreItemHistory" parameterType="map">
 		select * from store_item_history 
 		<where>
-			<if test="historyDate1=null and historyDate1!='' and historyDate2=null and historyDate2!=''">
-				history_date between historyDate1 and historyDate2
+			<if test="historyDate1!=null and historyDate1!='' and historyDate2!=null and historyDate2!=''">
+				history_date between #{historyDate1} and #{historyDate2}
 			</if>
-			<if test="requestNum!=null and requestNum!=''">
-				request_num '%'||#{requestNum}||'%'
+			<if test="storeHistorySeq!=null and storeHistorySeq!=''">
+				and store_history_seq like '%'||#{storeHistorySeq}||'%'
 			</if>
 			<if test="itemName!=null and itemName!=''">
-				item_name like '%'||#{itemName}||'%'
+				and item_name like '%'||#{itemName}||'%'
 			</if>
 			<if test="itemState!=null and itemState!=''">
-				item_state like '%'||#{itemState}||'%'
+				and item_state=#{itemState}
 			</if>
 			<if test="itemQty1=null and itemQty1!='' and itemQty2=null and itemQty2!=''">
-				item_qty between itemQty1 and itemQty2
+				and item_qty between #{itemQty1} and #{itemQty2}
 			</if>
 		</where>
 		order by store_history_seq 
 	</select>
-	 -->
 	
 <!-- 지점에서 발주 입력시 -->
 	<!-- store_item_history : 지점 발주 테이블 수정 -->

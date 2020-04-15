@@ -57,3 +57,15 @@
 			 $(".rowChk").prop("checked", true);
 		 }
 	 });
+	 
+	 
+	 // 발주에서 발주상태에 따른 버튼 누를시 배경색 변화
+	 $(".order-sta>li").click(function(){
+		 $(".order-sta>li").removeClass();
+		 $(this).addClass("blackgray");
+	 });
+	 
+	 
+	 
+	 
+	 
