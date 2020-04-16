@@ -1,38 +1,44 @@
 package site.bucks.dto;
 
 /*
+이름           널?       유형           
+------------ -------- ------------ 
+ITEM_NUM     NOT NULL VARCHAR2(50)
+ITEM_NAME    NOT NULL VARCHAR2(20) 
+ITEM_QTY     NOT NULL NUMBER       
+ITEM_IMG     NOT NULL VARCHAR2(20) 
+MIN_QTY      NOT NULL NUMBER       
+ITEM_PPRICE  NOT NULL NUMBER       
+ITEM_SPRICE  NOT NULL NUMBER       
+ITEM_MARGIN           NUMBER       
+ITEM_VENDOR NOT NULL VARCHAR2(50) 
+ITEM_DM               VARCHAR2(20) 
  
- 이름             널?       유형            
--------------- -------- ------------- 
-ITEM_CODE      NOT NULL VARCHAR2(50)  
-ITEM_NAME      NOT NULL VARCHAR2(100) 
-ITEM_PRICE     NOT NULL NUMBER        
-ITEM_PRICE_BUY NOT NULL NUMBER        
-ITEM_QTY       NOT NULL NUMBER(4)     
-ITEM_MIN_QTY        NOT NULL NUMBER(4)     
-ITEM_ACCOUNT   NOT NULL VARCHAR2(50)  
-
  */
 
 public class Item {
-	private String itemCode;
-	private String itemName;
-	private int itemPrice;
-	private int itemPriceBuy;
+	
+	private String itemNum;
+	private String itemName;  
 	private int itemQty;
-	private int itemMinQty;
-	private String itemAccount;
+	private String itemImg;
+	private int minQty;
+	private int itemPprice;
+	private int itemSprice;
+	private int itemMargin;
+	private String itemVendor;
+	private String itemDm;
 	
 	public Item() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public String getItemCode() {
-		return itemCode;
+	public String getItemNum() {
+		return itemNum;
 	}
 
-	public void setItemCode(String itemCode) {
-		this.itemCode = itemCode;
+	public void setItemNum(String itemNum) {
+		this.itemNum = itemNum;
 	}
 
 	public String getItemName() {
@@ -43,22 +49,6 @@ public class Item {
 		this.itemName = itemName;
 	}
 
-	public int getItemPrice() {
-		return itemPrice;
-	}
-
-	public void setItemPrice(int itemPrice) {
-		this.itemPrice = itemPrice;
-	}
-
-	public int getItemPriceBuy() {
-		return itemPriceBuy;
-	}
-
-	public void setItemPriceBuy(int itemPriceBuy) {
-		this.itemPriceBuy = itemPriceBuy;
-	}
-
 	public int getItemQty() {
 		return itemQty;
 	}
@@ -67,20 +57,63 @@ public class Item {
 		this.itemQty = itemQty;
 	}
 
-	public int getItemMinQty() {
-		return itemMinQty;
+	public String getItemImg() {
+		return itemImg;
 	}
 
-	public void setItemMinQty(int itemMinQty) {
-		this.itemMinQty = itemMinQty;
+	public void setItemImg(String itemImg) {
+		this.itemImg = itemImg;
 	}
 
-	public String getItemAccount() {
-		return itemAccount;
+	public int getMinQty() {
+		return minQty;
 	}
 
-	public void setItemAccount(String itemAccount) {
-		this.itemAccount = itemAccount;
+	public void setMinQty(int minQty) {
+		this.minQty = minQty;
+	}
+
+	public int getItemPprice() {
+		return itemPprice;
+	}
+
+	public void setItemPprice(int itemPprice) {
+		this.itemPprice = itemPprice;
+	}
+
+	public int getItemSprice() {
+		return itemSprice;
+	}
+
+	public void setItemSprice(int itemSprice) {
+		this.itemSprice = itemSprice;
+	}
+
+	public int getItemMargin() {
+		return itemMargin;
+	}
+
+	public void setItemMargin(int itemMargin) {
+		this.itemMargin = itemMargin;
+	}
+
+	public String getItemVendor() {
+		return itemVendor;
+	}
+
+	public void setItemVendor(String itemVendor) {
+		this.itemVendor = itemVendor;
+	}
+
+	public String getItemDm() {
+		return itemDm;
+	}
+
+	public void setItemDm(String itemDm) {
+		this.itemDm = itemDm;
 	}
 	
+	
+	
+
 }
