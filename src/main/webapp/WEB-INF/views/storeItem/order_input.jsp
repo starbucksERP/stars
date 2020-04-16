@@ -34,7 +34,7 @@
 							<th>발주요청일</th>
 							<td><label class="gLabel"><input type="date" readonly="readonly" />&nbsp;<i class="far fa-calendar-alt"></i></label>
 							<th>발주요청매장</th>
-							<td><input type="text"  value="강남점" readonly="readonly"/></td>
+							<td><input type="text"  value="1594" readonly="readonly" id="storeId"/></td>
 						</tr>
 					</thead>
 				</table>
@@ -128,8 +128,8 @@
 		    $(".rowChk:checked").each(function(i) {
 		 
 		         asd = {
-		        	requestNum	: 123,
-		        	storeId			: 11,
+		        	requestNum	: dd+mm+$("#storeId").val().substr(0, 3),
+		        	storeId			: $("#storeId").val(),
 	        		itemNum        : $(this).parents('tr').find(".itemNum").val(),
 	        		itemName      : $(this).parents('tr').find(".itemName").val(),
 	        		itemQty         : $(this).parents('tr').find(".itemQty").val()

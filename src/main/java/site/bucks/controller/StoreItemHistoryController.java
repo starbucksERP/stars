@@ -1,6 +1,5 @@
 package site.bucks.controller;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import site.bucks.dto.AppliedOrderSta;
 import site.bucks.dto.StoreItemHistory;
-import site.bucks.dto.StoreItemHistoryCollection;
 import site.bucks.service.StoreItemHistoryService;
 
 @Controller
@@ -28,11 +26,6 @@ public class StoreItemHistoryController {
 		return "storeItem/receipt_list";
 	}
 	
-	
-	@RequestMapping(value = "/storeOrderInput",method = RequestMethod.GET)
-	public String storeOrderInput() {
-		return "storeItem/order_input";
-	}
 	
 	
 	@RequestMapping(value = "/storeOrderReq")
@@ -65,7 +58,7 @@ public class StoreItemHistoryController {
 	}
 	*/
 	
-	
+//	지점 발주 요청 조회
 	@RequestMapping(value = "/storeOrderSta")
 	public String storeOrderSta(@ModelAttribute(value="storeOrderSta") AppliedOrderSta storeOrderSta, Model model) {
 		
@@ -77,9 +70,14 @@ public class StoreItemHistoryController {
 	public List<String> itemStateList(){
 		return Arrays.asList("발주요청","발주완료","배송중","입고완료");
 	}
+
 	
 	
-	
+//	지점 발주 입력
+	@RequestMapping(value = "/storeOrderInput",method = RequestMethod.GET)
+	public String storeOrderInput() {
+		return "storeItem/order_input";
+	}
 	
 	@RequestMapping(value = "/storeOrderInput", method = RequestMethod.POST)
 	@ResponseBody
@@ -90,6 +88,8 @@ public class StoreItemHistoryController {
 		}
 		return "success";
 	}
+	
+	
 	
 	
 	
