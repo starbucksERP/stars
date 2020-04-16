@@ -18,5 +18,5 @@ public interface StoreItemMapper {
 	
 	int updateStoreItemReceiptProcess(StoreItemHistory sih);
 	
-	List<Sale> selectSaleList();
+	List<Sale> selectSaleList(Map<String, Object> map);
 }

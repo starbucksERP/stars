@@ -10,6 +10,21 @@
 		}
 	});
 	
+	// 날짜 스크립트
+	$(function() {
+	    $( ".datepicker" ).datepicker({
+	         changeMonth: true, 
+	         buttonImage: "<i class='far fa-calendar-alt'></i>",
+	         dayNames: ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일'],
+	         dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'], 
+	         monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'],
+	         monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	         nextText: '다음 달',
+	         prevText: '이전 달',
+	         dateFormat: "yy-mm-dd"
+	  });
+	});
+	
 	// 상단 메뉴바 마우스 클릭시 메뉴 보임 및 숨김
 	$(".nav-item").click(function(){
 		$(".drop-menu").hide();
@@ -57,3 +72,15 @@
 			 $(".rowChk").prop("checked", true);
 		 }
 	 });
+	 
+	 
+	 // 발주에서 발주상태에 따른 버튼 누를시 배경색 변화
+	 $(".order-sta>li").click(function(){
+		 $(".order-sta>li").removeClass();
+		 $(this).addClass("blackgray");
+	 });
+	 
+	 
+	 
+	 
+	 
