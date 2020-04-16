@@ -54,7 +54,7 @@ public class StoreItemHistoryServiceImpl implements StoreItemHistoryService{
 			StoreItemHistory SIH=storeItemHistoryDAO.selectState10(sih);
 			
 			if(SIH==null) {
-				throw new RuntimeException("이미 발주가 접수�營윱求�.");
+				throw new RuntimeException("이미 발주가 접수되었습니다.");
 			}
 			
 //			기존정보와 신규정보가 같다면 메소드 회귀
@@ -77,7 +77,7 @@ public class StoreItemHistoryServiceImpl implements StoreItemHistoryService{
 		
 		for(StoreItemHistory sih:sihList) {
 			if(storeItemHistoryDAO.selectState10(sih).getItemState()!=10) {
-				throw new RuntimeException("이미 발주가 접수�營윱求�.");
+				throw new RuntimeException("이미 발주가 접수되었습니다.");
 			}else {
 				storeItemHistoryDAO.updateCancelProcess(sih);
 			}
