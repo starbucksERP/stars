@@ -70,7 +70,7 @@ public class StoreItemHistoryController {
 	
 	@ModelAttribute("itemStateList")
 	public List<String> itemStateList(){
-		return Arrays.asList("¹ßÁÖ¿äÃ»","¹ßÁÖ¿Ï·á","¹è¼ÛÁß","ÀÔ°í¿Ï·á");
+		return Arrays.asList("ë°œì£¼ìš”ì²­","ë°œì£¼ì™„ë£Œ","ë°°ì†¡ì¤‘","ìž…ê³ ì™„ë£Œ");
 	}
 	
 }
