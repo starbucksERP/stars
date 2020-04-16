@@ -34,7 +34,7 @@
 							<th>발주요청일</th>
 							<td><label class="gLabel"><input type="date" readonly="readonly" />&nbsp;<i class="far fa-calendar-alt"></i></label>
 							<th>발주요청매장</th>
-							<td><input type="text" value="강남점" readonly="readonly"/></td>
+							<td><input type="text"  value="강남점" readonly="readonly"/></td>
 						</tr>
 					</thead>
 				</table>
@@ -46,33 +46,45 @@
 				<button type="button" class="a-button padding-button red delTr">항목삭제</button>
 			</div>
 			<div class="information">
-				<table class="table">
-					<tbody>
-						<tr>
-							<th><input type="checkbox" class="allChk"></th>
-							<th>번호</th>
-							<th>품목코드</th>
-							<th>품목</th>
-							<th>수량</th>
-							<th>단가</th>
-							<th>총액</th>
-						</tr>
-						<tr>
-							<td><input type="checkbox" class="rowChk"></td>
-							<td>2020-03-03</td>
-							<td>2020341128124</td>
-							<td>강남역점(2124121233)</td>
-							<td>홍홍이</td>
-							<td><input type="text" /></td>
-							<td>324343</td>
-						</tr>
-					</tbody>
-					<tfoot>
-						<tr>
-							<td colspan="7"><div class="message center red-font"></div></td>
-						</tr>
-					</tfoot>
-				</table>
+				<form action="" method="post">
+					<table class="table">
+						<tbody>
+							<tr>
+								<th><input type="checkbox" class="allChk"></th>
+								<th>번호</th>
+								<th>품목코드</th>
+								<th>품목</th>
+								<th>수량</th>
+								<th>단가</th>
+								<th>총액</th>
+							</tr>
+							<tr>
+								<td><input type="checkbox" class="rowChk"></td>
+								<td>asdfasd</td>
+								<td><input type="text" value="1" name="itemNum" class="itemNum" /></td>
+								<td>
+									<select name="itemName" class="itemName">
+										<option value="원두">원두</option>
+										<option value="시럽">시럽</option>
+										<option value="바닐라">바닐라</option>
+									</select>
+								</td>
+								<td><input type="number" name="itemQty" class="itemQty" /></td>
+								<td>safasf</td>
+								<td>asdfasdf</td>
+							</tr>
+						</tbody>
+						<tfoot>
+							<tr>
+								<td colspan="7"><div class="message center red-font"></div></td>
+							</tr>
+						</tfoot>
+					</table>
+					<div class="center">
+						<button type="button" class="a-button big" id="storeOrderInput">판매 등록</button>
+						<button type="button" class="a-button sea big" onclick="reset()">다시 작성</button>
+					</div>
+				</form>
 			</div>
 				
 			
@@ -103,5 +115,52 @@
 	
 	$("input[type='date']").val(today);
 
+	
+	
+	$("#storeOrderInput").click(function(){
+	    
+	    var param = [];
+	 	var asd=[];
+	 	
+	 	if($('.rowChk:checked').length==0){
+			$(".message").text("발주할 물품 리스트를 체크해주세요")
+		}else{
+		    $(".rowChk:checked").each(function(i) {
+		 
+		         asd = {
+		        	requestNum	: 123,
+		        	storeId			: 11,
+	        		itemNum        : $(this).parents('tr').find(".itemNum").val(),
+	        		itemName      : $(this).parents('tr').find(".itemName").val(),
+	        		itemQty         : $(this).parents('tr').find(".itemQty").val()
+		        };
+		        
+		 	// param 배열에 data 오브젝트를 담는다.
+		        param.push(asd);
+		    });
+		    
+	
+		    $.ajax({
+				type: "POST",
+				url: "storeOrderInput",
+				headers: {"content-type":"application/json"},
+				data: JSON.stringify(param),
+				dateType: "text",
+				success: function(text) {
+					if(text=="success") {
+						alert("발주가 성공적으로 이루어졌습니다.")
+						$(".rowChk").prop('checked', false);
+					}
+				},
+				error: function(xhr) {
+					alert("에러코드 = "+xhr.status)
+				}
+		    
+			});
+		}
+	});
+	
+	
+	
 	
 </script>

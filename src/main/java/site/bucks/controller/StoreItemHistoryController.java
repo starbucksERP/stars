@@ -1,5 +1,6 @@
 package site.bucks.controller;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -7,10 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import site.bucks.dto.AppliedOrderSta;
+import site.bucks.dto.StoreItemHistory;
+import site.bucks.dto.StoreItemHistoryCollection;
 import site.bucks.service.StoreItemHistoryService;
 
 @Controller
@@ -24,7 +29,7 @@ public class StoreItemHistoryController {
 	}
 	
 	
-	@RequestMapping(value = "/storeOrderInput")
+	@RequestMapping(value = "/storeOrderInput",method = RequestMethod.GET)
 	public String storeOrderInput() {
 		return "storeItem/order_input";
 	}
@@ -72,5 +77,28 @@ public class StoreItemHistoryController {
 	public List<String> itemStateList(){
 		return Arrays.asList("발주요청","발주완료","배송중","입고완료");
 	}
+	
+	
+	
+	
+	@RequestMapping(value = "/storeOrderInput", method = RequestMethod.POST)
+	@ResponseBody
+	public String storeOrderInput(@RequestBody List<StoreItemHistory> sihList) {
+		
+		for(StoreItemHistory sih:sihList) {
+			storeItemHistoryService.addRecipt(sih);
+		}
+		return "success";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }
