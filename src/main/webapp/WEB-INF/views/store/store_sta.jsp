@@ -30,15 +30,15 @@
 					<thead>
 						<tr>
 							<th>매장명</th>
-							<td><input type="search" name="name">&nbsp;<a href="" class="a-button gray search-icon"><i class="fas fa-search"></i></a></td>
+							<td><input type="search" name="storeName">&nbsp;<a href="" class="a-button gray search-icon"><i class="fas fa-search"></i></a></td>
 						</tr>
 						<tr>
 							<th>매장 구분</th>
 							<td>
-								<label class="gLabel"><input type="radio" class="fChk" >전체</label>&nbsp;&nbsp;|
-								<label class="gLabel"><input type="radio" class="fChk" name="state">본점</label>
-								<label class="gLabel"><input type="radio" class="fChk" name="state">지점</label>
-								<label class="gLabel"><input type="radio" class="fChk" name="state">폐점</label>
+								<label class="gLabel"><input type="radio" class="fChk" value="all">전체</label>&nbsp;&nbsp;|
+								<label class="gLabel"><input type="radio" class="fChk" name="state" value="head">본점</label>
+								<label class="gLabel"><input type="radio" class="fChk" name="state" value="branch">지점</label>
+								<label class="gLabel"><input type="radio" class="fChk" name="state" value="close">폐점</label>
 							</td>
 						</tr>
 					</thead>
@@ -60,11 +60,11 @@
 							<th >매장코드</th>
 							<th >매장명</th>
 							<th >매장주소</th>
-							<th>매장점주</th>
+							<th>점주명</th>
 							<th >매장번호</th>
-							<th >점주명</th>
 							<th >매장 구분</th>
 							<th >개업일</th>
+							<th >폐업일</th>
 						</tr>
 						<tr>
 							<c:choose>
@@ -79,19 +79,26 @@
 										<td>${store.storeId }</td>				
 										<td>${store.storeName }</td>				
 										<td>${store.storeAddress }</td>
-										<td>${store.storeOwner }</td>
+										<td>점주테이블</td>
 										<td>${store.storePhone }</td>				
-										<td>점주테이블 </td>	
 									<c:if test="${store.storeState==0 }">
 										<td>본사</td>
 									</c:if>
 									<c:if test="${store.storeState==1 }">
 										<td>지점</td>
 									</c:if>
-									<c:if test="${store.storeState==9 } ">
+									<c:if test="${store.storeState==9 }">
 										<td>폐점</td>
 									</c:if>
-										<td>${fn:substring(store.storeOpen,0,10)}</td>				
+										<td>${fn:substring(store.storeOpen,0,10)}</td>
+									<c:choose>
+										<c:when test="${!empty(store.storeClose)}">
+											<td>${fn:substring(store.storeClose,0,10)}</td>				
+										</c:when>
+										<c:otherwise>
+											<td>&nbsp;</td>
+										</c:otherwise>
+									</c:choose>
 									</tr>	
 									</c:forEach>
 								</c:otherwise>
@@ -100,8 +107,22 @@
 					</tbody>
 				</table>
 			</div>
-		
 		</div>
-
 	</div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

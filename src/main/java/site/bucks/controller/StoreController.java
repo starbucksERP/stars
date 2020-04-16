@@ -15,17 +15,11 @@ public class StoreController {
 	@Autowired
 	StoreService storeService;
 	
-	@RequestMapping(value = "/add", method =RequestMethod.GET)
-	public String add() {
-		return "store/enroll";
+//	지점및 점주관리
+	@RequestMapping(value = "/storeEnroll")
+	public String storeEnroll() {
+		return "store/store_enroll";
 	}
-	
-	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String add(@ModelAttribute Store store, Model model) {
-		storeService.addStore(store);
-		return "redirect:/store/storeSta";
-	}
-	
 	
 	@RequestMapping(value = "/storeSta")
 	public String display(@ModelAttribute Store store, Model model) {
@@ -33,20 +27,15 @@ public class StoreController {
 		return "store/store_sta";
 	}
 	
-//	지점및 점주관리
 	@RequestMapping(value = "/storeInfo")
 	public String storeInfo() {
 		return "store/store_info";
 	}
-	
+
 	@RequestMapping(value = "/storeStaff")
 	public String storeStaff() {
 		return "store/store_staff";
 	}
 	
-	@RequestMapping(value = "/storeEnroll")
-	public String storeEnroll() {
-		return "store/store_enroll";
-	}
 	
 }

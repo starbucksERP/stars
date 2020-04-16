@@ -25,6 +25,7 @@
 			<div class="information-left">
 			
 				<div class="right"><button type="button" class="a-button purple medium">수정</button></div>
+				<div id="checkErrorMsg" style="color:red; display: none;">하나만 체크해 주세요.</div>
 				<table class="table">
 					<tbody>
 						<tr>
@@ -68,9 +69,8 @@
 				<div class="enroll-div">
 				<fieldset class="enroll-fieldset">
 					<label>
-						<span>매장코드  </span><input type="text" />
-					</label>
-					&nbsp;<button type="button" class="a-button purple">중복 검사</button><br />
+						<span>매장코드  </span><input type="text" readonly="readonly" />
+					</label><br/>
 					<label>
 						<span>매장명 </span><input type="text" />
 					</label><br />
@@ -80,13 +80,19 @@
 					<label>
 						<span>점주명 </span><input type="text" />
 					</label><br />
+					<label>
+						<span>매장 번호 </span><input type="text" />
+					</label><br />					
 					<span class="staff">매장구분 </span>	
-					<label class="gLabel"><input type="radio" class="fChk" >본점</label>
-					<label class="gLabel"><input type="radio" class="fChk" >지점</label>
-					<label class="gLabel"><input type="radio" class="fChk" >폐점</label>
+					<label class="gLabel"><input type="radio" name="radio-name" class="fChk" value="head">본점</label>
+					<label class="gLabel"><input type="radio" name="radio-name" class="fChk" value="branch">지점</label>
+					<label class="gLabel"><input type="radio" name="radio-name" class="fChk" value="close">폐점</label>
 					<br />
 					<label>
-						<span>점주명 </span><input type="text" />
+						<span>개업일 </span><input type="text" class="openDate"/>
+					</label><br />
+					<label>
+						<span>폐업일 </span><input type="text" class="closeDate"/>
 					</label><br />
 					<span class="staff">매장 이미지 </span>&nbsp;
 					<img src="../star.png" alt="" align="top">
@@ -104,3 +110,42 @@
 
 	</div>
 </div>
+
+<script type="text/javascript">
+
+	<%-- 수정가능한 체크박스 선택 갯수 제한 --%>
+	$('input:checkbox[class=rowChk]').click(function() {
+		
+		var cnt = $("input:checkbox[class='rowChk']:checked").length;
+		
+		if(cnt>1) {
+			$(this).prop('checked',false);
+			$('#checkErrorMsg').css('display','block');
+		}
+	});
+
+	<%-- 본점,지점 선택시  폐업일 비활성화 / 폐점 선택시 개업일 비활성화 --%>
+	$('.fChk').on('click',function(){
+		
+		var checkValue = $("input:radio[name='radio-name']:checked").val();
+		
+		if( checkValue != 'close') {
+			$('.openDate').prop('disabled',false);
+			$('.openDate').focus();
+			$('.closeDate').prop('disabled',true);
+		} else {
+			$('.openDate').prop('disabled',true);
+			$('.closeDate').prop('disabled',false);
+			$('.closeDate').focus();
+		}
+	});
+	
+	
+	
+	
+</script>
+
+
+
+
+
