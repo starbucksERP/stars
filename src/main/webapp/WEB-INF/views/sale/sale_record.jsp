@@ -16,109 +16,102 @@
 		<div class="main">
 			
 			<h3>판매 등록</h3>
+			<br />
 			<hr />
-			<form action="saleList" method="post" id="saleRecord">
-				<div class="information">
-					<table class="table">
-						<thead>
-							<tr>
-								<td colspan="7">
-										<div class="right">
-											<button type="button" class="a-button medium purple" id="saleRecordAdd"><i class="fas fa-search"></i>&nbsp;판매기록 행 추가</button>
-										</div>
-									</td>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<th><input type="checkbox" class="allChk"></th>
-								<th>지점</th>
-								<th >대분류</th>
-								<th >소분류</th>
-								<th >상품명</th>
-								<th >수량</th>
-								 <th>옵션</th>
-							</tr>
-							<tr class="sale1">
-								<td><input type="checkbox" class="rowChk"></td>
-								<td >A6516</td>
-								<td>
-									<select name="category">
-										<option value="A">음료</option>
-										<option value="B">푸드</option>
-										<option value="C">상품</option>
-									</select>
-								</td>
-								<td >
-									<select name="subcategory">
-										<option value="">1</option>
-										<option value="">2</option>
-										<option value="">3</option>
-									</select>
-								</td>
-								<td >
-									<select name="product" style="min-width: 150px;">
-										<option value="">제품명</option>
-									</select>
-								</td>
-								<td>
-									<input type="number" name="qty" style="width: 50px;"/><span>&nbsp;개</span>
-								</td>
-								<td>
-									<button type="button" class="a-button red" onclick="reomoveRow(this)"><i class="fas fa-search"></i>&nbsp;삭제</button>
-								</td>							
-							</tr>
-						</tbody>
-						<tfoot>
-							<tr>
-								<td colspan="7"><div class="message center red-font"></div></td>
-							</tr>
-						</tfoot>
-					</table>
-				</div>
-				
-				<div class="right"><button type="submit" class="a-button big sea"><i class="fas fa-search"></i>&nbsp;등록</button></div>
-			</form>
+			<div class="information">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>판매등록일</th>
+							<td><label class="gLabel"><input type="date" readonly="readonly" />&nbsp;<i class="far fa-calendar-alt"></i></label>
+							<th>판매등록매장</th>
+							<td><input type="text" value="강남점" readonly="readonly"/></td>
+						</tr>
+					</thead>
+				</table>
 			</div>
+			<hr/>
+			<br />
+			<div>
+				<button type="button" class="a-button padding-button addTr">항목추가</button>&nbsp;
+				<button type="button" class="a-button padding-button red delTr">항목삭제</button>
+			</div>
+			<div class="information">
+				<table class="table">
+					<tbody>
+						<tr>
+							<th><input type="checkbox" class="allChk"></th>
+							<th>판매날짜</th>
+							<th>지점</th>
+							<th>대분류</th>
+							<th>소분류</th>
+							<th>상품명</th>
+							<th>수량</th>
+							<th>판매액</th>
+						</tr>
+						<tr>
+							<td><input type="checkbox" class="rowChk"></td>
+							<td><span id="dateSale"></span></td>
+							<td>A6516</td>
+							<td>
+								<select name="category">
+									<option value="A">음료</option>
+									<option value="B">푸드</option>
+									<option value="C">상품</option>
+								</select>
+							</td>
+							<td >
+								<select name="subcategory">
+									<option value="">1</option>
+									<option value="">2</option>
+									<option value="">3</option>
+								</select>
+							</td>
+							<td >
+								<select name="product" style="min-width: 150px;">
+									<option value="">제품명</option>
+								</select>
+							</td>
+							<td>
+								<input type="number" name="qty" style="width: 50px;"/><span>&nbsp;개</span>
+							</td>
+							<td><span id="productSum">1000000000000000</span></td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="8"><div class="message center red-font"></div></td>
+						</tr>
+					</tfoot>
+				</table>
+				<div class="center">
+					<button type="button" class="a-button big">판매 등록</button>
+					<button type="button" class="a-button sea big">다시 작성</button>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 
-
 <script type="text/javascript">
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth()+1; //January is 0!
+	var yyyy = today.getFullYear();
 	
-	var i=2;
-	$('#saleRecordAdd').click(function(){
-		var newitem = $(".table>tbody tr:eq(1)").clone();
-		newitem.removeClass();
-		newitem.addClass("sale"+i);
-		$(".table>tbody:last").append(newitem);
-		i++;
-
-	});
+	 
+	if(dd<10) {
+	    dd='0'+dd
+	} 
 	
-	function reomoveRow(obj) {
-	    var tr = $(obj).parent().parent();
-	    if(tr.attr('class')=='sale1'){
-	    	return;
-	    }else{
-		    tr.remove();
-	    }
-	};
+	if(mm<10) {
+	    mm='0'+mm
+	} 
 	
-	$("#saleRecord").submit(function() {
-		
-		var submitResult=true;
-		
-		if($('.rowChk').is(":checked")){
-			return submitResult=true;
-		}else{
-			$(".message").text("선택한 판매등록 리스트가 하나도 없습니다.");
-			submitResult=false;
-		}
-		
-		return submitResult;
-		
-	});
+	today = yyyy+'-'+mm+'-'+dd;
+	today2 = yyyy+'년 '+mm+'월 '+dd+'일';
 	
+	$("input[type='date']").val(today);
+	$("#dateSale").text(today2)
 	
 </script>
