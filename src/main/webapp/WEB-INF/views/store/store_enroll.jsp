@@ -38,8 +38,8 @@
 						<tr>
 							<c:choose>
 								<c:when test="${empty(storeList) }">
-									<tr align="center">
-										<td colspan="5"></td>
+									<tr>
+										<td colspan="5">지점이 존재하지 않습니다.</td>
 									</tr>
 								</c:when>
 								<c:otherwise>
@@ -63,20 +63,6 @@
 								</c:otherwise>
 							</c:choose>
 						</tr>
-						<tr>
-							<td><input type="checkbox" class="rowChk"></td>
-							<td>23424427</td>
-							<td>강남점</td>
-							<td>윤제니</td>
-							<td>지점</td>
-						</tr>
-						<tr>
-							<td><input type="checkbox" class="rowChk"></td>
-							<td>235232362</td>
-							<td>강남점</td>
-							<td>이강남</td>
-							<td>지점</td>
-						</tr>
 					</tbody>
 				</table>
 				
@@ -85,8 +71,8 @@
 			<div class="information-right">
 				<!-- 탭 메뉴 영역 -->
 				<ul class="enroll-ul">
-					<li class="tablinks active" onclick="openTab(event,'tab1')">매장정보</li>
-					<li class="tablinks" onclick="openTab(event,'tab2')">점주정보</li>
+					<li class="tab1" >매장정보</li>
+					<li class="tab2" >점주정보</li>
 				</ul>
 				<!-- 탭 컨텐츠 영역 -->
 				<div class="enroll-div">
@@ -153,22 +139,17 @@
 <script type="text/javascript">
 
 	<%-- 매장정보 / 점주정보 탭이동 --%>
-	function openTab(evt, tabName) {
-		var i, tabcontent, tablinks;
-		tabcontent=document.getElementsByClassName("enroll-fieldset");
-		for(i=0; i<tabcontent.length; i++) {
-			tabcontent[i].style.display="none"; 
+	$(".enroll-ul li").click(function() {
+		if($(this).attr("class")=='tab1'){
+			$("#tab1").show();
+			$("#tab2").hide();
+		}else{
+			$("#tab2").show();
+			$("#tab1").hide();
 		}
-		
-		tablinks=document.getElementsByClassName("tablinks");
-		for(i=0; i<tabcontent.length; i++) {
-			tablinks[i].className=tablinks[i].className.replace("active","");
-		}
-		
-		document.getElementById(tabName).style.display="block";
-		evt.currentTarget.className+="active";
-	}
-
+	})
+	
+	
 	<%-- 수정가능한 체크박스 선택 갯수 제한 --%>
 	$('input:checkbox[class=rowChk]').click(function() {
 		

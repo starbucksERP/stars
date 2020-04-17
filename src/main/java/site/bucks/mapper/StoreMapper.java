@@ -1,6 +1,7 @@
 package site.bucks.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import site.bucks.dto.Store;
 
@@ -10,5 +11,5 @@ public interface StoreMapper {
 	int updateStore(Store store);
 	Store selectstoreId(int storeId);
 	Store selectStoreName(String storeName);
-	List<Store> selectAllStore();
+	List<Store> selectConditionStoreList(Store store);
 }

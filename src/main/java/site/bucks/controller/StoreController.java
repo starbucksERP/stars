@@ -1,11 +1,12 @@
 package site.bucks.controller;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import site.bucks.dto.Store;
 import site.bucks.service.StoreService;
@@ -21,16 +22,12 @@ public class StoreController {
 		return "store/store_enroll";
 	}
 	
-	@RequestMapping(value = "/storeSta", method = RequestMethod.GET)
-	public String storeSta() {
+	@RequestMapping(value = "/storeSta")
+	public String storeSta(@ModelAttribute Store store, Model model) {
+		model.addAttribute("storeList", storeService.getStoreList(store));
 		return "store/store_sta";
 	}
 	
-	@RequestMapping(value = "/storeSta", method = RequestMethod.POST)
-	public String storeSta(@ModelAttribute Store store, Model model) {
-		model.addAttribute("storeList", storeService.getStoreList());
-		return "store/store_sta";
-	}
 	
 	@RequestMapping(value = "/storeInfo")
 	public String storeInfo() {

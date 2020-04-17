@@ -8,6 +8,6 @@ public interface StoreService {
 	void addStore(Store store);
 	/* void removeStore(Store store); */
 	void modifyStore(Store store);
-	List<Store> getStoreList();
+	List<Store> getStoreList(Store store);
 
 }

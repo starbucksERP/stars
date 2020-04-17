@@ -1,6 +1,7 @@
 package site.bucks.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,11 +41,13 @@ public class StoreDAOImpl implements StoreDAO {
 	public Store selectStoreName(String storeName) {
 		return sqlSession.getMapper(StoreMapper.class).selectStoreName(storeName);
 	}
-	
 	@Override
-	public List<Store> selectAllStore() {
-		return sqlSession.getMapper(StoreMapper.class).selectAllStore();
+	public List<Store> selectConditionStoreList(Store store) {
+		return sqlSession.getMapper(StoreMapper.class).selectConditionStoreList(store);
 	}
+
+	
+
 
 
 

@@ -28,11 +28,13 @@ public class StoreServiceImpl implements StoreService{
 	public void modifyStore(Store store) {
 		storeDAO.updateStore(store);
 	}
-
 	@Override
-	public List<Store> getStoreList() {
-		return storeDAO.selectAllStore();
+	public List<Store> getStoreList(Store store) {
+		return storeDAO.selectConditionStoreList(store);
 	}
+	
+
+	
 
 
 	

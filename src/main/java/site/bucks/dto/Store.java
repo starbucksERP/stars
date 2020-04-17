@@ -1,5 +1,7 @@
 package site.bucks.dto;
 
+import java.util.List;
+
 /*
  		지점 테이블 DTO
  		
@@ -25,6 +27,10 @@ public class Store {
 	private int storeState;
 	private String storeOpen;
 	private String storeClose;
+	
+	private List<Integer> states;	// 체크박스 검색용
+	
+	
 	
 	public Store() {
 		// TODO Auto-generated constructor stub
@@ -75,8 +81,20 @@ public class Store {
 	public String getStorePhone() {
 		return storePhone;
 	}
+	
+	
 
 
+
+	public String getStoreOpen() {
+		return storeOpen;
+	}
+
+	public void setStoreOpen(String storeOpen) {
+		this.storeOpen = storeOpen;
+	}
+
+	
 
 	public void setStorePhone(String storePhone) {
 		this.storePhone = storePhone;
@@ -110,7 +128,18 @@ public class Store {
 	public void setStoreClose(String storeClose) {
 		this.storeClose = storeClose;
 	}
+	
+	
+	
+	
 
+	public List<Integer> getStates() {
+		return states;
+	}
+
+	public void setStates(List<Integer> states) {
+		this.states = states;
+	}
 
 	//	테스트용으로 제작
 	@Override

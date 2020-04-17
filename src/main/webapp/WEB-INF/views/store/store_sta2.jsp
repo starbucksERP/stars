@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <div class="container">
 	<div class="row">
 		<div class="sidebar">
@@ -22,9 +23,9 @@
 
 		<div class="main">
 			
-			<form action="storeSta" id="storeStaForm" method="post">
+			<form:form action="storeSta" name="storeStaForm" method="post" modelAttribute="store">
 				<h3>지점 현황</h3>
-				<div class="right"><button type="button" class="a-button big" onclick="startState()"><i class="fas fa-search"></i>&nbsp;검색</button></div>
+				<div class="right"><button type="submit" class="a-button big"><i class="fas fa-search"></i>&nbsp;검색</button></div>
 				<hr />
 				<table class="table">
 					<thead>
@@ -35,15 +36,16 @@
 						<tr>
 							<th>매장 구분</th>
 							<td>
-								<label class="gLabel"><input type="checkbox" class="fChk" name="state" value="본사">본사</label>
-								<label class="gLabel"><input type="checkbox" class="fChk" name="state" value="지점">지점</label>
-								<label class="gLabel"><input type="checkbox" class="fChk" name="state" value="폐점">폐점</label>
-								<input type="hidden" name="states"/>
+								<form:radiobuttons path="storeState" items="${storeStateList }"  class="fChk"/>
+<!-- 							<label class="gLabel"><input type="radio" class="fChk" name="storeState" >전체</label>&nbsp;&nbsp;|
+								<label class="gLabel"><input type="radio" class="fChk" name="storeState" >본점</label>
+								<label class="gLabel"><input type="radio" class="fChk" name="storeState" >지점</label>
+								<label class="gLabel"><input type="radio" class="fChk" name="storeState" >폐점</label> -->
 							</td>
 						</tr>
 					</thead>
 				</table>
-			</form>
+			</form:form>
 			
 			<div class="right">
 				<button type="button" class="a-button sea medium" onclick="location.href='${pageContext.request.contextPath}/storeEnroll'"><i class="fas fa-plus-circle"></i>&nbsp;지점 등록</button>
@@ -82,7 +84,7 @@
 										<td>점주테이블</td>
 										<td>${store.storePhone }</td>				
 									<c:if test="${store.storeState==0 }">
-										<td>본사</td>
+										<td>본점</td>
 									</c:if>
 									<c:if test="${store.storeState==1 }">
 										<td>지점</td>
@@ -113,31 +115,7 @@
 
 
 
-<script type="text/javascript">
-	function startState(){
-		
-		var states=[];
-			
-		 $(".fChk:checked").each(function(i) {
-			 if($(this).val()=='본사'){
-				 states.push(0);
-			 }else if($(this).val()=='지점'){
-				 states.push(1);
-			 }else if($(this).val()=='폐점'){
-				 states.push(9);
-			 }
-		 });
-			 
-		 if(states.length==0){
-			 states.push(0);
-			 states.push(1);
-			 states.push(9);
-		 }
-		 
-		 $("input[type='hidden']").val(states);
-		 $("#storeStaForm").submit();
-	}
-</script>
+
 
 
 
