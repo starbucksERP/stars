@@ -83,17 +83,16 @@ public class StoreServiceTest {
 		storeService.modifyStore(store);
 		logger.info(store.toString());
 	}
+	 */
 	
 	//4/16 지현이 테스트 완료
 	@Test
 	public void test4getStoreList() {
-		Store store= new Store();
-		List<Store> storeList= storeService.getStoreList(store);
+		List<Store> storeList= storeService.getStoreList();
 		for(Store storeTest:storeList) {
 			logger.info(storeTest.toString());
 		}
 	}
-	 */
 }
 
 

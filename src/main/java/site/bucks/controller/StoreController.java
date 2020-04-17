@@ -21,9 +21,14 @@ public class StoreController {
 		return "store/store_enroll";
 	}
 	
-	@RequestMapping(value = "/storeSta")
-	public String display(@ModelAttribute Store store, Model model) {
-		model.addAttribute("storeList", storeService.getStoreList(store));
+	@RequestMapping(value = "/storeSta", method = RequestMethod.GET)
+	public String storeSta() {
+		return "store/store_sta";
+	}
+	
+	@RequestMapping(value = "/storeSta", method = RequestMethod.POST)
+	public String storeSta(@ModelAttribute Store store, Model model) {
+		model.addAttribute("storeList", storeService.getStoreList());
 		return "store/store_sta";
 	}
 	

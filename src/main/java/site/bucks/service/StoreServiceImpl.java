@@ -30,8 +30,8 @@ public class StoreServiceImpl implements StoreService{
 	}
 
 	@Override
-	public List<Store> getStoreList(Store store) {
-		return storeDAO.selectAllStore(store);
+	public List<Store> getStoreList() {
+		return storeDAO.selectAllStore();
 	}
 
 

@@ -10,5 +10,5 @@ public interface StoreMapper {
 	int updateStore(Store store);
 	Store selectstoreId(int storeId);
 	Store selectStoreName(String storeName);
-	List<Store> selectAllStore(Store store);
+	List<Store> selectAllStore();
 }

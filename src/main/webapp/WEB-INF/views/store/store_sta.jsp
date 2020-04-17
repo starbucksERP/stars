@@ -22,7 +22,7 @@
 
 		<div class="main">
 		
-			<form name="storeStaForm">
+			<form name="storeStaForm" method="post" action="/star/storeSta">
 				<h3>지점 현황</h3>
 				<div class="right"><button type="submit" class="a-button big"><i class="fas fa-search"></i>&nbsp;검색</button></div>
 				<hr />
@@ -35,10 +35,10 @@
 						<tr>
 							<th>매장 구분</th>
 							<td>
-								<label class="gLabel"><input type="radio" class="fChk" value="all">전체</label>&nbsp;&nbsp;|
-								<label class="gLabel"><input type="radio" class="fChk" name="state" value="head">본점</label>
-								<label class="gLabel"><input type="radio" class="fChk" name="state" value="branch">지점</label>
-								<label class="gLabel"><input type="radio" class="fChk" name="state" value="close">폐점</label>
+								<label class="gLabel"><input type="radio" class="fChk" name="storeState" value="all">전체</label>&nbsp;&nbsp;|
+								<label class="gLabel"><input type="radio" class="fChk" name="storeState" value="head">본점</label>
+								<label class="gLabel"><input type="radio" class="fChk" name="storeState" value="branch">지점</label>
+								<label class="gLabel"><input type="radio" class="fChk" name="storeState" value="close">폐점</label>
 							</td>
 						</tr>
 					</thead>
@@ -46,7 +46,7 @@
 			</form>
 			
 			<div class="right">
-				<button type="button" class="a-button sea medium"><i class="fas fa-plus-circle"></i>&nbsp;지점 등록</button>
+				<button type="button" class="a-button sea medium" onclick="location.href='/star/storeEnroll'"><i class="fas fa-plus-circle"></i>&nbsp;지점 등록</button>
 			</div>
 			
 			<br />
@@ -70,7 +70,7 @@
 							<c:choose>
 								<c:when test="${empty(storeList) }">
 									<tr align="center">
-										<td colspan="7">검색된 지점정보가 없습니다.</td>		
+										<td colspan="8">검색된 지점정보가 없습니다.</td>		
 									</tr>
 								</c:when>
 								<c:otherwise>
