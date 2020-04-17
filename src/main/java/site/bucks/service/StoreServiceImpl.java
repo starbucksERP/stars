@@ -18,20 +18,20 @@ public class StoreServiceImpl implements StoreService{
 	public void addStore(Store store) {
 		storeDAO.insertStore(store);
 	}
-
+/*
 	@Override
-	public void removeStore(int storeId) {
-		storeDAO.closeStore(storeId);
+	public void removeStore(Store store) {
+		storeDAO.closeStore(store);
 	}
-
+*/
 	@Override
 	public void modifyStore(Store store) {
 		storeDAO.updateStore(store);
 	}
 
 	@Override
-	public List<Store> getStoreList(Store store) {
-		return storeDAO.selectAllStore(store);
+	public List<Store> getStoreList() {
+		return storeDAO.selectAllStore();
 	}
 
 
