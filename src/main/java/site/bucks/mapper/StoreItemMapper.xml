@@ -48,9 +48,25 @@
 
 
 	<!-- 판매 기록 검색 -->
+	<!--  
 	<select id="selectSaleList" resultType="Sale">
-		select * from sale
+		select A.*,B.item_num from sale A join store_item B on (A.sale_product=B.item_name) 
+		<where>
+			<if test="saleDate1!=null and saleDate1!='' and saleDate2!=null and saleDate2!=''">
+				sale_date between #{saleDate1} and #{saleDate2}
+			</if>
+			<if test="category!=null and category!=''">
+				item_num LIKE #{category}||'%'
+			</if>
+			<if test="subCategory!=null and subCategory!=''">
+				item_num LIKE (_#{subCategory}||'%')
+			</if>
+			<if test="saleProduct!=null and saleProduct!=''">
+				sale_product=	#{saleProduct}
+			</if>
+		</where>
 	</select>
+	-->
 	
 	
 	
