@@ -42,13 +42,14 @@
 	</select>
 	
 <!-- 지점에서 발주 입력시 -->
-	<!-- store_item_history : 지점 발주 테이블 수정 -->
-	<insert id="insertStoreItemHistory" parameterType="StoreItemHistory">
-		<selectKey resultType="int" keyProperty="storeHistorySeq" order="BEFORE">
-			select STORE_HISTORY_SEQ.nextval from dual		
-		</selectKey>
-		insert into store_item_history values(#{storeHistorySeq}, #{storeId}, #{requestNum}, #{itemNum}, #{itemName}, 10, #{itemQty}, sysdate)
+	<!-- store_item_history : 지점 발주 테이블 (주체 :order) -->
+	<sql id="itemName">
+	 	(select item_name from item where item_num=#{itemNum})
+	</sql>
+	<insert id="insertSIH" parameterType="OrderItem">
+		insert into store_item_history values(STORE_HISTORY_SEQ.nextval, #{storeId}, #{requestNum}, #{itemNum}, 'test', 10, #{orderQty}, sysdate)
 	</insert>
+	
 <!-- 지점에서 발주 입력시 -->	
 
 <!-- 지점에서 발주 수정시 -->

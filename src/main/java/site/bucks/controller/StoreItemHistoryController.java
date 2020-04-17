@@ -1,7 +1,9 @@
 package site.bucks.controller;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import site.bucks.dto.AppliedOrderSta;
+import site.bucks.dto.OrderItem;
 import site.bucks.dto.StoreItemHistory;
 import site.bucks.service.StoreItemHistoryService;
 
@@ -34,6 +37,7 @@ public class StoreItemHistoryController {
 	}
 	
 	/*
+	-노가다-
 	@RequestMapping(value = "/storeOrderSta")
 	public String storeOrderSta(String historyDate1, String historyDate2, String storeHistorySeq, String itemName, String itemQty1, String itemQty2, Model model) {
 		
@@ -57,7 +61,6 @@ public class StoreItemHistoryController {
 		return "storeItem/order_status";
 	}
 	*/
-	
 //	지점 발주 요청 조회
 	@RequestMapping(value = "/storeOrderSta")
 	public String storeOrderSta(@ModelAttribute(value="storeOrderSta") AppliedOrderSta storeOrderSta, Model model) {
@@ -65,6 +68,22 @@ public class StoreItemHistoryController {
 		model.addAttribute("storeOrderStaList", storeItemHistoryService.getReciptSta(storeOrderSta));
 		return "storeItem/order_status";
 	}
+	/*
+	-AJAX-
+	
+	@RequestMapping(value = "/storeOrderSta")
+	public String storeOrderSta() {
+		return "storeItem/order_status";
+	}
+	
+	@RequestMapping(value = "/storeOrderStaList", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String , Object> storeOrderStaList(@ModelAttribute AppliedOrderSta storeOrderSta) {
+		Map<String, Object> returnMap= new HashMap<String, Object>();
+		returnMap.put("sihList", storeItemHistoryService.getReciptSta(storeOrderSta));
+		return returnMap;
+	}
+	*/
 	
 	@ModelAttribute("itemStateList")
 	public List<String> itemStateList(){
@@ -81,16 +100,13 @@ public class StoreItemHistoryController {
 	
 	@RequestMapping(value = "/storeOrderInput", method = RequestMethod.POST)
 	@ResponseBody
-	public String storeOrderInput(@RequestBody List<StoreItemHistory> sihList) {
+	public String storeOrderInput(@RequestBody List<OrderItem> orderItemList) {
 		
-		for(StoreItemHistory sih:sihList) {
-			storeItemHistoryService.addRecipt(sih);
+		for(OrderItem orderItem:orderItemList) {
+			storeItemHistoryService.addRecipt(orderItem);
 		}
 		return "success";
 	}
-	
-	
-	
 	
 	
 	

@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import site.bucks.dto.OrderItem;
 import site.bucks.dto.StoreItemHistory;
 import site.bucks.mapper.OrderItemMapper;
 
@@ -15,8 +16,8 @@ public class OrderItemDAOImpl implements OrderItemDAO {
 	SqlSession sqlSession;
 
 	@Override
-	public int insertOrderItemByStore(StoreItemHistory sih) {
-		return sqlSession.getMapper(OrderItemMapper.class).insertOrderItemByStore(sih);
+	public int insertStoreOrder(OrderItem orderItem) {
+		return sqlSession.getMapper(OrderItemMapper.class).insertStoreOrder(orderItem);
 	}
 
 	@Override
@@ -28,6 +29,8 @@ public class OrderItemDAOImpl implements OrderItemDAO {
 	public int updateOrderReceiptProcess(StoreItemHistory sih) {
 		return sqlSession.getMapper(OrderItemMapper.class).updateOrderReceiptProcess(sih);
 	}
+
+	
 
 
 

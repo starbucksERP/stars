@@ -46,45 +46,43 @@
 				<button type="button" class="a-button padding-button red delTr">항목삭제</button>
 			</div>
 			<div class="information">
-				<form action="" method="post">
-					<table class="table">
-						<tbody>
-							<tr>
-								<th><input type="checkbox" class="allChk"></th>
-								<th>번호</th>
-								<th>품목코드</th>
-								<th>품목</th>
-								<th>수량</th>
-								<th>단가</th>
-								<th>총액</th>
-							</tr>
-							<tr>
-								<td><input type="checkbox" class="rowChk"></td>
-								<td>asdfasd</td>
-								<td><input type="text" value="1" name="itemNum" class="itemNum" /></td>
-								<td>
-									<select name="itemName" class="itemName">
-										<option value="원두">원두</option>
-										<option value="시럽">시럽</option>
-										<option value="바닐라">바닐라</option>
-									</select>
-								</td>
-								<td><input type="number" name="itemQty" class="itemQty" /></td>
-								<td>safasf</td>
-								<td>asdfasdf</td>
-							</tr>
-						</tbody>
-						<tfoot>
-							<tr>
-								<td colspan="7"><div class="message center red-font"></div></td>
-							</tr>
-						</tfoot>
-					</table>
-					<div class="center">
-						<button type="button" class="a-button big" id="storeOrderInput">판매 등록</button>
-						<button type="button" class="a-button sea big" onclick="reset()">다시 작성</button>
-					</div>
-				</form>
+				<table class="table">
+					<tbody>
+						<tr>
+							<th><input type="checkbox" class="allChk"></th>
+							<th>번호</th>
+							<th>품목코드</th>
+							<th>품목</th>
+							<th>수량</th>
+							<th>단가</th>
+							<th>총액</th>
+						</tr>
+						<tr>
+							<td><input type="checkbox" class="rowChk"></td>
+							<td>asdfasd</td>
+							<td><input type="text" value="1" class="itemNum" /></td>
+							<td>
+								<select class="itemName">
+									<option value="원두">원두</option>
+									<option value="시럽">시럽</option>
+									<option value="바닐라">바닐라</option>
+								</select>
+							</td>
+							<td><input type="number" class="orderQty" /></td>
+							<td>safasf</td>
+							<td>asdfasdf</td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="7"><div class="message center red-font"></div></td>
+						</tr>
+					</tfoot>
+				</table>
+				<div class="center">
+					<button type="button" class="a-button big" id="storeOrderInput">판매 등록</button>
+					<button type="button" class="a-button sea big" onclick="reset()">다시 작성</button>
+				</div>
 			</div>
 				
 			
@@ -120,23 +118,23 @@
 	$("#storeOrderInput").click(function(){
 	    
 	    var param = [];
-	 	var asd=[];
+	 	var storeOrder=[];
 	 	
 	 	if($('.rowChk:checked').length==0){
 			$(".message").text("발주할 물품 리스트를 체크해주세요")
 		}else{
 		    $(".rowChk:checked").each(function(i) {
 		 
-		         asd = {
-		        	requestNum	: dd+mm+$("#storeId").val().substr(0, 3),
+		    	storeOrder = {
+		        	requestNum		: dd+mm+$("#storeId").val().substr(0, 1),
 		        	storeId			: $("#storeId").val(),
-	        		itemNum        : $(this).parents('tr').find(".itemNum").val(),
-	        		itemName      : $(this).parents('tr').find(".itemName").val(),
-	        		itemQty         : $(this).parents('tr').find(".itemQty").val()
+	        		itemNum        	: $(this).parents('tr').find(".itemNum").val(),
+	        	//	itemName      	: $(this).parents('tr').find(".itemName").val(),
+	        		orderQty        : $(this).parents('tr').find(".orderQty").val()
 		        };
 		        
-		 	// param 배열에 data 오브젝트를 담는다.
-		        param.push(asd);
+		 	// param 배열에 storeOrder 오브젝트를 담는다.
+		        param.push(storeOrder);
 		    });
 		    
 	
@@ -149,7 +147,7 @@
 				success: function(text) {
 					if(text=="success") {
 						alert("발주가 성공적으로 이루어졌습니다.")
-						$(".rowChk").prop('checked', false);
+						location.href="/storeOrderSta"
 					}
 				},
 				error: function(xhr) {

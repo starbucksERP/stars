@@ -11,6 +11,7 @@ import site.bucks.dao.OrderItemDAO;
 import site.bucks.dao.StoreItemDAO;
 import site.bucks.dao.StoreItemHistoryDAO;
 import site.bucks.dto.AppliedOrderSta;
+import site.bucks.dto.OrderItem;
 import site.bucks.dto.StoreItemHistory;
 
 @Service
@@ -33,10 +34,11 @@ public class StoreItemHistoryServiceImpl implements StoreItemHistoryService{
 	
 //	발주 등록	(매개변수 배열로 받아서 처리 -  테스트 성공)
 	@Override
-	public void addRecipt(StoreItemHistory sih) {
-			storeItemHistoryDAO.insertStoreItemHistory(sih);
-//			orderItemDAO.insertOrderItemByStore(sih);
+	public void addRecipt(OrderItem orderItem) {
+		orderItemDAO.insertStoreOrder(orderItem);
+		storeItemHistoryDAO.insertSIH(orderItem);
 	}
+	
 	
 	
 //	발주 등록후 수정시[상태 10인 경우만] 메소드	(매개변수 배열로 받아서 처리 -  테스트 성공)
@@ -95,6 +97,9 @@ public class StoreItemHistoryServiceImpl implements StoreItemHistoryService{
 //		지점재고수량변경
 		storeItemDAO.updateStoreItemReceiptProcess(sih);
 	}
+
+
+	
 
 
 
