@@ -81,6 +81,7 @@
 	 });
 	 
 	 
+	 // 행 추가 및 삭제
 	 $('.addTr').click(function(){
 			$(".message").text(" ");
 			var newitem = $(".table>tbody tr:eq(1)").clone();

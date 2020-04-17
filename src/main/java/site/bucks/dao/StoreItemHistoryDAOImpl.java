@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import site.bucks.dto.AppliedOrderSta;
+import site.bucks.dto.OrderItem;
 import site.bucks.dto.StoreItemHistory;
 import site.bucks.mapper.StoreItemHistoryMapper;
 
@@ -38,8 +39,8 @@ public class StoreItemHistoryDAOImpl implements StoreItemHistoryDAO{
 	}
 
 	@Override
-	public int insertStoreItemHistory(StoreItemHistory sih) {
-		return sqlSession.getMapper(StoreItemHistoryMapper.class).insertStoreItemHistory(sih);
+	public int insertSIH(OrderItem orderItem) {
+		return sqlSession.getMapper(StoreItemHistoryMapper.class).insertSIH(orderItem);
 	}
 
 	@Override
@@ -51,6 +52,8 @@ public class StoreItemHistoryDAOImpl implements StoreItemHistoryDAO{
 	public int updateStoreItemHistory(StoreItemHistory sih) {
 		return sqlSession.getMapper(StoreItemHistoryMapper.class).updateStoreItemHistory(sih);
 	}
+
+	
 
 	
 
