@@ -33,11 +33,9 @@ public class StoreItemHistoryServiceImpl implements StoreItemHistoryService{
 	
 //	발주 등록	(매개변수 배열로 받아서 처리 -  테스트 성공)
 	@Override
-	public void addRecipt(List<StoreItemHistory> sihList) {
-		for(StoreItemHistory sih:sihList) {
+	public void addRecipt(StoreItemHistory sih) {
 			storeItemHistoryDAO.insertStoreItemHistory(sih);
-			orderItemDAO.insertOrderItemByStore(sih);
-		}
+//			orderItemDAO.insertOrderItemByStore(sih);
 	}
 	
 	
