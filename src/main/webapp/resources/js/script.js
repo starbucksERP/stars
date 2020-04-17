@@ -81,6 +81,34 @@
 	 });
 	 
 	 
+	 // 행 추가 및 삭제
+	 $('.addTr').click(function(){
+			$(".message").text(" ");
+			var newitem = $(".table>tbody tr:eq(1)").clone();
+			$(".table>tbody").append(newitem);
+		});
+			
+			
+		$(".delTr").click(function() {
+			$(".message").text(" ");
+		    
+		    //체크된 행이 없을 경우.
+		    if($('.rowChk:checked').length == 0){  
+		   	 $(".message").text("삭제할 행을 선택하여 주십시오.");
+		    } else {                  
+		       $('.rowChk:checked').each(function(index){   
+		       	
+		            if($('.rowChk').length == 1){  
+		           	 $(".message").text("모든 행을 삭제할 수 없습니다.")
+		            } else {        
+		               var clickedRow = $(this).parent().parent();   
+		               clickedRow.remove();
+		            }                         
+		      	});                    
+		    }            
+		});
+	 
+	 
 	 
 	 
 	 

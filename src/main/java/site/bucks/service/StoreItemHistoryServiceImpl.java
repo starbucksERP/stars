@@ -11,6 +11,7 @@ import site.bucks.dao.OrderItemDAO;
 import site.bucks.dao.StoreItemDAO;
 import site.bucks.dao.StoreItemHistoryDAO;
 import site.bucks.dto.AppliedOrderSta;
+import site.bucks.dto.OrderItem;
 import site.bucks.dto.StoreItemHistory;
 
 @Service
@@ -33,12 +34,11 @@ public class StoreItemHistoryServiceImpl implements StoreItemHistoryService{
 	
 //	발주 등록	(매개변수 배열로 받아서 처리 -  테스트 성공)
 	@Override
-	public void addRecipt(List<StoreItemHistory> sihList) {
-		for(StoreItemHistory sih:sihList) {
-			storeItemHistoryDAO.insertStoreItemHistory(sih);
-			orderItemDAO.insertOrderItemByStore(sih);
-		}
+	public void addRecipt(OrderItem orderItem) {
+		orderItemDAO.insertStoreOrder(orderItem);
+		storeItemHistoryDAO.insertSIH(orderItem);
 	}
+	
 	
 	
 //	발주 등록후 수정시[상태 10인 경우만] 메소드	(매개변수 배열로 받아서 처리 -  테스트 성공)
@@ -54,7 +54,7 @@ public class StoreItemHistoryServiceImpl implements StoreItemHistoryService{
 			StoreItemHistory SIH=storeItemHistoryDAO.selectState10(sih);
 			
 			if(SIH==null) {
-				throw new RuntimeException("이미 발주가 접수�營윱求�.");
+				throw new RuntimeException("이미 발주가 접수되었습니다.");
 			}
 			
 //			기존정보와 신규정보가 같다면 메소드 회귀
@@ -77,7 +77,7 @@ public class StoreItemHistoryServiceImpl implements StoreItemHistoryService{
 		
 		for(StoreItemHistory sih:sihList) {
 			if(storeItemHistoryDAO.selectState10(sih).getItemState()!=10) {
-				throw new RuntimeException("이미 발주가 접수�營윱求�.");
+				throw new RuntimeException("이미 발주가 접수되었습니다.");
 			}else {
 				storeItemHistoryDAO.updateCancelProcess(sih);
 			}
@@ -97,6 +97,9 @@ public class StoreItemHistoryServiceImpl implements StoreItemHistoryService{
 //		지점재고수량변경
 		storeItemDAO.updateStoreItemReceiptProcess(sih);
 	}
+
+
+	
 
 
 

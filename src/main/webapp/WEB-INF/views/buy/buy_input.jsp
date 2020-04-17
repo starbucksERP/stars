@@ -8,7 +8,7 @@
 					<button class="dropdown-btn">발주<i class="fa fa-caret-down"></i></button>
 					<div class="dropdown-container">
 						<a href="">발주요청조회</a><br /><br />
-						<a href="">발주요청조회</a>
+						<a href="">발주요청조회</a> 
 					</div>
 				</li>
 				<li>
