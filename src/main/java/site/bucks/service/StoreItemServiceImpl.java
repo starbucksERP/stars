@@ -2,6 +2,7 @@ package site.bucks.service;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import site.bucks.dao.StoreItemDAO;
 import site.bucks.dto.ProductRecipe;
 import site.bucks.dto.Sale;
+import site.bucks.dto.SaleItem;
 
 @Service
 public class StoreItemServiceImpl implements StoreItemService{
@@ -43,6 +45,7 @@ public class StoreItemServiceImpl implements StoreItemService{
 		String item1=pr.getItem1();
 		String item2=pr.getItem2();
 		String item3=pr.getItem3();
+		
 		
 		calculator1(qty,item1);
 		
@@ -108,6 +111,27 @@ public class StoreItemServiceImpl implements StoreItemService{
 		
 //		store 재고 업데이트 메소드
 		storeItemDAO.updateStoreItem(map);
+	}
+
+//	판매 리스트 출력용
+	@Override
+	public List<SaleItem> getSaleList(Sale sale) {
+		return storeItemDAO.selectSaleList(sale);
+	}
+
+//	카테고리 검색시 상품명 검색
+	@Override
+	public Map<String, Object> getSaleProductName(Sale sale) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("saleProduct1", storeItemDAO.selectSaleProductName1(sale));
+		map.put("saleProduct2", storeItemDAO.selectSaleProductName2());
+		return map;
+	}
+	
+//	판매 삭제
+	public void removeSale(Sale sale) {
+		sale.setSaleQty(sale.getSaleQty()*-1);
+		 
 	}
 	
 	
