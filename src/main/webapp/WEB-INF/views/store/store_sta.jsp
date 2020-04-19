@@ -29,13 +29,13 @@
 				<table class="table">
 					<thead>
 						<tr>
-							<th>매장명</th>
+							<th>지점명</th>
 							<td><input type="search" name="storeName">&nbsp;<a href="" class="a-button gray search-icon"><i class="fas fa-search"></i></a></td>
 						</tr>
 						<tr>
-							<th>매장 구분</th>
+							<th>구분</th>
 							<td>
-								<label class="gLabel"><input type="checkbox" class="fChk" name="state" value="본사">본사</label>
+								<label class="gLabel"><input type="checkbox" class="fChk" name="state" value="본점">본점</label>
 								<label class="gLabel"><input type="checkbox" class="fChk" name="state" value="지점">지점</label>
 								<label class="gLabel"><input type="checkbox" class="fChk" name="state" value="폐점">폐점</label>
 								<input type="hidden" name="states"/>
@@ -57,12 +57,12 @@
 				<table class="table">
 					<tbody>
 						<tr>
-							<th >매장코드</th>
-							<th >매장명</th>
-							<th >매장주소</th>
+							<th >지점코드</th>
+							<th >지점명</th>
+							<th >지점주소</th>
 							<th>점주명</th>
-							<th >매장번호</th>
-							<th >매장 구분</th>
+							<th >지점번호</th>
+							<th >구분</th>
 							<th >개업일</th>
 							<th >폐업일</th>
 						</tr>
@@ -82,7 +82,7 @@
 										<td>점주테이블</td>
 										<td>${store.storePhone }</td>				
 									<c:if test="${store.storeState==0 }">
-										<td>본사</td>
+										<td>본점</td>
 									</c:if>
 									<c:if test="${store.storeState==1 }">
 										<td>지점</td>
@@ -119,7 +119,7 @@
 		var states=[];
 			
 		 $(".fChk:checked").each(function(i) {
-			 if($(this).val()=='본사'){
+			 if($(this).val()=='본점'){
 				 states.push(0);
 			 }else if($(this).val()=='지점'){
 				 states.push(1);

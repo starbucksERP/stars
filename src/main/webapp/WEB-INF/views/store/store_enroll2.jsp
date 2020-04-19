@@ -182,21 +182,17 @@
 	
 	<%-- 지점등록 버튼 클릭시 submit --%>
 	
-/* 	$("#addStoreBtn").click(function() { 
+	$("#addStoreBtn").click(function() { 
 		
 		var openDate=$(".openDate").val();
 		var closeDate=$(".closeDate").val();
 		
-		if(openDate=="" && closeDate=="") {
-			$('#openErrorMsg').css('display','block');
-			$('.openDate').focus();
-			return;
-		} else{
+		if(closeDate=="" && openDate!=null) {
 			$('#closeErrorMsg').css('display','block');
 			$('.closeDate').focus();
-			return;			
+			return;
 		}
-	}) */
+	})
 
 
 	

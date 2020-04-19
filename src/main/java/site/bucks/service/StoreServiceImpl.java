@@ -28,6 +28,17 @@ public class StoreServiceImpl implements StoreService{
 	public void modifyStore(Store store) {
 		storeDAO.updateStore(store);
 	}
+	
+	@Override
+	public Store getStoreId(int storeId) {
+		return storeDAO.selectstoreId(storeId);
+	}
+	
+	@Override
+	public Store getStoreName(String storeName) {
+		return storeDAO.selectStoreName(storeName);
+	}
+
 	@Override
 	public List<Store> getStoreList(Store store) {
 		return storeDAO.selectConditionStoreList(store);

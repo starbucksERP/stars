@@ -77,30 +77,13 @@ public class Store {
 	}
 
 
-
 	public String getStorePhone() {
 		return storePhone;
 	}
-	
-	
-
-
-
-	public String getStoreOpen() {
-		return storeOpen;
-	}
-
-	public void setStoreOpen(String storeOpen) {
-		this.storeOpen = storeOpen;
-	}
-
-	
 
 	public void setStorePhone(String storePhone) {
 		this.storePhone = storePhone;
 	}
-
-
 
 	public int getStoreState() {
 		return storeState;
@@ -128,9 +111,6 @@ public class Store {
 	public void setStoreClose(String storeClose) {
 		this.storeClose = storeClose;
 	}
-	
-	
-	
 	
 
 	public List<Integer> getStates() {

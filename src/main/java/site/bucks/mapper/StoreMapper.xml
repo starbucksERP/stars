@@ -31,6 +31,9 @@
 		select * from STORE where store_name like '%'||#{storeName}||'%'
 	</select>
 	
+	<!-- Store테이블과 HEWONTEST테이블을 JOIN하여 HEWONTEST테이블의 정보를 검색 -->
+
+	
 	<!-- 전체 지점 조건별 검색 -->
 	<select id="selectConditionStoreList" resultType="Store">
 		select * from STORE
@@ -45,7 +48,7 @@
 				</foreach>
 			</if>
 		</where>
-		order by store_state, store_open
+		order by store_state, store_name
 	</select>
 	
 	
