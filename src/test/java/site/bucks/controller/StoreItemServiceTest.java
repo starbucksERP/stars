@@ -28,8 +28,8 @@ import site.bucks.service.StoreItemService;
 public class StoreItemServiceTest {
 	private Logger logger=LoggerFactory.getLogger(StoreItemServiceTest.class);
 	
-//	@Autowired
-//	private StoreItemService storeItemService;
+	@Autowired
+	private StoreItemService storeItemService;
 	
 	@Autowired
 	private StoreItemDAO storeItemDAO;
@@ -79,5 +79,11 @@ public class StoreItemServiceTest {
 //	 * 
 //	 * }
 //	 */
+	
+	@Test
+	public void test2() {
+		Sale sale= new Sale();
+		storeItemService.getSaleList(sale);
+	}
 
 }

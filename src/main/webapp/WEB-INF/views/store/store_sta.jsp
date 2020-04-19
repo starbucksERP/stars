@@ -21,24 +21,24 @@
 		</div>
 
 		<div class="main">
-		
-			<form name="storeStaForm">
+			
+			<form action="storeSta" id="storeStaForm" method="post">
 				<h3>지점 현황</h3>
-				<div class="right"><button type="submit" class="a-button big"><i class="fas fa-search"></i>&nbsp;검색</button></div>
+				<div class="right"><button type="button" class="a-button big" onclick="startState()"><i class="fas fa-search"></i>&nbsp;검색</button></div>
 				<hr />
 				<table class="table">
 					<thead>
 						<tr>
-							<th>매장명</th>
-							<td><input type="search" name="name">&nbsp;<a href="" class="a-button gray search-icon"><i class="fas fa-search"></i></a></td>
+							<th>지점명</th>
+							<td><input type="search" name="storeName">&nbsp;<a href="" class="a-button gray search-icon"><i class="fas fa-search"></i></a></td>
 						</tr>
 						<tr>
-							<th>매장 구분</th>
+							<th>구분</th>
 							<td>
-								<label class="gLabel"><input type="radio" class="fChk" >전체</label>&nbsp;&nbsp;|
-								<label class="gLabel"><input type="radio" class="fChk" name="state">본점</label>
-								<label class="gLabel"><input type="radio" class="fChk" name="state">지점</label>
-								<label class="gLabel"><input type="radio" class="fChk" name="state">폐점</label>
+								<label class="gLabel"><input type="checkbox" class="fChk" name="state" value="본점">본점</label>
+								<label class="gLabel"><input type="checkbox" class="fChk" name="state" value="지점">지점</label>
+								<label class="gLabel"><input type="checkbox" class="fChk" name="state" value="폐점">폐점</label>
+								<input type="hidden" name="states"/>
 							</td>
 						</tr>
 					</thead>
@@ -46,7 +46,7 @@
 			</form>
 			
 			<div class="right">
-				<button type="button" class="a-button sea medium"><i class="fas fa-plus-circle"></i>&nbsp;지점 등록</button>
+				<button type="button" class="a-button sea medium" onclick="location.href='${pageContext.request.contextPath}/storeEnroll'"><i class="fas fa-plus-circle"></i>&nbsp;지점 등록</button>
 			</div>
 			
 			<br />
@@ -57,20 +57,20 @@
 				<table class="table">
 					<tbody>
 						<tr>
-							<th >매장코드</th>
-							<th >매장명</th>
-							<th >매장주소</th>
-							<th>매장점주</th>
-							<th >매장번호</th>
-							<th >점주명</th>
-							<th >매장 구분</th>
+							<th >지점코드</th>
+							<th >지점명</th>
+							<th >지점주소</th>
+							<th>점주명</th>
+							<th >지점번호</th>
+							<th >구분</th>
 							<th >개업일</th>
+							<th >폐업일</th>
 						</tr>
 						<tr>
 							<c:choose>
 								<c:when test="${empty(storeList) }">
 									<tr align="center">
-										<td colspan="7">검색된 지점정보가 없습니다.</td>		
+										<td colspan="8">검색된 지점정보가 없습니다.</td>		
 									</tr>
 								</c:when>
 								<c:otherwise>
@@ -79,19 +79,26 @@
 										<td>${store.storeId }</td>				
 										<td>${store.storeName }</td>				
 										<td>${store.storeAddress }</td>
-										<td>${store.storeOwner }</td>
+										<td>점주테이블</td>
 										<td>${store.storePhone }</td>				
-										<td>점주테이블 </td>	
 									<c:if test="${store.storeState==0 }">
-										<td>본사</td>
+										<td>본점</td>
 									</c:if>
 									<c:if test="${store.storeState==1 }">
 										<td>지점</td>
 									</c:if>
-									<c:if test="${store.storeState==9 } ">
+									<c:if test="${store.storeState==9 }">
 										<td>폐점</td>
 									</c:if>
-										<td>${fn:substring(store.storeOpen,0,10)}</td>				
+										<td>${fn:substring(store.storeOpen,0,10)}</td>
+									<c:choose>
+										<c:when test="${!empty(store.storeClose)}">
+											<td>${fn:substring(store.storeClose,0,10)}</td>				
+										</c:when>
+										<c:otherwise>
+											<td>&nbsp;</td>
+										</c:otherwise>
+									</c:choose>
 									</tr>	
 									</c:forEach>
 								</c:otherwise>
@@ -100,8 +107,46 @@
 					</tbody>
 				</table>
 			</div>
-		
 		</div>
-
 	</div>
 </div>
+
+
+
+<script type="text/javascript">
+	function startState(){
+		
+		var states=[];
+			
+		 $(".fChk:checked").each(function(i) {
+			 if($(this).val()=='본점'){
+				 states.push(0);
+			 }else if($(this).val()=='지점'){
+				 states.push(1);
+			 }else if($(this).val()=='폐점'){
+				 states.push(9);
+			 }
+		 });
+			 
+		 if(states.length==0){
+			 states.push(0);
+			 states.push(1);
+			 states.push(9);
+		 }
+		 
+		 $("input[type='hidden']").val(states);
+		 $("#storeStaForm").submit();
+	}
+</script>
+
+
+
+
+
+
+
+
+
+
+
+

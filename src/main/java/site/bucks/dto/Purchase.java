@@ -1,7 +1,11 @@
 package site.bucks.dto;
 
 /*
+<<<<<<< HEAD
 이름             널?       유형           
+=======
+ �̸�             ��?       ����           
+>>>>>>> branch 'master' of https://github.com/starbucksERP/stars.git
 -------------- -------- ------------ 
 PURCHASE_SEQ   NOT NULL NUMBER       
 REQUEST_NUM    NOT NULL VARCHAR2(50) 
@@ -23,10 +27,13 @@ public class Purchase {
 	private String itemNum;
 	private int ItemQty;
 	private int itemPprice;
+<<<<<<< HEAD
 	private int itemPpriceTwo; // 구매현황조회에서 가격 범위검색을 위한 변수
 	private int nowPurchaseState; // 구매관련 페이지별 해당 페이지의 기본 list 출력을 위한 변수
 	private String itemVendor;
 	private int purchaseType;
+=======
+>>>>>>> branch 'master' of https://github.com/starbucksERP/stars.git
 	
 	public Purchase() {
 		// TODO Auto-generated constructor stub
@@ -95,6 +102,7 @@ public class Purchase {
 	public void setItemPprice(int itemPprice) {
 		this.itemPprice = itemPprice;
 	}
+<<<<<<< HEAD
 
 	public int getNowPurchaseState() {
 		return nowPurchaseState;
@@ -132,5 +140,7 @@ public class Purchase {
 	
 	
 	
+=======
+>>>>>>> branch 'master' of https://github.com/starbucksERP/stars.git
 
 }
