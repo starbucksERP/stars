@@ -1,7 +1,7 @@
 package site.bucks.dto;
 
 /*
- ÀÌ¸§             ³Î?       À¯Çü           
+ ï¿½Ì¸ï¿½             ï¿½ï¿½?       ï¿½ï¿½ï¿½ï¿½           
 -------------- -------- ------------ 
 PURCHASE_SEQ   NOT NULL NUMBER       
 REQUEST_NUM    NOT NULL VARCHAR2(50) 
@@ -19,7 +19,7 @@ public class Purchase {
 	private String purchaseDate;
 	private String itemNum;
 	private int ItemQty;
-	private int itemPrice;
+	private int itemPprice;
 	
 	public Purchase() {
 		// TODO Auto-generated constructor stub
@@ -73,14 +73,12 @@ public class Purchase {
 		ItemQty = itemQty;
 	}
 
-	public int getItemPrice() {
-		return itemPrice;
+	public int getItemPprice() {
+		return itemPprice;
 	}
 
-	public void setItemPrice(int itemPrice) {
-		this.itemPrice = itemPrice;
+	public void setItemPprice(int itemPprice) {
+		this.itemPprice = itemPprice;
 	}
-	
-	
 
 }

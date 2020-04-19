@@ -1,5 +1,8 @@
 package site.bucks.dto;
-/*ÀÌ¸§            ³Î?       À¯Çü           
+
+import java.util.List;
+
+/*ï¿½Ì¸ï¿½            ï¿½ï¿½?       ï¿½ï¿½ï¿½ï¿½           
 ------------- -------- ------------ 
 ORDER_SEQ     NOT NULL NUMBER       
 REQUEST_NUM   NOT NULL VARCHAR2(20) 
@@ -24,6 +27,10 @@ public class OrderItem {
 	private String requestDate;
 	private String deliveryDate;
 	private int orderType;
+	private List<String> states;    // ê²€ìƒ‰ìš©
+	private String requestDatePair; // ê²€ìƒ‰ìš©
+	private int price1;             // ê²€ìƒ‰ìš©
+	private int price2;             // ê²€ìƒ‰ìš©
 	
 	public OrderItem() {
 		// TODO Auto-generated constructor stub
@@ -116,5 +123,39 @@ public class OrderItem {
 	public void setOrderType(int orderType) {
 		this.orderType = orderType;
 	}
+
+	public List<String> getStates() {
+		return states;
+	}
+
+	public void setStates(List<String> states) {
+		this.states = states;
+	}
+
+	public String getRequestDatePair() {
+		return requestDatePair;
+	}
+
+	public void setRequestDatePair(String requestDatePair) {
+		this.requestDatePair = requestDatePair;
+	}
+
+	public int getPrice1() {
+		return price1;
+	}
+
+	public void setPrice1(int price1) {
+		this.price1 = price1;
+	}
+
+	public int getPrice2() {
+		return price2;
+	}
+
+	public void setPrice2(int price2) {
+		this.price2 = price2;
+	}
+
 	
+
 }

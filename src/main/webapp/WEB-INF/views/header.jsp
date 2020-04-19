@@ -34,11 +34,11 @@
 			<li onclick="location.href='saleList'">판매조회</li>
 		</ul>
 		<ul class="drop-menu" style="padding-left: 5%">
-			<li onclick="location.href='receipt'">발주요청조회</li>
-			<li onclick="location.href='receipt'">발주현황조회</li>
-			<li onclick="location.href='buyPlan'">구매계획</li>
-			<li>구매현황</li>
-			<li onclick="location.href='buyIn'">구매입력</li>
+			<li onclick="location.href='orderReq'">발주요청조회</li>
+			<li onclick="location.href='orderList'">발주현황조회</li>
+			<li onclick="location.href='purchasePlan'">구매계획</li>
+			<li onclick="location.href='purchaselist'">구매현황</li>
+			<li onclick="location.href='purchaseAdd'">구매입력</li>
 			<li onclick="location.href='receipt'">입출하조회</li>
 		</ul>		
 		<ul class="drop-menu" style="padding-left: 15%">
