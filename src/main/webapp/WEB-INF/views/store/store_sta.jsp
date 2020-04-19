@@ -24,7 +24,7 @@
 			
 			<form action="storeSta" id="storeStaForm" method="post">
 				<h3>지점 현황</h3>
-				<div class="right"><button type="button" class="a-button big" onclick="startState()"><i class="fas fa-search"></i>&nbsp;검색</button></div>
+				<div class="right"><button type="button" class="a-button darkgreen big" onclick="startState()"><i class="fas fa-search"></i>&nbsp;검색</button></div>
 				<hr />
 				<table class="table">
 					<thead>

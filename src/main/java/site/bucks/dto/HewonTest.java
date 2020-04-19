@@ -17,7 +17,9 @@ public class HewonTest {
 	private String hewonPhone;
 	private String hewonEmail;
 	private int hewonStId;
-	private String hewonStoreName;
+	
+//	HEWONTEST 테이블에 없고, STORE 테이블에 존재 
+	private String storeName;
 	
 	public HewonTest() {
 		// TODO Auto-generated constructor stub
@@ -72,15 +74,13 @@ public class HewonTest {
 	}
 
 //	DB에는 없는 컬럼
-	public String getHewonStoreName() {
-		return hewonStoreName;
+	public String getStoreName() {
+		return storeName;
 	}
 
-	public void setHewonStoreName(String hewonStoreName) {
-		this.hewonStoreName = hewonStoreName;
+	public void setStoreName(String storeName) {
+		this.storeName = storeName;
 	}
-	
-	
-	
+
 
 }
