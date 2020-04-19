@@ -194,7 +194,7 @@
 	});
 
 	<%-- 본점,지점 선택시  폐업일 비활성화 / 폐점 선택시 개업일 비활성화 --%>
-	$('.fChk').on('click',function(){
+	$('.fChk').on('click',function(){ 
 		
 		var checkValue = $("input:radio[name='radio-name']:checked").val();
 		
