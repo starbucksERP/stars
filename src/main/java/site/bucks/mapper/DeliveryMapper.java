@@ -10,6 +10,6 @@ public interface DeliveryMapper {
 	
 	
 	int insertDeliveryRequest(Delivery delivery); // 근형 
-	List<Delivery> selectDeliveryList(); // 근형
+	List<Delivery> selectDeliveryList(Delivery delivery); // 근형
 	int updateDeliveryState(String requestNum); // 근형
 }

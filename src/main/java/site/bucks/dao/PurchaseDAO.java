@@ -1,12 +1,11 @@
-package site.bucks.mapper;
+package site.bucks.dao;
 
 import java.util.List;
 
 import site.bucks.dto.Purchase;
 
-public interface PurchaseMapper {
+public interface PurchaseDAO {
 	int insertPurchaseRequest (Purchase purchase); // 근형
 	List<Purchase> selectPurchaseList(Purchase purchase); // 근형
 	int updatePurchaseState (int purchaseSeq); // 근형
-	
 }
