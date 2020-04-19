@@ -115,7 +115,6 @@
 			$(".subCategory").empty();
 			
 			var category=$(this).val();
-			
 			switch (category) {
 				case "A": 
 					$(".subCategory").append($("<option value='01'>원두종류</option>")); 
