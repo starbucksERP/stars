@@ -108,6 +108,90 @@
 		    }            
 		});
 	 
+		
+		
+		// 카테고리명에 따라 서브카테고리를 추가
+		$(".category").change(function() {
+			$(".subCategory").empty();
+			
+			var category=$(this).val();
+			
+			switch (category) {
+				case "A": 
+					$(".subCategory").append($("<option value='01'>원두종류</option>")); 
+					$(".subCategory").append($("<option value='02'>티백</option>")); 
+					$(".subCategory").append($("<option value='03'>부재료</option>")); 
+				break;
+				case "B": 
+					$(".subCategory").append($("<option value='01'>베이커리</option>")); 
+					$(".subCategory").append($("<option value='02'>케이크</option>")); 
+					$(".subCategory").append($("<option value='03'>샌드위치</option>")); 
+					$(".subCategory").append($("<option value='04'>디저트</option>")); 
+					$(".subCategory").append($("<option value='05'>아이스크림</option>")); 
+					$(".subCategory").append($("<option value='06'>병음료</option>")); 
+				break;
+				case "C":
+					$(".subCategory").append($("<option value='01'>머그</option>")); 
+					$(".subCategory").append($("<option value='02'>글라스</option>")); 
+					$(".subCategory").append($("<option value='03'>텀블러</option>")); 
+					$(".subCategory").append($("<option value='04'>보온병</option>")); 
+					$(".subCategory").append($("<option value='05'>액세서리</option>")); 
+					$(".subCategory").append($("<option value='06'>커피용품</option>")); 
+				break;
+			}
+		});
+		
+		
+		// 판매 관련 jsp 에서 상품명 출력
+		$(".subCategory").change(function() {
+			$(".saleProduct").empty();
+			
+			var subCategory={
+				subCategory : $(this).val()
+			}
+			
+			$.ajax({
+				type: "GET",
+				url: "saleProduct",
+				data: subCategory,
+				dataType:"json",
+				success: function(json) {
+					if($(".category").val()=='A'){
+						switch ($(".subCategory").val()) {
+							case '01':
+								alert("a01");
+								break;
+							case '02':
+								alert("a02");
+								break;
+							case '03':
+								alert("a03");
+								break;
+							default:
+								$(json.saleProduct1).each(function(i) {
+									$(".saleProduct").append($("<option value=''>"+json.saleProduct2[i]+"</option>"));
+								});
+								break;
+						}
+					}else if($(".category").val()=='B'){
+						$(json.saleProduct1).each(function(i) {
+							$(".saleProduct").append($("<option value=''>"+json.saleProduct1[i]+"</option>"));
+						});
+					}else{
+						$(json.saleProduct1).each(function(i) {
+							$(".saleProduct").append($("<option value=''>"+json.saleProduct1[i]+"</option>"));
+						});
+					}
+					
+				},
+				error: function(xhr) {
+					alert("에러코드 = "+xhr.status)
+				}
+			
+			});
+			
+			
+		});
 	 
 	 
 	 
