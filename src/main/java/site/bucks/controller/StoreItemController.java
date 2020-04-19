@@ -27,7 +27,7 @@ public class StoreItemController {
 	@RequestMapping(value = "/sale_record", method =RequestMethod.POST)
 	public String record(@ModelAttribute String[] product, String[] qty) {
 		
-//		sale Àü´Þ¹ÞÀ»¶§ ÇÊ¿äÇÑ °ª => »óÇ°¸í, »óÇ°°³¼ö, ÁöÁ¡¸í (Á¤È®ÇÑ °ªÀ¸·Î Àü´Þ¹Þ¾Æ¾ßÇÔ)
+//		sale ï¿½ï¿½ï¿½Þ¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½ï¿½ => ï¿½ï¿½Ç°ï¿½ï¿½, ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½È®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Þ¹Þ¾Æ¾ï¿½ï¿½ï¿½)
 		
 //		@SuppressWarnings("unchecked")
 //		List<Sale> list=(List<Sale>) saleCollection;

@@ -1,18 +1,18 @@
 package site.bucks.dto;
  
 /*ass
-¿Ã∏ß           ≥Œ?       ¿Ø«¸           
------------- -------- ------------ 
-ITEM_NUM     NOT NULL VARCHAR2(50)
-ITEM_NAME    NOT NULL VARCHAR2(20) 
-ITEM_QTY     NOT NULL NUMBER       
-ITEM_IMG     NOT NULL VARCHAR2(20) 
-MIN_QTY      NOT NULL NUMBER       
-ITEM_PPRICE  NOT NULL NUMBER       
-ITEM_SPRICE  NOT NULL NUMBER       
-ITEM_MARGIN           NUMBER       
+
+Ïù¥Î¶Ñ          ÎÑê?       Ïú†Ìòï           
+----------- -------- ------------ 
+ITEM_NUM    NOT NULL VARCHAR2(50) 
+ITEM_NAME   NOT NULL VARCHAR2(20) 
+ITEM_QTY    NOT NULL NUMBER       
+MIN_QTY              NUMBER       
+ITEM_PPRICE NOT NULL NUMBER       
+ITEM_SPRICE NOT NULL NUMBER       
+ITEM_MARGIN          NUMBER       
 ITEM_VENDOR NOT NULL VARCHAR2(50) 
-ITEM_DM               VARCHAR2(20) 
+ITEM_DM              VARCHAR2(20) 
  
  */
 

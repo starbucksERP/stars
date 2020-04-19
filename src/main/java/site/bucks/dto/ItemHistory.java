@@ -1,7 +1,7 @@
 package site.bucks.dto;
 
 /*
- ÀÌ¸§            ³Î?       À¯Çü           
+ ï¿½Ì¸ï¿½            ï¿½ï¿½?       ï¿½ï¿½ï¿½ï¿½           
 ------------- -------- ------------ 
 HISTORY_SEQ   NOT NULL NUMBER       
 REQUEST_NUM   NOT NULL VARCHAR2(50) 
@@ -22,6 +22,7 @@ public class ItemHistory {
 	private int itemState;
 	private int itemQty;
 	private String historyDate;
+	private String historyDateTwo;
 	private int purchaseType;
 	private String historyOwner;
 	
@@ -100,6 +101,20 @@ public class ItemHistory {
 	public void setHistoryOwner(String historyOwner) {
 		this.historyOwner = historyOwner;
 	}
+
+	public String getHistoryDateTwo() {
+		return historyDateTwo;
+	}
+
+	public void setHistoryDateTwo(String historyDateTwo) {
+		this.historyDateTwo = historyDateTwo;
+	}
+
+
+	
+	
+	
+	
 	
 
 }
