@@ -9,7 +9,7 @@ import site.bucks.dao.DeliveryDAO;
 import site.bucks.dto.Delivery;
 
 @Service
-public class DelieveryServiceImpl implements DeliveryService{
+public class DeliveryServiceImpl implements DeliveryService{
 	
 	@Autowired
 	private DeliveryDAO deliveryDAO;
