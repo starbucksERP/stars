@@ -23,10 +23,11 @@
 			<h3>지점 등록 / 수정</h3>
 			<hr />
 			<div class="information-left">
-			
-				<div class="right"><button type="button" class="a-button purple medium">수정</button></div>
+				<div class="right"><button type="button" id="modifyBtn" class="a-button yellow medium">수정</button></div>
 				<div id="checkErrorMsg" style="color:red; display: none;">하나만 체크해 주세요.</div>
-				<table class="table">
+				<div id="storeInsertDiv"></div>
+				<%-- 				
+					<table class="table">
 					<tbody>
 						<tr>
 							<th><input type="checkbox" class="allChk"></th>
@@ -36,43 +37,22 @@
 							<th>구분</th>
 						</tr>
 						<tr>
-							<c:choose>
-								<c:when test="${empty(storeList) }">
-									<tr>
-										<td colspan="5">지점이 존재하지 않습니다.</td>
-									</tr>
-								</c:when>
-								<c:otherwise>
-									<c:forEach var="store" items="${storeList }">
-									<tr>
-										<td><input type="checkbox" class="rowChk"></td>
-										<td>${store.storeId }</td>
-										<td>${store.storeName }</td>
-										<td>${store.storeOwner }</td>
-									<c:if test="${store.state==0 }">
-										<td>본사</td>
-									</c:if>	
-									<c:if test="${store.state==1 }">
-										<td>지점</td>
-									</c:if>
-									<c:if test="${store.state==9 }">
-										<td>폐점</td>
-									</c:if>						
-									</tr>
-									</c:forEach>
-								</c:otherwise>
-							</c:choose>
+							<td><input type="checkbox" class="rowChk"></td>
+							<td>${store.storeId }</td>
+							<td>${store.storeName }</td>
+							<td>${store.storeOwner }</td>
+							<td>${store.storeState }</td>
 						</tr>
 					</tbody>
-				</table>
-				
+					</table> 
+				--%>
 			</div>
 			
 			<div class="information-right">
 				<!-- 탭 메뉴 영역 -->
 				<ul class="enroll-ul">
 					<li class="tab1" >지점정보</li>
-					<li class="tab2" >점주정보</li>
+					<!-- <li class="tab2" >점주정보</li> -->
 				</ul>
 				<!-- 탭 컨텐츠 영역 -->
 				<div class="enroll-div">
@@ -110,6 +90,7 @@
 					<img src="../star.png" alt="" align="top">
 				</fieldset>
 				<!-- 점주 정보 -->
+				<!--  
 				<fieldset id="tab2" class="enroll-fieldset" style="display: none">
 					<label>
 						<span>주소  </span><input type="text" readonly="readonly" />
@@ -124,11 +105,12 @@
 						<span>요구사항 </span><input type="text" />
 					</label><br />
 				</fieldset>
+				-->
 					<br />
 						
 					<div class="center">
-						<button type="button" class="a-button medium" id="addStoreBtn" >등 록</button>
-						<button type="button" class="a-button purple medium">초기화</button>
+						<button type="button" class="a-button darkgreen medium" id="addStoreBtn" >등 록</button>
+						<button type="button" class="a-button blackgray medium">초기화</button>
 					</div>
 				</div>
 			</div>
@@ -138,9 +120,57 @@
 	</div>
 </div> 
 
+<script id="templateStore" type="text/x-handlebars-template">
+	<table class="table">
+	<tbody>
+		<tr>
+			<th><input type="checkbox" class="allChk"></th>
+			<th>지점코드</th>
+			<th>지점명</th>
+			<th>점주명</th>
+			<th>구분</th>
+		</tr>
+		{{#each.}}
+		<tr>
+			<td><input type="checkbox" class="rowChk"></td>
+			<td>{{storeId }}</td>
+			<td>{{storeName }}</td>
+			<td>{{storeOwner }}</td>
+			<td>{{storeState }}</td>
+		</tr>
+		{{/each}}
+	</tbody>
+	</table>
+</script>
+
+
 <script type="text/javascript">
 
-	<%-- 지점정보 / 점주정보 탭이동 --%>
+	//처음에는 전체 출력
+	storeDisplay();
+	function storeDisplay() {
+		$.ajax({
+			type: "GET",
+			 url: "storeStaffList",
+			 dataType: "json",
+			 success: function(json) {
+				 if(json.storeList.lenght==0) {
+					 $("#storeInsertDiv").html("검색된 지점정보가 없습니다.");
+					 return;
+				 }
+				 var source=$("#templateStore").html();
+				 var template=Handlebars.compile(source);
+				 $("#storeInsertDiv").html(template(json.storeList));
+			 },
+			 
+			 error: function(xhr) {
+				 alert("에러코드 = "+xhr.status);
+			 }
+		});		
+	}
+
+
+	<%-- 지점정보 / 점주정보 탭이동 
 	$(".enroll-ul li").click(function() {
 		if($(this).attr("class")=='tab1'){
 			$("#tab1").show();
@@ -150,10 +180,10 @@
 			$("#tab1").hide();
 		}
 	})
-	
+	--%>
 	
 	<%-- 수정가능한 체크박스 선택 갯수 제한 --%>
-	$('input:checkbox[class=rowChk]').click(function() {
+	$("#modifyBtn").click(function() {
 		
 		var cnt = $("input:checkbox[class='rowChk']:checked").length;
 		

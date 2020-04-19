@@ -258,7 +258,7 @@ legend {
 }
 
 .table th {
-     background: #f6f5ef;
+     background: #D4C9C2;
       text-align: center;
 }
 
@@ -372,6 +372,14 @@ legend {
 	background: #006633 !important; 
 }
 
+.darkgreen{
+	background: #006C49 !important;
+}
+
+.yellow{
+	background: rgb(237, 175, 38);
+}
+
 .pink{
 	background: rgb(255, 243, 240) !important;
 }
@@ -381,7 +389,11 @@ legend {
 }
 
 .beige{
-	background: rgba(243, 156, 18, 0.19) !important;
+	background: rgb(243, 156, 18, 0.19) !important;
+}
+
+.coral{
+	background: #D4C9C2 !important;
 }
 
 .green-font{
@@ -404,7 +416,7 @@ legend {
 }
 
 .enroll-ul>li{
-	background:#f6f5ef; 
+	background:#D4C9C2; 
 	padding: 20px; 
 	cursor: pointer;
 }
@@ -412,7 +424,7 @@ legend {
 .enroll-div{
 	padding:30px; 
 	width: 85%; 
-	background:#f6f5ef; 
+	background:#D4C9C2; 
 }
 
 .enroll-fieldset{

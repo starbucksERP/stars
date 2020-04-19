@@ -2,9 +2,7 @@ package site.bucks.controller;
 
 
 
-import java.awt.Stroke;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +26,13 @@ public class StoreController {
 	@Autowired
 	HewonTestService hewonTestService;
 	
+//	★★★ AJAX ★★★ 
 //	지점등록 및 수정
 	@RequestMapping(value = "/storeEnroll")
 	public String storeEnroll() {
 		return "store/store_enroll";
 	}
+		
 	
 //	지점 현황
 	@RequestMapping(value = "/storeSta")
@@ -97,15 +97,9 @@ public class StoreController {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		System.out.println("hewonStId ="+storeId);
 		returnMap.put("owner", hewonTestService.getHewonTestStId(storeId));
+		
 		return returnMap;
 	}
-/*	
-	@RequestMapping(value = "/storeName/{storeId}", method = RequestMethod.GET)
-	public String storeName(@PathVariable int storeId, Model model) {
-		model.addAttribute("storeName",storeService.getStoreId(storeId));
-		return "success";
-	}
-*/	
 	
 }
 

@@ -25,12 +25,12 @@
 			<hr />
 			<%-- 점주정보를 출력하는 영역 --%>
 			<div id="ownerDiv" class="information-left staff-left" >
-				<div class="brown staff-head">[지점] 점주 정보</div>
+				<div id="ownerInfo" class="brown staff-head">[지점] 점주 정보</div>
 				<div class="information-left" style="width: 32%">
 					<img src="../star.png" alt="" align="middle" style="margin-top: 20px;">
 				</div>
 				<div class="information-right" style="width: 60%">
-					<button type="button" class="a-button green medium" style="margin-left: 20px;">이름</button>
+					<button id="ownerName" type="button" class="a-button green medium" style="margin-left: 20px;">이름</button>
 					<div>
 						<div class="staff" style="font-weight: bold;">주소</div><span class="gray-font">주소</span>
 					</div>
@@ -108,16 +108,6 @@
 	//처음에는 전체 출력 
 	storeDisplay();
 	
-/*  
-	var storeName=$("#storeName").val();
-
-	if(storeName.length==0) {
-		storeDisplay();
-	} else {
-		storeSearchDisplay();
-	}  */
-	
-	
 	//1.검색키워드가 없는 경우 전체지점 출력
  	function storeDisplay() {
 		$.ajax({
@@ -138,9 +128,10 @@
 				 alert("에러코드 = "+xhr.status);
 			 }
 		});
+		
 	};
 	
-	//1.검색키워드가 있는 경우 검색하여 출력
+	//2.검색키워드가 있는 경우 검색하여 출력
  	function storeSearchDisplay() {
 		
 		var storeName=$("#storeName").val();
@@ -165,7 +156,6 @@
 		
 		$("#searchBtn").submit();	
 		$("#storeName").val("");
-		
 		
 	}; 
 	
