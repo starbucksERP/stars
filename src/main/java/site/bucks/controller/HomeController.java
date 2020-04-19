@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import site.bucks.dto.Sale;
-//		ºê·£Ä¡ Å×½ºÆ® 1
-//		ºê·£Ä¡ Å×½ºÆ® 2
-//		ºê·£Ä¡ Å×½ºÆ®4444
+//		ï¿½ê·£Ä¡ ï¿½×½ï¿½Æ® 1
+//		ï¿½ê·£Ä¡ ï¿½×½ï¿½Æ® 2
+//		ï¿½ê·£Ä¡ ï¿½×½ï¿½Æ®4444
 @Controller
 public class HomeController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -17,26 +17,16 @@ public class HomeController {
 		return "home";
 	}
 	
-//	ÀÔÃâÇÏ°ü¸®
+//	ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ï¿½ï¿½
 	@RequestMapping(value = "/receipt")
 	public String receiptList() {
 		return "receipt/receipt_list";
 	}
 	
 	
-//	ÁÖ¹®°ü¸®
-	@RequestMapping(value = "/orderReq")
-	public String orderReq() {
-		return "order/order_req_list";
-	}
-	
-	@RequestMapping(value = "/orderSta")
-	public String orderSta() {
-		return "order/order_sta_list";
-	}
 	
 	
-//	Àç°í°ü¸®
+//	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping(value = "/productList")
 	public String productList() {
 		return "item/product_list";
@@ -48,7 +38,7 @@ public class HomeController {
 	}
 	
 	
-//	¹è¼Û°ü¸®
+//	ï¿½ï¿½Û°ï¿½ï¿½ï¿½
 	@RequestMapping(value = "/deliveryList")
 	public String deliveryList() {
 		return "delivery/delivery_list";
@@ -60,16 +50,7 @@ public class HomeController {
 	}
 	
 	
-//	±¸¸Å°ü¸®
-	@RequestMapping(value = "/buyIn")
-	public String buyIn() {
-		return "buy/buy_input";
-	}
-	
-	@RequestMapping(value = "/buyPlan")
-	public String buyPlan() {
-		return "buy/buy_plan";
-	}
+
 	
 	@RequestMapping(value = "/saleRecord")
 	public String s1() {
@@ -81,7 +62,7 @@ public class HomeController {
 		return "sale/sale_list";
 	}
 	
-//	È¸°è 
+//	È¸ï¿½ï¿½ 
 	@RequestMapping(value = "/accountAccount")
 	public String a1() {
 		return "accounting/search_account";
@@ -126,6 +107,8 @@ public class HomeController {
 	public String a9() {
 		return "accounting/income_month";
 	}
+	
+
 }
 
 

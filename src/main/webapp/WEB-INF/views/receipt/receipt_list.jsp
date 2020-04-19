@@ -40,12 +40,12 @@
 							<tr>
 								<th>날짜</th>
 								<td><label class="gLabel"><input type="date" />&nbsp;<i class="far fa-calendar-alt"></i></label>
-								&nbsp;-&nbsp;<label class="gLabel"><input type="date" />&nbsp;<i class="far fa-calendar-alt"></i></label></td>
+								&nbsp;~&nbsp;<label class="gLabel"><input type="date" />&nbsp;<i class="far fa-calendar-alt"></i></label></td>
 								<th>발주/구매 번호</th>
 								<td><input type="search" /></td>
 							</tr>
 							<tr>
-								<th>품목</th>
+								<th>물품코드</th>
 								<td><input type="text">&nbsp;<a href="" class="a-button gray search-icon"><i class="fas fa-search"></i></a></td>
 								<th>진행상태</th>
 								<td>
@@ -63,16 +63,17 @@
 					<button type="button" class="a-button black">전체</button>
 					<button type="button" class="a-button gray">입고</button>
 					<button type="button" class="a-button gray">출고</button>
+					<button type="button" class="a-button gray">요청확인</button>
 				</div>
 				
 				<hr  style="margin-top: -2px;"/>
 			<br />
-			<div class="date-output right">2020/02/18 - 2020/03/03</div>
+			<div class="date-output right">최근 2주간의 기록 입니다.2020/02/18 - 2020/03/03</div>
 			<br />
-			<div>
+		<!-- 	<div>
 					<button type="button" class="a-button padding-button">출고</button>&nbsp;<button type="button" class="a-button padding-button red">취소</button>
 					<span style="float: right;"><button type="button" class="a-button"><i class="fas fa-plus"></i>&nbsp;신규 발주</button></span>
-			</div>
+			</div> -->
 			<div class="information">
 				<table class="table">
 					<tbody>
@@ -83,6 +84,7 @@
 							<th>품목(코드)</th>
 							<th>수량</th>
 							<th>자동/수정</th>
+							<th>담당자</th>
 							<th>입하/출하</th>
 						</tr>
 						<tr class="blue">
@@ -92,6 +94,7 @@
 							<td>스타벅스 머그컵</td>
 							<td>500</td>
 							<td>H</td>
+							<td>김대리</td>
 							<td>입하</td>
 						</tr>
 						<tr class="pink">
@@ -101,6 +104,7 @@
 							<td>리저브_노브크릭위스키배럴과테말라</td>
 							<td>1500</td>
 							<td>H</td>
+							<td>김대리</td>
 							<td>출하</td>
 						</tr>
 						

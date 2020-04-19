@@ -25,7 +25,7 @@ public class StoreItemController {
 	@Autowired
 	private StoreItemService storeItemService;
 	
-//	ÆÇ¸Å ÀÔ·Â
+//	ï¿½Ç¸ï¿½ ï¿½Ô·ï¿½
 	@RequestMapping(value = "/sale_record",method = RequestMethod.GET)
 	public String sale_record() {
 		return "sale/sale_record";
@@ -43,7 +43,7 @@ public class StoreItemController {
 	
 
 	
-//	ÆÇ¸Å Á¶È¸
+//	ï¿½Ç¸ï¿½ ï¿½ï¿½È¸
 	@RequestMapping(value = "/sale_list")
 	public String sale_list(@ModelAttribute Sale sale, Model model) {
 		model.addAttribute("saleList", storeItemService.getSaleList(sale));
@@ -51,7 +51,7 @@ public class StoreItemController {
 	}
 	
 	
-//	»óÇ° Á¶È¸
+//	ï¿½ï¿½Ç° ï¿½ï¿½È¸
 	@RequestMapping(value = "/saleProduct", method = RequestMethod.GET)
 	@ResponseBody
 	public Map<String , Object> saleProduct(@ModelAttribute Sale sale) {

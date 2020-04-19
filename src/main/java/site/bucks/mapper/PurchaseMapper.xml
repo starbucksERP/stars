@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="site.bucks.mapper.PurchaseMapper"> 
+
+
+<!-- 200419 이근형 작성 시작 -->
+<!-- 본사 구매 관련 페이지 시작 -->
+<!-- ==> insert 들어왔을때 발주요청조회에서 해당 requestNum의 상태도 update해야 한다 - 미완료(확인할것) -->
+<!-- 히스토리에 insert 넣을때 Purchase_Type 신경쓸것 - 미완료 -->
+<insert id="insertPurchaseRequest" parameterType="Purchase">
+	<selectKey resultType="int" keyProperty="purchaseSeq" order="BEFORE">
+		select purchase_seq.nextval from dual
+	</selectKey>
+		insert into purchase values(#{purchaseSeq}, #{requestNum}, 30, sysdate, #{itemNum}, #{itemQty}, #{itemPprice}, #{itemVendor}, #{purchaseType})
+</insert>
+ 
+<select id="selectPurchaseList" parameterType="Purchase" resultType="Purchase">
+	select * from purchase
+	
+	<where>
+		<!-- 구매현황조회 페이지: 기본 리스트 출력을 위한 조건 및 전체 분류탭을 눌렀을때 -->
+		<if test="purchaseState >= 30">
+			purchase_state between 30 and 32
+		</if>
+		
+		<!-- 구매현황조회 페이지: 구매진행 분류탭을 눌렀을때  -->
+		<if test="purchaseState==31">
+			purchase_state=31
+		</if>
+		
+		<!-- 구매현황조회 페이지: 구매완료 분류탭을 눌렀을때 -->
+		<if test="purchaseState==32">
+			purchase_state=32
+		</if>
+		
+		<!-- 구매현황조회 페이지: 날짜 단일검색(좌측 입력태그만 작성)  -->
+		<if test="purchaseDate!=null and purchaseDate!='' and purchaseDateTwo==null and purchaseDateTwo==''">
+			purchase_date = #{purchaseDate} 
+		</if>
+		
+		<!-- 구매현황조회 페이지: 날짜 범위검색  -->
+		<if test="purchaseDate!=null and purchaseDate!='' and purchaseDateTwo!=null and purchaseDateTwo!=''">
+			purchase_date between #{purchaseDate} and #{purchaseDateTwo}
+		</if>
+		
+		<!-- 구매현황조회 페이지: 구매 예약 현황 버튼을 눌렀을때 -->
+		<!-- SQL문 올바로 작동하는지 확인해볼것 -->
+		<if test="purchaseState == 30">
+			purchase_date > sysdate
+		</if>		
+		
+		
+		<!-- 구매현황조회 페이지: 날짜 단일검색(우측 입력태그만 작성)  -->
+		<if test="purchaseDate==null and purchaseDate=='' and purchaseDateTwo!=null and purchaseDateTwo!=''">
+			purchase_date=#{purchaseDateTwo}
+		</if>
+		
+		
+		<!-- 구매현황조회 페이지: 거래처 검색  -->
+		<if test="itemVendor !=null and itemVendor !=''">
+			item_vendor = #{itemVendor}
+		</if>
+		
+		<!-- 구매현황조회 페이지: 물품번호로 검색  -->
+		<if test="itemNum !=null and itemNum !=''">
+			item_num = #{itemNum}
+		</if>
+		
+		<!-- 구매현황조회 페이지: 요청번호로 검색  -->
+		<if test="requestNum !=null and requestNum !=''">
+			request_num = #{requestNum}
+		</if>
+		
+		<!-- 구매현황조회 페이지: 구매방식으로(지점,시스템자동,본사수동 검색  -->
+		<if test="purchaseType !=null and purchaseType !=''">
+			purchase_type = #{purchaseType}
+		</if>
+		
+		
+		<!-- 구매현황조회 페이지: 가격 단일검색 (좌측 입력태그만 입력)  -->
+		<if test="itemPprice !=null and itemPprice !='' and itemPpriceTwo==null and itemPpriceTwo==''">
+			item_pprice = #{itemPprice}
+		</if>
+		
+		<!-- 구매현황조회 페이지: 가격 범위검색 -->
+		<if test="itemPprice !=null and itemPprice !='' and itemPpriceTwo !=null and itemPpriceTwo !=''">
+			item_pprice between #{itemPprice} and #{itemPpriceTwo}
+		</if>
+		
+		<!-- 구매현황조회 페이지: 가격 단일검색 (우측 입력태그만 입력)  -->
+		<if test="itemPprice==null and itemPprice=='' and itemPpriceTwo !=null and itemPpriceTwo !=''">
+			item_pprice = #{itemPpriceTwo}
+		</if>
+		
+	</where>
+	order by purchase_seq desc
+</select>
+
+<update id="updatePurchaseState" parameterType="Purchase">
+	update purchase
+	<set>
+		<!-- 구매현황페이지: 구매확인 버튼을 눌렀을때 상태가 30인 경우 -->
+		<if test="purchaseState==30">
+			purchase_state = 31
+		</if>
+		
+		<!-- 구매현황페이지: 구매완료 버튼을 눌렀을때 상태가 31인 경우 + 대리점 주문-->
+		<if test="purchaseType == 0 and purchaseState==31">
+			purchase_state = 32
+		</if>
+		
+		<!-- 구매현황페이지: 구매완료 버튼을 눌렀을때 상태가 31인 경우 + 대리점 주문이 아닌 경우(최소수량을 위한 자동 / 본사수동 주문)-->
+		<if test="purchaseType != 0 and purchaseState==31">
+			purchase_state = 33
+		</if>
+		
+		<!-- 구매현황페이지: 본사 수동주문을 취소하는 경우 -->
+		<if test="purchaseType == 2 and purchaseState == 30">
+			purchase_state = 99
+		</if>
+		
+	</set>
+	<!-- 구매 테이블에서 requestNum은 중복되기 때문에 sequence로 검색 -->
+	where purchase_seq=#{purchaseSeq} order by purchase_seq desc
+
+</update>
+<!-- 200419 이근형 작성 종료 -->
+
+</mapper>
+
+
+
+
+

@@ -2,8 +2,79 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 사용 테이블 : 누님형님들 하고싶은 테이블 겹쳐서 하시든 다 따로 하시든 하심 됩니다. (매퍼끼리는 성격 맞는거 묶어서 해주시면 감사) -->
 <mapper namespace="site.bucks.mapper.ItemMapper">
-	<insert id="insertItem">
-		
+	<insert id="insertItem" parameterType="Item">
+		<selectKey resultType="int" keyProperty="itemNum" order="BEFORE">
+			select item_seq.nextval from dual
+		</selectKey>
+		insert into item values(#{itemNum},#{itemName},#{itemQty},0,#{itemSprice},#{itemPprice},0,#{itemVendor},#{itemDm})
 	</insert>
+	
+	<!--  MinQty, Margin, DM : 최소보유량 및 마진 변경 -->
+	<update id="updateItemMinQty" parameterType="Item">
+		update item set ITEM_DM=#{itemDm},
+		<trim suffix=", " suffixOverrides=",">
+			<if test="minQty!=null and minQty!=0">
+				MIN_QTY=#{minQty}
+			</if>
+			<if test="itemMargin!=null and itemMargin!=0">
+				ITEM_MARGIN=#{itemMargin}
+			</if>
+		</trim>
+		where ITEM_NUM=#{itemNum}
+	</update>
+	
+	<!--  재고 또는 품목페이지에서 all, 조건검색 -->
+	<select id="selectItemList" resultType="Item">
+		select * from item
+		<where>
+			<!--  라디오버튼도 이렇게활용 -->
+			<if test="itemNum!=null and itemNum!=''">
+				ITEM_NUM LIKE '%'||#{itemNum}||'%' 
+			</if>
+			<if test="itemName!=null and itemName!=0">
+				AND ITEM_NAME=#{itemName}
+			</if>
+		</where>
+		order by ITEM_NAME asc
+	</select>
+	
+	<!--  구매계획 페이지에서 all, 조건검색 -->
+	<select id="selectItemPlanList" resultType="Item">
+		select * from item where min_qty!=0
+		<trim prefix="AND">
+			<if test="itemNum!=null and itemNum!=''">
+				ITEM_NUM LIKE '%'||#{itemNum}||'%' 
+			</if>
+			<if test="itemName!=null and itemName!=''">
+				ITEM_NAME=#{itemName} 
+			</if>
+			<if test="itemVendor!=null and iitemVendor!=''">
+				ITEM_VENDOR=#{itemVendor} 
+			</if>
+			<if test="itemDm!=null and itemDm!=''">
+				ITEM_DM=#{itemDm} 
+			</if>
+		</trim>
+		order by ITEM_NAME asc
+	</select>
+	
+	
+	<!-- 재고수량체크 -->
+	<select id="selectItemQty" parameterType="String" resultType="int">
+		select ITEM_QTY from item where ITEM_NUM=#{itemNum}
+	</select>
+	
+	<!--거래처목록 및 검색 -->
+	<select id="selectItemVendorList" parameterType="String" resultType="String">
+		select distinct ITEM_VENDOR from item 
+		<where>
+			<if test="itemVendor!=null and itemVendor!=''">
+				ITEM_VENDOR like #{itemVendor} 
+			</if>
+		</where>
+		order by ITEM_VENDOR asc
+	</select>
+	
+	
 
 </mapper>
