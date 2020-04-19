@@ -1,9 +1,15 @@
 package site.bucks.dao;
 
+import java.util.List;
+
+import site.bucks.dto.Delivery;
 import site.bucks.dto.StoreItemHistory;
 
 public interface DeliveryDAO {	
 	int updateDeliveryReceiptProcess(StoreItemHistory sih);
 	
-	// 이근형 - 내가 Delivery 매퍼에 만든 메소드 DAO랑 Impl에 구현해야함.
+	
+	int insertDeliveryRequest(Delivery delivery); // 근형 
+	List<Delivery> selectDeliveryList(Delivery delivery); // 근형
+	int updateDeliveryState(String requestNum); // 근형
 }
