@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="site.bucks.mapper.HewonTestMapper">
-	<select id="selectHewonTestList" resultType="HewonTest">
-		select H.*,S.store_name from hewontest H join Store S on 
+<mapper namespace="site.bucks.mapper.HewonMapper">
+
+
+
+
+
+	<!-- store에서 사용하기 위한 SELECT 문 -->
+	<select id="selectHewonStIdList" resultType="Hewon">
+		select H.*,S.store_name from hewon H join Store S on 
 			H.hewon_st_id=S.store_id 
 				where H.hewon_st_id=${hewonStId}
 	</select>

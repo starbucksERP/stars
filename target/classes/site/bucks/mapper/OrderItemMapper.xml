@@ -14,29 +14,38 @@
 			select order_seq.nextval from dual		
 		</selectKey>
 		insert into order_item values(#{orderSeq}, #{requestNum}, #{storeId}, #{itemNum},
-		 #{orderQty}, 999, 999, 10, sysdate, null, 0)
+		 #{orderQty}, <include refid="orderItemPprice"/>, <include refid="orderItemSprice"/>, 10, sysdate, null, 0)
 	</insert>
 	
 <!-- 지점 발주시 -->
 
-<!-- ???????????????? -->
-<!-- 지점에서 발주 수정시 --> 
-	<!-- 오더의 구별값은 order_seq이지만 sih테이블 값으로 고유값을 뽑아올 수 없으므로 여러데이터를 비교해서 같은 결과값을 가진 값을 업데이트 -->
-	<update id="updateOrderItemByStore" parameterType="StoreItemHistory">
-		update order_item set item_num = #{itemNum}, order_qty=#{itemQty}, request_date=sysdate 
-		where request_num=#{requestNum} and item_num=#{itemNum} and order_qty=#{itemQty} and request_date=#{historyDate}
-	</update>
-<!-- 지점에서 발주 수정시 -->
+<!-- 지점 발주 조회 -->
+	<select id="selectStoreOrderItemList" resultType="OrderItem">
+		select * from order_item <!--where STORE_ID=#{storeId}
+			 <if test="requestDate!=null and requestDate!=''">
+				AND REQUEST_DATE BETWEEN #{requestDate} AND #{requestDatePair}
+			</if>
+			<if test="itemNum!=null and itemNum!=''">
+				AND ITEM_NUM!=null=#{itemNum}
+			</if>
+			<if test="price1!=null and price1!='' and price2!=null and price2!=''">
+				AND ITEM_SPRICE between #{price1} and #{price2}
+			</if> -->
+		order by REQUEST_DATE desc
+	</select>
+<!-- 지점 발주 조회 -->
 
 <!-- 지점 입고 확인시 storeItemHistory 테이블에서 일어나는 일련의 메소드 -->
 	<!-- order_item : 지점에서 입고확인시 주문상태 변화 -->
-	<update id="updateOrderReceiptProcess" parameterType="StoreItemHistory">
-		update order_item set request_state=70 where request_num=#{requestNum}
+	<update id="updateOrderReceiptProcess" parameterType="OrderItem">
+		update order_item set request_state=#{requestState} where request_num=#{requestNum}
 	</update>
 <!-- 지점 입고 확인시 storeItemHistory 테이블에서 일어나는 일련의 메소드 -->
 
 
-<!--  0417 가을이 -->
+
+<!--  ******************************* 본점관련SQL *********************************************** -->
+
 	<!-- 매개변수값은 상태와 도착날짜뿐 -->
 	<update id="updateOrderItem" parameterType="OrderItem">
 		update order_item 
@@ -51,8 +60,8 @@
 		where request_num=#{requestNum}
 	</update>
 	
-	
-	<!-- 체크박스 foreach List받기처리 -->
+	<!-- 검색 -->
+	<!--  => 체크박스 foreach List받기처리추가 -->
 	<select id="selectOrderItemList" resultType="OrderItem">
 		select * from order_item
 		<where>
@@ -71,13 +80,16 @@
 			<if test="itemNum!=null and itemNum!=''">
 				AND ITEM_NUM!=null=#{itemNum}
 			</if>
+			<if test="request_num!=null and request_num!=''">
+				AND request_num=#{requestNum}
+			</if>
 		</where>
 		order by REQUEST_DATE desc
 	</select>
 	
-	<!-- 반환 >> 상품번호&수량 -->
-	<select id="selectOrderItem" parameterType="int" resultType="OrderItem">
-		select * from order_item where ORDER_SEQ=#{orderSeq}
+	<!-- 요청번호에 대한 오더들 반환  -->
+	<select id="selectOrderItems" parameterType="String" resultType="OrderItem">
+		select * from order_item where request_num=#{requestNum}
 	</select>
 	
 

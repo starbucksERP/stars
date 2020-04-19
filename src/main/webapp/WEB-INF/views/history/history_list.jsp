@@ -38,35 +38,41 @@
 					<table class="table">
 						<thead>
 							<tr>
-								<th>날짜</th>
-								<td><label class="gLabel"><input type="date" />&nbsp;<i class="far fa-calendar-alt"></i></label>
+								<th width="10%">날짜</th>
+								<td width="40%"><label class="gLabel"><input type="date" />&nbsp;<i class="far fa-calendar-alt"></i></label>
 								&nbsp;~&nbsp;<label class="gLabel"><input type="date" />&nbsp;<i class="far fa-calendar-alt"></i></label></td>
-								<th>발주/구매 번호</th>
-								<td><input type="search" /></td>
+								<th width="10%">발주/구매 번호</th>
+								<td width="40%"><input type="search" /></td>
 							</tr>
 							<tr>
 								<th>물품코드</th>
 								<td><input type="text">&nbsp;<a href="" class="a-button gray search-icon"><i class="fas fa-search"></i></a></td>
-								<th>진행상태</th>
-								<td>
-									<label class="gLabel"><input type="checkbox" class="fChk" >준비</label>
-									<label class="gLabel"><input type="checkbox" class="fChk" >대기</label>
-									<label class="gLabel"><input type="checkbox" class="fChk" >출고</label>
-									<label class="gLabel"><input type="checkbox" class="fChk" >완료</label>
+								<th>담당자</th>
+								<td><input type="text">&nbsp;<a href="" class="a-button gray search-icon"><i class="fas fa-search"></i></a></td>
+							</tr>
+							<tr>
+								<th>요청기관</th>
+								<td colspan="3">
+									<label class="gLabel"><input type="radio" class="fChk" >전체</label>&nbsp;&nbsp;&nbsp;|
+									<label class="gLabel"><input type="radio" class="fChk" >대리점</label>
+									<label class="gLabel"><input type="radio" class="fChk" >본사(자동)</label>
+									<label class="gLabel"><input type="radio" class="fChk" >본사(수동)</label>
 								</td>
 							</tr>
 						</thead>
 					</table>
 				</div>
 				
-				<div class="right">
-					<button type="button" class="a-button black">전체</button>
-					<button type="button" class="a-button gray">입고</button>
-					<button type="button" class="a-button gray">출고</button>
-					<button type="button" class="a-button gray">요청확인</button>
-				</div>
-				
-				<hr  style="margin-top: -2px;"/>
+				<div class="right" style="float: right;">
+	            <ul class="order-sta">
+	               <li class="blackgray">전체</li>
+	               <li >입고</li>
+	               <li >출고</li>
+	               <li >발주완료</li>
+	            </ul>
+        	 </div>
+			<br />
+			<hr  style="margin-top: 14px;"/>
 			<br />
 			<div class="date-output right">최근 2주간의 기록 입니다.2020/02/18 - 2020/03/03</div>
 			<br />

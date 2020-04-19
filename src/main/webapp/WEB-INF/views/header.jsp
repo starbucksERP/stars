@@ -39,7 +39,7 @@
 			<li onclick="location.href='purchasePlan'">구매계획</li>
 			<li onclick="location.href='purchaselist'">구매현황</li>
 			<li onclick="location.href='purchaseAdd'">구매입력</li>
-			<li onclick="location.href='receipt'">입출하조회</li>
+			<li onclick="location.href='history'">입출하조회</li>
 		</ul>		
 		<ul class="drop-menu" style="padding-left: 15%">
 			<li onclick="location.href='storeOrderInput'">발주입력</li>

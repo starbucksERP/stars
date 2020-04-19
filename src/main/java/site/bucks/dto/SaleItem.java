@@ -1,5 +1,7 @@
 package site.bucks.dto;
 
+//	조인용
+
 public class SaleItem {
 	private Sale sale;
 	private StoreItem storeItem;
