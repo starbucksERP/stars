@@ -2,47 +2,46 @@ package site.bucks.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import site.bucks.dao.ItemHistoryDAO;
 import site.bucks.dto.ItemHistory;
 
 @Service
 public class ItemHistoryServiceImpl implements ItemHistoryService{
+	
+	@Autowired
+	private ItemHistoryDAO itemHistoryDAO;
 
 	@Override
 	public List<ItemHistory> getRecentHistoryList() {
-		// TODO Auto-generated method stub
-		return null;
+		return itemHistoryDAO.recentHistoryList(); 
 	}
 
 	@Override
 	public List<ItemHistory> getItemHistoryList(ItemHistory itemHistory) {
-		// TODO Auto-generated method stub
-		return null;
+		return itemHistoryDAO.selectItemHistoryList(itemHistory);
 	}
 
 	@Override
 	public List<ItemHistory> getAllHistoryList() {
-		// TODO Auto-generated method stub
-		return null;
+		return itemHistoryDAO.allHistoryTap();
 	}
 
 	@Override
 	public List<ItemHistory> getGoodsReceivedList() {
-		// TODO Auto-generated method stub
-		return null;
+		return itemHistoryDAO.goodsReceivedHistoryTap();
 	}
 
 	@Override
 	public List<ItemHistory> getGoodsShippedList() {
-		// TODO Auto-generated method stub
-		return null;
+		return itemHistoryDAO.goodsShippedHistoryTap();
 	}
 
 	@Override
 	public List<ItemHistory> getRequestConfirmedList() {
-		// TODO Auto-generated method stub
-		return null;
+		return itemHistoryDAO.requestConfirmedHistoryTap();
 	}
 
 }

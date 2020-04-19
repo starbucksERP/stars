@@ -2,12 +2,36 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 사용 테이블 : 누님형님들 하고싶은 테이블 겹쳐서 하시든 다 따로 하시든 하심 됩니다. (매퍼끼리는 성격 맞는거 묶어서 해주시면 감사) -->
 <mapper namespace="site.bucks.mapper.ItemMapper">
-	<insert id="insertItem" parameterType="Item">
-		<selectKey resultType="int" keyProperty="itemNum" order="BEFORE">
+	<!--  품목등록  -->
+	<insert id="insertProduct" parameterType="Item">
+		<selectKey resultType="int" keyProperty="seq" order="BEFORE">
 			select item_seq.nextval from dual
 		</selectKey>
-		insert into item values(#{itemNum},#{itemName},#{itemQty},0,#{itemSprice},#{itemPprice},0,#{itemVendor},#{itemDm})
+		insert into item values(#{itemNum}||'-'||#{seq},#{itemName},0,0,#{itemPprice},#{itemSprice},0,#{itemVendor},'로그인사용자',0)
 	</insert>
+	
+	<!--  재고등록 및 수정 : 이미 등록된 아이템 -->
+	<update id="updateItem">
+		update item 
+		<set>
+			<if test="itemName!=null and itemName!=''">
+				ITEM_NAME=#{itemName}
+			</if>
+			<if test="itemQty!=null and itemQty!=0">
+				ITEM_QTY=#{itemQty}
+			</if>
+			<if test="itemPprice!=null and itemPprice!=0">
+				ITEM_PPRICE=#{itemPprice}
+			</if>
+			<if test="itemSprice!=null and itemSprice!=0">
+				ITEM_SPRICE=#{itemSprice}
+			</if>
+			<if test="itemVendor!=null and itemVendor!=''">
+				ITEM_VENDOR=#{itemVendor} 
+			</if>
+		</set>	
+		where ITEM_NUM=#{itemNum}
+	</update>
 	
 	<!--  MinQty, Margin, DM : 최소보유량 및 마진 변경 -->
 	<update id="updateItemMinQty" parameterType="Item">
@@ -23,6 +47,16 @@
 		where ITEM_NUM=#{itemNum}
 	</update>
 	
+	<!-- 품목삭제처리 -->
+	<update id="deleteProduct" parameterType="String">
+		update item set ITEM_USGAE=1 where ITEM_NUM=#{itemNum}
+	</update>
+
+	<!-- 아이템 단일검색 -->
+	<select id="selectItem" resultType="Item">
+		select * from item where ITEM_NUM=#{itemNum}
+	</select>
+
 	<!--  재고 또는 품목페이지에서 all, 조건검색 -->
 	<select id="selectItemList" resultType="Item">
 		select * from item
@@ -31,7 +65,7 @@
 			<if test="itemNum!=null and itemNum!=''">
 				ITEM_NUM LIKE '%'||#{itemNum}||'%' 
 			</if>
-			<if test="itemName!=null and itemName!=0">
+			<if test="itemName!=null and itemName!=''">
 				AND ITEM_NAME=#{itemName}
 			</if>
 		</where>
@@ -48,16 +82,15 @@
 			<if test="itemName!=null and itemName!=''">
 				ITEM_NAME=#{itemName} 
 			</if>
-			<if test="itemVendor!=null and iitemVendor!=''">
+			<if test="itemVendor!=null and itemVendor!=''">
 				ITEM_VENDOR=#{itemVendor} 
 			</if>
 			<if test="itemDm!=null and itemDm!=''">
 				ITEM_DM=#{itemDm} 
 			</if>
 		</trim>
-		order by ITEM_NAME asc
+		order by ITEM_NUM asc
 	</select>
-	
 	
 	<!-- 재고수량체크 -->
 	<select id="selectItemQty" parameterType="String" resultType="int">
@@ -69,12 +102,19 @@
 		select distinct ITEM_VENDOR from item 
 		<where>
 			<if test="itemVendor!=null and itemVendor!=''">
-				ITEM_VENDOR like #{itemVendor} 
+				ITEM_VENDOR like '%'||#{itemVendor}||'%' 
 			</if>
 		</where>
 		order by ITEM_VENDOR asc
 	</select>
 	
+	<!-- 재고수량 수정 -->
+	<update id="updateTotalQty" parameterType="double">
+		update item set ITEM_QTY+=#{change} where ITEM_NUM=#{itemNum}
+	</update>
+<<<<<<< HEAD
+=======
 	
+>>>>>>> branch 'master' of https://github.com/starbucksERP/stars.git
 
 </mapper>

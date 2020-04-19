@@ -8,7 +8,9 @@ public interface DeliveryService {
 	
 	void addDeliveryRequest(Delivery delivery);
 	List<Delivery> getDeliveryList(Delivery delivery);
-	void modifyDelieveryState(List<Delivery> delivery);
+	//void modifyDelieveryState(int delivery);
+	void modifyDeliveryReq(int deliverySeq);
+	void modifyDeliveryReady(int deliverySeq);
 	
 	
 }

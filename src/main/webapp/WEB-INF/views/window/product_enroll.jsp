@@ -67,7 +67,7 @@ label {
 					<span>매입단가 :</span><input type="text" name="itemSprice"/> 원
 				</label>
 				<label>
-					<span>매출단가 :</span><input type="text" name="itemPprice"/> 원
+					<span>공급가 :</span><input type="text" name="itemPprice"/> 원
 				</label>
 				<label>
 					<span>거래처 :</span><input type="text" name="itemVendor" />

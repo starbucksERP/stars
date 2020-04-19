@@ -15,6 +15,7 @@ REQUEST_STATE NOT NULL NUMBER
 REQUEST_DATE  NOT NULL DATE         
 DELIVERY_DATE          DATE         
 ORDER_TYPE    NOT NULL NUMBER    */   
+
 public class OrderItem {
 	private int orderSeq;
 	private String requestNum;

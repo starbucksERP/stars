@@ -3,9 +3,13 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 		
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
@@ -20,7 +24,14 @@
 	<resources mapping="/images/**" location="/resources/images/" /> 
 	<resources mapping="/css/**" location="/resources/css/" /> 
 	<resources mapping="/js/**" location="/resources/js/" /> 
+	<resources mapping="/upload/**" location="/resources/upload/" /> 
 	
+	<!-- BeanNameViewResolver : 요청처리 메소드에서 baenName을 제공받아 해당 Spring Bean의 메소드를 호출하여 실행하는 기능을 제공하는 ViewResolver -->
+	<!-- => JSP를 이용한 응답이 아닌 명령 실행을 목적으로 하는 Viewresolver -->
+	<!-- => 출력이 목적인 ViewResolver 보다 우선순위가 높도록 설정 -->
+	<beans:bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<beans:property name="order" value="1"/>
+	</beans:bean>
 	
 	
 	<!-- template 파일이 응답하는 viewresolver -->
@@ -61,6 +72,43 @@
 	<context:component-scan base-package="site.bucks.controller" />	
 	<context:component-scan base-package="site.bucks.dao" />	
 	<context:component-scan base-package="site.bucks.service" />
+	
+	<!-- AOP 기능을 이용한 Transaction 처리 -->
+	<!-- advice : TransactionManager 관련 Spring Bean을 Advisor(횡단관심코드를 제공할 수 있는)로 기능을 제공하는 엘리먼트 -->
+	<!-- => BEFORE, JOINPOINT 이미 다 설정되어 있음 -->
+	<!-- transaction-manager 속성 : TransactionManager 관련 Spring Bean을 인젝션 처리 -->
+		<!-- attributes : 트렌젝션 처리 관련 정보를 설정하는 엘리먼트 -->
+			<!-- method : 트렌젝션 처리 메소드를 설정하는 엘리먼트  
+				name 속성 : 메소드 패턴을 속성값으로 설정-->
+			<!-- rollback-for 속성 : ROLLBACK 명령을 실행하기 위한 예외를 속성값으로 설정 -->
+			<!-- read-only 속성 : 읽기 전용 메소드인 경우 true를 속성값으로 설정 -->
+	<!-- 		
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="add*" rollback-for="Exception"/>
+			<tx:method name="erase*" rollback-for="Exception"/>
+			<tx:method name="modify*" rollback-for="Exception"/>
+			<tx:method name="get*" read-only="true"/>
+		</tx:attributes>
+	</tx:advice>
+	 -->
+	
+	<!-- TransactionManager 로 생성된 advisor를 사용하여 AOP 기능을 구현 -->
+	<!-- pointcut 
+	<aop:config>
+		<aop:advisor advice-ref="txAdvice" pointcut="execution(* site.itwill10.service..*(..))"/>		
+		<aop:advisor advice-ref="txAdvice" pointcut="execution(* sie.itwill10.service.PointBoardService(..))"/> 
+	</aop:config>	
+	-->
+	
+	<!-- 파일 업로드 기능을 제공하는 클래스를 Spring Bean 으로 등록 -->
+	<!-- => beanName 은 반드시 "multipartResolver" 로 설정 -->
+	<beans:bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver">
+		<!-- maxUploadSize 필드에 업로드 파일의 용량 제한값(Byte)을 인젝션 처리 -->
+		<beans:property name="maxUploadSize" value="20971520"></beans:property>
+		<!-- defaultEncoding : 입력값에 대한 캐릭터셋의 인코딩을 인젝션 처리 -->
+		<beans:property name="defaultEncoding" value="UTF-8"></beans:property>
+	</beans:bean>
 	
 	
 </beans:beans>

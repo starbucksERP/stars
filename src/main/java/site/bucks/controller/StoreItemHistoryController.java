@@ -1,18 +1,19 @@
 package site.bucks.controller;
 
-import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import site.bucks.dto.AppliedOrderSta;
+import site.bucks.dto.Item;
 import site.bucks.dto.OrderItem;
 import site.bucks.service.StoreItemHistoryService;
 
@@ -25,8 +26,6 @@ public class StoreItemHistoryController {
 	public String receiptList() {
 		return "storeItem/receipt_list";
 	}
-	
-	
 	
 	@RequestMapping(value = "/storeOrderReq")
 	public String storeOrderReq() {
@@ -57,7 +56,7 @@ public class StoreItemHistoryController {
 		
 		return "storeItem/order_status";
 	}
-	*/
+	
 //	지점 발주 요청 조회
 	@RequestMapping(value = "/storeOrderSta")
 	public String storeOrderSta(@ModelAttribute(value="storeOrderSta") AppliedOrderSta storeOrderSta, Model model) {
@@ -65,7 +64,7 @@ public class StoreItemHistoryController {
 		model.addAttribute("storeOrderStaList", storeItemHistoryService.getReciptSta(storeOrderSta));
 		return "storeItem/order_status";
 	}
-	/*
+	
 	-AJAX-
 	
 	@RequestMapping(value = "/storeOrderSta")
@@ -80,15 +79,14 @@ public class StoreItemHistoryController {
 		returnMap.put("sihList", storeItemHistoryService.getReciptSta(storeOrderSta));
 		return returnMap;
 	}
-	*/
+	
 	
 	@ModelAttribute("itemStateList")
 	public List<String> itemStateList(){
 		return Arrays.asList("발주요청","발주완료","배송중","입고완료");
 	}
 
-	
-	
+	*/
 //	지점 발주 입력
 	@RequestMapping(value = "/storeOrderInput",method = RequestMethod.GET)
 	public String storeOrderInput() {
@@ -106,10 +104,52 @@ public class StoreItemHistoryController {
 	}
 	
 	
+//	지점 발주 조회
+	@RequestMapping(value = "/storeOrderSta")
+	public String storeOrderSta(@ModelAttribute(value = "orderItem") OrderItem orderItem, Model model) {
+		
+		model.addAttribute("orderItemList", storeItemHistoryService.getReciptSta(orderItem));
+		return "storeItem/order_status";
+	}
+	
+	
+//	지점 발주 입고처리
+	@RequestMapping(value = "/checkStoreOrder", method = RequestMethod.POST)
+	@ResponseBody
+	public String checkStoreOrder(@RequestBody List<OrderItem> orderItemList) {
+		
+		for(OrderItem orderItem:orderItemList) {
+			storeItemHistoryService.modifyReceiptProcess(orderItem);
+		}
+		return "success";
+	}
+//	지점 발주 취소
+	@RequestMapping(value = "/cancelStoreOrder", method = RequestMethod.POST)
+	@ResponseBody
+	public String cancelStoreOrder(@RequestBody List<OrderItem> orderItemList) {
+		
+		for(OrderItem orderItem:orderItemList) {
+			
+		}
+		return "success";
+	}
 	
 	
 	
+//	아이템 카테고리로 찾아오기
+	@RequestMapping(value = "/getItem", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String , Object> getItem(@RequestBody Item item) {
+		return storeItemHistoryService.getItem(item);
+	}
 	
+	
+//	아이템 검색시 해당 item 정보 가져오기
+	@RequestMapping(value = "/searchItem/{itemName}", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> searchItem(@PathVariable String itemName) {
+		return storeItemHistoryService.getItemName(itemName);
+	}
 	
 	
 	

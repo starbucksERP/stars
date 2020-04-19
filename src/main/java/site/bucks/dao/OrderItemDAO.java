@@ -2,11 +2,17 @@ package site.bucks.dao;
 
 
 
+import java.util.List;
+
 import site.bucks.dto.OrderItem;
-import site.bucks.dto.StoreItemHistory;
 
 public interface OrderItemDAO {
 	int insertStoreOrder(OrderItem orderItem);
-	int updateOrderItemByStore(StoreItemHistory sih);
-	int updateOrderReceiptProcess(StoreItemHistory sih);
+	List<OrderItem> selectStoreOrderItemList(OrderItem orderItem);
+	int updateOrderReceiptProcess(OrderItem orderItem);
+
+	// 본점용
+	int updateOrderItem(OrderItem orderItem);
+	List<OrderItem> selectOrderItemList(OrderItem orerItem);
+	List<OrderItem> selectOrderItems(String requestNum);
 }
