@@ -151,7 +151,6 @@
 		    		orderSeq		    : tr.find("td:eq(2)").text(),	
 	        		itemNum        	: tr.find("td:eq(3)").text(),
 		    		orderQty				: tr.find("td:eq(4)").text(),
-		    		requestNum		: $("input[type='hidden']").val();
 		        	storeId				: 1594
 	        	};
 		    	//$("#storeId").val()
