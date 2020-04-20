@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<style type="text/css">
+.choice { display: none; }
+</style>
 <div class="container">
 	<div class="row">
 		<div class="sidebar">
@@ -32,37 +35,47 @@
 		<div class="main">
 		
 			<h3>구매계획설정</h3>
-			<div class="right"><button type="button" class="a-button big"><i class="fas fa-plus-circle"></i>&nbsp;신규 구매</button>&nbsp;<button type="button" class="a-button big">검색</button></div>
+			<div class="right"><button type="button" class="a-button big"><i class="fas fa-plus-circle"></i>&nbsp;신규 구매계획</button>&nbsp;<button type="button" class="a-button big">검색</button></div>
 			<hr />
 			<table class="table">
 				<thead>
 					<tr>
-						<th>품목명</th>
-						<td>
+						<th width="10%">품목명</th>
+						<td width="40%">
 							<input type="search">&nbsp;<a href="" class="a-button gray search-icon"><i class="fas fa-search"></i></a>
 						</td>
-						<th>카테고리</th>
-						<td>
-							<select>
-								<optgroup label="전체">
-									<option value="">전체 카테고리</option>
-								</optgroup>
-								<optgroup label="원두">
-									<option value="">1. 원두원두원두원두원두원두</option>
-									<option value="">2. 원두원두원두원두원두원두</option>
-									<option value="">3. 원두원두원두원두원두원두</option>
-								</optgroup>
-								<optgroup label="부자재">
-									<option value="">1</option>
-									<option value="">2</option>
-									<option value="">3</option>
-								</optgroup>
-								<optgroup label="베이커리">
-									<option value="">1</option>
-									<option value="">2</option>
-									<option value="">3</option>
-								</optgroup>
-							</select>
+						<th width="10%">상품카테고리</th>
+						<td width="40%">
+						<select id="category" name="num1">
+							<option>대분류</option>
+							<option value="A">제조음료</option>
+							<option value="B">푸드</option>
+							<option value="C">상품</option>
+						</select>
+						<select id="categoryA" class="choice" name="num2">
+							<option>제조음료 소분류</option>
+							<option value="01">원두</option>
+							<option value="02">티백</option>
+							<option value="03">부재료</option>
+						</select>
+						<select id="categoryB" class="choice" name="num2">
+							<option>푸드 소분류</option>
+							<option value="01">베이커리</option>
+							<option value="02">케이크</option>
+							<option value="03">샌드위치</option>
+							<option value="04">디저트</option>
+							<option value="05">아이스크림</option>
+							<option value="06">병음료</option>
+						</select>
+						<select id="categoryC" class="choice" name="num2">
+							<option>상품 소분류</option>
+							<option value="01">머그</option>
+							<option value="02">글라스</option>
+							<option value="03">텀블러</option>
+							<option value="04">보온병</option>
+							<option value="05">악세서리</option>
+							<option value="06">커피용품</option>
+						</select>
 						</td>
 					</tr>
 					<tr>
@@ -81,7 +94,7 @@
 			<hr>
 			<br />
 			
-			<div><button type="button" class="a-button padding-button">수정</button>&nbsp;<button type="button" class="a-button padding-button red">초기화</button></div>
+			<div><button type="button" class="a-button green padding-button">일괄수정</button>&nbsp;<button type="button" class="a-button padding-button gray">초기화</button></div>
 			<div class="information">
 				<table class="table cal">
 					<tbody>
@@ -106,8 +119,8 @@
 							<td><input type="number" value="10" class="permit-div permit-div0">&nbsp;%</td>
 							<td class="Scope Scope0"></td>
 							<td>김대리</td>
-							<td><button type="button" class="a-button gray">수정</button></td>
-							<td><button type="button" class="a-button blackgray">초기화</button></td>
+							<td><button type="button" class="a-button green inner-button">수정</button></td>
+							<td><button type="button" class="a-button gray inner-button">초기화</button></td>
 						</tr>
 						<tr>
 							<td><input type="checkbox" class="rowChk"></td>
@@ -118,8 +131,8 @@
 							<td><input type="number" value="30" class="permit-div permit-div1">&nbsp;%</td>
 							<td class="Scope Scope1"></td>
 							<td>김대리</td>
-							<td><button type="button" class="a-button gray">수정</button></td>
-							<td><button type="button" class="a-button blackgray">초기화</button></td>
+							<td><button type="button" class="a-button green inner-button">수정</button></td>
+							<td><button type="button" class="a-button gray inner-button">초기화</button></td>
 						</tr>
 					</tbody>
 				</table>
@@ -169,7 +182,21 @@
 		});
 	});
 	  */
-			 
-	 
+
+	$('#category').change(function() {
+		var category = jQuery('#category option:selected').val();
+		if (category== 'A') {
+			$('.choice').hide();
+			$('#categoryA').show();
+		} else if (category=='B') {
+			$('.choice').hide();
+			$('#categoryB').show();
+		} else if (category=='C') {
+			$('.choice').hide();
+			$('#categoryC').show();
+		} else {
+			$('.choice').hide();
+		} 
+	});
 	
 </script>

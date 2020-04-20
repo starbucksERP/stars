@@ -23,84 +23,260 @@
 			<h3>지점 등록 / 수정</h3>
 			<hr />
 			<div class="information-left">
-			
-				<div class="right"><button type="button" class="a-button purple medium">수정</button></div>
+				<div class="right"><button type="button" id="modifyBtn" class="a-button yellow medium">수정</button></div>
+				<div id="checkErrorMsg" style="color:red; display: none;">하나만 체크해 주세요.</div>
+				<div id="storeInsertDiv"></div>
 				<table class="table">
 					<tbody>
 						<tr>
 							<th><input type="checkbox" class="allChk"></th>
-							<th>매장코드</th>
-							<th>매장명</th>
+							<th>지점코드</th>
+							<th>지점명</th>
 							<th>점주명</th>
 							<th>구분</th>
 						</tr>
-						<tr>
-							<td><input type="checkbox" class="rowChk"></td>
-							<td>02134567</td>
-							<td>강남점</td>
-							<td>박잠실</td>
-							<td>본점</td>
-						</tr>
-						<tr>
-							<td><input type="checkbox" class="rowChk"></td>
-							<td>23424427</td>
-							<td>강남점</td>
-							<td>윤제니</td>
-							<td>지점</td>
-						</tr>
-						<tr>
-							<td><input type="checkbox" class="rowChk"></td>
-							<td>235232362</td>
-							<td>강남점</td>
-							<td>이강남</td>
-							<td>지점</td>
-						</tr>
 					</tbody>
-				</table>
-				
+				</table> 
 			</div>
 			
 			<div class="information-right">
-				<ul class="enroll-ul">
-					<li>매장정보</li>
-					<li>점주정보</li>
-				</ul>
+				<!-- <ul class="enroll-ul">
+					<li class="tab1" >지점정보</li>
+				</ul> -->
+				
+				<!-- 탭 컨텐츠 영역 -->
 				<div class="enroll-div">
-				<fieldset class="enroll-fieldset">
+				<!-- 매장정보 -->
+				<fieldset id="tab1" class="enroll-fieldset" style="display: block">
+					<!--  
 					<label>
-						<span>매장코드  </span><input type="text" />
-					</label>
-					&nbsp;<button type="button" class="a-button purple">중복 검사</button><br />
+						<span>지점코드 </span><input type="text" id="storeId" readonly="readonly" />
+					</label><br/>
+					-->
 					<label>
-						<span>매장명 </span><input type="text" />
+						<span>지점명 </span><input type="text" id="storeName"/>
 					</label><br />
 					<label>
-						<span>매장주소 </span><input type="text" />
+						<span>지점주소 </span><input type="text" id="storeAddress" style="width: 250px;"/>
 					</label><br />
 					<label>
-						<span>점주명 </span><input type="text" />
+						<span>점주명 </span><input type="text" id="storeName"/>
 					</label><br />
-					<span class="staff">매장구분 </span>	
-					<label class="gLabel"><input type="radio" class="fChk" >본점</label>
-					<label class="gLabel"><input type="radio" class="fChk" >지점</label>
-					<label class="gLabel"><input type="radio" class="fChk" >폐점</label>
+					<label>
+						<span>지점 전화번호 </span><input type="text" id="storePhone"/>
+					</label><br />					
+					<span class="staff">구분 </span>	
+					<label class="gLabel"><input type="radio" name="radio-name" class="fChk" value="head">본점</label>
+					<label class="gLabel"><input type="radio" name="radio-name" class="fChk" value="branch">지점</label>
+					<label class="gLabel"><input type="radio" name="radio-name" class="fChk" value="close">폐점</label>
 					<br />
 					<label>
-						<span>점주명 </span><input type="text" />
+						<span>개업일 </span><input type="text" class="openDate"/>
 					</label><br />
-					<span class="staff">매장 이미지 </span>&nbsp;
+					<div id="openErrorMsg" style="color:red; display: none;">&nbsp;&nbsp;개업일을 반드시 입력해 주세요.</div>
+					<label>
+						<span>폐업일 </span><input type="text" class="closeDate"/>
+					</label><br />
+					<div id="closeErrorMsg" style="color:red; display: none;">&nbsp;&nbsp;폐업일을 반드시 입력해 주세요.</div>
+					<span class="staff">지점 이미지 </span>&nbsp;
 					<img src="../star.png" alt="" align="top">
-				</fieldset>
-					<br />
-						
-					<div class="center">
-						<button type="button" class="a-button medium">등 록</button>
-						<button type="button" class="a-button purple medium">초기화</button>
+					
+					<div class="center" style="margin-top: 70px;">
+						<button type="button" class="a-button darkgreen medium" id="addStoreBtn" >등 록</button>
+						<button type="button" class="a-button blackgray medium">초기화</button>
 					</div>
+				</fieldset>
+				<!-- 점주 정보 -->
+				<!--  
+				<fieldset id="tab2" class="enroll-fieldset" style="display: none">
+					<label>
+						<span>주소  </span><input type="text" readonly="readonly" />
+					</label><br/>
+					<label>
+						<span>연락처 </span><input type="text" />
+					</label><br />
+					<label>
+						<span>이메일 </span><input type="text" />
+					</label><br />
+					<label>
+						<span>요구사항 </span><input type="text" />
+					</label><br />
+				</fieldset>
+				-->
+				
+					
 				</div>
 			</div>
 		
 		</div>
 
 	</div>
-</div>
+</div> 
+
+<script id="templateStore" type="text/x-handlebars-template">
+	<table class="table">
+	<tbody>
+		<tr>
+			<th><input type="checkbox" class="allChk"></th>
+			<th>지점코드</th>
+			<th>지점명</th>
+			<th>점주명</th>
+			<th>구분</th>
+		</tr>
+		{{#each.}}
+		<tr>
+			<td><input type="checkbox" class="rowChk"></td>
+			<td>{{storeId }}</td>
+			<td>{{storeName }}</td>
+			<td>{{storeOwner }}</td>
+			<td>{{storeState }}</td>
+		</tr>
+		{{/each}}
+	</tbody>
+	</table>
+</script>
+
+
+<script type="text/javascript">
+
+	//처음에는 전체 출력
+	storeDisplay();
+	function storeDisplay() {
+		$.ajax({
+			type: "GET",
+			 url: "storeStaffList",
+			 dataType: "json",
+			 success: function(json) {
+				/*  if(json.storeList.lenght==0) {
+					 $("#storeInsertDiv").html("검색된 지점정보가 없습니다.");
+					 return;
+				 }
+				 var source=$("#templateStore").html();
+				 var template=Handlebars.compile(source);
+				 $("#storeInsertDiv").html(template(json.storeList)); */
+				 if(json.storeList.length==0){
+					 $(".table>tbody").append("<tr><td colspan='5'>검색된 지점정보가 없습니다.</td></tr>");
+				 }else{
+					 $(json.storeList).each(function(i) {
+						 var state= json.storeList[i].storeState;
+						 if(state==0){
+							 state="본점";
+						 }else if(state==1){
+							 state="지점";
+						 }else{
+							 state="폐점";
+						 }
+						 
+						 var storeAdd = "<tr>"+
+						 "<td><input type='checkbox' class='rowChk'></td>"+
+						 "<td>"+json.storeList[i].storeId+"</td>"+
+						 "<td>"+json.storeList[i].storeName+"</td>"+
+						 "<td>"+json.storeList[i].storeOwner+"</td>"+
+						 "<td>"+state+"</td>"+
+						 "</tr>";
+						$(".table>tbody").append(storeAdd);
+					 })
+					 
+				 }
+				 
+			 },
+			 
+			 error: function(xhr) {
+				 alert("에러코드 = "+xhr.status);
+			 }
+		});		
+	}
+
+
+	<%-- 지점정보 / 점주정보 탭이동 
+	$(".enroll-ul li").click(function() {
+		if($(this).attr("class")=='tab1'){
+			$("#tab1").show();
+			$("#tab2").hide();
+		}else{
+			$("#tab2").show();
+			$("#tab1").hide();
+		}
+	})
+	--%>
+	
+	<%-- 수정가능한 체크박스 선택 갯수 제한 --%>
+	$("#modifyBtn").click(function() {
+		
+		var cnt = $("input:checkbox[class='rowChk']:checked").length;
+		
+		if(cnt>1) {
+			$(this).prop('checked',false);
+			$('#checkErrorMsg').css('display','block');
+		}
+	});
+
+	<%-- 본점,지점 선택시  폐업일 비활성화 / 폐점 선택시 개업일 비활성화 --%>
+	$('.fChk').on('click',function(){ 
+		
+		var checkValue = $("input:radio[name='radio-name']:checked").val();
+		
+		if( checkValue != 'close') {
+			$('.openDate').prop('disabled',false);
+			$('.openDate').focus();
+			$('.closeDate').prop('disabled',true);
+		} else {
+			$('.openDate').prop('disabled',true);
+			$('.closeDate').prop('disabled',false);
+			$('.closeDate').focus();
+		}
+	});
+	
+	
+	<%-- 지점등록 버튼 클릭시 submit --%>
+	
+/* 	$("#addStoreBtn").click(function() { 
+		
+		var openDate=$(".openDate").val();
+		var closeDate=$(".closeDate").val();
+		
+		if(openDate=="" && closeDate=="") {
+			$('#openErrorMsg').css('display','block');
+			$('.openDate').focus();
+			return;
+		} else{
+			$('#closeErrorMsg').css('display','block');
+			$('.closeDate').focus();
+			return;			
+		}
+	}) */
+
+
+	
+/* 	function addStore() {
+		
+		if(("input:text[class='closeDate']").val()==null) {
+			$('#closeErrorMsg').css('display','block');
+		}
+	}
+	 */
+	 $("#addStoreBtn").click(function() {
+	 	//입력값을 반환받아 저장 
+	 	var storeName=$("#storeName").val();
+	 	var storeAddress=$("#storeAddress").val();
+	 	var storeName=$("#storeName").val();
+	 	var storePhone=$("#storePhone").val();
+	 	var openDate=$(".openDate").val();
+	 	var closeDate=$(".closeDate").val();
+		 
+		 
+		 storeDisplay();
+	 });
+	
+</script>
+
+
+
+
+
+
+
+
+
+
+

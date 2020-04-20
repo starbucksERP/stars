@@ -1,20 +1,29 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="container">
 	<div class="row">
 		<div class="sidebar">
 			<ul class="side-menu">
 				<li>
-					<button class="dropdown-btn">판매 기록<i class="fa fa-caret-down"></i></button>
+					<button class="dropdown-btn">재고관리<i class="fa fa-caret-down"></i></button>
+					<div class="dropdown-container">
+						<a href="">품목관리</a><br /><br />
+						<a href="">재고관리</a><br /><br />
+					</div>
 				</li>
 				<li>
-					<button class="dropdown-btn">판매 현황<i class="fa fa-caret-down"></i></button>
+					<button class="dropdown-btn">판매관리<i class="fa fa-caret-down"></i></button>
+					<div class="dropdown-container">
+						<a href="">판매기록</a><br /><br />
+						<a href="">판매현황</a>
+					</div>
 				</li>
+				
 			</ul>
 		</div>
 
 		<div class="main">
-			
+		
 			<h3>판매 등록</h3>
 			<br />
 			<hr />
@@ -24,8 +33,8 @@
 						<tr>
 							<th>판매등록일</th>
 							<td><label class="gLabel"><input type="date" readonly="readonly" />&nbsp;<i class="far fa-calendar-alt"></i></label>
-							<th>판매등록매장</th>
-							<td><input type="text" value="강남점" readonly="readonly"/></td>
+							<th>판매등록 매장</th>
+							<td><input type="text"  value="1594" readonly="readonly" id="storeId"/></td>
 						</tr>
 					</thead>
 				</table>
@@ -51,31 +60,30 @@
 						</tr>
 						<tr>
 							<td><input type="checkbox" class="rowChk"></td>
-							<td><span id="dateSale"></span></td>
-							<td>A6516</td>
+							<td>2020-04-19</td>
+							<td>스타벅스 강남점</td>
 							<td>
-								<select name="category">
-									<option value="A">음료</option>
-									<option value="B">푸드</option>
-									<option value="C">상품</option>
-								</select>
+								<select name="category" class="category">
+	                            	<option value="">전체</option>
+	                            	<option value="A">제조음료 재료</option>
+	                            	<option value="B">푸드</option>
+	                            	<option value="C">상품</option>
+	                            </select>
 							</td>
-							<td >
-								<select name="subcategory">
-									<option value="">1</option>
-									<option value="">2</option>
-									<option value="">3</option>
-								</select>
-							</td>
-							<td >
-								<select name="product" style="min-width: 150px;">
-									<option value="">제품명</option>
-								</select>
+                            <td>
+                         		<select name="subCategory" class="subCategory">
+                         		</select>
+                           	</td>
+							<td>
+                           		<select name="saleProduct" class="saleProduct">
+                           		</select>
+                           	</td>
+							<td>
+								<input type="number" name="saleQty"/> 개
 							</td>
 							<td>
-								<input type="number" name="qty" style="width: 50px;"/><span>&nbsp;개</span>
+								<input type="number" name="salePriceSum"/> 원
 							</td>
-							<td><span id="productSum">1000000000000000</span></td>
 						</tr>
 					</tbody>
 					<tfoot>
@@ -85,13 +93,18 @@
 					</tfoot>
 				</table>
 				<div class="center">
-					<button type="button" class="a-button big">판매 등록</button>
-					<button type="button" class="a-button sea big">다시 작성</button>
+					<button type="button" class="a-button big" id="saleInput">판매 등록</button>
+					<button type="button" class="a-button sea big" onclick="reset()">다시 작성</button>
 				</div>
 			</div>
+				
+			
+			
 		</div>
+
 	</div>
 </div>
+
 
 <script type="text/javascript">
 	var today = new Date();
@@ -109,9 +122,55 @@
 	} 
 	
 	today = yyyy+'-'+mm+'-'+dd;
-	today2 = yyyy+'년 '+mm+'월 '+dd+'일';
+	
 	
 	$("input[type='date']").val(today);
-	$("#dateSale").text(today2)
+
+	
+	
+	$("#saleInput").click(function(){
+	    
+	    var param = [];
+	 	var sales=[];
+	 	
+	 	if($('.rowChk:checked').length==0){
+			$(".message").text("등록할 판매리스트를 체크해주세요")
+		}else{
+		    $(".rowChk:checked").each(function(i) {
+		 
+		    	sales = {
+		        	requestNum		: dd+mm+$("#storeId").val().substr(0, 1),
+		        	storeId			: $("#storeId").val(),
+	        		itemNum        	: $(this).parents('tr').find(".itemNum").val(),
+	        	//	itemName      	: $(this).parents('tr').find(".itemName").val(),
+	        		orderQty        : $(this).parents('tr').find(".orderQty").val()
+		        };
+		        
+		        param.push(sales);
+		    });
+		    
+	
+		    $.ajax({
+				type: "POST",
+				url: "sale_record",
+				headers: {"content-type":"application/json"},
+				data: JSON.stringify(param),
+				dateType: "text",
+				success: function(text) {
+					if(text=="success") {
+						alert("판매등록이 성공적으로 이루어졌습니다.")
+						location.href="/sale_record"
+					}
+				},
+				error: function(xhr) {
+					alert("에러코드 = "+xhr.status)
+				}
+		    
+			});
+		}
+	});
+	
+	
+	
 	
 </script>
