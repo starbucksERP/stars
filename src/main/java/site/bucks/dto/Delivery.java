@@ -1,6 +1,6 @@
 package site.bucks.dto;
 
-/*�̸�             ��?       ����     
+/*�̸� 000            ��?       ����     
 -------------- -------- ------ 
 DELIVERY_SEQ   NOT NULL NUMBER 
 REQUEST_NUM    NOT NULL VARCHAR2(20)
@@ -14,7 +14,10 @@ public class Delivery {
 	private int storeId;
 	private int deliverySate;
 	private String deliveryStart;
+	private String deliveryStartTwo;
 	private String deliveryEnd;
+	private String deliveryEndTwo;
+	private int nowDeliveryState; //배송요청조회 페이지(40), 배송현황조회 페이지(50)으로 동적SQL에 적용하기 위함
 
 	public Delivery() {
 		// TODO Auto-generated constructor stub
@@ -67,5 +70,31 @@ public class Delivery {
 	public void setDeliveryEnd(String deliveryEnd) {
 		this.deliveryEnd = deliveryEnd;
 	}
+
+	public int getNowDeliveryState() {
+		return nowDeliveryState;
+	}
+
+	public void setNowDeliveryState(int nowDeliveryState) {
+		this.nowDeliveryState = nowDeliveryState;
+	}
+
+	public String getDeliveryStartTwo() {
+		return deliveryStartTwo;
+	}
+
+	public void setDeliveryStartTwo(String deliveryStartTwo) {
+		this.deliveryStartTwo = deliveryStartTwo;
+	}
+
+	public String getDeliveryEndTwo() {
+		return deliveryEndTwo;
+	}
+
+	public void setDeliveryEndTwo(String deliveryEndTwo) {
+		this.deliveryEndTwo = deliveryEndTwo;
+	}
+	
+	
 	
 }

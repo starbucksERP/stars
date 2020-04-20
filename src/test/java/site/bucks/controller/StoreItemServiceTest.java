@@ -72,5 +72,18 @@ public class StoreItemServiceTest {
 		System.out.println(storeItemDAO.selectStoreItemPrice(sale).getItemPrice()*sale.getSaleQty());
 	}
 	 */
+//	/*
+//	 * @Test public void test1() { Map<String, Object> map= new HashMap<String,
+//	 * Object>(); map.put("category", "B"); // map.put("subCategory", "01");
+//	 * storeItemDAO.selectSaleList(map);
+//	 * 
+//	 * }
+//	 */
+	
+	@Test
+	public void test2() {
+		Sale sale= new Sale();
+		storeItemService.getSaleList(sale);
+	}
 
 }

@@ -2,20 +2,25 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="site.bucks.mapper.OrderItemMapper">
 <!-- 지점 발주시 -->
-	<!-- order_item : 지점 발주 테이블에 기록시 주문 기록 -->
+	<!-- order_item : 지점 발주 테이블에 기록시 주문 기록(주체가 order) -->
 	<sql id="orderItemPprice">
 	 	(select item_Pprice from item where item_num=#{itemNum})
 	</sql>
 	<sql id="orderItemSprice">
 	 	(select item_Sprice from item where item_num=#{itemNum})
 	</sql>
-	<insert id="insertOrderItemByStore" parameterType="StoreItemHistory">
-		insert into order_item values(ORDER_SEQ.nextval, #{requestNum}, #{storeId}, #{itemNum},
-		 #{itemQty}, <include refid="orderItemPprice"/>, <include refid="orderItemSprice"/>, 10, sysdate, null, 0)
+	<insert id="insertStoreOrder" parameterType="OrderItem">
+		<selectKey resultType="int" keyProperty="orderSeq" order="BEFORE">
+			select order_seq.nextval from dual		
+		</selectKey>
+		insert into order_item values(#{orderSeq}, #{requestNum}, #{storeId}, #{itemNum},
+		 #{orderQty}, 999, 999, 10, sysdate, null, 0)
 	</insert>
+	
 <!-- 지점 발주시 -->
 
-<!-- 지점에서 발주 수정시 -->
+<!-- ???????????????? -->
+<!-- 지점에서 발주 수정시 --> 
 	<!-- 오더의 구별값은 order_seq이지만 sih테이블 값으로 고유값을 뽑아올 수 없으므로 여러데이터를 비교해서 같은 결과값을 가진 값을 업데이트 -->
 	<update id="updateOrderItemByStore" parameterType="StoreItemHistory">
 		update order_item set item_num = #{itemNum}, order_qty=#{itemQty}, request_date=sysdate 
@@ -30,6 +35,55 @@
 	</update>
 <!-- 지점 입고 확인시 storeItemHistory 테이블에서 일어나는 일련의 메소드 -->
 
+
+<!--  0417 가을이 -->
+	<!-- 매개변수값은 상태와 도착날짜뿐 -->
+	<update id="updateOrderItem" parameterType="OrderItem">
+		update order_item 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="requestState!=null and requestState!=0">
+				request_state=#{requestState},
+			</if>
+			<if test="deliveryDate!=null and deliveryDate!=''">
+				delivery_date=#{deliveryDate}
+			</if>
+		</trim>
+		where request_num=#{requestNum}
+	</update>
+	
+	
+	<!-- 체크박스 foreach List받기처리 -->
+	<select id="selectOrderItemList" resultType="OrderItem">
+		select * from order_item
+		<where>
+			<if test="requestDate!=null and requestDate!=''">
+				REQUEST_DATE BETWEEN #{requestDate} AND #{requestDatePair}
+			</if>
+			<if test="requestState!=null and requestState!=0">
+				AND REQUEST_STATE=#{requestState}
+			</if>
+			<if test="orderQty!=null and orderQty!=0">
+				AND ORDER_QTY=#{orderQty}
+			</if>
+			<if test="storeId!=null and storeId!=0">
+				AND STORE_ID=#{storeId}
+			</if>
+			<if test="itemNum!=null and itemNum!=''">
+				AND ITEM_NUM!=null=#{itemNum}
+			</if>
+		</where>
+		order by REQUEST_DATE desc
+	</select>
+	
+	<!-- 반환 >> 상품번호&수량 -->
+	<select id="selectOrderItem" parameterType="int" resultType="OrderItem">
+		select * from order_item where ORDER_SEQ=#{orderSeq}
+	</select>
+	
+
+
+	
+	
 	
 	
 </mapper>

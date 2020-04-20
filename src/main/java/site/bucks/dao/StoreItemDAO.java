@@ -5,6 +5,7 @@ import java.util.Map;
 
 import site.bucks.dto.ProductRecipe;
 import site.bucks.dto.Sale;
+import site.bucks.dto.SaleItem;
 import site.bucks.dto.StoreItem;
 import site.bucks.dto.StoreItemHistory;
 
@@ -18,5 +19,8 @@ public interface StoreItemDAO {
 	
 	int updateStoreItemReceiptProcess(StoreItemHistory sih);
 	
-	List<Sale> selectSaleList();
+	List<SaleItem> selectSaleList(Sale sale);
+	
+	List<String> selectSaleProductName1(Sale sale);
+	List<String> selectSaleProductName2();
 }

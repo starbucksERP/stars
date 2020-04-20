@@ -21,10 +21,10 @@
 			<div class="right">
 				<button type="button" class="a-button black medium" id="chk" style="float: left;">전체 선택 / 해제</button>
 				<select>
-					<option value="">배송처리 현황 선택</option>
-					<option value="">1. 원두원두원두원두</option>
-					<option value="">2. 원두원두원두원두</option>
-					<option value="">3. 원두원두원두원두</option>
+					<option value="">검색조건 선택</option>
+					<option value="">1. 요청번호</option>
+					<option value="">2. 매장코드</option>
+					<option value="">-------</option>
 				</select>&nbsp;
 				<input type="search" />&nbsp;
 				<button type="button" class="a-button" style="padding: 3px 20px">검색</button>

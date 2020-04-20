@@ -37,11 +37,11 @@
 			<table class="table">
 				<thead>
 					<tr>
-						<th>품목명</th>
+						<th>품목코드/품목명</th>
 						<td>
 							<input type="search">&nbsp;<a href="" class="a-button gray search-icon"><i class="fas fa-search"></i></a>
 						</td>
-						<th>카테고리</th>
+						<th>상품카테고리</th>
 						<td>
 							<select>
 								<optgroup label="전체">
