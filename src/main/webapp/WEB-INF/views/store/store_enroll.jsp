@@ -23,7 +23,9 @@
 			<h3>지점 등록 / 수정</h3>
 			<hr />
 			<div class="information-left">
-				<div class="right"><button type="button" id="modifyBtn" class="a-button yellow medium">수정</button></div>
+			<br />
+				<span id="length"></span>
+				<span style="float: right;"><button type="button" id="modifyBtn" class="a-button yellow medium">수정</button></span>
 				<div id="checkErrorMsg" style="color:red; display: none;">하나만 체크해 주세요.</div>
 				<div id="storeInsertDiv"></div>
 				<table class="table">
@@ -47,6 +49,7 @@
 				<!-- 탭 컨텐츠 영역 -->
 				<div class="enroll-div">
 				<!-- 매장정보 -->
+				<%-- 매장정보 입력 영역 --%>
 				<fieldset id="tab1" class="enroll-fieldset" style="display: block">
 					<!--  
 					<label>
@@ -54,28 +57,28 @@
 					</label><br/>
 					-->
 					<label>
-						<span>지점명 </span><input type="text" id="storeName"/>
+						<span>지점명 </span><input type="text" id="storeName" name="storeName"/>
 					</label><br />
 					<label>
-						<span>지점주소 </span><input type="text" id="storeAddress" style="width: 250px;"/>
+						<span>지점주소 </span><input type="text" id="storeAddress" name="storeAddress" style="width: 250px;"/>
 					</label><br />
 					<label>
-						<span>점주명 </span><input type="text" id="storeName"/>
+						<span>점주명 </span><input type="text" id="storeOwner" name="storeOwner"/>
 					</label><br />
 					<label>
-						<span>지점 전화번호 </span><input type="text" id="storePhone"/>
+						<span>지점 전화번호 </span><input type="text" id="storePhone" name="storePhone"/>
 					</label><br />					
 					<span class="staff">구분 </span>	
 					<label class="gLabel"><input type="radio" name="radio-name" class="fChk" value="head">본점</label>
-					<label class="gLabel"><input type="radio" name="radio-name" class="fChk" value="branch">지점</label>
+					<label class="gLabel"><input type="radio" name="radio-name" class="fChk" value="branch" checked="checked">지점</label>
 					<label class="gLabel"><input type="radio" name="radio-name" class="fChk" value="close">폐점</label>
 					<br />
 					<label>
-						<span>개업일 </span><input type="text" class="openDate"/>
+						<span>개업일 </span><input type="text" id="storeOpen" name="storeOpen"/>
 					</label><br />
 					<div id="openErrorMsg" style="color:red; display: none;">&nbsp;&nbsp;개업일을 반드시 입력해 주세요.</div>
 					<label>
-						<span>폐업일 </span><input type="text" class="closeDate"/>
+						<span>폐업일 </span><input type="text" id="storeClose" name="storeClose" disabled="disabled"/>
 					</label><br />
 					<div id="closeErrorMsg" style="color:red; display: none;">&nbsp;&nbsp;폐업일을 반드시 입력해 주세요.</div>
 					<span class="staff">지점 이미지 </span>&nbsp;
@@ -103,7 +106,6 @@
 					</label><br />
 				</fieldset>
 				-->
-				
 					
 				</div>
 			</div>
@@ -112,29 +114,6 @@
 
 	</div>
 </div> 
-
-<script id="templateStore" type="text/x-handlebars-template">
-	<table class="table">
-	<tbody>
-		<tr>
-			<th><input type="checkbox" class="allChk"></th>
-			<th>지점코드</th>
-			<th>지점명</th>
-			<th>점주명</th>
-			<th>구분</th>
-		</tr>
-		{{#each.}}
-		<tr>
-			<td><input type="checkbox" class="rowChk"></td>
-			<td>{{storeId }}</td>
-			<td>{{storeName }}</td>
-			<td>{{storeOwner }}</td>
-			<td>{{storeState }}</td>
-		</tr>
-		{{/each}}
-	</tbody>
-	</table>
-</script>
 
 
 <script type="text/javascript">
@@ -156,7 +135,8 @@
 				 $("#storeInsertDiv").html(template(json.storeList)); */
 				 if(json.storeList.length==0){
 					 $(".table>tbody").append("<tr><td colspan='5'>검색된 지점정보가 없습니다.</td></tr>");
-				 }else{
+				 } else {
+					 $(".table>tbody tr:not(:first)").empty();
 					 $(json.storeList).each(function(i) {
 						 var state= json.storeList[i].storeState;
 						 if(state==0){
@@ -176,7 +156,12 @@
 						 "</tr>";
 						$(".table>tbody").append(storeAdd);
 					 })
-					 
+
+					 	$("#length").empty();
+					 	
+						var n = ($( 'tr' ).length)-1;
+						var nAdd = "<p style='display: inline-block;'>총 매장수 :"+n+"</p>";
+						$("#length").append(nAdd);
 				 }
 				 
 			 },
@@ -186,6 +171,47 @@
 			 }
 		});		
 	}
+	
+	 $("#addStoreBtn").click(function() {
+		 
+		 	//입력값을 반환받아 저장 
+		 	var storeName=$("#storeName").val();
+		 	var storeAddress=$("#storeAddress").val();
+		 	var storeOwner=$("#storeOwner").val();
+		 	var storePhone=$("#storePhone").val();
+		 	var storeOpen=$("#storeOpen").val();
+		 	var storeClose=$("#storeClose").val();
+			 
+		 	$.ajax({
+		 		type: "POST",
+		 		 url: "storeAdd",
+		 		 headers: {"content-type":"application/json"},
+		 		 data: JSON.stringify({
+		 				"storeName":storeName,
+						"storeAddress":storeAddress,
+						"storeOwner":storeOwner,
+						"storePhone":storePhone,
+						"storeOpen":storeOpen,
+						"storeClose":storeClose
+		 		 }),
+		 		 dataType: "text",
+		 		 success: function(text) {
+		 			 if(text=="success") {
+		 			 	$("#storeName").val("");
+		 			 	$("#storeAddress").val("");
+		 			 	$("#storeOwner").val("");
+		 			 	$("#storePhone").val("");
+		 			 	$("#storeOpen").val("");
+		 			 	$("#storeClose").val("");
+		 			 	storeDisplay();
+		 			 }
+		 		 },
+		 		 error: function (xhr) {
+					alert("에러코드 = "+xhr.status)
+				}
+		 	});
+			 
+		 });
 
 
 	<%-- 지점정보 / 점주정보 탭이동 
@@ -217,13 +243,14 @@
 		var checkValue = $("input:radio[name='radio-name']:checked").val();
 		
 		if( checkValue != 'close') {
-			$('.openDate').prop('disabled',false);
-			$('.openDate').focus();
-			$('.closeDate').prop('disabled',true);
+			$('#storeOpen').prop('disabled',false);
+			$('#storeOpen').focus();
+			$('#storeClose').prop('disabled',true);
 		} else {
-			$('.openDate').prop('disabled',true);
-			$('.closeDate').prop('disabled',false);
-			$('.closeDate').focus();
+			document.getElementById('storeClose').disabled=false;
+			$('#storeOpen').prop('disabled',true);
+			$('#storeClose').prop('disabled',false);
+			$('#storeClose').focus();
 		}
 	});
 	
@@ -255,21 +282,10 @@
 		}
 	}
 	 */
-	 $("#addStoreBtn").click(function() {
-	 	//입력값을 반환받아 저장 
-	 	var storeName=$("#storeName").val();
-	 	var storeAddress=$("#storeAddress").val();
-	 	var storeName=$("#storeName").val();
-	 	var storePhone=$("#storePhone").val();
-	 	var openDate=$(".openDate").val();
-	 	var closeDate=$(".closeDate").val();
-		 
-		 
-		 storeDisplay();
-	 });
+	 	
+
 	
 </script>
-
 
 
 

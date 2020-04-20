@@ -10,9 +10,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.util.HtmlUtils;
 
 import site.bucks.dto.HewonTest;
 import site.bucks.dto.Store;
@@ -33,11 +35,18 @@ public class StoreController {
 		return "store/store_enroll";
 	}
 
-	/*
-	 * @RequestMapping(value = "/storeAdd") public String storeAdd() { return
-	 * "success"; }
-	 * 
-	 */
+	
+	@RequestMapping(value = "/storeAdd",method = RequestMethod.POST)
+	@ResponseBody
+	public String storeAdd(@RequestBody Store store) {
+		store.setStoreName(HtmlUtils.htmlEscape(store.getStoreName()));
+		store.setStoreAddress(HtmlUtils.htmlEscape(store.getStoreAddress()));
+		store.setStoreOwner(HtmlUtils.htmlEscape(store.getStoreOwner()));
+		storeService.addStore(store);
+		 return"success"; 
+	}
+	  
+	 
 //	지점 현황
 	@RequestMapping(value = "/storeSta")
 	public String storeSta(@ModelAttribute Store store, Model model) {

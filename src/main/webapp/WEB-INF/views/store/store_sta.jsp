@@ -30,7 +30,7 @@
 					<thead>
 						<tr>
 							<th>지점명</th>
-							<td><input type="search" name="storeName">&nbsp;<a href="" class="a-button gray search-icon"><i class="fas fa-search"></i></a></td>
+							<td><input type="search" name="storeName">&nbsp;</td>
 						</tr>
 						<tr>
 							<th>구분</th>
