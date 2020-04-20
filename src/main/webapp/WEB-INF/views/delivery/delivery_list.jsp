@@ -31,10 +31,13 @@
 							<tr>
 								<th>배송 시작일</th>
 								<td colspan="1">
+									<label class="gLabel"><input type="date" />&nbsp;<i class="far fa-calendar-alt"></i>&nbsp;&nbsp;~&nbsp;&nbsp;</label>
 									<label class="gLabel"><input type="date" />&nbsp;<i class="far fa-calendar-alt"></i></label>
 								</td>
+								
 								<th>배송 완료일</th>
 								<td colspan="1">
+									<label class="gLabel"><input type="date" />&nbsp;<i class="far fa-calendar-alt"></i>&nbsp;&nbsp;~&nbsp;&nbsp;</label>
 									<label class="gLabel"><input type="date" />&nbsp;<i class="far fa-calendar-alt"></i></label>
 								</td>
 							</tr>
@@ -43,9 +46,9 @@
 								<td colspan="3">
 									<select>
 										<option value="">배송처리 현황 선택</option>
-										<option value="">1. 원두원두원두원두</option>
-										<option value="">2. 원두원두원두원두</option>
-										<option value="">3. 원두원두원두원두</option>
+										<option value="">1. 배송 준비중</option>
+										<option value="">2. 배송중</option>
+										<option value="">3. 배송완료</option>
 									</select>
 								</td>
 							</tr>
@@ -57,7 +60,7 @@
 				<br />
 				<div class="right">
 					<button type="button" class="a-button big black" id="chk" style="float: left;">전체 선택 / 해제</button>
-					<button type="button" class="a-button big">단계 진행</button>
+					<button type="button" class="a-button big">배송 시작</button>
 				</div>
 				<br />
 				<br />

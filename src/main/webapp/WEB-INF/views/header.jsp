@@ -14,6 +14,7 @@
 			<li class="nav-item">지점관리<br /><span class="tri">▲</span></li>
 			<li class="nav-item">재고관리<br /><span class="tri">▲</span></li>
 			<li class="nav-item" style="width: 160px; padding: 0px;">발주/구매관리<br /><span class="tri">▲</span></li>
+			<li class="nav-item" style="width: 160px; padding: 0px;">[지점] 발주/구매관리<br /><span class="tri">▲</span></li>
 			<li class="nav-item">배송관리<br /><span class="tri">▲</span></li>
 			<li class="nav-item">회계관리<br /><span class="tri">▲</span></li>
 		</ul>
@@ -33,14 +34,20 @@
 			<li onclick="location.href='saleList'">판매조회</li>
 		</ul>
 		<ul class="drop-menu" style="padding-left: 5%">
-			<li onclick="location.href='receipt'">발주요청조회</li>
-			<li onclick="location.href='receipt'">발주현황조회</li>
-			<li onclick="location.href='buyPlan'">구매계획</li>
-			<li>구매현황</li>
-			<li onclick="location.href='buyIn'">구매입력</li>
+			<li onclick="location.href='orderReq'">발주요청조회</li>
+			<li onclick="location.href='orderList'">발주현황조회</li>
+			<li onclick="location.href='purchasePlan'">구매계획</li>
+			<li onclick="location.href='purchaselist'">구매현황</li>
+			<li onclick="location.href='purchaseAdd'">구매입력</li>
 			<li onclick="location.href='receipt'">입출하조회</li>
 		</ul>		
-		<ul class="drop-menu" style="/* padding-left: 20% */padding-left:30%">
+		<ul class="drop-menu" style="padding-left: 15%">
+			<li onclick="location.href='storeOrderInput'">발주입력</li>
+			<li onclick="location.href='storeOrderReq'">발주요청조회</li>
+			<li onclick="location.href='storeOrderSta'">발주현황조회</li>
+			<li onclick="location.href='storeReceipt'">입출하조회</li>
+		</ul>		
+		<ul class="drop-menu" style="/* padding-left: 20% */padding-left:35%">
 			<li onclick="location.href='deliveryReq'">배송요청조회</li>
 			<li onclick="location.href='deliveryList'">배송조회</li>
 		</ul>	

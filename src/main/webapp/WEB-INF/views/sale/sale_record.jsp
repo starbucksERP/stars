@@ -1,124 +1,176 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="container">
 	<div class="row">
 		<div class="sidebar">
 			<ul class="side-menu">
 				<li>
-					<button class="dropdown-btn">판매 기록<i class="fa fa-caret-down"></i></button>
+					<button class="dropdown-btn">재고관리<i class="fa fa-caret-down"></i></button>
+					<div class="dropdown-container">
+						<a href="">품목관리</a><br /><br />
+						<a href="">재고관리</a><br /><br />
+					</div>
 				</li>
 				<li>
-					<button class="dropdown-btn">판매 현황<i class="fa fa-caret-down"></i></button>
+					<button class="dropdown-btn">판매관리<i class="fa fa-caret-down"></i></button>
+					<div class="dropdown-container">
+						<a href="">판매기록</a><br /><br />
+						<a href="">판매현황</a>
+					</div>
 				</li>
+				
 			</ul>
 		</div>
 
 		<div class="main">
-			
+		
 			<h3>판매 등록</h3>
+			<br />
 			<hr />
-			<form action="saleList" method="post" id="saleRecord">
-				<div class="information">
-					<table class="table">
-						<thead>
-							<tr>
-								<td colspan="7">
-										<div class="right">
-											<button type="button" class="a-button medium purple" id="saleRecordAdd"><i class="fas fa-search"></i>&nbsp;판매기록 행 추가</button>
-										</div>
-									</td>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<th><input type="checkbox" class="allChk"></th>
-								<th>지점</th>
-								<th >대분류</th>
-								<th >소분류</th>
-								<th >상품명</th>
-								<th >수량</th>
-								 <th>옵션</th>
-							</tr>
-							<tr class="sale1">
-								<td><input type="checkbox" class="rowChk"></td>
-								<td >A6516</td>
-								<td>
-									<select name="category">
-										<option value="A">음료</option>
-										<option value="B">푸드</option>
-										<option value="C">상품</option>
-									</select>
-								</td>
-								<td >
-									<select name="subcategory">
-										<option value="">1</option>
-										<option value="">2</option>
-										<option value="">3</option>
-									</select>
-								</td>
-								<td >
-									<select name="product" style="min-width: 150px;">
-										<option value="">제품명</option>
-									</select>
-								</td>
-								<td>
-									<input type="number" name="qty" style="width: 50px;"/><span>&nbsp;개</span>
-								</td>
-								<td>
-									<button type="button" class="a-button red" onclick="reomoveRow(this)"><i class="fas fa-search"></i>&nbsp;삭제</button>
-								</td>							
-							</tr>
-						</tbody>
-						<tfoot>
-							<tr>
-								<td colspan="7"><div class="message center red-font"></div></td>
-							</tr>
-						</tfoot>
-					</table>
-				</div>
-				
-				<div class="right"><button type="submit" class="a-button big sea"><i class="fas fa-search"></i>&nbsp;등록</button></div>
-			</form>
+			<div class="information">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>판매등록일</th>
+							<td><label class="gLabel"><input type="date" readonly="readonly" />&nbsp;<i class="far fa-calendar-alt"></i></label>
+							<th>판매등록 매장</th>
+							<td><input type="text"  value="1594" readonly="readonly" id="storeId"/></td>
+						</tr>
+					</thead>
+				</table>
 			</div>
+			<hr/>
+			<br />
+			<div>
+				<button type="button" class="a-button padding-button addTr">항목추가</button>&nbsp;
+				<button type="button" class="a-button padding-button red delTr">항목삭제</button>
+			</div>
+			<div class="information">
+				<table class="table">
+					<tbody>
+						<tr>
+							<th><input type="checkbox" class="allChk"></th>
+							<th>판매날짜</th>
+							<th>지점</th>
+							<th>대분류</th>
+							<th>소분류</th>
+							<th>상품명</th>
+							<th>수량</th>
+							<th>판매액</th>
+						</tr>
+						<tr>
+							<td><input type="checkbox" class="rowChk"></td>
+							<td>2020-04-19</td>
+							<td>스타벅스 강남점</td>
+							<td>
+								<select name="category" class="category">
+	                            	<option value="">전체</option>
+	                            	<option value="A">제조음료 재료</option>
+	                            	<option value="B">푸드</option>
+	                            	<option value="C">상품</option>
+	                            </select>
+							</td>
+                            <td>
+                         		<select name="subCategory" class="subCategory">
+                         		</select>
+                           	</td>
+							<td>
+                           		<select name="saleProduct" class="saleProduct">
+                           		</select>
+                           	</td>
+							<td>
+								<input type="number" name="saleQty"/> 개
+							</td>
+							<td>
+								<input type="number" name="salePriceSum"/> 원
+							</td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="8"><div class="message center red-font"></div></td>
+						</tr>
+					</tfoot>
+				</table>
+				<div class="center">
+					<button type="button" class="a-button big" id="saleInput">판매 등록</button>
+					<button type="button" class="a-button sea big" onclick="reset()">다시 작성</button>
+				</div>
+			</div>
+				
+			
+			
+		</div>
+
 	</div>
 </div>
 
 
 <script type="text/javascript">
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth()+1; //January is 0!
+	var yyyy = today.getFullYear();
 	
-	var i=2;
-	$('#saleRecordAdd').click(function(){
-		var newitem = $(".table>tbody tr:eq(1)").clone();
-		newitem.removeClass();
-		newitem.addClass("sale"+i);
-		$(".table>tbody:last").append(newitem);
-		i++;
+	 
+	if(dd<10) {
+	    dd='0'+dd
+	} 
+	
+	if(mm<10) {
+	    mm='0'+mm
+	} 
+	
+	today = yyyy+'-'+mm+'-'+dd;
+	
+	
+	$("input[type='date']").val(today);
 
-	});
 	
-	function reomoveRow(obj) {
-	    var tr = $(obj).parent().parent();
-	    if(tr.attr('class')=='sale1'){
-	    	return;
-	    }else{
-		    tr.remove();
-	    }
-	};
 	
-	$("#saleRecord").submit(function() {
-		
-		var submitResult=true;
-		
-		if($('.rowChk').is(":checked")){
-			return submitResult=true;
+	$("#saleInput").click(function(){
+	    
+	    var param = [];
+	 	var sales=[];
+	 	
+	 	if($('.rowChk:checked').length==0){
+			$(".message").text("등록할 판매리스트를 체크해주세요")
 		}else{
-			$(".message").text("선택한 판매등록 리스트가 하나도 없습니다.");
-			submitResult=false;
+		    $(".rowChk:checked").each(function(i) {
+		 
+		    	sales = {
+		        	requestNum		: dd+mm+$("#storeId").val().substr(0, 1),
+		        	storeId			: $("#storeId").val(),
+	        		itemNum        	: $(this).parents('tr').find(".itemNum").val(),
+	        	//	itemName      	: $(this).parents('tr').find(".itemName").val(),
+	        		orderQty        : $(this).parents('tr').find(".orderQty").val()
+		        };
+		        
+		        param.push(sales);
+		    });
+		    
+	
+		    $.ajax({
+				type: "POST",
+				url: "sale_record",
+				headers: {"content-type":"application/json"},
+				data: JSON.stringify(param),
+				dateType: "text",
+				success: function(text) {
+					if(text=="success") {
+						alert("판매등록이 성공적으로 이루어졌습니다.")
+						location.href="/sale_record"
+					}
+				},
+				error: function(xhr) {
+					alert("에러코드 = "+xhr.status)
+				}
+		    
+			});
 		}
-		
-		return submitResult;
-		
 	});
+	
+	
 	
 	
 </script>
