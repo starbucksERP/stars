@@ -15,8 +15,8 @@ public class DeliveryServiceImpl implements DeliveryService{
 	private DeliveryDAO deliveryDAO;
 
 	@Override
-	public void addDeliveryRequest(Delivery delivery) {
-		deliveryDAO.insertDeliveryRequest(delivery);
+	public int addDeliveryRequest(Delivery delivery) {
+		return deliveryDAO.insertDeliveryRequest(delivery);
 		
 	}
 
@@ -26,12 +26,10 @@ public class DeliveryServiceImpl implements DeliveryService{
 	}
 
 	@Override
-	public void modifyDelieveryState(List<Delivery> delivery) {
-		
-		if(delivery.isEmpty()) {
-			throw new RuntimeException("선택된 배송일정이 없습니다.");
-		}
-		
+	public int modifyDelieveryState(int deliverySeq) {
+		return deliveryDAO.updateDeliveryState(deliverySeq);
 	}
+
+	
 
 }

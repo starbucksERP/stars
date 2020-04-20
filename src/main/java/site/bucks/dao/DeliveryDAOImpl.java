@@ -31,9 +31,10 @@ public class DeliveryDAOImpl implements DeliveryDAO {
 	}
 
 	@Override
-	public int updateDeliveryState(String requestNum) {
-		return sqlSession.getMapper(DeliveryMapper.class).updateDeliveryState(requestNum);
+	public int updateDeliveryState(int deliverySeq) {
+		return sqlSession.getMapper(DeliveryMapper.class).updateDeliveryState(deliverySeq);
 	}
-	
+
+
 	
 }
