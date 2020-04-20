@@ -71,7 +71,7 @@ public class StoreItemHistoryServiceImpl implements StoreItemHistoryService{
 		orderItemDAO.updateOrderReceiptProcess(orderItem);
 //		지점재고수량변경
 		storeItemDAO.updateStoreItemReceiptProcess(orderItem);
-	}
+	} 
 
 
 	
