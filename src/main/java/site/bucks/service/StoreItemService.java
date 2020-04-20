@@ -8,6 +8,7 @@ import site.bucks.dto.SaleItem;
 
 public interface StoreItemService {
 	void addSale(Sale sale);
+	void removeSale(Sale sale);
 	List<SaleItem> getSaleList(Sale sale);
 	Map<String, Object> getSaleProductName(Sale sale);
 

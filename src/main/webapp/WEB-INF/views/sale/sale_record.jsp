@@ -32,7 +32,7 @@
 					<thead>
 						<tr>
 							<th>판매등록일</th>
-							<td><label class="gLabel"><input type="date" readonly="readonly" />&nbsp;<i class="far fa-calendar-alt"></i></label>
+							<td><label class="gLabel"><input type="date" readonly="readonly" id="saleDate"/>&nbsp;<i class="far fa-calendar-alt"></i></label>
 							<th>판매등록 매장</th>
 							<td><input type="text"  value="1594" readonly="readonly" id="storeId"/></td>
 						</tr>
@@ -79,10 +79,10 @@
                            		</select>
                            	</td>
 							<td>
-								<input type="number" name="saleQty"/> 개
+								<input type="number" name="saleQty" class="saleQty" /> 개
 							</td>
 							<td>
-								<input type="number" name="salePriceSum"/> 원
+								<input type="number" name="salePriceSum" class="salePriceSum" readonly="readonly"/> 원
 							</td>
 						</tr>
 					</tbody>
@@ -139,11 +139,9 @@
 		    $(".rowChk:checked").each(function(i) {
 		 
 		    	sales = {
-		        	requestNum		: dd+mm+$("#storeId").val().substr(0, 1),
 		        	storeId			: $("#storeId").val(),
-	        		itemNum        	: $(this).parents('tr').find(".itemNum").val(),
-	        	//	itemName      	: $(this).parents('tr').find(".itemName").val(),
-	        		orderQty        : $(this).parents('tr').find(".orderQty").val()
+		        	saleProduct   	: $(this).parents('tr').find(".saleProduct").val(),
+		        	saleQty         : $(this).parents('tr').find(".saleQty").val()
 		        };
 		        
 		        param.push(sales);
@@ -159,7 +157,7 @@
 				success: function(text) {
 					if(text=="success") {
 						alert("판매등록이 성공적으로 이루어졌습니다.")
-						location.href="/sale_record"
+						location.href="${pageContext.request.contextPath }/sale_list";
 					}
 				},
 				error: function(xhr) {
@@ -170,6 +168,10 @@
 		}
 	});
 	
+	
+	function reset() {
+		
+	};
 	
 	
 	

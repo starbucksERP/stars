@@ -1,8 +1,6 @@
 package site.bucks.controller;
 
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import site.bucks.dto.Sale;
@@ -25,7 +22,7 @@ public class StoreItemController {
 	@Autowired
 	private StoreItemService storeItemService;
 	
-//	�Ǹ� �Է�
+//	판매등록
 	@RequestMapping(value = "/sale_record",method = RequestMethod.GET)
 	public String sale_record() {
 		return "sale/sale_record";
@@ -36,14 +33,20 @@ public class StoreItemController {
 	public String sale_record(@RequestBody List<Sale> saleList) {
 		
 		for(Sale sale:saleList) {
-			
+			storeItemService.addSale(sale);
 		}
 		return "success";
 	}
 	
-
+//	판매삭제
+	@RequestMapping(value = "/sale_delete", method = RequestMethod.POST)
+	public String sale_delete(Sale sale) {
+		storeItemService.removeSale(sale);
+		return "redirect:/sale_list";
+	}
 	
-//	�Ǹ� ��ȸ
+	
+//	판매조회
 	@RequestMapping(value = "/sale_list")
 	public String sale_list(@ModelAttribute Sale sale, Model model) {
 		model.addAttribute("saleList", storeItemService.getSaleList(sale));
@@ -51,7 +54,7 @@ public class StoreItemController {
 	}
 	
 	
-//	��ǰ ��ȸ
+//	카테고리 별 상품명 불러오기
 	@RequestMapping(value = "/saleProduct", method = RequestMethod.GET)
 	@ResponseBody
 	public Map<String , Object> saleProduct(@ModelAttribute Sale sale) {

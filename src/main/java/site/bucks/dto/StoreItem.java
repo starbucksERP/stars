@@ -2,22 +2,22 @@ package site.bucks.dto;
 
 /*
  
-
-¿Ã∏ß         ≥Œ?       ¿Ø«¸           
+Ïù¥Î¶Ñ         ÎÑê?       Ïú†Ìòï           
 ---------- -------- ------------ 
 ITEM_NUM   NOT NULL VARCHAR2(50) 
 STORE_ID   NOT NULL VARCHAR2(20) 
 ITEM_NAME  NOT NULL VARCHAR2(20) 
 ITEM_QTY   NOT NULL NUMBER       
 MIN_QTY    NOT NULL NUMBER       
-ITEM_PRICE NOT NULL NUMBER   
+ITEM_PRICE NOT NULL NUMBER  
+
  */
 
 public class StoreItem {
 	private String itemNum;
 	private int storeId;
 	private String itemName;
-	private int itemQty;
+	private double itemQty;
 	private int itemPrice;
 	private int minQty;
 	
@@ -49,11 +49,11 @@ public class StoreItem {
 		this.storeId = storeId;
 	}
 
-	public int getItemQty() {
+	public double getItemQty() {
 		return itemQty;
 	}
 
-	public void setItemQty(int itemQty) {
+	public void setItemQty(double itemQty) {
 		this.itemQty = itemQty;
 	}
 
