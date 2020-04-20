@@ -1,12 +1,17 @@
 package site.bucks.controller;
 
+
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import site.bucks.dto.Sale;
 import site.bucks.service.StoreItemService;
@@ -17,26 +22,44 @@ public class StoreItemController {
 	@Autowired
 	private StoreItemService storeItemService;
 	
-	@RequestMapping(value = "/sale_record", method =RequestMethod.GET)
-	public String record() {
-		
+//	ÌåêÎß§Îì±Î°ù
+	@RequestMapping(value = "/sale_record",method = RequestMethod.GET)
+	public String sale_record() {
 		return "sale/sale_record";
 	}
-
 	
-	@RequestMapping(value = "/sale_record", method =RequestMethod.POST)
-	public String record(@ModelAttribute String[] product, String[] qty) {
+	@RequestMapping(value = "/sale_record", method = RequestMethod.POST)
+	@ResponseBody
+	public String sale_record(@RequestBody List<Sale> saleList) {
 		
-//		sale ¿¸¥ﬁπﬁ¿ª∂ß « ø‰«— ∞™ => ªÛ«∞∏Ì, ªÛ«∞∞≥ºˆ, ¡ˆ¡°∏Ì (¡§»Æ«— ∞™¿∏∑Œ ¿¸¥ﬁπﬁæ∆æﬂ«‘)
-		
-//		@SuppressWarnings("unchecked")
-//		List<Sale> list=(List<Sale>) saleCollection;
-//		
-//		for(Sale sale:list) {
-//			storeItemService.saleRecord(sale);
-//		}
-//			
-		return "sale/sale_record";
+		for(Sale sale:saleList) {
+			storeItemService.addSale(sale);
+		}
+		return "success";
 	}
+	
+//	ÌåêÎß§ÏÇ≠Ï†ú
+	@RequestMapping(value = "/sale_delete", method = RequestMethod.POST)
+	public String sale_delete(Sale sale) {
+		storeItemService.removeSale(sale);
+		return "redirect:/sale_list";
+	}
+	
+	
+//	ÌåêÎß§Ï°∞Ìöå
+	@RequestMapping(value = "/sale_list")
+	public String sale_list(@ModelAttribute Sale sale, Model model) {
+		model.addAttribute("saleList", storeItemService.getSaleList(sale));
+		return "sale/sale_list";
+	}
+	
+	
+//	Ïπ¥ÌÖåÍ≥†Î¶¨ Î≥Ñ ÏÉÅÌíàÎ™Ö Î∂àÎü¨Ïò§Í∏∞
+	@RequestMapping(value = "/saleProduct", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String , Object> saleProduct(@ModelAttribute Sale sale) {
+		return storeItemService.getSaleProductName(sale);
+	}
+	
 
 }

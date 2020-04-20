@@ -22,21 +22,21 @@
 		insert into sale values(#{saleSeq},#{storeId},#{saleProduct},#{saleQty},#{salePriceSum},sysdate)
 	</insert>
 	
-	<!-- 특정 재고 잔량 검색 -->
-	<select id="selectItemRest" parameterType="string" resultType="int">
-		select item_rest from record where item=#{item}
-	</select>
+	<!-- 판매기록 등록시 지점재고 업데이트 -->
+	<update id="updateStoreItemRecord">
+		update store_item set item_qty=item_qty-#{saleQty} where item_name=#{saleProduct} and store_id=#{storeId}
+	</update> 
 	
-	<!-- 재고 잔량 기록 -->
-	<update id="updateRecord" parameterType="map">
-	 	update record set item_rest=#{itemRest} where item=#{itemName}
+	<!-- 판매기록 삭제시 지점재고 업데이트 백하는 sql -->
+	<update id="updateStoreItemBack">
+		update store_item set item_qty=item_qty+#{saleQty} where item_name=#{saleProduct} and store_id=#{storeId}
 	</update>
 	
-	<!-- 원재료 들어올시 지점재고 업데이트 / 완제품 들어올시 지점재고 업데이트  - item 테이블 코드로 item name 발췌 -->
-	<update id="updateStoreItem" parameterType="map">
-		update store_item set item_qty=item_qty-#{itemQty} where item_name=#{itemName}
-	</update> 
+	<delete id="deleteSale">
+		delete from sale where sale_seq=#{saleSeq}
+	</delete>
 <!-- 판매등록시 sql -->	
+	
 	
 	
 <!-- 지점에서 입고 확인시 storeItemHistory 테이블에서 일어나는 일련의 메소드 -->
@@ -46,28 +46,61 @@
 	</update>
 <!-- 지점에서 입고 확인시 storeItemHistory 테이블에서 일어나는 일련의 메소드 -->
 
+	<resultMap type="SaleItem" id="saleRM">
+		<association property="sale" javaType="Sale">
+			<id column="sale_seq" property="saleSeq"/>
+			<result column="store_id" property="storeId"/>
+			<result column="sale_product" property="saleProduct"/>
+			<result column="sale_qty" property="saleQty"/>
+			<result column="sale_date" property="saleDate"/>
+		</association>
+		<association property="storeItem" javaType="StoreItem">
+			<id column="item_num" property="itemNum"/>
+			<result column="item_name" property="itemName"/>		
+			<result column="item_price" property="itemPrice"/>
+		</association>
+		<association property="productRecipe" javaType="ProductRecipe">
+			<id column="product" property="product"/>		
+			<result column="product_price" property="productPrice"/>
+		</association>
+	</resultMap>
 
 	<!-- 판매 기록 검색 -->
-	<!--  
-	<select id="selectSaleList" resultType="Sale">
-		select A.*,B.item_num from sale A join store_item B on (A.sale_product=B.item_name) 
+	<select id="selectSaleList" resultMap="saleRM">
+		select A.*,B.item_num,B.item_price,C.product_price from (sale A left join store_item B on A.sale_product=B.item_name) left join product_recipe C on A.sale_product=C.product 
 		<where>
-			<if test="saleDate1!=null and saleDate1!='' and saleDate2!=null and saleDate2!=''">
-				sale_date between #{saleDate1} and #{saleDate2}
-			</if>
 			<if test="category!=null and category!=''">
-				item_num LIKE #{category}||'%'
+				A.sale_product like #{category}||'%' 
 			</if>
 			<if test="subCategory!=null and subCategory!=''">
-				item_num LIKE (_#{subCategory}||'%')
+				and A.sale_product like '_'||#{subCategory}||'%'
 			</if>
 			<if test="saleProduct!=null and saleProduct!=''">
-				sale_product=	#{saleProduct}
+				and A.sale_product=#{saleProduct}
 			</if>
-		</where>
+			<if test="saleQty1!=null and saleQty1!='' and saleQty2!=null and saleQty2!=''">
+				and A.sale_qty between #{saleQty1} and #{saleQty2}
+			</if>
+			<if test="saleDate1!=null and saleDate1!='' and saleDate2!=null and saleDate2!=''">
+				and A.sale_date between #{saleDate1} and #{saleDate2}
+			</if>
+			<if test="saleDate!='' and saleDate!=null">
+				and A.sale_date between #{saleDate} and #{saleDate}+1 and
+			</if>
+		</where> 
+		order by A.sale_seq desc, B.item_num
 	</select>
-	-->
 	
+		
+	<!-- 대분류, 소분류 상품 검색 -->
+	<select id="selectSaleProductName1" resultType="string">
+		select sale_product from sale where sale_product like #{category}||'%' and sale_product like '_'||#{subCategory}||'%'
+	</select>
+	
+	<!-- 단순 조합상품 검색 -->
+	<select id="selectSaleProductName2" resultType="string">
+		select product from product_recipe
+	</select>
 	
 	
 </mapper>

@@ -62,19 +62,20 @@
 					</thead>
 				</table>
 				
-				<div class="right">
-					<button type="button" class="a-button black">전체</button>
-					<button type="button" class="a-button gray">구매진행</button>
-					<button type="button" class="a-button gray">완료</button>
-				</div>
-				
-				<hr  style="margin-top: -2px;"/>
+				<div class="right" style="float: right;">
+		            <ul class="order-sta">
+		               <li class="blackgray">전체</li>
+		               <li >구매진행</li>
+		               <li >구매종결</li>
+		            </ul>
+	        	 </div>
+				<br />
+				<hr  style="margin-top: 14px;"/>
 				<br />
 				<div class="date-output right">2020/02/18 - 2020/03/03</div>
 				<br />
 				<div>
-					<button type="button" class="a-button">구매완료</button>&nbsp;<button type="button" class="a-button red">취소</button>
-					<span style="float: right;"><button type="button" class="a-button"><i class="fas fa-plus"></i>&nbsp;신규 구매</button></span>
+					<button type="button" class="a-button green padding-button">구매확인</button>&nbsp;<button type="button" class="a-button green padding-button">구매종결</button>
 				</div>
 				<div class="information">
 					<table class="table">
@@ -99,7 +100,7 @@
 								<td>40</td>
 								<td>510,000</td>
 								<td class="green-font">요청</td>
-								<td><button type="button" class="a-button blackgray">취소</button></td>
+								<td><button type="button" class="a-button red inner-button">취소</button></td>
 							</tr>
 							<tr>
 								<td><input type="checkbox" class="rowChk"></td>
@@ -109,8 +110,19 @@
 								<td>리저브_노브크릭위스키배럴과테말라</td>
 								<td>100</td>
 								<td>1,615,000</td>
-								<td class="red-font">완료</td>
-								<td><button type="button" class="a-button blackgray">취소</button></td>
+								<td class="green-font">종결</td>
+								<td>-</td>
+							</tr>
+							<tr>
+								<td><input type="checkbox" class="rowChk"></td>
+								<td>H</td>
+								<td>2020-03-03</td>
+								<td>COJDOOEFJFJ</td>
+								<td>리저브_노브크릭위스키배럴과테말라</td>
+								<td>100</td>
+								<td>1,615,000</td>
+								<td class="red-font">취소</td>
+								<td>-</td>
 							</tr>
 						</tbody>
 					</table>

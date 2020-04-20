@@ -12,11 +12,15 @@ a{
 input[type="search"], input[type="date"],  input[type="text"], select{
 	height: 25px;
 }
+input[type="number"]{
+	width: 90px;
+	text-align: right;
+}
 
 label span{
 	display: inline-block;
-	width: 100px;
-	padding: 15px 10px;
+	width: 120px;
+	padding: 15px 27px;
 }
 
 fieldset {
@@ -254,7 +258,7 @@ legend {
 }
 
 .table th {
-     background: #f6f5ef;
+     background: #D4C9C2;
       text-align: center;
 }
 
@@ -368,6 +372,14 @@ legend {
 	background: #006633 !important; 
 }
 
+.darkgreen{
+	background: #006C49 !important;
+}
+
+.yellow{
+	background: rgb(237, 175, 38);
+}
+
 .pink{
 	background: rgb(255, 243, 240) !important;
 }
@@ -377,7 +389,11 @@ legend {
 }
 
 .beige{
-	background: rgba(243, 156, 18, 0.19) !important;
+	background: rgb(243, 156, 18, 0.19) !important;
+}
+
+.coral{
+	background: #D4C9C2 !important;
 }
 
 .green-font{
@@ -400,7 +416,7 @@ legend {
 }
 
 .enroll-ul>li{
-	background:#f6f5ef; 
+	background:#D4C9C2; 
 	padding: 20px; 
 	cursor: pointer;
 }
@@ -408,19 +424,21 @@ legend {
 .enroll-div{
 	padding:30px; 
 	width: 85%; 
-	background:#f6f5ef; 
 }
 
 .enroll-fieldset{
 	background: white; 
 	margin: 10px;
-	 padding: 30px 5px;
+	padding: 30px 5px;
+	padding-left: 40px;
+	width: 83%;
+	
 }
 
 .staff{
 	display: inline-block; 
-	width: 90px; 
-	padding: 15px 10px;
+	width: 110px; 
+	padding: 15px 27px;
 }
 
 .staff-head{
@@ -473,6 +491,18 @@ legend {
 
 .date-output>input{
 	border: none;
+}
+
+.category{
+	width: 120px;
+}
+
+.subCategory{
+	width: 170px;
+}
+
+.saleProduct{
+	width: 220px;
 }
 
 /*	 

@@ -2,6 +2,7 @@ package site.bucks.service;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import site.bucks.dao.StoreItemDAO;
 import site.bucks.dto.ProductRecipe;
 import site.bucks.dto.Sale;
+import site.bucks.dto.SaleItem;
 
 @Service
 public class StoreItemServiceImpl implements StoreItemService{
@@ -17,101 +19,118 @@ public class StoreItemServiceImpl implements StoreItemService{
 	@Autowired
 	private StoreItemDAO storeItemDAO;
 	
-//	ÆÇ¸Å¸¦ ±â·ÏÇÏ¸é -> ÆÇ¸Åinsert, ¿øÀç·áÀÎÁö ¿ÏÁ¦Ç°ÀÎÁö ±¸º°ÈÄ(productRecipe À¯¹«) ¿øÀç·á¸é ¿øÀç·á ½×¾Æ¼­  100°³ ¸ğÀÏ½Ã Àç°í ¼ÒÁø / ¿ÏÁ¦Ç°ÀÏ½Ã Àç°í ¹Ù·Î ¼ÒÁø
+//	íŒë§¤ ê¸°ë¡
 	@Override
 	public void addSale(Sale sale) {
-//		»óÇ°·¹½ÃÇÇ¿¡ Á¸ÀçÇÏ´ÂÁö ¿©ºÎ ÆÇ´Ü => Á¶ÇÕµÇ´Â »óÇ°ÀÎÁö ¿ÏÁ¦Ç°ÀÎÁö
+//		íŒë§¤ê¸°ë¡ì‹œ ì™„ì œí’ˆ ë¶„ë³„
 		ProductRecipe pr=storeItemDAO.selectProduct(sale.getSaleProduct());
 		
 		if(pr!=null) {
-			saleRecord(sale, pr);
-		}else {
-			saleRecord(sale);
-		}
-		
-	}
-	
-	
-//	Àç·á·Î ¹ŞÀ»¶§ Á¶ÇÕ
-	public void saleRecord(Sale sale, ProductRecipe pr) {
-//		ÆÇ¸Å µî·Ï Àü ÃÑÇÕ°è ±¸ÇÏ±â
-		sale.setSalePriceSum(pr.getProductPrice()*sale.getSaleQty());
-//		ÆÇ¸Åµî·Ï
-		storeItemDAO.insertSale(sale);
-		int qty = sale.getSaleQty();
-		
-		String item1=pr.getItem1();
-		String item2=pr.getItem2();
-		String item3=pr.getItem3();
-		
-		calculator1(qty,item1);
-		
-		if(item2!=null) {
-			calculator1(qty, item2);
-		}
-		if(item3!=null) {
-			calculator1(qty, item3);
-		}
-		
-	}
-
-	public void calculator1(int qty, String item) {
-//		¿©±â¼­ Ãß°¡ÇÕ ¸ÊÀº updateRecord ¹× updateItem µÎ°³ÀÇ ¸Ş¼Òµå¿¡ »ç¿ë
-		Map<String, Object> map=new HashMap<String, Object>();
-		int itemRest= storeItemDAO.selectItemRest(item);
-//		¡Ú¿©±â¼­ item=Àç·á
-		map.put("itemName", item);
-		
-//		³²Àº Àç°í¿¡ »óÇ°Àç°í ÇÕ
-		itemRest=itemRest+qty;
-//		±× ÇÕÀÇ ¹­À½
-		int bundle = itemRest/100;
-//		100ÀÇ ÀÚ¸®¸¦ Á¦¿ÜÇÑ ³²Àº Àç¼ö
-		itemRest=itemRest-(bundle*100);
-		
-		if(bundle>=1) {
-			map.put("itemQty",bundle);
-//			store Àç°í ¾÷µ¥ÀÌÆ® ¸Ş¼Òµå
-			storeItemDAO.updateStoreItem(map);
-		}else {
-//			¿©±â¼­ Ãß°¡ÇÑ ¸ÊÀº updateRecord¿¡ »ç¿ë
-			map.put("itemRest",itemRest);
+//			ë ˆì‹œí”¼ í…Œì´ë¸”ì—ì„œ ìƒí’ˆê°€ê²© ê°€ì ¸ì™€ì„œ ê°œìˆ˜ ê³±í•´ì„œ ì´í•© ì €ì¥
+			sale.setSalePriceSum(pr.getProductPrice()*(int)sale.getSaleQty());
+//			íŒë§¤ê¸°ë¡
+			storeItemDAO.insertSale(sale);
 			
-			storeItemDAO.updateRecord(map);
+//			íŒë§¤ ìˆ˜ëŸ‰ì„ ì†Œìˆ˜ì í™”(ì›ì¬ë£Œì´ê¸° ë•Œë¬¸ì—)
+			sale.setSaleQty(sale.getSaleQty()*0.1);
+			
+			String item1=pr.getItem1();		
+			String item2=pr.getItem2();
+			String item3=pr.getItem3();
+			
+//			ê¸°ë¡ì¸ê±¸ ì§€ì •í•´ì£¼ëŠ” ìˆ«ì
+			int num=0;
+			
+			calculator(item1, sale, num);
+			
+			if(item2!=null) {
+				calculator(item2, sale, num);
+			}
+			if(item3!=null) {
+				calculator(item3, sale, num);
+			}
+			
+		}else {
+//			ì§€ì  í…Œì´ë¸”ì—ì„œ ìƒí’ˆê°€ê²© ê°€ì ¸ì™€ì„œ ê°œìˆ˜ ê³±í•´ì„œ ì´í•© ì €ì¥
+			sale.setSalePriceSum(storeItemDAO.selectStoreItemPrice(sale).getItemPrice()*(int)sale.getSaleQty());
+//			íŒë§¤ ê¸°ë¡
+			storeItemDAO.insertSale(sale);
+//			íŒë§¤ëŸ‰ ì¬ê³  ì—…ë°ì´íŠ¸ 
+			storeItemDAO.updateStoreItemRecord(sale);
 		}
+		
+		
+	}
+	
+	public void calculator(String item, Sale sale, int num) {
+//		ìƒí’ˆëª…ì„ ì¬ë£Œ ëª…ìœ¼ë¡œ ë‹¤ì‹œ ë“±ë¡(ì†Œìˆ˜ì í™”)
+		sale.setSaleProduct(item);
+		
+		if(num==1) {
+//			ë“±ë¡í•œ ê°œìˆ˜ ê·¸ëŒ€ë¡œ ê¸°ë¡
+			storeItemDAO.updateStoreItemRecord(sale);
+		}else if(num==9) {
+//			ë“±ë¡í•œ ê°œìˆ˜ ê·¸ëŒ€ë¡œ ë¡¤ë°±
+			storeItemDAO.updateStoreItemBack(sale);
+		}
+		
+	}
 
+	
+//	íŒë§¤ì‚­ì œ
+	@Override
+	public void removeSale(Sale sale) {
+//		ì¼ë‹¨ ì‚­ì œ ë©”ì†Œë“œ
+		storeItemDAO.deleteSale(sale);
+		
+//		ì œí’ˆ ë¶„ë¥˜
+		ProductRecipe pr=storeItemDAO.selectProduct(sale.getSaleProduct());
+		
+		if(pr!=null) {
+//			íŒë§¤ ìˆ˜ëŸ‰ì„ ì†Œìˆ˜ì í™”(ì›ì¬ë£Œì´ê¸° ë•Œë¬¸ì—)
+			sale.setSaleQty(sale.getSaleQty()*0.1);
+			
+			String item1=pr.getItem1();		
+			String item2=pr.getItem2();
+			String item3=pr.getItem3();
+			
+//			ë¡¤ë°±ì¸ê±¸ ì§€ì •í•´ì£¼ëŠ” ìˆ«ì
+			int num=9;
+			
+			calculator(item1, sale, num);
+			
+			if(item2!=null) {
+				calculator(item2, sale, num);
+			}
+			if(item3!=null) {
+				calculator(item3, sale, num);
+			}
+			
+		}else {
+//			íŒë§¤ëŸ‰ ì¬ê³  ì—…ë°ì´íŠ¸ 
+			storeItemDAO.updateStoreItemBack(sale);
+		}
+		
 	}
 	
 	
 	
 	
-//	Àç·á°¡ ¾Æ´Ñ ¿ÏÁ¦Ç°ÀÏ¶§
-	public void saleRecord(Sale sale) {
-//		ÆÇ¸Å µî·Ï Àü ÃÑÇÕ°è ±¸ÇÏ±â
-		sale.setSalePriceSum(storeItemDAO.selectStoreItemPrice(sale).getItemPrice()*sale.getSaleQty());
-		
-//		ÆÇ¸Åµî·Ï
-		storeItemDAO.insertSale(sale);
-		
-		int qty = sale.getSaleQty();
-		String product =sale.getSaleProduct();
-		
-		calculator2(qty,product);
+//	íŒë§¤ì¡°íšŒ
+	@Override
+	public List<SaleItem> getSaleList(Sale sale) {
+		return storeItemDAO.selectSaleList(sale);
 	}
-	
-	public void calculator2(int qty,String product) {
-//		¿©±â¼­ Ãß°¡ÇÕ ¸ÊÀº updateRecord ¹× updateItem µÎ°³ÀÇ ¸Ş¼Òµå¿¡ »ç¿ë
-		Map<String, Object> map=new HashMap<String, Object>();
-//		¡Ú¿©±â¼­ item=¿ÏÁ¦Ç°
-		map.put("itemName", product);
-		map.put("itemQty",qty);
-		
-//		store Àç°í ¾÷µ¥ÀÌÆ® ¸Ş¼Òµå
-		storeItemDAO.updateStoreItem(map);
+
+//	ì¹´í…Œê³ ë¦¬ë³„ íŒë§¤ ìƒí’ˆ ê²€ìƒ‰
+	@Override
+	public Map<String, Object> getSaleProductName(Sale sale) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("saleProduct1", storeItemDAO.selectSaleProductName1(sale));
+		map.put("saleProduct2", storeItemDAO.selectSaleProductName2());
+		return map;
 	}
-	
-	
-	
+
 	
 
 

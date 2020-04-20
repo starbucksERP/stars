@@ -1,10 +1,10 @@
 package site.bucks.mapper;
 
 import java.util.List;
-import java.util.Map;
 
 import site.bucks.dto.ProductRecipe;
 import site.bucks.dto.Sale;
+import site.bucks.dto.SaleItem;
 import site.bucks.dto.StoreItem;
 import site.bucks.dto.StoreItemHistory;
 
@@ -12,11 +12,14 @@ public interface StoreItemMapper {
 	ProductRecipe selectProduct(String product);
 	StoreItem selectStoreItemPrice(Sale sale);
 	int insertSale(Sale sale);
-	int selectItemRest(String item);
-	int updateRecord(Map<String, Object> map);
-	int updateStoreItem(Map<String, Object> map);
+	int updateStoreItemRecord(Sale sale);
+	int updateStoreItemBack(Sale sale);
+	int deleteSale(Sale sale);
 	
 	int updateStoreItemReceiptProcess(StoreItemHistory sih);
 	
-	List<Sale> selectSaleList(Map<String, Object> map);
+	List<SaleItem> selectSaleList(Sale sale);
+	
+	List<String> selectSaleProductName1(Sale sale);
+	List<String> selectSaleProductName2();
 }
