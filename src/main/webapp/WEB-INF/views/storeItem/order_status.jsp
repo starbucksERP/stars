@@ -197,7 +197,7 @@
 				url: "cancelStoreOrder",
 				headers: {"content-type":"application/json"},
 				data: JSON.stringify(param),
-				dateType: "text",
+				dateType: "text", 
 				success: function(text) {
 					if(text=="success") {
 						alert("발주가 취소되었습니다.");
