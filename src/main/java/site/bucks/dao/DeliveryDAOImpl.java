@@ -30,9 +30,20 @@ public class DeliveryDAOImpl implements DeliveryDAO {
 		return sqlSession.getMapper(DeliveryMapper.class).selectDeliveryList(delivery);
 	}
 
+	/*
+	 * @Override public int updateDeliveryState(int deliverySeq) { return
+	 * sqlSession.getMapper(DeliveryMapper.class).updateDeliveryState(deliverySeq);
+	 * }
+	 */
+
 	@Override
-	public int updateDeliveryState(int deliverySeq) {
-		return sqlSession.getMapper(DeliveryMapper.class).updateDeliveryState(deliverySeq);
+	public int updateDeliveryReq(int deliverySeq) {
+		return sqlSession.getMapper(DeliveryMapper.class).updateDeliveryReq(deliverySeq);
+	}
+
+	@Override
+	public int updateDeliveryReady(int deliverySeq) {
+		return sqlSession.getMapper(DeliveryMapper.class).updateDeliveryReady(deliverySeq);
 	}
 
 
