@@ -30,6 +30,10 @@ public class Item {
 	private int itemUsage;
 	private int seq;
 	
+//	검색용
+	private String category;
+	private String subCategory;
+	
 	public Item() {
 		// TODO Auto-generated constructor stub
 	}
@@ -122,6 +126,25 @@ public class Item {
 		this.seq = seq;
 	}
 
+	
+//	검색용
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public String getSubCategory() {
+		return subCategory;
+	}
+
+	public void setSubCategory(String subCategory) {
+		this.subCategory = subCategory;
+	}
+
+	
 	
 
 }
