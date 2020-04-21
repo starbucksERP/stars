@@ -117,20 +117,16 @@ public class StoreItemHistoryController {
 	@RequestMapping(value = "/checkStoreOrder", method = RequestMethod.POST)
 	@ResponseBody
 	public String checkStoreOrder(@RequestBody List<OrderItem> orderItemList) {
-		
-		for(OrderItem orderItem:orderItemList) {
-			storeItemHistoryService.modifyReceiptProcess(orderItem);
-		}
+		storeItemHistoryService.modifyReceiptProcess(orderItemList);
 		return "success";
 	}
+	
+	
 //	지점 발주 취소
 	@RequestMapping(value = "/cancelStoreOrder", method = RequestMethod.POST)
 	@ResponseBody
 	public String cancelStoreOrder(@RequestBody List<OrderItem> orderItemList) {
-		
-		for(OrderItem orderItem:orderItemList) {
-			
-		}
+		storeItemHistoryService.modifyCancelRecipt(orderItemList);
 		return "success";
 	}
 	

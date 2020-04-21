@@ -2,7 +2,7 @@ package site.bucks.dto;
 
 import java.util.List;
 
-/*�̸�            ��?       ����           
+/*占싱몌옙            占쏙옙?       占쏙옙占쏙옙           
 ------------- -------- ------------ 
 ORDER_SEQ     NOT NULL NUMBER       
 REQUEST_NUM   NOT NULL VARCHAR2(20) 
@@ -28,10 +28,12 @@ public class OrderItem {
 	private String requestDate;
 	private String deliveryDate;
 	private int orderType;
-	private List<String> states;    // 검색용
-	private String requestDatePair; // 검색용
-	private int price1;             // 검색용
-	private int price2;             // 검색용
+	
+	private List<String> states;    // 寃�����
+	private String requestDatePair; // 寃�����
+	private int price1;             // 寃�����
+	private int price2;             // 寃�����
+	private String itemName;
 	
 	public OrderItem() {
 		// TODO Auto-generated constructor stub
@@ -155,6 +157,14 @@ public class OrderItem {
 
 	public void setPrice2(int price2) {
 		this.price2 = price2;
+	}
+
+	public String getItemName() {
+		return itemName;
+	}
+
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
 	}
 
 	
