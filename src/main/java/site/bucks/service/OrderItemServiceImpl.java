@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 
 import site.bucks.dao.ItemDAO;
 import site.bucks.dao.OrderItemDAO;
+import site.bucks.dao.PurchaseDAO;
 import site.bucks.dto.OrderItem;
+import site.bucks.dto.Purchase;
 
 @Service
 public class OrderItemServiceImpl implements OrderItemService {
@@ -15,6 +17,8 @@ public class OrderItemServiceImpl implements OrderItemService {
 	private OrderItemDAO oderItemDAO;
 	@Autowired
 	private ItemDAO itemDAO;
+	@Autowired
+	private PurchaseDAO purchaseDAO;
 
 	@Override
 	public void insertStoreOrder(OrderItem orderItem) {
@@ -53,22 +57,32 @@ public class OrderItemServiceImpl implements OrderItemService {
 	@Override
 	public void checkQty(String requestNum) {
 		List<OrderItem> oderItems=oderItemDAO.selectOrderItems(requestNum);
-		
+		boolean possible=true;
+		String Pnum="P"+System.currentTimeMillis();
 		for (OrderItem order:oderItems) {
 			int currentQty=itemDAO.selectItemQty(order.getItemNum());
-			
-			if(order.getOrderQty()<=currentQty) {
-				// 상태 40 : 배송요청
-				order.setRequestState(40);
-			} else {
-				// 상태30 : 구매요청
-				order.setRequestState(30);
+			if(order.getOrderQty()>=currentQty) {
+				Purchase purchase=new Purchase();
+				purchase.setRequestNum(Pnum);
+				purchase.setItemNum(order.getItemNum());
+				purchase.setItemQty(order.getOrderQty());
+				purchase.setItemPprice(order.getItemPprice());
+				purchase.setPurchaseType(0);
+				purchaseDAO.insertPurchaseRequest(purchase);
+				possible=false;
 			}
-			
 		}
 		
-		
-		
+		OrderItem order=new OrderItem();
+		if(possible==true) {
+			order.setRequestState(40); // 배송요청
+			order.setRequestNum(requestNum);
+			updateOrderItem(order);
+		} else {
+			order.setRequestState(30); // 구매요청
+			order.setRequestNum(requestNum);
+			updateOrderItem(order);
+		}
 		
 	}
 
