@@ -31,6 +31,21 @@ public class OrderItemDAOImpl implements OrderItemDAO {
 		return sqlSession.getMapper(OrderItemMapper.class).updateOrderReceiptProcess(orderItem);
 	}
 
+	@Override
+	public int updateOrderItem(OrderItem orderItem) {
+		return sqlSession.getMapper(OrderItemMapper.class).updateOrderItem(orderItem);
+	}
+
+	@Override
+	public List<OrderItem> selectOrderItemList(OrderItem orerItem) {
+		return sqlSession.getMapper(OrderItemMapper.class).selectOrderItemList(orerItem);
+	}
+
+	@Override
+	public List<OrderItem> selectOrderItems(String requestNum) {
+		return sqlSession.getMapper(OrderItemMapper.class).selectOrderItems(requestNum);
+	}
+
 
 
 	

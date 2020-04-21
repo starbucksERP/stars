@@ -149,7 +149,7 @@
 	});
 	
 	$("#productInsertBtn").click(function() {
-		var itemNum=$("#itemNum1").val()+$("#itemNum2").val()+"-";
+		var itemNum=$("#itemNum1").val()+$("#itemNum2").val();
 		var itemName=$("#itemName").val();
 		var itemPprice=$("#itemPprice").val();
 		var itemSprice=$("#itemSprice").val();
@@ -200,6 +200,7 @@
 	$("#resetinserttBtn").click(function() {
 		$(".insert").val("");      
 	});
+	
 	$("#cancelInsertBtn").click(function() {
 		$(".insert").val("");      
 		$("#insertProductDiv").hide(300);  
