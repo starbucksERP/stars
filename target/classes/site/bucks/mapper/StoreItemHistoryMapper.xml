@@ -7,10 +7,21 @@
 	 	(select item_name from item where item_num=#{itemNum})
 	</sql>
 	<insert id="insertSIH" parameterType="OrderItem">
-		insert into store_item_history values(STORE_HISTORY_SEQ.nextval, #{storeId}, #{requestNum}, #{itemNum}, 'test', #{requestState}, #{orderQty}, sysdate)
+		insert into store_item_history values(STORE_HISTORY_SEQ.nextval, #{storeId}, #{requestNum}, #{itemNum}, <include refid="itemName"/>, #{requestState}, #{orderQty}, sysdate)
 	</insert>
-	
 <!-- 지점에서 발주 입력시 -->	
+
+
+	<!-- itemName으로 정보 찾기  -->
+	<select id="searchItem" resultType="item">
+		select * from item where item_name=#{itemName}
+	</select>
+	
+	<!-- 카테고리를 통해 item 찾기  -->
+	<select id="searchItems" resultType="string">
+		select item_name from item where item_num like #{category}||'%' and item_num like '_'||#{subCategory}||'%'
+	</select>
+
 
 
 <!-- 발주 상태 10 검색 -->

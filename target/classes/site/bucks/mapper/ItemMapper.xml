@@ -108,14 +108,11 @@
 		order by ITEM_VENDOR asc
 	</select>
 	
-<<<<<<< HEAD
 	<!-- 재고수량 수정 -->
 	<update id="updateTotalQty" parameterType="double">
 		update item set ITEM_QTY+=#{change} where ITEM_NUM=#{itemNum}
 	</update>
 	
 	
-=======
->>>>>>> branch 'master' of https://github.com/starbucksERP/stars.git
 
 </mapper>

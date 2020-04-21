@@ -1,18 +1,20 @@
 package site.bucks.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import site.bucks.dto.Item;
 import site.bucks.dto.OrderItem;
-import site.bucks.dto.Sale;
 import site.bucks.service.StoreItemHistoryService;
 
 @Controller
@@ -134,7 +136,20 @@ public class StoreItemHistoryController {
 	
 	
 	
+//	아이템 카테고리로 찾아오기
+	@RequestMapping(value = "/getItem", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String , Object> getItem(@RequestBody Item item) {
+		return storeItemHistoryService.getItem(item);
+	}
 	
+	
+//	아이템 검색시 해당 item 정보 가져오기
+	@RequestMapping(value = "/searchItem/{itemName}", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> searchItem(@PathVariable String itemName) {
+		return storeItemHistoryService.getItemName(itemName);
+	}
 	
 	
 	
