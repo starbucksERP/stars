@@ -1,6 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<style type="text/css">
+#insertProductDiv {
+	width: 600px;
+	height: 600px;
+	border: 3px solid darkgray;
+	background-color: white;
+	position: absolute;
+	top: 30%;
+	left: 30%;
+	margin-top: -40px;
+	margin-left: -100px;
+	padding: 5px;
+	z-index: 100;
+	display: none;
+}
+</style>
+
 <div class="container">
 	<div class="row">
 		<div class="sidebar">
@@ -13,7 +30,50 @@
 				</li>
 			</ul>
 		</div>
-
+		
+		<!--  품목 신규등록 -->
+		<div id="insertProductDiv">
+			<div class="main">
+			<h3>품목등록</h3>
+			<hr />
+				<table class="table">
+					<thead>
+						<tr>
+							<th width="30%">품목그룹1</th>
+							<td width="70%"><input type="search" id="itemNum1"  class="insert">&nbsp;<a href="" class="a-button gray search-icon"><i class="fas fa-search"></i></a></td>
+						</tr>
+						<tr>
+							<th width="30%">품목그룹2</th>
+							<td width="70%"><input type="search" id="itemNum2" class="insert">&nbsp;<a href="" class="a-button gray search-icon"><i class="fas fa-search"></i></a></td>
+						</tr>
+						<tr>
+							<th>품목명</th>
+							<td><input type="search" id="itemName" class="insert" /></td>
+						</tr>
+						<tr>
+							<th>입고단가</th>
+							<td><input type="search" id="itemPprice" class="insert"/></td>
+						</tr>
+						<tr>
+							<th>출고단가</th>
+							<td><input type="search" id="itemSprice" class="insert"/></td>
+						</tr>
+						<tr>
+							<th>거래처</th>
+							<td><input type="search" id="itemVendor" class="insert">&nbsp;<a href="" class="a-button gray search-icon"><i class="fas fa-search"></i></a></td>
+						</tr>
+						<tr>
+							<td colspan="2" style="text-align: center;">
+								<button type="button" class="a-button medium green" id="productInsertBtn">저장</button>
+								<button type="reset" class="a-button medium red" id="resetinserttBtn" >초기화</button>
+								<button type="button" class="a-button medium black" id="cancelInsertBtn">닫기</button>
+							</td>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+		
 		<div class="main">
 		
 			<h3>품목 현황</h3>
@@ -44,9 +104,9 @@
 			</table>
 			
 			<div class="right">
-				<button type="button" class="a-button sea medium"><i class="fas fa-plus-circle"></i>&nbsp;품목 등록</button>
-				<button type="button" class="a-button purple medium"><i class="fas fa-edit"></i>&nbsp;품목 수정</button>
-				<button type="button" class="a-button red medium"><i class="fas fa-times"></i>&nbsp;품목 삭제</button>
+				<button type="button" class="a-button brown big" id="enrollBtn"><i class="fas fa-plus-circle"></i>&nbsp;품목 등록</button>
+				<!-- <button type="button" class="a-button purple medium"><i class="fas fa-edit"></i>&nbsp;품목 수정</button>
+				<button type="button" class="a-button red medium"><i class="fas fa-times"></i>&nbsp;품목 삭제</button> -->
 			</div>
 			
 			<br />
@@ -80,4 +140,71 @@
 
 	</div>
 </div>
+
+<script type="text/javascript">
+	$("#enrollBtn").click(function() {
+		$(".update").val("");    
+		$("#updateDiv").hide(); 
+		$("#insertProductDiv").show(300);  
+	});
+	
+	$("#productInsertBtn").click(function() {
+		var itemNum=$("#itemNum1").val()+$("#itemNum2").val();
+		var itemName=$("#itemName").val();
+		var itemPprice=$("#itemPprice").val();
+		var itemSprice=$("#itemSprice").val();
+		var itemVendor=$("#itemVendor").val();
+		
+		// 유효성검사 : 추후추가 및 모달박스로 변경
+		if(itemNum1=="" || itemNum2=="") {
+			alert("품목그룹을 모두 입력해주세요");
+			return;
+		} 
+		
+		if(itemName=="") {
+			alert("품목명을 입력해주세요");
+			return;
+		}
+		
+		if(itemPprice=="") {
+			alert("매입단가를 입력해 주세요.");
+			return;
+		}
+		if(itemSprice=="") {
+			alert("공급단가를 입력해 주세요.");
+			return;
+		}
+		if(itemVendor=="") {
+			alert("거래처를 입력해 주세요.");
+			return;
+		}
+		
+		$.ajax({
+			type: "POST",
+			url: "productEnroll",
+			headers: {"content-type":"application/json"},
+			data: JSON.stringify({"itemNum":itemNum,"itemName":itemName,"itemPprice":itemPprice,"itemSprice":itemSprice,"itemVendor":itemVendor}),
+			dataType: "text", 
+			success: function(text) {
+				if(text=="success") {
+					$(".insert").val("");      
+					$("#insertProductDiv").hide(300); 
+				}
+			},
+			error: function(xhr) {
+				alert("에러코드 = "+xhr.status)
+			}
+		});
+	});
+	
+	$("#resetinserttBtn").click(function() {
+		$(".insert").val("");      
+	});
+	
+	$("#cancelInsertBtn").click(function() {
+		$(".insert").val("");      
+		$("#insertProductDiv").hide(300);  
+	});
+
+</script>
 

@@ -6,10 +6,10 @@
 		<div class="sidebar">
 			<ul class="side-menu">
 				<li>
-					<button class="dropdown-btn">배송요청조회</button>
+					<button class="dropdown-btn" style="background-color: #669900;" onclick="location.href='${pageContext.request.contextPath }/deliveryReq'">배송요청조회</button>
 				</li>
 				<li>
-					<button class="dropdown-btn">배송조회</button>
+					<button class="dropdown-btn" style="background-color: #2C2A29;" onclick="location.href='${pageContext.request.contextPath }/deliveryList'">배송조회</button>
 				</li>
 				
 			</ul>
@@ -88,62 +88,39 @@ $("#reqConfirmationBtn").click(function() {
 		
 		
 		if($(".rowChk:checked").length==0) {
-			alert("승인할 배송정보를 체크 해주세요.");
+			alert("배송요청확인: 요청승인할 배송정보를 선택해 주세요.");
 		} else {
 			
-			var delivery;
+			var delivery =[];
 			var rowChk = $(".rowChk:checked");
 			
 			rowChk.each(function(i) {
 				var tr = rowChk.parent().parent().eq(i);
 				var td = tr.children();
 				
-				var checkedDelSeq = td.eq(1).text();
-				alert("checkedDelSeq = " + checkedDelSeq);
-				
-				delivery = {
-						deliverySeq : checkedDelSeq
-				}
-				
+				var deliverySeq = td.eq(1).text();
+				delivery.push(deliverySeq);
 			});
 			
-			$.ajax({
-				type: "POST",
-				url: "delReqConfirm",
-				data: delivery,
-				dataType:"json",
-				success: function(json) {
-					alert("배송요청이 확인 되었습니다.")
-				},
-				error:function(request,status,error){
-		            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-					 
-		          }
-			
-			});
-			
-		
-			/*
 			var param={"list":delivery};
-		
+			
 			$.ajax({
 				type: "POST",
 				url: "delReqConfirm",
 				data: param,
 				dateType: "text",
 				success: function(text) {
-						alert("배송요청이 확인 되었습니다.")
+						alert(delivery +"번 배송 = 배송요청 승인")
 						location.href="/star/deliveryReq"
 					
 				},
 				error:function(request,status,error){
-					alert(delivery);
 		            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 					 
 		          }
 
 			});
-			*/
+		
 		}
 	});
 			
