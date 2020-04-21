@@ -71,11 +71,6 @@
 						</tr>
 					</thead>
 				</table>
-				<!-- <div class="center">
-				<button type="button" class="a-button medium green" id="insertBtn">저장</button>
-				<button type="reset" class="a-button medium red" >초기화</button>
-				<button type="button" class="a-button medium black" id="insertCancelBtn">닫기</button>
-				</div> -->
 			</div>
 		</div>
 		
@@ -187,15 +182,8 @@
 		$.ajax({
 			type: "POST",
 			url: "productEnroll",
-			// << headers가 없으면 data도 없어도 되는데, 문제는 그러면 @RequestBody 어노테이션 사용을 못해 한번에 보낼수 없겠지 그러면 한번에 받을수도없겠찌?  >>
-			// headers: 요청자원의 헤더정보응 변경하기위한 속성
-			//  => content-type속성으로 입력값에대한 전달 택스트 형식 변경
 			headers: {"content-type":"application/json"},
-			// JSON.stringify(Object object) : JavaScript객체를 문자열로 변환하는 메소드
-			//    => JavaScript객체를 JSON형식의 문자열로 변경하여 전달해야만 Java객체로
-			//    => 요청처리메소드의 매개변수에 @RequestBodt어노테이션으로 보냈기때문이얌
 			data: JSON.stringify({"itemNum":itemNum,"itemName":itemName,"itemPprice":itemPprice,"itemSprice":itemSprice,"itemVendor":itemVendor}),
-			// 얘는 매소드의 반환형이 스트링이니까 아래 택스트로 적히는거야
 			dataType: "text", 
 			success: function(text) {
 				if(text=="success") {
@@ -209,9 +197,12 @@
 		});
 	});
 	
-	$("#insertCancelBtn").click(function() {
+	$("#resetinserttBtn").click(function() {
 		$(".insert").val("");      
-		$("#insertDiv").hide(300);  // 영역숨김
+	});
+	$("#cancelInsertBtn").click(function() {
+		$(".insert").val("");      
+		$("#insertProductDiv").hide(300);  
 	});
 
 </script>
