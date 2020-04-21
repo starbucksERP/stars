@@ -1,15 +1,15 @@
 package site.bucks.dto;
 
-/*	∆«∏≈ ≈◊¿Ã∫Ì
+/*	
  
-¿Ã∏ß             ≥Œ?       ¿Ø«¸           
+Ïù¥Î¶Ñ             ÎÑê?       Ïú†Ìòï           
 -------------- -------- ------------ 
 SALE_SEQ       NOT NULL NUMBER       
 STORE_ID       NOT NULL NUMBER       
 SALE_PRODUCT   NOT NULL VARCHAR2(50) 
 SALE_QTY       NOT NULL NUMBER       
 SALE_PRICE_SUM NOT NULL NUMBER       
-SALE_DATE               DATE  
+SALE_DATE               DATE     
 
  */
 
@@ -17,11 +17,11 @@ public class Sale {
 	private int saleSeq;
 	private int storeId;
 	private String saleProduct;
-	private int saleQty;
+	private double saleQty;
 	private int salePriceSum;
 	private String saleDate;
 	
-//	∞ÀªˆøÎ
+//	Í≤ÄÏÉâÏö©
 	private String saleDate1;
 	private String saleDate2;
 	private String saleQty1;
@@ -57,11 +57,11 @@ public class Sale {
 		this.saleProduct = saleProduct;
 	}
 
-	public int getSaleQty() {
+	public double getSaleQty() {
 		return saleQty;
 	}
 
-	public void setSaleQty(int saleQty) {
+	public void setSaleQty(double saleQty) {
 		this.saleQty = saleQty;
 	}
 

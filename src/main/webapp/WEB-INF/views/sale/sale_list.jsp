@@ -2,6 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <div class="container">
    <div class="row">
       <div class="sidebar">
@@ -26,8 +27,8 @@
       <div class="main">
       
          <h3>판매기록조회</h3>
-         <form action="sale_list" method="post">
-            <div class="right"><button type="submit" class="a-button big">검색</button></div>
+         <form action="sale_list" method="post" id="saleListForm">
+            <div class="right"><button type="button" class="a-button big" onclick="submitSale()">검색</button></div>
             <hr />
             <div class="information">
                   <table class="table">
@@ -130,9 +131,9 @@
                            		</c:otherwise> 
                            </c:choose>
                            <td>${fn:substring(saleItem.sale.saleProduct,1,3)}</td>      
-                           <td class="qty">${saleItem.sale.saleQty }</td>     
+                           <td class="qty"><fmt:parseNumber integerOnly= "true" value="${saleItem.sale.saleQty }"/></td>     
                            <td class="price">${saleItem.sale.saleQty }</td> 
-                           <td><button type="button" class="a-button blackgray inner-button">삭제</button> </td>   
+                           <td><form action="sale_delete" method="post"><button type="button" class="a-button blackgray inner-button deleteSale">삭제</button><input type="hidden" name="saleSeq" value="${saleItem.sale.saleSeq }"/></form></td>   
                         </tr>
                         </c:forEach>
                      </c:otherwise>
@@ -153,6 +154,19 @@
 </div>
 
 <script type="text/javascript">
+	$(".deleteSale").click(function() {
+		if(confirm("선택하신 판매기록을 삭제하시겠습니까?")){
+			$(this).closest("form").submit();
+			alert("판매기록이 삭제됬습니다.");
+		}
+	}); 
+	
+	
+	function submitSale() {
+		$("#saleListForm").submit();
+	}
+	
+	
 	qtySum();
 	priceSum();
 	
@@ -173,9 +187,6 @@
 		})
 		$("#priceSum").text(priceAdd);
 	}
-	
-	
-	
 	
 
 </script>

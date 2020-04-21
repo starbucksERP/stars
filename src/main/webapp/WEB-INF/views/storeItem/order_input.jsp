@@ -147,7 +147,7 @@
 				success: function(text) {
 					if(text=="success") {
 						alert("발주가 성공적으로 이루어졌습니다.")
-						location.href="/storeOrderSta"
+						location.href="${pageContext.request.contextPath }/storeOrderSta";
 					}
 				},
 				error: function(xhr) {

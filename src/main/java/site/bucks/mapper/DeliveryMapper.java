@@ -3,13 +3,13 @@ package site.bucks.mapper;
 import java.util.List;
 
 import site.bucks.dto.Delivery;
-import site.bucks.dto.StoreItemHistory;
+import site.bucks.dto.OrderItem;
 
 public interface DeliveryMapper {
-	int updateDeliveryReceiptProcess(StoreItemHistory sih);
+	int updateDeliveryReceiptProcess(OrderItem orderItem);
 	
 	
-	int insertDeliveryRequest(Delivery delivery); // 근형 
-	List<Delivery> selectDeliveryList(Delivery delivery); // 근형
-	int updateDeliveryState(String requestNum); // 근형
+	int insertDeliveryRequest(Delivery delivery); // 洹쇳�� 
+	List<Delivery> selectDeliveryList(Delivery delivery); // 洹쇳��
+	int updateDeliveryState(String requestNum); // 洹쇳��
 }
