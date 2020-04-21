@@ -77,7 +77,7 @@
 				</table>
 				
 				<div class="right">
-					<button type="button" class="a-button sea medium"><i class="fas fa-plus-circle"></i>&nbsp;재고 등록</button>
+					<button type="button" class="a-button sea medium" value="재고등록" onclick="window.open('${pageContext.request.contextPath}/window/itemEnroll','재고등록','width=400px','height=900px')"><i class="fas fa-plus-circle"></i>&nbsp;재고 등록</button>
 					<button type="button" class="a-button purple medium"><i class="fas fa-edit"></i>&nbsp;재고 수정</button>
 					<button type="button" class="a-button red medium"><i class="fas fa-times"></i>&nbsp;재고 삭제</button>
 				</div>
