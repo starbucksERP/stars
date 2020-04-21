@@ -28,14 +28,24 @@ public class ItemDAOImpl implements ItemDAO {
 	public int updateItemMinQty(Item item) {
 		return sqlSession.getMapper(ItemMapper.class).updateItemMinQty(item);
 	}
+	
+	@Override
+	public int deleteProduct(String itemNum) {
+		return sqlSession.getMapper(ItemMapper.class).deleteProduct(itemNum);
+	}
 
 	@Override
-	public Item selectItemList(Item item) {
+	public Item selectItem(String itemNum) {
+		return sqlSession.getMapper(ItemMapper.class).selectItem(itemNum);
+	}
+
+	@Override
+	public List<Item> selectItemList(Item item) {
 		return sqlSession.getMapper(ItemMapper.class).selectItemList(item);
 	}
 
 	@Override
-	public Item selectItemPlanList(Item item) {
+	public List<Item> selectItemPlanList(Item item) {
 		return sqlSession.getMapper(ItemMapper.class).selectItemPlanList(item);
 	}
 
@@ -48,5 +58,12 @@ public class ItemDAOImpl implements ItemDAO {
 	public List<String> selectItemVendorList(String itemVendor) {
 		return sqlSession.getMapper(ItemMapper.class).selectItemVendorList(itemVendor);
 	}
+
+	@Override
+	public int updateTotalQty(Double change) {
+		return sqlSession.getMapper(ItemMapper.class).updateTotalQty(change);
+	}
+
+
 
 }

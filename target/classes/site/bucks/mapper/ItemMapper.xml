@@ -4,11 +4,12 @@
 <mapper namespace="site.bucks.mapper.ItemMapper">
 	<!--  품목등록  -->
 	<insert id="insertProduct" parameterType="Item">
-		<selectKey resultType="int" keyProperty="itemNum" order="BEFORE">
+		<selectKey resultType="int" keyProperty="seq" order="BEFORE">
 			select item_seq.nextval from dual
 		</selectKey>
-		insert into item values(#{itemNum},#{itemName},0,0,#{itemPprice},#{itemSprice},0,#{itemVendor},#{itemDm})
+		insert into item values(#{itemNum}||'#{seq}',#{itemName},0,0,#{itemPprice},#{itemSprice},0,#{itemVendor},'',0)
 	</insert>
+	
 	<!--  재고등록 및 수정 : 이미 등록된 아이템 -->
 	<update id="updateItem">
 		update item 
@@ -23,10 +24,10 @@
 				ITEM_PPRICE=#{itemPprice}
 			</if>
 			<if test="itemSprice!=null and itemSprice!=0">
-				ITEM_NAME=#{itemSprice}
+				ITEM_SPRICE=#{itemSprice}
 			</if>
-			<if test="itemSprice!=null and itemSprice!=0">
-				ITEM_NAME=#{itemSprice}
+			<if test="itemVendor!=null and itemVendor!=''">
+				ITEM_VENDOR=#{itemVendor} 
 			</if>
 		</set>	
 		where ITEM_NUM=#{itemNum}
@@ -46,6 +47,16 @@
 		where ITEM_NUM=#{itemNum}
 	</update>
 	
+	<!-- 품목삭제처리 -->
+	<update id="deleteProduct" parameterType="String">
+		update item set ITEM_USGAE=1 where ITEM_NUM=#{itemNum}
+	</update>
+
+	<!-- 아이템 단일검색 -->
+	<select id="selectItem" resultType="Item">
+		select * from item where ITEM_NUM=#{itemNum}
+	</select>
+
 	<!--  재고 또는 품목페이지에서 all, 조건검색 -->
 	<select id="selectItemList" resultType="Item">
 		select * from item
@@ -54,7 +65,7 @@
 			<if test="itemNum!=null and itemNum!=''">
 				ITEM_NUM LIKE '%'||#{itemNum}||'%' 
 			</if>
-			<if test="itemName!=null and itemName!=0">
+			<if test="itemName!=null and itemName!=''">
 				AND ITEM_NAME=#{itemName}
 			</if>
 		</where>
@@ -71,14 +82,14 @@
 			<if test="itemName!=null and itemName!=''">
 				ITEM_NAME=#{itemName} 
 			</if>
-			<if test="itemVendor!=null and iitemVendor!=''">
+			<if test="itemVendor!=null and itemVendor!=''">
 				ITEM_VENDOR=#{itemVendor} 
 			</if>
 			<if test="itemDm!=null and itemDm!=''">
 				ITEM_DM=#{itemDm} 
 			</if>
 		</trim>
-		order by ITEM_NAME asc
+		order by ITEM_NUM asc
 	</select>
 	
 	<!-- 재고수량체크 -->
@@ -91,11 +102,16 @@
 		select distinct ITEM_VENDOR from item 
 		<where>
 			<if test="itemVendor!=null and itemVendor!=''">
-				ITEM_VENDOR like #{itemVendor} 
+				ITEM_VENDOR like '%'||#{itemVendor}||'%' 
 			</if>
 		</where>
 		order by ITEM_VENDOR asc
 	</select>
+	
+	<!-- 재고수량 수정 -->
+	<update id="updateTotalQty" parameterType="double">
+		update item set ITEM_QTY+=#{change} where ITEM_NUM=#{itemNum}
+	</update>
 	
 	
 
