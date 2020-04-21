@@ -113,12 +113,12 @@
 		// 카테고리명에 따라 서브카테고리를 추가
 		$(".category").change(function() {
 			$(".subCategory").empty();
-			$(".saleProduct").empty();
+			$(".itemName").empty();
 			
 			var category=$(this).val();
 			
 			$(".subCategory").append($("<option value=''>---------------------------</option>")); 
-			$(".saleProduct").append($("<option value=''>---------------------------</option>")); 
+			$(".itemName").append($("<option value=''>---------------------------</option>")); 
 			
 			switch (category) {
 				case "A": 
@@ -146,37 +146,26 @@
 		});
 		
 		
-		// 판매 관련 jsp 에서 상품명 출력
+		// 아이템 관련 jsp 에서 상품명 출력
 		$(".subCategory").change(function() {
-			$(".saleProduct").empty();
-			$(".saleProduct").append($("<option value=''>-------------------------------</option>")); 
+			$(".itemName").empty();
+			$(".itemName").append($("<option value=''>-------------------------------</option>")); 
 			
-			var sales={
+			var item={
 				category	: $(".category").val(),
 				subCategory : $(this).val()
 			}
 			
 			$.ajax({
 				type: "POST",
-				url: "saleProduct",
+				url: "getItem",
 				headers: {"content-type":"application/json"},
-				data: JSON.stringify(sales),
+				data: JSON.stringify(item),
 				dataType:"json",
 				success: function(json) {
-					if($(".category").val()=='A'){
-						$(json.saleProduct1).each(function(i) {
-							$(".saleProduct").append($("<option value=''>"+json.saleProduct1[i]+"</option>"));
-						});
-					}else if($(".category").val()=='B'){
-						$(json.saleProduct1).each(function(i) {
-							$(".saleProduct").append($("<option value=''>"+json.saleProduct1[i]+"</option>"));
-						});
-					}else{
-						$(json.saleProduct1).each(function(i) {
-							$(".saleProduct").append($("<option value=''>"+json.saleProduct1[i]+"</option>"));
-						});
-					}
-					
+					$(json.items).each(function(i) {
+						$(".itemName").append($("<option value='"+json.items[i]+"'>"+json.items[i]+"</option>"));
+					});
 				},
 				error: function(xhr) {
 					alert("에러코드 = "+xhr.status)

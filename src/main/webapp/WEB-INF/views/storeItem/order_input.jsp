@@ -32,9 +32,9 @@
 					<thead>
 						<tr>
 							<th>발주요청일</th>
-							<td><label class="gLabel"><input type="date" readonly="readonly" />&nbsp;<i class="far fa-calendar-alt"></i></label>
+							<td><label class="gLabel"><input type="date" readonly="readonly"/>&nbsp;<i class="far fa-calendar-alt"></i></label>
 							<th>발주요청매장</th>
-							<td><input type="text"  value="1594" readonly="readonly" id="storeId"/></td>
+							<td><input type="text"  value="1021" readonly="readonly" id="storeId"/></td>
 						</tr>
 					</thead>
 				</table>
@@ -50,27 +50,34 @@
 					<tbody>
 						<tr>
 							<th><input type="checkbox" class="allChk"></th>
-							<th>번호</th>
 							<th>품목코드</th>
+							<th>대분류</th>
+							<th>소분류</th>
 							<th>품목</th>
 							<th>수량</th>
 							<th>단가</th>
-							<th>총액</th>
 						</tr>
 						<tr>
 							<td><input type="checkbox" class="rowChk"></td>
-							<td>asdfasd</td>
-							<td><input type="text" value="1" class="itemNum" /></td>
+							<td></td>
 							<td>
-								<select class="itemName">
-									<option value="원두">원두</option>
-									<option value="시럽">시럽</option>
-									<option value="바닐라">바닐라</option>
-								</select>
+								<select class="category">
+	                            	<option value="">전체</option>
+	                            	<option value="A">제조음료</option>
+	                            	<option value="B">푸드</option>
+	                            	<option value="C">상품</option>
+	                            </select>
 							</td>
+							<td>
+								<select class="subCategory">
+								</select>
+                         	</td>
+                         	<td>
+                         		<select class="itemName">
+                           		</select>
+                         	</td>
 							<td><input type="number" class="orderQty" /></td>
-							<td>safasf</td>
-							<td>asdfasdf</td>
+							<td style="width: 150px"></td>
 						</tr>
 					</tbody>
 					<tfoot>
@@ -124,7 +131,7 @@
 			$(".message").text("발주할 물품 리스트를 체크해주세요")
 		}else{
 		    $(".rowChk:checked").each(function(i) {
-		 
+			 //	{orderSeq}, {requestNum}, {storeId}, {itemNum},  {orderQty}
 		    	storeOrder = {
 		        	requestNum		: dd+mm+$("#storeId").val().substr(0, 1),
 		        	storeId			: $("#storeId").val(),
@@ -156,6 +163,29 @@
 		    
 			});
 		}
+	});
+	
+	
+	$(".itemName").change(function() {
+		var itemName = $(this).val();
+		var tr=$(this).closest('tr');
+		tr.find("td:eq(1)").text("");
+		tr.find("td:eq(7)").text("");
+		
+		$.ajax({
+			type: "GET",
+			url: "searchItem/"+itemName,
+			dateType: "json",
+			success: function(json) {
+				tr.find("td:eq(1)").text(json.item.itemNum);
+				tr.find("td:eq(7)").text(json.item.itemSprice);
+			},
+			error: function(xhr) {
+				alert("에러코드 = "+xhr.status) 
+			}
+	    
+		});
+		
 	});
 	
 	

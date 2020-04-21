@@ -30,7 +30,7 @@
 					<thead>
 						<tr>
 							<th>지점명</th>
-							<td><input type="search" name="storeName">&nbsp;<a href="" class="a-button gray search-icon"><i class="fas fa-search"></i></a></td>
+							<td><input type="search" name="storeName">&nbsp;</td>
 						</tr>
 						<tr>
 							<th>구분</th>
@@ -79,7 +79,7 @@
 										<td>${store.storeId }</td>				
 										<td>${store.storeName }</td>				
 										<td>${store.storeAddress }</td>
-										<td>점주테이블</td>
+										<td>${store.storeOwner }</td>
 										<td>${store.storePhone }</td>				
 									<c:if test="${store.storeState==0 }">
 										<td>본점</td>
