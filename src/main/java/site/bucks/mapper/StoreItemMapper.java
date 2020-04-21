@@ -2,11 +2,11 @@ package site.bucks.mapper;
 
 import java.util.List;
 
+import site.bucks.dto.OrderItem;
 import site.bucks.dto.ProductRecipe;
 import site.bucks.dto.Sale;
 import site.bucks.dto.SaleItem;
 import site.bucks.dto.StoreItem;
-import site.bucks.dto.StoreItemHistory;
 
 public interface StoreItemMapper {
 	ProductRecipe selectProduct(String product);
@@ -16,7 +16,7 @@ public interface StoreItemMapper {
 	int updateStoreItemBack(Sale sale);
 	int deleteSale(Sale sale);
 	
-	int updateStoreItemReceiptProcess(StoreItemHistory sih);
+	int updateStoreItemReceiptProcess(OrderItem orderItem);
 	
 	List<SaleItem> selectSaleList(Sale sale);
 	
