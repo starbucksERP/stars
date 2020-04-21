@@ -12,7 +12,7 @@ public class Delivery {
 	private int deliverySeq;
 	private String requestNum;
 	private int storeId;
-	private int deliverySate;
+	private int deliveryState;
 	private String deliveryStart;
 	private String deliveryStartTwo;
 	private String deliveryEnd;
@@ -47,12 +47,12 @@ public class Delivery {
 		this.storeId = storeId;
 	}
 
-	public int getDeliverySate() {
-		return deliverySate;
+	public int getDeliveryState() {
+		return deliveryState;
 	}
 
-	public void setDeliverySate(int deliverySate) {
-		this.deliverySate = deliverySate;
+	public void setDeliveryState(int deliveryState) {
+		this.deliveryState = deliveryState;
 	}
 
 	public String getDeliveryStart() {
