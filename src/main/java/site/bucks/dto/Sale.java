@@ -26,8 +26,8 @@ public class Sale {
 	private String saleDate2;
 	private String saleQty1;
 	private String saleQty2;
-	private String category;
-	private String subCategory;
+	private String saleCategory;
+	private String saleSubCategory;
 	
 	public Sale() {
 		// TODO Auto-generated constructor stub
@@ -100,20 +100,20 @@ public class Sale {
 	}
 
 
-	public String getCategory() {
-		return category;
+	public String getsaleCategory() {
+		return saleCategory;
 	}
 
-	public void setCategory(String category) {
-		this.category = category;
+	public void setsaleCategory(String saleCategory) {
+		this.saleCategory = saleCategory;
 	}
 
-	public String getSubCategory() {
-		return subCategory;
+	public String getsaleSubCategory() {
+		return saleSubCategory;
 	}
 
-	public void setSubCategory(String subCategory) {
-		this.subCategory = subCategory;
+	public void setsaleSubCategory(String saleSubCategory) {
+		this.saleSubCategory = saleSubCategory;
 	}
 
 	public String getSaleQty1() {

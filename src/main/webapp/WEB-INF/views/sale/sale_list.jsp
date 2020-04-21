@@ -43,16 +43,16 @@
                         <tr>
                             <th>대분류</th>
                             <td>
-	                            <select name="category" class="category">
+	                            <select name="saleCategory" class="saleCategory">
 	                            	<option value="">전체</option>
-	                            	<option value="A">제조음료 재료</option>
+	                            	<option value="A">제조음료</option>
 	                            	<option value="B">푸드</option>
 	                            	<option value="C">상품</option>
 	                            </select>
                             </td>
                            	<th>소분류</th>
                            	<td>
-                         		<select name="subCategory" class="subCategory">
+                         		<select name="saleSubCategory" class="saleSubCategory">
                          		</select>
                            	</td>
                         </tr>

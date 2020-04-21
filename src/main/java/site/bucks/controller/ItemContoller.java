@@ -1,5 +1,6 @@
 package site.bucks.controller;
 
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +10,7 @@ import site.bucks.dto.Item;
 
 @Controller
 public class ItemContoller {
+	
 	@RequestMapping(value = "/itemList")
 	public String itemList() {
 		return "item/item_list";
@@ -23,5 +25,4 @@ public class ItemContoller {
 		// 재고등록명령
 		return "window/item_enroll";
 	}
-
 }
