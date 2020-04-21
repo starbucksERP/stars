@@ -1,6 +1,7 @@
 package site.bucks.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,6 +32,12 @@ public class DeliveryController {
 		return "delivery/delivery_req_list";
 	}
 	
+	@RequestMapping(value = "/deliveryReqSearch")
+	@ResponseBody
+	public void deliveryReqSearch(@RequestBody Delivery delivery) {
+		delivery.setNowDeliveryState(40);
+		deliveryService.getDeliveryList(delivery);
+	}
 	
 	// 2. 배송요청확인 페이지의 요청확인처리 버튼을 눌렀을때 사용되는 update 메소드 
 	  @RequestMapping(value = "/delReqConfirm", method = RequestMethod.POST)

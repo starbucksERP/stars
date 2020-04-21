@@ -117,6 +117,7 @@
 	
 <script type="text/javascript">
 
+
 // 배송요청을 확인처리하기 위한 함수 
 $("#deliveryStartBtn").click(function() {
 		
