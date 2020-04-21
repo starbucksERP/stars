@@ -2,24 +2,27 @@ package site.bucks.dto;
 
 /*
  
-
-¿Ã∏ß         ≥Œ?       ¿Ø«¸           
----------- -------- ------------ 
-ITEM_NUM   NOT NULL VARCHAR2(50) 
-STORE_ID   NOT NULL VARCHAR2(20) 
-ITEM_NAME  NOT NULL VARCHAR2(20) 
-ITEM_QTY   NOT NULL NUMBER       
-MIN_QTY    NOT NULL NUMBER       
-ITEM_PRICE NOT NULL NUMBER   
+Ïù¥Î¶Ñ          ÎÑê?       Ïú†Ìòï            
+----------- -------- ------------- 
+ITEM_NUM    NOT NULL VARCHAR2(50)  
+ITEM_NAME   NOT NULL VARCHAR2(100) 
+STORE_ID    NOT NULL NUMBER        
+ITEM_QTY    NOT NULL NUMBER        
+MIN_QTY     NOT NULL NUMBER        
+ITEM_PRICE  NOT NULL NUMBER        
+ITEM_USAGE  NOT NULL NUMBER        
+ITEM_MARGIN          NUMBER  
  */
 
 public class StoreItem {
 	private String itemNum;
-	private int storeId;
 	private String itemName;
-	private int itemQty;
-	private int itemPrice;
+	private int storeId;
+	private double itemQty;
 	private int minQty;
+	private int itemPrice;
+	private int itemUsage;
+	private int itemMargin;
 	
 	public StoreItem() {
 		// TODO Auto-generated constructor stub
@@ -49,11 +52,11 @@ public class StoreItem {
 		this.storeId = storeId;
 	}
 
-	public int getItemQty() {
+	public double getItemQty() {
 		return itemQty;
 	}
 
-	public void setItemQty(int itemQty) {
+	public void setItemQty(double itemQty) {
 		this.itemQty = itemQty;
 	}
 
@@ -71,6 +74,22 @@ public class StoreItem {
 
 	public void setMinQty(int minQty) {
 		this.minQty = minQty;
+	}
+
+	public int getItemUsage() {
+		return itemUsage;
+	}
+
+	public void setItemUsage(int itemUsage) {
+		this.itemUsage = itemUsage;
+	}
+
+	public int getItemMargin() {
+		return itemMargin;
+	}
+
+	public void setItemMargin(int itemMargin) {
+		this.itemMargin = itemMargin;
 	}
 	
 	

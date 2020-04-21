@@ -25,5 +25,9 @@ public class OrderController {
 	public String purchaseList() {
 		return "purchase/purchase_list";
 	}
+	@RequestMapping(value = "/history")
+	public String historyList() {
+		return "history/history_list";
+	}
 
 }

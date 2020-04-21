@@ -57,7 +57,6 @@
 						<tr>
 							<th><input type="checkbox" class="allChk"></th>
 							<th>번호</th>
-							<th>이미지</th>
 							<th>품목코드</th>
 							<th>폼목명</th>
 							<th>단위</th>
@@ -67,7 +66,6 @@
 						<tr>
 							<td><input type="checkbox" class="rowChk"></td>
 							<td>A</td>
-							<td><img src="../star.png" alt=""></td>
 							<td>A001</td>
 							<td>원두 - 블랙 퍼스트 마일</td>
 							<td>1.5kg</td>
