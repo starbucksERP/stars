@@ -13,21 +13,26 @@ ITEM_SPRICE NOT NULL NUMBER
 ITEM_MARGIN          NUMBER       
 ITEM_VENDOR NOT NULL VARCHAR2(50) 
 ITEM_DM              VARCHAR2(20) 
+ITEM_USAGE  NOT NULL NUMBER       
  
  */
 
 public class Item {
-	
 	private String itemNum;
 	private String itemName;  
-	private int itemQty;
-	private String itemImg;
+	private double itemQty;
 	private int minQty;
 	private int itemPprice;
 	private int itemSprice;
 	private int itemMargin;
 	private String itemVendor;
 	private String itemDm;
+	private int itemUsage;
+	private int seq;
+	
+//	검색용
+	private String category;
+	private String subCategory;
 	
 	public Item() {
 		// TODO Auto-generated constructor stub
@@ -49,20 +54,12 @@ public class Item {
 		this.itemName = itemName;
 	}
 
-	public int getItemQty() {
+	public double getItemQty() {
 		return itemQty;
 	}
 
-	public void setItemQty(int itemQty) {
+	public void setItemQty(double itemQty) {
 		this.itemQty = itemQty;
-	}
-
-	public String getItemImg() {
-		return itemImg;
-	}
-
-	public void setItemImg(String itemImg) {
-		this.itemImg = itemImg;
 	}
 
 	public int getMinQty() {
@@ -112,7 +109,41 @@ public class Item {
 	public void setItemDm(String itemDm) {
 		this.itemDm = itemDm;
 	}
+
+	public int getItemUsage() {
+		return itemUsage;
+	}
+
+	public void setItemUsage(int itemUsage) {
+		this.itemUsage = itemUsage;
+	}
+
+	public int getSeq() {
+		return seq;
+	}
+
+	public void setSeq(int seq) {
+		this.seq = seq;
+	}
+
 	
+//	검색용
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public String getSubCategory() {
+		return subCategory;
+	}
+
+	public void setSubCategory(String subCategory) {
+		this.subCategory = subCategory;
+	}
+
 	
 	
 

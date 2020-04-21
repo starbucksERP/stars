@@ -27,7 +27,7 @@
       <div class="main">
       
          <h3>발주현황조회</h3>
-         <form:form action="storeOrderSta" method="post" id="form" modelAttribute="storeOrderSta">
+         <form:form action="storeOrderSta" method="post" id="form" modelAttribute="orderItem">
             <div class="right"><button type="submit" class="a-button big">검색</button></div>
             <hr />
             <div class="information">
@@ -35,22 +35,26 @@
                      <thead>
                         <tr>
                            <th>발주일</th>
-                           <td><label class="gLabel"><input type="text" name="historyDate1" class="datepicker" readonly="readonly" value="${storeOrderSta.historyDate1}"/>&nbsp;<i class="far fa-calendar-alt"></i></label>
-                           &nbsp;-&nbsp;<label class="gLabel"><input type="text" name="historyDate2"  class="datepicker" readonly="readonly" value="${storeOrderSta.historyDate2}"/>&nbsp;<i class="far fa-calendar-alt"></i></label></td>
-                           <th>발주번호</th>
-                           <td><form:input path="historySeq"/></td>
+                           <td>
+                           <label class="gLabel"><input type="text" name="requestDate" class="datepicker" value=""/>&nbsp;<i class="far fa-calendar-alt"></i></label> &nbsp;-&nbsp;
+                           <label class="gLabel"><input type="text" name="requestDatePair"  class="datepicker"  value=""/>&nbsp;<i class="far fa-calendar-alt"></i></label></td>
+                           <th>발주지점</th>
+                           <td><form:input path="storeId" id="storeId"/></td>
                         </tr>
                         <tr>
                            <th>품목</th>
-                           <td colspan="3"><form:input path="itemName" />&nbsp;<a href="" class="a-button white" style="font-size: 15px;"><i class="fas fa-file-alt"></i></a></td>
+                           <td colspan="3"><form:input path="itemNum" />&nbsp;<a href="" class="a-button white" style="font-size: 15px;"><i class="fas fa-file-alt"></i></a></td>
                         </tr>
                         <tr>
                            <th>진행상태</th>
                            <td>
-                              <form:checkboxes items="${itemStateList}" path="itemState" class="fChk"/>
+                           		<form:checkbox path="states" class="fChk" label="발주요청" value="10" />
+                           		<form:checkbox path="states" class="fChk" label="발주완료" value="20" />
+                           		<form:checkbox path="states" class="fChk" label="배송중" value="60" />
+                           		<form:checkbox path="states" class="fChk" label="입고완료" value="70" />
                            </td>
                            <th>가격 범위</th>
-                           <td><form:input path="itemQty1"/>&nbsp;-&nbsp;<form:input path="itemQty2"/></td>
+                           <td><form:input path="price1"/>&nbsp;-&nbsp;<form:input path="price2"/></td>
                         </tr>
                      </thead>
                   </table>
@@ -67,10 +71,10 @@
          <br />
          <hr style="margin-top: 14px;" />
          <br />
-         <div class="date-output right"><c:choose><c:when test="${empty(storeOrderSta.historyDate1)}"></c:when><c:otherwise>${storeOrderSta.historyDate1}&nbsp;~&nbsp;${storeOrderSta.historyDate2}</c:otherwise></c:choose></div>
+         <div class="date-output right"><c:choose><c:when test="${empty(orderItem.requestDate)}"></c:when><c:otherwise>${orderItem.requestDate}&nbsp;~&nbsp;${orderItem.requestDatePair}</c:otherwise></c:choose></div>
          <br />
          <div>
-               <button type="button" class="a-button padding-button">입고확인</button>&nbsp;<button type="button" class="a-button padding-button red">취소요청</button>
+               <button type="button" class="a-button padding-button" id="checkStoreOrder">입고확인</button>&nbsp;<button type="button" class="a-button padding-button red" id="cancelStoreOrder">취소요청</button>
          </div>
          <div class="information">
             <table class="table">
@@ -86,35 +90,35 @@
                      <th>요청</th>
                   </tr>
                   <c:choose>
-                     <c:when test="${empty(storeOrderStaList) }">
+                     <c:when test="${empty(orderItemList) }">
                         <tr align="center">
                            <td colspan="8">검색된 발주정보가 없습니다.</td>      
                         </tr>
                      </c:when>
                      <c:otherwise>
-                        <c:forEach var="sih" items="${storeOrderStaList }">
+                        <c:forEach var="oi" items="${orderItemList }">
                         <tr>
                            <td><input type="checkbox" class="rowChk"></td>
-                           <td>${fn:substring(sih.historyDate,0,10)}</td>            
-                           <td>${sih.storeHistorySeq }</td>            
-                           <td>${sih.itemName }</td>
-                           <td>${sih.itemQty }</td>
-                           <td>${sih.itemQty }</td>      
+                           <td>${fn:substring(oi.requestDate,0,10)}</td>            
+                           <td>${oi.orderSeq }</td>            
+                           <td>${oi.itemNum }</td>
+                           <td>${oi.orderQty }</td>
+                           <td>${oi.itemSprice }</td>      
                            <c:choose>
-                              <c:when test="${sih.itemState==20}">
+                              <c:when test="${oi.requestState==20}">
                                  <td class="green-font">발주완료</td>
                               </c:when>
-                              <c:when test="${sih.itemState==60}">
+                              <c:when test="${oi.requestState==60}">
                                  <td class="green-font">배송중</td>
                               </c:when>
-                              <c:when test="${sih.itemState==70}">
+                              <c:when test="${oi.requestState==70}">
                                  <td class="green-font">입고완료</td>
                               </c:when>
                               <c:otherwise>
                                  <td class="green-font">발주요청</td>
                               </c:otherwise>
                            </c:choose>
-                           <td><button type="button" class="a-button blackgray inner-button">취소</button> </td>   
+                           <td><form action="" method="post"><button type="button" class="a-button blackgray inner-button storeOrderCancel">취소</button></form></td>   
                         </tr>
                         </c:forEach>
                      </c:otherwise>
@@ -128,3 +132,87 @@
    </div>
 </div>
 
+
+<script type="text/javascript">
+	
+	var param = [];
+ 	var storeOrder=[];
+ 	
+ 	function check() {
+ 	 	
+ 	 	if($('.rowChk:checked').length==0){
+			$(".message").text("처리할 리스트를 체크해주세요")
+		}else{
+		    $(".rowChk:checked").each(function(i) {
+		 
+		    	var tr=$(this).closest('tr');
+		    	
+		    	storeOrder = {
+		    		orderSeq		    : tr.find("td:eq(2)").text(),	
+	        		itemNum        		: tr.find("td:eq(3)").text(),
+		    		orderQty			: tr.find("td:eq(4)").text(),
+		        	storeId				: 1594
+	        	};
+		    	//$("#storeId").val()
+		    	
+		        param.push(storeOrder);
+		    });
+		}
+	}
+ 	
+ 	
+	
+	$("#checkStoreOrder").click(function() {
+		if(confirm("입고처리 하시겠습니까?")){
+			check();
+			
+		    $.ajax({
+				type: "POST",
+				url: "checkStoreOrder",
+				headers: {"content-type":"application/json"},
+				data: JSON.stringify(param),
+				dateType: "text",
+				success: function(text) {
+					if(text=="success") {
+						alert("입고완료 처리되었습니다.");
+						location.href="${pageContext.request.contextPath }/storeOrderSta";
+					}
+				},
+				error: function(xhr) {
+					alert("에러코드 = "+xhr.status)
+				}
+		    
+			});
+		}else{
+			return;
+		}
+	});
+	
+	$("#cancelStoreOrder").click(function() {
+		if(confirm("발주 취소 처리 하시겠습니까?")){
+			check();
+			
+		    $.ajax({
+				type: "POST",
+				url: "cancelStoreOrder",
+				headers: {"content-type":"application/json"},
+				data: JSON.stringify(param),
+				dateType: "text", 
+				success: function(text) {
+					if(text=="success") {
+						alert("발주가 취소되었습니다.");
+						location.href="${pageContext.request.contextPath }/storeOrderSta";
+					}
+				},
+				error: function(xhr) {
+					alert("에러코드 = "+xhr.status)
+				}
+		    
+			});
+		}else{
+			return;
+		}
+	});
+	
+	
+</script>

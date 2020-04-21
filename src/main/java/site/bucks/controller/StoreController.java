@@ -2,9 +2,7 @@ package site.bucks.controller;
 
 
 
-import java.awt.Stroke;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +10,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.util.HtmlUtils;
 
-import site.bucks.dto.HewonTest;
+import site.bucks.dto.Hewon;
 import site.bucks.dto.Store;
-import site.bucks.service.HewonTestService;
+import site.bucks.service.HewonService;
 import site.bucks.service.StoreService;
 
 @Controller
@@ -26,14 +26,44 @@ public class StoreController {
 	@Autowired
 	StoreService storeService;
 	@Autowired
-	HewonTestService hewonTestService;
+	HewonService hewonService;
 	
-//	지점등록 및 수정
+//	★★★ AJAX ★★★ 
+//	지점등록 
 	@RequestMapping(value = "/storeEnroll")
 	public String storeEnroll() {
 		return "store/store_enroll";
 	}
+
+	@RequestMapping(value = "/storeAdd",method = RequestMethod.POST)
+	@ResponseBody
+	public String storeAdd(@RequestBody Store store) {
+		store.setStoreName(HtmlUtils.htmlEscape(store.getStoreName()));
+		store.setStoreAddress(HtmlUtils.htmlEscape(store.getStoreAddress()));
+		store.setStoreOwner(HtmlUtils.htmlEscape(store.getStoreOwner()));
+		storeService.addStore(store);
+		 return"success"; 
+	}
+
+//	지점 아이디를 URL 주소로 전달받아 STORE 테이블에 저장된 해당 지점을 검색하여 JSON 형태로 응답하는 요청처리 메소드
+	@RequestMapping(value = "/storeIdView/{storeId}", method = RequestMethod.GET)
+	@ResponseBody
+	public Store storeIdView(@PathVariable int storeId) {
+		return storeService.getStoreId(storeId);
+	}
 	
+	
+//	지점수정
+	@RequestMapping(value = "/storeModify", method = {RequestMethod.PUT,RequestMethod.PATCH})
+	@ResponseBody
+	public String storeModify(@RequestBody Store store) {
+//		★ 관리자가 아니라면 수정불가 코드작성해야함 ★
+		storeService.modifyStore(store);
+		return "success";
+	}
+	
+	  
+	 
 //	지점 현황
 	@RequestMapping(value = "/storeSta")
 	public String storeSta(@ModelAttribute Store store, Model model) {
@@ -59,13 +89,13 @@ public class StoreController {
 	
 // *************************************** AJAX *************************************************
 
+//	★★★ 지점 정보 ★★★ 
 	@RequestMapping("/storeStaff") 
 	public String storeStaff() {
 		return "store/store_staff";
 	}
 	
 	
-//	★★★ 지점 정보 ★★★ 
 //	게시글 목록을 AJAX로 요청
 	@RequestMapping(value = "/storeStaffList", method = RequestMethod.GET)
 	@ResponseBody
@@ -93,19 +123,13 @@ public class StoreController {
 //	지점코드를 전달받아 점주정보를 가져오는 메소드 	
 	@RequestMapping(value = "/storeOwner/{storeId}",method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> storeOwner(@ModelAttribute HewonTest hewon ,@PathVariable int storeId) {
+	public Map<String, Object> storeOwner(@ModelAttribute Hewon hewon ,@PathVariable int storeId) {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		System.out.println("hewonStId ="+storeId);
-		returnMap.put("owner", hewonTestService.getHewonTestStId(storeId));
+		returnMap.put("owner", hewonService.getHewonStIdList(storeId));
+		
 		return returnMap;
 	}
-/*	
-	@RequestMapping(value = "/storeName/{storeId}", method = RequestMethod.GET)
-	public String storeName(@PathVariable int storeId, Model model) {
-		model.addAttribute("storeName",storeService.getStoreId(storeId));
-		return "success";
-	}
-*/	
 	
 }
 

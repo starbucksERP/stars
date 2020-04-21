@@ -16,7 +16,7 @@
 	
 	<!-- 지점 수정(관리자만 가능) -->
 	<update id="updateStore" parameterType="Store">
-		update STORE set store_address=#{storeAddress},store_owner=#{storeOwner},store_phone=#{storePhone},
+		update STORE set store_name=#{storeName},store_address=#{storeAddress},store_owner=#{storeOwner},store_phone=#{storePhone},
 		    		store_state=#{storeState},store_open=#{storeOpen},store_close=#{storeClose} where store_id=#{storeId}
 	</update>
 	

@@ -32,10 +32,7 @@ public class HomeController {
 		return "item/product_list";
 	}
 	
-	@RequestMapping(value = "/itemList")
-	public String itemList() {
-		return "item/item_list";
-	}
+	
 	
 
 
