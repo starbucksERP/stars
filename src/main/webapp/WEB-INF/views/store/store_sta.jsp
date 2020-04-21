@@ -79,7 +79,7 @@
 										<td>${store.storeId }</td>				
 										<td>${store.storeName }</td>				
 										<td>${store.storeAddress }</td>
-										<td>점주테이블</td>
+										<td>${store.storeOwner }</td>
 										<td>${store.storePhone }</td>				
 									<c:if test="${store.storeState==0 }">
 										<td>본점</td>

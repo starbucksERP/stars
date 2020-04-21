@@ -72,14 +72,25 @@
 				<div id="storeListDiv"></div>
 				<!-- <td><a onclick="ownerDisplay({{storeId}})">{{storeName}}</a></td> -->
 				
-				
 			</div>
 		</div>	
 	</div>
 </div>
 
-
-<script id="templateStore" type="text/x-handlebars-template">
+<script id="templateStore1" type="text/x-handlebars-template">
+	<table class="table" id="tableClick">
+		<tbody>
+			<tr id="trFirst" style="color: black;" >
+				<th>지점명</th>
+				<th>주소</th>
+			</tr>
+			<tr id="trFirst" style="color: black;" >
+				<td colspan="2">검색된 지점이 없습니다.</td>
+			</tr>
+		</tbody>
+	</table>
+</script>
+<script id="templateStore2" type="text/x-handlebars-template">
 	<table class="table" id="tableClick">
 		<tbody>
 			<tr id="trFirst" style="color: black;" >
@@ -127,12 +138,14 @@
 			 dataType: "json",
 			 success: function(json) {
 				 if(json.storeList.lenght==0) {
-					 $("#storeListDiv").html("검색된 지점정보가 없습니다.");
+					 var source=$("#templateStore1").html();
+					 var template=Handlebars.compile(source);
+					 $("#storeListDiv").html(template(json));
 					 return;
 				 }
-				 var source=$("#templateStore").html();
-				 var template=Handlebars.compile(source);
-				 $("#storeListDiv").html(template(json.storeList));
+					 var source=$("#templateStore2").html();
+					 var template=Handlebars.compile(source);
+					 $("#storeListDiv").html(template(json.storeList));
 			 },
 			 
 			 error: function(xhr) {
@@ -153,12 +166,14 @@
 			 dataType: "json",
 			 success: function(json) {
 				 if(json.storeList.lenght==0) {
-					 $("#storeListDiv").html("검색된 지점정보가 없습니다.");
+					 var source=$("#templateStore1").html();
+					 var template=Handlebars.compile(source);
+					 $("#storeListDiv").html(template(json));
 					 return;
 				 }
-				 var source=$("#templateStore").html();
-				 var template=Handlebars.compile(source);
-				 $("#storeListDiv").html(template(json.storeList));
+					 var source=$("#templateStore2").html();
+					 var template=Handlebars.compile(source);
+					 $("#storeListDiv").html(template(json.storeList));
 			 },
 			 error: function(xhr) {
 				 alert("에러코드 = "+xhr.status);
