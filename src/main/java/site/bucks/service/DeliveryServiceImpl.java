@@ -25,9 +25,21 @@ public class DeliveryServiceImpl implements DeliveryService{
 		return deliveryDAO.selectDeliveryList(delivery);
 	}
 
+	/*
+	 * @Override public void modifyDelieveryState(int deliverySeq) {
+	 * deliveryDAO.updateDeliveryState(deliverySeq); }
+	 */
+
 	@Override
-	public void modifyDelieveryState(int deliverySeq) {
-		 deliveryDAO.updateDeliveryState(deliverySeq);
+	public void modifyDeliveryReq(int deliverySeq) {
+		deliveryDAO.updateDeliveryReq(deliverySeq);
+		
+	}
+
+	@Override
+	public void modifyDeliveryReady(int deliverySeq) {
+		deliveryDAO.updateDeliveryReady(deliverySeq);
+		
 	}
 
 	
