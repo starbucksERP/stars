@@ -9,7 +9,7 @@ public interface DeliveryDAO {
 	int updateDeliveryReceiptProcess(OrderItem orderItem);
 	
 	
-	int insertDeliveryRequest(Delivery delivery); // 洹쇳�� 
-	List<Delivery> selectDeliveryList(Delivery delivery); // 洹쇳��
-	int updateDeliveryState(String requestNum); // 洹쇳��
+	int insertDeliveryRequest(Delivery delivery); // 근형 
+	List<Delivery> selectDeliveryList(Delivery delivery); // 근형
+	int updateDeliveryState(int deliverySeq); // 근형
 }

@@ -41,11 +41,6 @@ public class HomeController {
 		return "delivery/delivery_list";
 	}
 	
-	@RequestMapping(value = "/deliveryReq")
-	public String deliveryReq() {
-		return "delivery/delivery_req_list";
-	}
-	
 	
 
 	

@@ -1,6 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<style type="text/css">
+.table tr:not(.trFirst):hover {
+	background-color: #006C49;
+	color: white;
+}
+
+
+
+
+</style>
 <div class="container">
 	<div class="row">
 		<div class="sidebar">
@@ -26,19 +36,19 @@
 			<%-- 점주정보를 출력하는 영역 --%>
 			<div id="ownerDiv" class="information-left staff-left" >
 				<div id="ownerInfo" class="brown staff-head">[지점] 점주 정보</div>
-				<div class="information-left" style="width: 32%">
+				<div class="information-left" style="width: 32%" >
 					<img src="../star.png" alt="" align="middle" style="margin-top: 20px;">
 				</div>
 				<div class="information-right" style="width: 60%">
 					<button id="ownerName" type="button" class="a-button green medium" style="margin-left: 20px;">이름</button>
 					<div>
-						<div class="staff" style="font-weight: bold;">주소</div><span class="gray-font">주소</span>
+						<div id="ownerAddress" class="staff" style="font-weight: bold;">주소</div><span class="gray-font">주소</span>
 					</div>
 					<div>
-						<div class="staff" style="font-weight: bold;">연락처</div><span class="gray-font">연락처</span>
+						<div id="ownerPhone" class="staff" style="font-weight: bold;">연락처</div><span class="gray-font">연락처</span>
 					</div>
 					<div>
-						<div class="staff" style="font-weight: bold;">이메일</div><span class="gray-font">이메일</span>
+						<div id="ownerEmail" class="staff" style="font-weight: bold;">이메일</div><span class="gray-font">이메일</span>
 					</div>
 				</div>
 			</div>
@@ -46,7 +56,7 @@
 			<div class="information-right">
 				<h3>[지점명 검색]</h3> 
 				<div>
-					<span class="staff">지점명 :&nbsp;</span>
+					<span class="staff" >지점명 :&nbsp;</span>
 					<input type="search" id="storeName"/>&nbsp;
 					<button type="button" id="searchBtn" class="a-button black" onclick="storeSearchDisplay()"><i class="fas fa-search"></i>&nbsp;검색</button>
 				</div>
@@ -55,30 +65,42 @@
 				<div class="right">
 					<span class="red-font">지점명</span>을 클릭하시면 점주 정보를 확인할수 있습니다.
 				</div>
+				<div class="right" id="length"> &nbsp;&nbsp;</div>
 				<%-- <div class="right">총 매장수 : ${fn:length(storeList) }&nbsp;&nbsp;</div> --%>
 				
 				<%-- 지점 목록을 출력하는 영역 --%>
-				<div id="StoreListDiv"></div>
-				<!-- <td><a onclick="ownerDisplay()">{{storeName}}</a></td> -->
-				
+				<div id="storeListDiv"></div>
+				<!-- <td><a onclick="ownerDisplay({{storeId}})">{{storeName}}</a></td> -->
 				
 			</div>
 		</div>	
 	</div>
 </div>
 
-
-<script id="templateStore" type="text/x-handlebars-template">
-	<table class="table" id="StoreListDiv">
+<script id="templateStore1" type="text/x-handlebars-template">
+	<table class="table" id="tableClick">
 		<tbody>
-			<tr>
+			<tr id="trFirst" style="color: black;" >
+				<th>지점명</th>
+				<th>주소</th>
+			</tr>
+			<tr id="trFirst" style="color: black;" >
+				<td colspan="2">검색된 지점이 없습니다.</td>
+			</tr>
+		</tbody>
+	</table>
+</script>
+<script id="templateStore2" type="text/x-handlebars-template">
+	<table class="table" id="tableClick">
+		<tbody>
+			<tr id="trFirst" style="color: black;" >
 				<th>지점명</th>
 				<th>주소</th>
 			</tr>
 			{{#each.}}
-			<tr>
-				<td><a onclick="ownerDisplay({{storeId}})">{{storeName}}</a></td>
-				<td>{{storeAddress}}</td>
+			<tr onclick="ownerDisplay({{storeId}})">
+				<td>{{storeName}}</td>
+				<td>{{storeAddress}}</td>			
 			</tr>
 			{{/each}}
 		</tbody>
@@ -116,12 +138,14 @@
 			 dataType: "json",
 			 success: function(json) {
 				 if(json.storeList.lenght==0) {
-					 $("#StoreListDiv").html("검색된 지점정보가 없습니다.");
+					 var source=$("#templateStore1").html();
+					 var template=Handlebars.compile(source);
+					 $("#storeListDiv").html(template(json));
 					 return;
 				 }
-				 var source=$("#templateStore").html();
-				 var template=Handlebars.compile(source);
-				 $("#StoreListDiv").html(template(json.storeList));
+					 var source=$("#templateStore2").html();
+					 var template=Handlebars.compile(source);
+					 $("#storeListDiv").html(template(json.storeList));
 			 },
 			 
 			 error: function(xhr) {
@@ -142,12 +166,14 @@
 			 dataType: "json",
 			 success: function(json) {
 				 if(json.storeList.lenght==0) {
-					 $("#StoreListDiv").html("검색된 지점정보가 없습니다.");
+					 var source=$("#templateStore1").html();
+					 var template=Handlebars.compile(source);
+					 $("#storeListDiv").html(template(json));
 					 return;
 				 }
-				 var source=$("#templateStore").html();
-				 var template=Handlebars.compile(source);
-				 $("#StoreListDiv").html(template(json.storeList));
+					 var source=$("#templateStore2").html();
+					 var template=Handlebars.compile(source);
+					 $("#storeListDiv").html(template(json.storeList));
 			 },
 			 error: function(xhr) {
 				 alert("에러코드 = "+xhr.status);
@@ -159,6 +185,7 @@
 		
 	}; 
 	
+
 	
 	//지점명 클릭시 점주정보를 출력하는 함수
  	function ownerDisplay(storeId) {
@@ -179,19 +206,22 @@
 				 alert("에러코드 ="+xhr.status);
 			 }
 		});
-/*		
+		/*		
 		$("#searchBtn").click(function(){
 			$("#owerInfo").val("");
 			$("#owerName").val("");
 			$(".staff").val("");
 		});
-*/
+		*/	
 	} 
 	
 	
-
-	
-	
+ 	$('.table>tbody> tr').hover(function() {
+ 	    $(this).addClass('hover');
+ 	}, function() {
+ 	    $(this).removeClass('hover');
+ 	});
+		
 </script>
 
 

@@ -59,11 +59,14 @@ public class ItemDAOImpl implements ItemDAO {
 		return sqlSession.getMapper(ItemMapper.class).selectItemVendorList(itemVendor);
 	}
 
+<<<<<<< HEAD
 	@Override
 	public int updateTotalQty(Double change) {
 		return sqlSession.getMapper(ItemMapper.class).updateTotalQty(change);
 	}
 
 
+=======
+>>>>>>> branch 'master' of https://github.com/starbucksERP/stars.git
 
 }

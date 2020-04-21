@@ -69,11 +69,11 @@
 	<select id="selectSaleList" resultMap="saleRM">
 		select A.*,B.item_num,B.item_price,C.product_price from (sale A left join store_item B on A.sale_product=B.item_name) left join product_recipe C on A.sale_product=C.product 
 		<where>
-			<if test="category!=null and category!=''">
-				A.sale_product like #{category}||'%' 
+			<if test="saleCategory!=null and saleCategory!=''">
+				A.sale_product like #{saleCategory}||'%' 
 			</if>
-			<if test="subCategory!=null and subCategory!=''">
-				and A.sale_product like '_'||#{subCategory}||'%'
+			<if test="saleSubCategory!=null and saleSubCategory!=''">
+				and A.sale_product like '_'||#{salesubCategory}||'%'
 			</if>
 			<if test="saleProduct!=null and saleProduct!=''">
 				and A.sale_product=#{saleProduct}
@@ -94,12 +94,12 @@
 		
 	<!-- 대분류, 소분류 상품 검색 -->
 	<select id="selectSaleProductName1" resultType="string">
-		select sale_product from sale where sale_product like #{category}||'%' and sale_product like '_'||#{subCategory}||'%'
+		select sale_product from sale where sale_product like #{saleCategory}||'%' and sale_product like '_'||#{saleSubCategory}||'%'
 	</select>
 	
-	<!-- 단순 조합상품 검색 -->
+	<!-- 조합상품 검색 -->
 	<select id="selectSaleProductName2" resultType="string">
-		select product from product_recipe
+		select product from product_recipe where category=#{saleSubCategory}
 	</select>
 	
 	

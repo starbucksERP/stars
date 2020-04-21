@@ -63,15 +63,15 @@
 							<td>2020-04-19</td>
 							<td>스타벅스 강남점</td>
 							<td>
-								<select name="category" class="category">
+								<select name="saleCategory" class="saleCategory">
 	                            	<option value="">전체</option>
-	                            	<option value="A">제조음료 재료</option>
+	                            	<option value="A">제조음료</option>
 	                            	<option value="B">푸드</option>
 	                            	<option value="C">상품</option>
 	                            </select>
 							</td>
                             <td>
-                         		<select name="subCategory" class="subCategory">
+                         		<select name="saleSubCategory" class="saleSubCategory">
                          		</select>
                            	</td>
 							<td>

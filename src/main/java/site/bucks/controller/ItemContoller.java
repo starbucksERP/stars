@@ -1,6 +1,10 @@
 package site.bucks.controller;
 
+<<<<<<< HEAD
 import org.springframework.beans.factory.annotation.Autowired;
+=======
+
+>>>>>>> branch 'master' of https://github.com/starbucksERP/stars.git
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,8 +18,11 @@ import site.bucks.service.ItemService;
 
 @Controller
 public class ItemContoller {
+<<<<<<< HEAD
 	@Autowired
 	private ItemService itemService;
+=======
+>>>>>>> branch 'master' of https://github.com/starbucksERP/stars.git
 	
 	@RequestMapping(value = "/itemList")
 	public String itemList() {
@@ -46,5 +53,4 @@ public class ItemContoller {
 		itemService.addProduct(item);
 		return "success";
 	}
-
 }
