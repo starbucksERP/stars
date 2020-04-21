@@ -15,8 +15,8 @@ public class DeliveryServiceImpl implements DeliveryService{
 	private DeliveryDAO deliveryDAO;
 
 	@Override
-	public int addDeliveryRequest(Delivery delivery) {
-		return deliveryDAO.insertDeliveryRequest(delivery);
+	public void addDeliveryRequest(Delivery delivery) {
+		deliveryDAO.insertDeliveryRequest(delivery);
 		
 	}
 
@@ -26,8 +26,8 @@ public class DeliveryServiceImpl implements DeliveryService{
 	}
 
 	@Override
-	public int modifyDelieveryState(int deliverySeq) {
-		return deliveryDAO.updateDeliveryState(deliverySeq);
+	public void modifyDelieveryState(int deliverySeq) {
+		 deliveryDAO.updateDeliveryState(deliverySeq);
 	}
 
 	

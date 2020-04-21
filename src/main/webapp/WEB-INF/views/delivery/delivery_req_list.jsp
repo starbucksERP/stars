@@ -53,7 +53,7 @@
 								<c:otherwise>
 									<c:forEach var="deliveryReq" items="${deliveryReqList }">
 									<tr>
-										<td><input type="checkbox" class="rowChk" value="${deliveryReq.deliverySeq }"></td>
+										<td><input type="checkbox" class="rowChk"  value="${deliveryReq.deliverySeq }"></td>
 										<td>${deliveryReq.deliverySeq }</td>				
 										<!-- 팝업창 뜨는거 만들어야 함  -->
 										<td>${deliveryReq.requestNum }</td>				
@@ -65,11 +65,7 @@
 							</c:choose>
 						</tr>
 					</tbody>
-					<tfoot>
-						<tr>
-							<td colspan="5"><div class="message center red-font" ></div></td>
-						</tr>
-					</tfoot>
+				
 				</table>
 				
 				<div class="right">
@@ -90,37 +86,64 @@
 // 배송요청을 확인처리하기 위한 함수 
 $("#reqConfirmationBtn").click(function() {
 		
-		var delivery = [];
 		
 		if($(".rowChk:checked").length==0) {
-			$(".message").text("요청 확인할 배송정보를 체크 해주세요.")
+			alert("승인할 배송정보를 체크 해주세요.");
 		} else {
-			$(".rowChk:checked").each(function(i) {
-				delivery = {
-						deliverySeq:$(".rowChk").val()
-				};
-			});	
 			
-			  $.ajax({
-					type: "POST",
-					url: "delReqConfirm",
-					headers: {"content-type":"application/json"},
-					data: JSON.stringify(delivery),
-					dateType: "text",
-					success: function(text) {
-						if(text=="success") {
-							alert("배송요청이 확인 되었습니다.")
-							location.href="/deliveryReq"
-						}
-					},
-					error: function(xhr) {
-						alert("에러코드 = "+xhr.status)
-					}
-					, error:function(request,status,error){
-			             alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-			          }
-    
-				});
+			var delivery;
+			var rowChk = $(".rowChk:checked");
+			
+			rowChk.each(function(i) {
+				var tr = rowChk.parent().parent().eq(i);
+				var td = tr.children();
+				
+				var checkedDelSeq = td.eq(1).text();
+				alert("checkedDelSeq = " + checkedDelSeq);
+				
+				delivery = {
+						deliverySeq : checkedDelSeq
+				}
+				
+			});
+			
+			$.ajax({
+				type: "GET",
+				url: "delReqConfirm",
+				data: delivery,
+				dataType:"json",
+				success: function(json) {
+					alert("배송요청이 확인 되었습니다.")
+				},
+				error:function(request,status,error){
+		            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					 
+		          }
+			
+			});
+			
+		
+			/*
+			var param={"list":delivery};
+		
+			$.ajax({
+				type: "POST",
+				url: "delReqConfirm",
+				data: param,
+				dateType: "text",
+				success: function(text) {
+						alert("배송요청이 확인 되었습니다.")
+						location.href="/star/deliveryReq"
+					
+				},
+				error:function(request,status,error){
+					alert(delivery);
+		            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					 
+		          }
+
+			});
+			*/
 		}
 	});
 			

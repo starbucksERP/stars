@@ -6,9 +6,9 @@ import site.bucks.dto.Delivery;
 
 public interface DeliveryService {
 	
-	int addDeliveryRequest(Delivery delivery);
+	void addDeliveryRequest(Delivery delivery);
 	List<Delivery> getDeliveryList(Delivery delivery);
-	int modifyDelieveryState(int deliverySeq);
+	void modifyDelieveryState(int delivery);
 	
 	
 }
