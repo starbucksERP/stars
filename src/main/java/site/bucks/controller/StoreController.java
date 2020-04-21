@@ -2,9 +2,7 @@ package site.bucks.controller;
 
 
 
-import java.awt.Stroke;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +26,18 @@ public class StoreController {
 	@Autowired
 	HewonTestService hewonTestService;
 	
+//	★★★ AJAX ★★★ 
 //	지점등록 및 수정
 	@RequestMapping(value = "/storeEnroll")
 	public String storeEnroll() {
 		return "store/store_enroll";
 	}
-	
+
+	/*
+	 * @RequestMapping(value = "/storeAdd") public String storeAdd() { return
+	 * "success"; }
+	 * 
+	 */
 //	지점 현황
 	@RequestMapping(value = "/storeSta")
 	public String storeSta(@ModelAttribute Store store, Model model) {
@@ -59,13 +63,13 @@ public class StoreController {
 	
 // *************************************** AJAX *************************************************
 
+//	★★★ 지점 정보 ★★★ 
 	@RequestMapping("/storeStaff") 
 	public String storeStaff() {
 		return "store/store_staff";
 	}
 	
 	
-//	★★★ 지점 정보 ★★★ 
 //	게시글 목록을 AJAX로 요청
 	@RequestMapping(value = "/storeStaffList", method = RequestMethod.GET)
 	@ResponseBody
@@ -97,15 +101,9 @@ public class StoreController {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		System.out.println("hewonStId ="+storeId);
 		returnMap.put("owner", hewonTestService.getHewonTestStId(storeId));
+		
 		return returnMap;
 	}
-/*	
-	@RequestMapping(value = "/storeName/{storeId}", method = RequestMethod.GET)
-	public String storeName(@PathVariable int storeId, Model model) {
-		model.addAttribute("storeName",storeService.getStoreId(storeId));
-		return "success";
-	}
-*/	
 	
 }
 

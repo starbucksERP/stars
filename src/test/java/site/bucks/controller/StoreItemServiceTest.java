@@ -34,12 +34,30 @@ public class StoreItemServiceTest {
 	@Autowired
 	private StoreItemDAO storeItemDAO;
 	
-//	4/11 Å×½ºÆ® ¿Ï·á
+	
+//	@Test
+//	public void test1addSale() {
+//		Sale sale= new Sale();
+//		sale.setSaleProduct("ì¿¨ ë¼ì„ í”¼ì§€ì˜¤");
+//		sale.setSaleQty(20);
+//		
+//		storeItemService.addSale(sale);
+//	}
+	
+	@Test
+	public void test1addSale() {
+		Sale sale= new Sale();
+		sale.setSaleSeq(1);
+		
+		storeItemService.removeSale(sale);
+	}
+	
+//	4/11 ï¿½×½ï¿½Æ® ï¿½Ï·ï¿½
 	/*
 	@Test
 	public void test1addSale() {
 		Sale sale= new Sale();
-		sale.setSaleProduct("¿¡½ºÇÁ·¹¼Ò ¸¶Å°¾Æ¶Ç");
+		sale.setSaleProduct("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å°ï¿½Æ¶ï¿½");
 		sale.setSaleQty(2);
 		
 		storeItemService.addSale(sale);
@@ -54,7 +72,7 @@ public class StoreItemServiceTest {
 	@Test
 	public void test2saleRecord() {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("itemName", "¹öÅÍ °¡µæ ¶óÀÌ½º ÄíÅ°");
+		map.put("itemName", "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì½ï¿½ ï¿½ï¿½Å°");
 		map.put("itemQty", 10);
 		storeItemDAO.updateStoreItem(map);
 	}
@@ -80,10 +98,10 @@ public class StoreItemServiceTest {
 //	 * }
 //	 */
 	
-	@Test
-	public void test2() {
-		Sale sale= new Sale();
-		storeItemService.getSaleList(sale);
-	}
+//	@Test
+//	public void test2() {
+//		Sale sale= new Sale();
+//		storeItemService.getSaleList(sale);
+//	}
 
 }

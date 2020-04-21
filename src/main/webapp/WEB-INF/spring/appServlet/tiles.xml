@@ -19,6 +19,10 @@
 		<put-attribute name="content" value="/WEB-INF/views/content.jsp"/>
 	</definition>
 	
+	<definition name="window/*" extends="home">
+		<put-attribute name="header" value="/WEB-INF/views/window/none_header.jsp"/>
+		<put-attribute name="content" value="/WEB-INF/views/window/{1}.jsp"/>
+	</definition>
 	
 	<!-- name속성값을 "*"로 설정한 경우 요청처리 메소드의 모든 반환값이 "문자열"인 경우 템플릿 페이지로 응답되도록 설정 -->
 	<!-- extends속성 : 다른 definition엘리먼트의 고유값을 속성값으로 설정 
@@ -42,6 +46,7 @@
 		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}/{3}.jsp"/>
 	</definition>
 	
+	<!--  새창용 탬플릿등록 -->
 	
 	
 	

@@ -82,7 +82,7 @@
 			<div class="date-output right">2020/02/18 - 2020/03/03</div>
 			<br />
 			<div>
-					<button type="button" class="a-button padding-button">발주확인</button>
+					<button type="button" class="a-button green padding-button">발주확인</button>
 			</div>
 			<div class="information">
 				<table class="table">
