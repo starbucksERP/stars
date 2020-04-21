@@ -108,7 +108,7 @@ $("#reqConfirmationBtn").click(function() {
 			});
 			
 			$.ajax({
-				type: "GET",
+				type: "POST",
 				url: "delReqConfirm",
 				data: delivery,
 				dataType:"json",
