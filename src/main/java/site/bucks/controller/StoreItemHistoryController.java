@@ -80,7 +80,6 @@ public class StoreItemHistoryController {
 		return returnMap;
 	}
 	
-	
 	@ModelAttribute("itemStateList")
 	public List<String> itemStateList(){
 		return Arrays.asList("발주요청","발주완료","배송중","입고완료");
