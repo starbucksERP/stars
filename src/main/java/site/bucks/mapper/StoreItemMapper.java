@@ -21,5 +21,5 @@ public interface StoreItemMapper {
 	List<SaleItem> selectSaleList(Sale sale);
 	
 	List<String> selectSaleProductName1(Sale sale);
-	List<String> selectSaleProductName2();
+	List<String> selectSaleProductName2(Sale sale);
 }

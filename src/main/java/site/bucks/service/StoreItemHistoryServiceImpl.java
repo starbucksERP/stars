@@ -1,6 +1,8 @@
 package site.bucks.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +11,7 @@ import site.bucks.dao.DeliveryDAO;
 import site.bucks.dao.OrderItemDAO;
 import site.bucks.dao.StoreItemDAO;
 import site.bucks.dao.StoreItemHistoryDAO;
+import site.bucks.dto.Item;
 import site.bucks.dto.OrderItem;
 
 @Service
@@ -60,6 +63,7 @@ public class StoreItemHistoryServiceImpl implements StoreItemHistoryService{
 //	지점에 물품 입하시 일어나는 메소드
 	@Override
 	public void modifyReceiptProcess(OrderItem orderItem) {
+		
 //		발주상태 발주요청 70으로
 		orderItem.setRequestState(70);
 		
@@ -71,7 +75,27 @@ public class StoreItemHistoryServiceImpl implements StoreItemHistoryService{
 		orderItemDAO.updateOrderReceiptProcess(orderItem);
 //		지점재고수량변경
 		storeItemDAO.updateStoreItemReceiptProcess(orderItem);
+	}
+
+
+//	아이템이름 검색
+	@Override
+	public Map<String, Object> getItem(Item item) {
+		Map<String, Object> map= new HashMap<String, Object>();
+		map.put("items", storeItemHistoryDAO.searchItems(item));
+		return map;
+	}
+
+//	아이템 정보검색
+	@Override
+	public Map<String, Object> getItemName(String itemName) {
+		Map<String, Object> map= new HashMap<String, Object>();
+		map.put("item", storeItemHistoryDAO.searchItem(itemName));
+		return map;
 	} 
+	
+
+
 
 
 	

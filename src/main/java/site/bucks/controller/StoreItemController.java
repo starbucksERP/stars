@@ -30,7 +30,7 @@ public class StoreItemController {
 	
 	
 	
-//	��留ㅻ�깅�
+//	판매 기록
 	@RequestMapping(value = "/sale_record",method = RequestMethod.GET)
 	public String sale_record() {
 		return "sale/sale_record";
@@ -46,7 +46,7 @@ public class StoreItemController {
 		return "success";
 	}
 	
-//	��留ㅼ����
+//	판매삭제
 	@RequestMapping(value = "/sale_delete", method = RequestMethod.POST)
 	public String sale_delete(Sale sale) {
 		storeItemService.removeSale(sale);
@@ -54,7 +54,7 @@ public class StoreItemController {
 	}
 	
 	
-//	��留ㅼ“��
+//	판매조회
 	@RequestMapping(value = "/sale_list")
 	public String sale_list(@ModelAttribute Sale sale, Model model) {
 		model.addAttribute("saleList", storeItemService.getSaleList(sale));
@@ -62,10 +62,10 @@ public class StoreItemController {
 	}
 	
 	
-//	移댄��怨�由� 蹂� ����紐� 遺��ъ�ㅺ린
-	@RequestMapping(value = "/saleProduct", method = RequestMethod.GET)
+//	카테고리 별 검색 후 상품 조회
+	@RequestMapping(value = "/saleProduct", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String , Object> saleProduct(@ModelAttribute Sale sale) {
+	public Map<String , Object> saleProduct(@RequestBody Sale sale) {
 		return storeItemService.getSaleProductName(sale);
 	}
 	

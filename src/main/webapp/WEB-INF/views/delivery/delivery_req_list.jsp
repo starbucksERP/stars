@@ -1,14 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <div class="container">
 	<div class="row">
 		<div class="sidebar">
 			<ul class="side-menu">
 				<li>
-					<button class="dropdown-btn">배송요청조회</button>
+					<button class="dropdown-btn" style="background-color: #669900;" onclick="location.href='${pageContext.request.contextPath }/deliveryReq'">배송요청조회</button>
 				</li>
 				<li>
-					<button class="dropdown-btn">배송조회</button>
+					<button class="dropdown-btn" style="background-color: #2C2A29;" onclick="location.href='${pageContext.request.contextPath }/deliveryList'">배송조회</button>
 				</li>
 				
 			</ul>
@@ -43,38 +44,34 @@
 							<th>배송처리현황</th>
 						</tr>
 						<tr>
-							<td><input type="checkbox" class="rowChk"></td>
-							<td>1</td>
-							<td>req1234567</td>
-							<td>021234567</td>
-							<td>배송 준비중</td>
-						</tr>
-						<tr>
-							<td><input type="checkbox" class="rowChk"></td>
-							<td>2</td>
-							<td>req1234567</td>
-							<td>021234567</td>
-							<td>배송 준비중</td>
-						</tr>
-						<tr>
-							<td><input type="checkbox" class="rowChk"></td>
-							<td>3</td>
-							<td>req1234567</td>
-							<td>021234567</td>
-							<td>배송 준비중</td>
-						</tr>
-						<tr>
-							<td><input type="checkbox" class="rowChk"></td>
-							<td>4</td>
-							<td>req1234567</td>
-							<td>021234567</td>
-							<td>배송 준비중</td>
+						<c:choose>
+								<c:when test="${empty(deliveryReqList) }">
+									<tr align="center">
+										<td colspan="5">검색된 배송요청이 없습니다.</td>		
+									</tr>
+								</c:when>
+								<c:otherwise>
+									<c:forEach var="deliveryReq" items="${deliveryReqList }">
+									<tr>
+										<td><input type="checkbox" class="rowChk"  value="${deliveryReq.deliverySeq }"></td>
+										<td>${deliveryReq.deliverySeq }</td>				
+										<!-- 팝업창 뜨는거 만들어야 함  -->
+										<td>${deliveryReq.requestNum }</td>				
+										<td>${deliveryReq.storeId }</td>
+										<td>${deliveryReq.deliveryState }</td>
+									</tr>	
+									</c:forEach>
+								</c:otherwise>
+							</c:choose>
 						</tr>
 					</tbody>
+				
 				</table>
 				
 				<div class="right">
-					<button type="button" class="a-button medium">요청확인처리</button>
+					<button type="button" class="a-button medium" id="reqConfirmationBtn" >
+					요청확인처리
+					</button>
 				</div>
 				
 			</div>
@@ -83,3 +80,79 @@
 
 	</div>
 </div>
+
+<script type="text/javascript">
+
+// 배송요청을 확인처리하기 위한 함수 
+$("#reqConfirmationBtn").click(function() {
+		
+		
+		if($(".rowChk:checked").length==0) {
+			alert("배송요청확인: 요청승인할 배송정보를 선택해 주세요.");
+		} else {
+			
+			var delivery =[];
+			var rowChk = $(".rowChk:checked");
+			
+			rowChk.each(function(i) {
+				var tr = rowChk.parent().parent().eq(i);
+				var td = tr.children();
+				
+				var deliverySeq = td.eq(1).text();
+				delivery.push(deliverySeq);
+			});
+			
+			var param={"list":delivery};
+			
+			$.ajax({
+				type: "POST",
+				url: "delReqConfirm",
+				data: param,
+				dateType: "text",
+				success: function(text) {
+						alert(delivery +"번 배송 = 배송요청 승인")
+						location.href="/star/deliveryReq"
+					
+				},
+				error:function(request,status,error){
+		            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					 
+		          }
+
+			});
+		
+		}
+	});
+			
+			
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

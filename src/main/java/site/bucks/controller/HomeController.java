@@ -32,24 +32,9 @@ public class HomeController {
 		return "item/product_list";
 	}
 	
-	@RequestMapping(value = "/itemList")
-	public String itemList() {
-		return "item/item_list";
-	}
 	
 	
-//	��۰���
-	@RequestMapping(value = "/deliveryList")
-	public String deliveryList() {
-		return "delivery/delivery_list";
-	}
-	
-	@RequestMapping(value = "/deliveryReq")
-	public String deliveryReq() {
-		return "delivery/delivery_req_list";
-	}
-	
-	
+
 
 	
 	@RequestMapping(value = "/saleRecord")

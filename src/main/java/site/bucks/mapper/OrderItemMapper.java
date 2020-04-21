@@ -10,10 +10,9 @@ public interface OrderItemMapper {
 	List<OrderItem> selectStoreOrderItemList(OrderItem orderItem);
 	int updateOrderReceiptProcess(OrderItem orderItem); 
 
-	// 媛�����
+	// 본점용
 	int updateOrderItem(OrderItem orderItem);
 	List<OrderItem> selectOrderItemList(OrderItem orerItem);
-	int selectOrderItemQty(String requestNum);
-	OrderItem selectOrderItem(int orderSeq);
+	List<OrderItem> selectOrderItems(String requestNum);
 	
 }

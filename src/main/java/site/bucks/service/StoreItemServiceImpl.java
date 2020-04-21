@@ -126,11 +126,13 @@ public class StoreItemServiceImpl implements StoreItemService{
 	@Override
 	public Map<String, Object> getSaleProductName(Sale sale) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("saleProduct1", storeItemDAO.selectSaleProductName1(sale));
-		map.put("saleProduct2", storeItemDAO.selectSaleProductName2());
+		if(sale.getsaleCategory().equals("A")) {
+			map.put("saleProduct2", storeItemDAO.selectSaleProductName2(sale));
+		}else {
+			map.put("saleProduct1", storeItemDAO.selectSaleProductName1(sale));
+		}
 		return map;
 	}
-
 	
 
 
