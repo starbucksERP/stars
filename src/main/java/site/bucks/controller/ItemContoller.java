@@ -45,7 +45,9 @@ public class ItemContoller {
 	@RequestMapping(value = "/productEnroll", method = RequestMethod.POST)
 	@ResponseBody
 	public String productEnroll(@RequestBody Item item) {
+		// 로그인기능 추가시 : LoginUser Name>> setDM해주고 >> insertProduct Mapper #{itemDm}처리
 		item.setItemName(HtmlUtils.htmlEscape(item.getItemName()));
+		item.setItemVendor(HtmlUtils.htmlEscape(item.getItemVendor()));
 		itemService.addProduct(item);
 		return "success";
 	}
