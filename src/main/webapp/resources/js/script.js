@@ -113,8 +113,13 @@
 		// 카테고리명에 따라 서브카테고리를 추가
 		$(".category").change(function() {
 			$(".subCategory").empty();
+			$(".saleProduct").empty();
 			
 			var category=$(this).val();
+			
+			$(".subCategory").append($("<option value=''>---------------------------</option>")); 
+			$(".saleProduct").append($("<option value=''>---------------------------</option>")); 
+			
 			switch (category) {
 				case "A": 
 					$(".subCategory").append($("<option value='01'>원두종류</option>")); 
@@ -144,34 +149,24 @@
 		// 판매 관련 jsp 에서 상품명 출력
 		$(".subCategory").change(function() {
 			$(".saleProduct").empty();
+			$(".saleProduct").append($("<option value=''>-------------------------------</option>")); 
 			
-			var subCategory={
+			var sales={
+				category	: $(".category").val(),
 				subCategory : $(this).val()
 			}
 			
 			$.ajax({
-				type: "GET",
+				type: "POST",
 				url: "saleProduct",
-				data: subCategory,
+				headers: {"content-type":"application/json"},
+				data: JSON.stringify(sales),
 				dataType:"json",
 				success: function(json) {
 					if($(".category").val()=='A'){
-						switch ($(".subCategory").val()) {
-							case '01':
-								alert("a01");
-								break;
-							case '02':
-								alert("a02");
-								break;
-							case '03':
-								alert("a03");
-								break;
-							default:
-								$(json.saleProduct1).each(function(i) {
-									$(".saleProduct").append($("<option value=''>"+json.saleProduct2[i]+"</option>"));
-								});
-								break;
-						}
+						$(json.saleProduct1).each(function(i) {
+							$(".saleProduct").append($("<option value=''>"+json.saleProduct1[i]+"</option>"));
+						});
 					}else if($(".category").val()=='B'){
 						$(json.saleProduct1).each(function(i) {
 							$(".saleProduct").append($("<option value=''>"+json.saleProduct1[i]+"</option>"));
@@ -186,10 +181,86 @@
 				error: function(xhr) {
 					alert("에러코드 = "+xhr.status)
 				}
-			
 			});
+		});
+		
+		
+		//카테고리명에 따라 서브카테고리를 추가
+		$(".saleCategory").change(function() {
+			$(".saleSubCategory").empty();
+			$(".saleProduct").empty();
 			
+			var saleCategory=$(this).val();
 			
+			$(".saleSubCategory").append($("<option value=''>---------------------------</option>")); 
+			$(".saleProduct").append($("<option value=''>---------------------------</option>")); 
+			
+			switch (saleCategory) {
+				case "A": 
+					$(".saleSubCategory").append($("<option value='커피'>커피</option>")); 
+					$(".saleSubCategory").append($("<option value='라떼/모카/초콜릿'>라떼/모카/초콜릿</option>")); 
+					$(".saleSubCategory").append($("<option value='프라프치노'>프라프치노</option>")); 
+					$(".saleSubCategory").append($("<option value='블랜디드'>블랜디드</option>")); 
+					$(".saleSubCategory").append($("<option value='피지오'>피지오</option>")); 
+					$(".saleSubCategory").append($("<option value='티'>티</option>")); 
+					$(".saleSubCategory").append($("<option value='기타'>기타</option>")); 
+				break;
+				case "B": 
+					$(".saleSubCategory").append($("<option value='01'>베이커리</option>")); 
+					$(".saleSubCategory").append($("<option value='02'>케이크</option>")); 
+					$(".saleSubCategory").append($("<option value='03'>샌드위치</option>")); 
+					$(".saleSubCategory").append($("<option value='04'>디저트</option>")); 
+					$(".saleSubCategory").append($("<option value='05'>아이스크림</option>")); 
+					$(".saleSubCategory").append($("<option value='06'>병음료</option>")); 
+				break;
+				case "C":
+					$(".saleSubCategory").append($("<option value='01'>머그</option>")); 
+					$(".saleSubCategory").append($("<option value='02'>글라스</option>")); 
+					$(".saleSubCategory").append($("<option value='03'>텀블러</option>")); 
+					$(".saleSubCategory").append($("<option value='04'>보온병</option>")); 
+					$(".saleSubCategory").append($("<option value='05'>액세서리</option>")); 
+					$(".saleSubCategory").append($("<option value='06'>커피용품</option>")); 
+				break;
+			}
+		});
+		
+		
+		// 판매 관련 jsp 에서 상품명 출력
+		$(".saleSubCategory").change(function() {
+			$(".saleProduct").empty();
+			$(".saleProduct").append($("<option value=''>-------------------------------</option>")); 
+			
+			var sales={
+				saleCategory	: $(".saleCategory").val(),
+				saleSubCategory : $(this).val()
+			}
+			
+			$.ajax({
+				type: "POST",
+				url: "saleProduct",
+				headers: {"content-type":"application/json"},
+				data: JSON.stringify(sales),
+				dataType:"json",
+				success: function(json) {
+					if($(".saleCategory").val()=='A'){
+						$(json.saleProduct2).each(function(i) {
+							$(".saleProduct").append($("<option value=''>"+json.saleProduct2[i]+"</option>"));
+						});
+					}else if($(".saleCategory").val()=='B'){
+						$(json.saleProduct1).each(function(i) {
+							$(".saleProduct").append($("<option value=''>"+json.saleProduct1[i]+"</option>"));
+						});
+					}else{
+						$(json.saleProduct1).each(function(i) {
+							$(".saleProduct").append($("<option value=''>"+json.saleProduct1[i]+"</option>"));
+						});
+					}
+					
+				},
+				error: function(xhr) {
+					alert("에러코드 = "+xhr.status)
+				}
+			});
 		});
 	 
 	 

@@ -97,6 +97,5 @@
 		order by ITEM_VENDOR asc
 	</select>
 	
-	
 
 </mapper>

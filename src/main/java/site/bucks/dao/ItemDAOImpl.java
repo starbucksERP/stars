@@ -49,4 +49,5 @@ public class ItemDAOImpl implements ItemDAO {
 		return sqlSession.getMapper(ItemMapper.class).selectItemVendorList(itemVendor);
 	}
 
+
 }

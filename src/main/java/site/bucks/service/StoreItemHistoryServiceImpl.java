@@ -60,6 +60,7 @@ public class StoreItemHistoryServiceImpl implements StoreItemHistoryService{
 //	지점에 물품 입하시 일어나는 메소드
 	@Override
 	public void modifyReceiptProcess(OrderItem orderItem) {
+		
 //		발주상태 발주요청 70으로
 		orderItem.setRequestState(70);
 		

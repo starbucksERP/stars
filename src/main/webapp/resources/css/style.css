@@ -493,11 +493,11 @@ legend {
 	border: none;
 }
 
-.category{
+.category, saleCategory{
 	width: 120px;
 }
 
-.subCategory{
+.subCategory, .saleSubCategory{
 	width: 170px;
 }
 

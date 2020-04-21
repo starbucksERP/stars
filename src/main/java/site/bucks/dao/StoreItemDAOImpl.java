@@ -69,8 +69,8 @@ public class StoreItemDAOImpl implements StoreItemDAO {
 	}
 
 	@Override
-	public List<String> selectSaleProductName2() {
-		return sqlSession.getMapper(StoreItemMapper.class).selectSaleProductName2();
+	public List<String> selectSaleProductName2(Sale sale) {
+		return sqlSession.getMapper(StoreItemMapper.class).selectSaleProductName2(sale);
 	}
 
 	

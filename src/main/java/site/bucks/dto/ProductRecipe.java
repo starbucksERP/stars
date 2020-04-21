@@ -1,23 +1,23 @@
 package site.bucks.dto;
 /*
   
-¿Ã∏ß       ≥Œ?       ¿Ø«¸            
--------- -------- ------------- 
-PRODUCT       NOT NULL VARCHAR2(500) 
-CATEGORY      NOT NULL VARCHAR2(200) 
-ITEM1         NOT NULL VARCHAR2(50)  
-ITEM2                  VARCHAR2(50)  
-ITEM3                  VARCHAR2(50)  
-PRODUCT_PRICE          NUMBER          
+Ïù¥Î¶Ñ            ÎÑê?       Ïú†Ìòï           
+------------- -------- ------------ 
+PRODUCT       NOT NULL VARCHAR2(80) 
+CATEGORY      NOT NULL VARCHAR2(50) 
+PRODUCT_PRICE NOT NULL NUMBER       
+ITEM1         NOT NULL VARCHAR2(50) 
+ITEM2                  VARCHAR2(50) 
+ITEM3                  VARCHAR2(50)          
  
  */
 public class ProductRecipe {
 	private String product;
 	private String category;
+	private int productPrice;
 	private String item1;
 	private String item2;
 	private String item3;
-	private int productPrice;
 	
 	public ProductRecipe() {
 		// TODO Auto-generated constructor stub

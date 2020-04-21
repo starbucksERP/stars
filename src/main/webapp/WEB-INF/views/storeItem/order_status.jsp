@@ -149,8 +149,8 @@
 		    	
 		    	storeOrder = {
 		    		orderSeq		    : tr.find("td:eq(2)").text(),	
-	        		itemNum        	: tr.find("td:eq(3)").text(),
-		    		orderQty				: tr.find("td:eq(4)").text(),
+	        		itemNum        		: tr.find("td:eq(3)").text(),
+		    		orderQty			: tr.find("td:eq(4)").text(),
 		        	storeId				: 1594
 	        	};
 		    	//$("#storeId").val()
