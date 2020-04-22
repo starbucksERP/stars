@@ -35,8 +35,8 @@
 			
 			<br />
 			<hr />
-			<div class="information">
-				<table class="table">
+			<div class="information" id="displayDiv" >
+			<%-- 	<table class="table">
 					<tbody>
 						<tr>
 							<th style="width: 10px;"><input type="checkbox" class="allChk"></th>
@@ -68,37 +68,105 @@
 						</tr>
 					</tbody>
 				
-				</table>
+				</table> --%>
 				
+			</div>
 				<div class="right">
 					<button type="button" class="a-button medium" onclick="requestConfirmation()" >요청확인처리</button>
 				</div>
 				
-			</div>
 		
 		</div>
 
 	</div>
 </div>
 
+<script id="delReqListEmpty" type="text/x-handlebars-template">
+<table class="table">
+	<tbody>
+		<tr>
+			<th style="width: 10px;"><input type="checkbox" class="allChk"></th>
+			<th>번호</th>
+			<th>요청번호</th>
+			<th>매장코드</th>
+			<th>배송처리현황</th>
+		</tr>
+		<tr>
+			<tr align="center">
+    		<td colspan="5">검색된 배송요청이 없습니다.</td>		
+		</tr>
+	</tbody>
+</table>
+</script>
+
+<script id="delReqList" type="text/x-handlebars-template">
+<table class="table">
+	<tbody>
+		<tr>
+			<th style="width: 10px;"><input type="checkbox" class="allChk"></th>
+			<th>번호</th>
+			<th>요청번호</th>
+			<th>매장코드</th>
+			<th>배송처리현황</th>
+		</tr>
+		{{#each.}}
+			<tr>
+				<td><input type="checkbox" class="rowChk"  value="{{deliverySeq }}"></td>
+				<td>{{deliverySeq }}</td>
+				<td>{{requestNum }}</td>				
+				<td>{{storeId }}</td>
+				<td>{{deliveryState }}</td>	
+			</tr>
+		{{/each}}
+	</tbody>
+</table>
+</script>
+
+
 <script type="text/javascript">
+
+delReqDisplay();
+
+function delReqDisplay() {
+	$.ajax({
+		type: "GET",
+		 url: "deliveryReqList",
+		 dataType: "json",
+		 success: function(json) {
+			 if(json.deliveryReqList.length==0) {
+				 var source=$("#delReqListEmpty").html();
+				 var template=Handlebars.compile(source);
+				 $("#displayDiv").html(template(json.deliveryReqList));
+				 return;
+			 }
+				 var source=$("#delReqList").html();
+				 var template=Handlebars.compile(source);
+				 $("#displayDiv").html(template(json.deliveryReqList));
+		 },
+		 
+		 error: function(xhr) {
+			 alert("에러코드 = "+xhr.status);
+		 }
+	});
+	
+};
 
 function deliveryReqSearch(){
 		
 	var delivery;
-	alert("여기까지왔다0");	
+	alert("조건검색 시작 ");	
 	if($(".delReqCategory").val()=='requestNum') {
-		alert("여기까지왔다1");	
+		alert("조건이 요청번호인 경우");	
 		delivery={	
 			requestNum:$("#delReqSearchInput").val()
 		}
 	}else if($(".delReqCategory").val()=='storeId') {
-		alert("여기까지왔다2");		
+		alert("조건이 지점코드인 경우");	
 		delivery={
 			storeId:$("#delReqSearchInput").val()
 		}
 	} else {
-		$(this).alert("여기까지왔다3");		
+		$(this).alert("검색조건 선택 안한 경우");		
 		alert("검색 항목을 선택해 주세요.");
 		location.href="/star/deliveryReq"
 		return; 
@@ -111,19 +179,24 @@ function deliveryReqSearch(){
 		data: JSON.stringify(delivery),
 		dataType:"json",
 		success: function(json) {
-			alert("검색결과 확인");
-		},
-		error:function(request,status,error){
-            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-		}
+			if(json.reqSearchList.length==0) {
+				 var source=$("#delReqListEmpty").html();
+				 var template=Handlebars.compile(source);
+				 $("#displayDiv").html(template(json.reqSearchList));
+				 return;
+			 }
+				 var source=$("#delReqList").html();
+				 var template=Handlebars.compile(source);
+				 $("#displayDiv").html(template(json.reqSearchList));
+		 },
+		 
+		 error: function(xhr) {
+			 alert("에러코드 = "+xhr.status);
+		 }
 	});
 	
-	/* alert($("#delReqSearchInput").val());
-	alert($(".delReqCategory").val());
-	$("#delReqSearchForm").submit();
-	alert("뭔지몰겠는데 서브밋 성공"); 머지 확인용 태그 */ 
-	
-}
+};
+
 	
 
 
