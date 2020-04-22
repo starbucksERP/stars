@@ -126,7 +126,7 @@
 		$(".message").text(" ");
 		
 		var html="<tr>"+
-			"<td><input type='checkbox' class='rowChk itemNum'/></td>"+
+			"<td><input type='checkbox' class='rowChk'/></td>"+
 			"<td><input type='text' readonly='readonly'style='border:none; text-align:center;' class='requestDate' value='"+$("input[type='date']").val()+"'/></td>"+
 			"<td><input type='text' readonly='readonly'style='border:none; text-align:center;' class='storeId' value='"+$('#storeId').val()+"'/></td>"+
 			"<td><input type='text' readonly='readonly'style='border:none; text-align:center;' class='itemNum' value='"+$('#itemNum').val()+"'/></td>"+
@@ -152,12 +152,12 @@
 		    $(".rowChk:checked").each(function(i) {
 			 //	{orderSeq}, {requestNum}, {storeId}, {itemNum},  {orderQty}
 		    	storeOrder = {
-		        	requestNum		: time+$("#storeId").val().substring(0, 2),
+		        	requestNum	: time+$("#storeId").val().substring(0, 2),
 		        	storeId			: $("#storeId").val(),
-	        		itemNum        	: $(".itemNum").val(),
-	        		itemName      	: $(".itemName").val(),
-	        		itemSprice		: $(".itemSprice").val(),
-	        		orderQty        : $(".orderQty").val()
+	        		itemNum        : $(this).parents('tr').find(".itemNum").val(),
+	        	    itemName      : $(this).parents('tr').find(".itemNames").val(),
+	        		itemSprice		: $(this).parents('tr').find(".itemSprice").val(),
+	        		orderQty        : $(this).parents('tr').find(".orderQty").val()
 		        };
 		        
 		 	// param 배열에 storeOrder 오브젝트를 담는다.

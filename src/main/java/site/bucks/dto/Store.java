@@ -31,7 +31,6 @@ public class Store {
 	private List<Integer> states;	// 체크박스 검색용
 	
 	
-	
 	public Store() {
 		// TODO Auto-generated constructor stub
 	}

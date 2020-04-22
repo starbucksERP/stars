@@ -31,7 +31,7 @@
 				<table class="table">
 					<tbody>
 						<tr>
-							<th><input type="checkbox" class="allChk" value=""></th>
+							<th><input type="checkbox" class="allChk"></th>
 							<th>지점코드</th>
 							<th>지점명</th>
 							<th>점주명</th>
@@ -70,7 +70,7 @@
 					</label><br />					
 					<span class="staff">구분 </span>	
 					<label class="gLabel"><input type="radio" name="radio-name" class="fChk" value="head">본점</label>
-					<label class="gLabel"><input type="radio" name="radio-name" class="fChk" value="branch" checked="checked">지점</label>
+					<label class="gLabel"><input type="radio" name="radio-name" class="fChk" value="branch">지점</label>
 					<label class="gLabel"><input type="radio" name="radio-name" class="fChk" value="close">폐점</label>
 					<br />
 					<label>
@@ -81,8 +81,6 @@
 						<span>폐업일 </span><input type="text" id="insertClose" name="storeClose" disabled="disabled"/>
 					</label><br />
 					<div id="closeErrorMsg" style="color:red; display: none; padding-left: 25px;" >폐업일은 수정시 가능합니다.</div>
-					<span class="staff">지점 이미지 </span>&nbsp;
-					<img src="../star.png" alt="" align="top">
 					
 					<div class="center" style="margin-top: 70px;">
 						<button type="button" class="a-button darkgreen medium" id="addStoreBtn" >등 록</button>
@@ -106,7 +104,7 @@
 					</label><br />					
 					<span class="staff">구분 </span>	
 					<label class="gLabel"><input type="radio" name="radio-name" class="fChk" value="head">본점</label>
-					<label class="gLabel"><input type="radio" name="radio-name" class="fChk" value="branch" checked="checked">지점</label>
+					<label class="gLabel"><input type="radio" name="radio-name" class="fChk" value="branch">지점</label>
 					<label class="gLabel"><input type="radio" name="radio-name" class="fChk" value="close">폐점</label>
 					<br />
 					<label>
@@ -116,9 +114,7 @@
 					<label>
 						<span>폐업일 </span><input type="text" id="updateClose" name="storeClose" />
 					</label><br />
-					<div id="" style="color:red; display: none; text-align: center;">&nbsp;&nbsp;</div>
-					<span class="staff">지점 이미지 </span>&nbsp;
-					<img src="../star.png" alt="" align="top">
+					<div id="upCloseMsg" style="color:red; display: none; text-align: center;">&nbsp;&nbsp;폐업일을 입력해 주세요.</div>
 					
 					<div class="center" style="margin-top: 70px;">
 						<button type="button" class="a-button yellow medium" id="updateBtn" >수정완료</button>
@@ -177,7 +173,7 @@
 						 }
 						 
 						 var storeAdd = "<tr>"+
-						 "<td><input type='checkbox' class='rowChk'></td>"+
+						 "<td><input type='checkbox' class='rowChk' value='"+json.storeList[i].storeId+"' ></td>"+
 						 "<td>"+json.storeList[i].storeId+"</td>"+
 						 "<td>"+json.storeList[i].storeName+"</td>"+
 						 "<td>"+json.storeList[i].storeOwner+"</td>"+
@@ -207,6 +203,20 @@
 		 	var storeAddress=$("#insertAddress").val();
 		 	var storeOwner=$("#insertOwner").val();
 		 	var storePhone=$("#insertPhone").val();
+		 	
+		 	//라디오 선택된값 가져오기
+			 	var storeState=0;
+				 $(".fChk:checked").each(function(i) {
+					 if($(this).val()=='head'){
+						 storeState=0;
+					 }else if($(this).val()=='branch'){
+						 storeState=1;
+					 }else if($(this).val()=='close'){
+						 storeState=9;
+					 }
+				 }); 
+				 
+			 
 		 	var storeOpen=$("#insertOpen").val();
 		 	var storeClose=$("#insertClose").val();
 			 
@@ -219,6 +229,7 @@
 						"storeAddress":storeAddress,
 						"storeOwner":storeOwner,
 						"storePhone":storePhone,
+						"storeState":storeState,
 						"storeOpen":storeOpen,
 						"storeClose":storeClose
 		 		 }),
@@ -247,12 +258,12 @@
 		
 		var checkValue = $("input:radio[name='radio-name']:checked").val();
 		
-		if( checkValue != 'close') {
+		if( checkValue != 'close') { //본점 , 지점 
 			$('#insertOpen').prop('disabled',false);
 			$('#insertOpen').focus();
 			$('#insertClose').prop('disabled',true);
 			$('#closeErrorMsg').hide();
-		} else {
+		} else { // 폐점
 			document.getElementById('insertClose').disabled=true;
 			$('#closeErrorMsg').css('display','block');
 			$('#insertOpen').prop('disabled',true);
@@ -272,61 +283,147 @@
 			$("#insertArea").css('display','none');
 			
 			<%-- store_id를 전달하여 입력값 반환받기 --%>
+		 	//체크박스선택값 (메소드 때문에 가져온것)
+		 	var storeId=$(".rowChk:checked").val();
+		 	alert(storeId);
+
 		 	var storeName=$("#insertName").val();
 		 	var storeAddress=$("#insertAddress").val();
 		 	var storeOwner=$("#insertOwner").val();
 		 	var storePhone=$("#insertPhone").val();
-		 	//체크박스선택값 아직 보류
+		 	
+		 	//라디오 선택된값 가져오기
+/* 		 	var storeState=0;
+			 $(".fChk:checked").each(function(i) {
+				 if($(this).val()=='head'){
+					 storeState=0;
+				 }else if($(this).val()=='branch'){
+					 storeState=1;
+				 }else if($(this).val()=='close'){
+					 storeState=9;
+				 }
+			 }); 	 */	 	
+			 var storeState=$("input:radio[name='radio-name']:checked").val();
+			 alert("storeStateModify1="+storeState);
+		 	
 		 	var storeOpen=$("#insertOpen").val();
-		 	var storeClose=$("#insertClose").val();			
+		 	var storeClose=$("#insertClose").val();
+		 	
+/* 		 	if($!("#insertClose").val('')) {
+				$('#insertOpen').prop('disabled',false);
+				$('#insertClose').prop('disabled',false);
+			 	var storeOpen=$("#insertOpen").val();
+			 	var storeClose=$("#insertClose").val();			
+		 	}
+*/ 
 			
 			<%-- 반환받은값 변경inpt태그에 저장 --%>
 			var storeName=$("#updateName").val(storeName);
 			var storeAddress=$("#updateAddress").val(storeAddress);
 			var storeOwner=$("#updateOwner").val(storeOwner);
 			var storePhone=$("#updatePhone").val(storePhone);
+			
+			//라디오 선택값 가져와서 해당 값으로 선택되게 하기
+			 	var storeState=0;
+				 $(".fChk:checked").each(function(i) {
+					 if($(this).val()=='head'){
+						 storeState=0;
+					 }else if($(this).val()=='branch'){
+						 storeState=1;
+					 }else if($(this).val()=='close'){
+						 storeState=9;
+					 }
+				 }); 
+			alert("storeStateModify2="+storeState);
+			
 			var storeOpen=$("#updateOpen").val(storeOpen);
 			var storeClose=$("#updateClose").val(storeClose);
 			
-			$("#updateArea").show();
-			<%-- store_id를 전달하여 입력값 반환받기 --%>
-			
-		 	
-		 	
-			
-			$("#updateBtn").click(function() {
-				$("#updateArea").css('display','none');
-				$("#insertArea").show();
+			$.ajax({
+				type: "GET",
+				 url: "storeIdView/"+storeId,
+				 dataType: "json",
+				 success: function(json) {
+					 $("#updateName").val(json.storeName);
+					 $("#updateAddress").val(json.storeAddress);
+					 $("#updateOwner").val(json.storeOwner);
+					 $("#updatePhone").val(json.storePhone);
+					 $("#updateOpen").val(json.storeOpen);
+					 $("#updateClose").val(json.storeClose);
+				 },
+				 error: function(xhr) {
+					 alert("에러코드 ="+xhr.status);
+				 }
+				 
 			});
+			
+			$("#updateArea").show();
 		}
 		
-	}); 
+	}); 			
+			
+			$("#updateBtn").click(function() {
+			 	//체크박스선택값 (메소드 때문에 가져온것)
+			 	var storeId=$(".rowChk:checked").val();
+			 	
+			 	var storeName=$("#updateName").val();
+			 	var storeAddress=$("#updateAddress").val();
+			 	var storeOwner=$("#updateOwner").val();
+			 	var storePhone=$("#updatePhone").val();
+			 	
+			 	//라디오 선택된값 가져오기
+			 	var storeState=0;
+				 $(".fChk:checked").each(function(i) {
+					 if($(this).val()=='head'){
+						 storeState=0;
+					 }else if($(this).val()=='branch'){
+						 storeState=1;
+					 }else if($(this).val()=='close'){
+						 storeState=9;
+					 }
+				 	//alert("storeState="+storeState);
+				 	//alert("typeof="+typeof(storeState));
+				 }); 
+				 
+			 	var storeOpen=$("#updateOpen").val();
+			 	var storeClose=$("#updateClose").val();
+			 	
+			 	$.ajax({
+			 		type: "PUT",
+			 		 url: "storeModify/"+storeId,
+			 		 headers: {"content-type":"application/json","X-Http-Method-override":"PUT"},
+			 		 data: JSON.stringify({
+		 				"storeName":storeName,
+						"storeAddress":storeAddress,
+						"storeOwner":storeOwner,
+						"storePhone":storePhone,
+						"storeState":storeState,
+						"storeOpen":storeOpen,
+						"storeClose":storeClose			 		
+			 		 }),
+			 		 dataType:"text",
+			 		 success: function(text) {
+			 			 if(text=="success"){
+			 				storeDisplay();
+			 			 }
+			 		 },
+			 		 error: function(xhr) {
+			 			 alert("에러코드 ="+xhr.status);
+			 		 }
+			 			 
+			 	});
+				
+				$("#updateArea").css('display','none');
+				$("#insertArea").show();
+				$('#closeErrorMsg').css('display','none');
+			});
+
 	
 
 	
 	
 	<%-- 지점등록 버튼 클릭시 submit --%>
-/* 		 	var storeName=$("#updateName").val();
-		 	var storeAddress=$("#updateAddress").val();
-		 	var storeOwner=$("#updateOwner").val();
-		 	var storePhone=$("#updatePhone").val();
-		 	
-		 	var states=[];
-			 $(".fChk:checked").each(function(i) {
-				 if($(this).val()=='head'){
-					 states.push(0);
-					 var storeState=$(".fChk").val(states);
-				 }else if($(this).val()=='branch'){
-					 states.push(1);
-					 var storeState=$(".fChk").val(states);
-				 }else if($(this).val()=='close'){
-					 states.push(9);
-					 var storeState=$(".fChk").val(states);
-				 }
-			 });
-		 	
-		 	var storeOpen=$("#updateOpen").val();
-		 	var storeClose=$("#updateClose").val(); */
+
 	
 /* 	$("#addStoreBtn").click(function() { 
 		
@@ -345,16 +442,7 @@
 	}) */
 
 
-	<%-- 지점정보 / 점주정보 탭이동 --%>
-	$(".enroll-ul li").click(function() {
-		if($(this).attr("class")=='tab1'){
-			$("#tab1").show();
-			$("#tab2").hide();
-		}else{
-			$("#tab2").show();
-			$("#tab1").hide();
-		}
-	})
+
 	
 	
 	<%-- 수정가능한 체크박스 선택 갯수 제한 --%>
