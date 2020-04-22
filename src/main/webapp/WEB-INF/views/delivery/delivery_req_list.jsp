@@ -35,7 +35,7 @@
 			
 			<br />
 			<hr />
-			<div class="information" id="displayDiv" >
+			<div class="information" id="delReqDisplay" >
 			<%-- 	<table class="table">
 					<tbody>
 						<tr>
@@ -90,10 +90,11 @@
 			<th>요청번호</th>
 			<th>매장코드</th>
 			<th>배송처리현황</th>
+			<th>배송요청일</th>
 		</tr>
 		<tr>
 			<tr align="center">
-    		<td colspan="5">검색된 배송요청이 없습니다.</td>		
+    		<td colspan="6">검색된 배송요청이 없습니다.</td>		
 		</tr>
 	</tbody>
 </table>
@@ -108,6 +109,7 @@
 			<th>요청번호</th>
 			<th>매장코드</th>
 			<th>배송처리현황</th>
+			<th>배송요청일</th>
 		</tr>
 		{{#each.}}
 			<tr>
@@ -116,6 +118,7 @@
 				<td>{{requestNum }}</td>				
 				<td>{{storeId }}</td>
 				<td>{{deliveryState }}</td>	
+				<td>{{deliveryStart }}</td>	
 			</tr>
 		{{/each}}
 	</tbody>
@@ -136,12 +139,12 @@ function delReqDisplay() {
 			 if(json.deliveryReqList.length==0) {
 				 var source=$("#delReqListEmpty").html();
 				 var template=Handlebars.compile(source);
-				 $("#displayDiv").html(template(json.deliveryReqList));
+				 $("#delReqDisplay").html(template(json.deliveryReqList));
 				 return;
 			 }
 				 var source=$("#delReqList").html();
 				 var template=Handlebars.compile(source);
-				 $("#displayDiv").html(template(json.deliveryReqList));
+				 $("#delReqDisplay").html(template(json.deliveryReqList));
 		 },
 		 
 		 error: function(xhr) {
@@ -154,21 +157,24 @@ function delReqDisplay() {
 function deliveryReqSearch(){
 		
 	var delivery;
-	alert("조건검색 시작 ");	
 	if($(".delReqCategory").val()=='requestNum') {
-		alert("조건이 요청번호인 경우");	
+		if($("#delReqSearchInput").val()=='') {
+			alert("검색어를 입력해 주세요.");
+			return;
+		}
 		delivery={	
 			requestNum:$("#delReqSearchInput").val()
 		}
 	}else if($(".delReqCategory").val()=='storeId') {
-		alert("조건이 지점코드인 경우");	
+		if($("#delReqSearchInput").val()=='') {
+			alert("검색어를 입력해 주세요.");
+			return;
+		}
 		delivery={
 			storeId:$("#delReqSearchInput").val()
 		}
-	} else {
-		$(this).alert("검색조건 선택 안한 경우");		
+	} else {	
 		alert("검색 항목을 선택해 주세요.");
-		location.href="/star/deliveryReq"
 		return; 
 	}
 	
@@ -182,12 +188,12 @@ function deliveryReqSearch(){
 			if(json.reqSearchList.length==0) {
 				 var source=$("#delReqListEmpty").html();
 				 var template=Handlebars.compile(source);
-				 $("#displayDiv").html(template(json.reqSearchList));
+				 $("#delReqDisplay").html(template(json.reqSearchList));
 				 return;
 			 }
 				 var source=$("#delReqList").html();
 				 var template=Handlebars.compile(source);
-				 $("#displayDiv").html(template(json.reqSearchList));
+				 $("#delReqDisplay").html(template(json.reqSearchList));
 		 },
 		 
 		 error: function(xhr) {
@@ -201,7 +207,7 @@ function deliveryReqSearch(){
 
 
 function delReqSearchReset() {
-	location.href="/star/deliveryReq"
+	delReqDisplay();
 }
 
 
