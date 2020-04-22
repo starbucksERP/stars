@@ -39,7 +39,7 @@
                            <label class="gLabel"><input type="text" name="requestDate" class="datepicker" value=""/>&nbsp;<i class="far fa-calendar-alt"></i></label> &nbsp;-&nbsp;
                            <label class="gLabel"><input type="text" name="requestDatePair"  class="datepicker"  value=""/>&nbsp;<i class="far fa-calendar-alt"></i></label></td>
                            <th>발주지점</th>
-                           <td><form:input path="storeId" id="storeId"/></td>
+                           <td><form:input path="storeId" id="storeId"/>1021</td>
                         </tr>
                         <tr>
                            <th>품목</th>
@@ -98,21 +98,24 @@
                      <c:otherwise>
                         <c:forEach var="oi" items="${orderItemList }">
                         <tr>
-                           <td><input type="checkbox" class="rowChk"></td>
+                           <td><input type="checkbox" class="rowChk" value="${oi.requestState}"></td>
                            <td>${fn:substring(oi.requestDate,0,10)}</td>            
-                           <td>${oi.orderSeq }</td>            
+                           <td>${oi.requestNum }</td>            
                            <td>${oi.itemNum }</td>
                            <td>${oi.orderQty }</td>
                            <td>${oi.itemSprice }</td>      
                            <c:choose>
                               <c:when test="${oi.requestState==20}">
-                                 <td class="green-font">발주완료</td>
+                                 <td class="darkgreen-font">발주완료</td>
                               </c:when>
                               <c:when test="${oi.requestState==60}">
-                                 <td class="green-font">배송중</td>
+                                 <td class="beige-font">배송중</td>
                               </c:when>
                               <c:when test="${oi.requestState==70}">
-                                 <td class="green-font">입고완료</td>
+                                 <td class="blue-font">입고완료</td>
+                              </c:when>
+                               <c:when test="${oi.requestState==99}">
+                                 <td class="red-font">발주취소</td>
                               </c:when>
                               <c:otherwise>
                                  <td class="green-font">발주요청</td>
@@ -145,15 +148,17 @@
 		}else{
 		    $(".rowChk:checked").each(function(i) {
 		 
-		    	var tr=$(this).closest('tr');
+		    	var tr=$(this).parents('tr');
+		    	
 		    	
 		    	storeOrder = {
-		    		orderSeq		    : tr.find("td:eq(2)").text(),	
-	        		itemNum        		: tr.find("td:eq(3)").text(),
-		    		orderQty			: tr.find("td:eq(4)").text(),
-		        	storeId				: 1594
+		    		requestState	: $(this).val(),
+		    		requestNum	: tr.find("td:eq(2)").text(),	
+	        		itemNum        : tr.find("td:eq(3)").text(),
+		    		orderQty		 	: tr.find("td:eq(4)").text(),
+		    		itemSprice		: tr.find("td:eq(5)").text(),
+		        	storeId			: $("#storeId").val()
 	        	};
-		    	//$("#storeId").val()
 		    	
 		        param.push(storeOrder);
 		    });

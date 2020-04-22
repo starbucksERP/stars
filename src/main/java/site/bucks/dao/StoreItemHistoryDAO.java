@@ -10,4 +10,5 @@ public interface StoreItemHistoryDAO {
 	int insertSIH(OrderItem orderItem);
 	List<String> searchItems(Item item);
 	Item searchItem(String itemName);
+	int updateCancelStoreOrder(OrderItem orderItem);
 }

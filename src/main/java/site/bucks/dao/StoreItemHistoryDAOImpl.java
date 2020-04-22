@@ -32,6 +32,11 @@ public class StoreItemHistoryDAOImpl implements StoreItemHistoryDAO{
 		return sqlSession.getMapper(StoreItemHistoryMapper.class).searchItem(itemName);
 	}
 
+	@Override
+	public int updateCancelStoreOrder(OrderItem orderItem) {
+		return sqlSession.getMapper(StoreItemHistoryMapper.class).updateCancelStoreOrder(orderItem);
+	}
+
 
 	
 
