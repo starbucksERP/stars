@@ -39,7 +39,7 @@ public class DeliveryController {
 		deliveryService.getDeliveryList(delivery);
 	}
 	
-	// 2. 배송요청확인 페이지의 요청확인처리 버튼을 눌렀을때 사용되는 update 메소드 
+	// 2. 배송요청확인 페이지의 요청확인처리 버튼을 눌렀을때 사용되는 update 메소드 // 머지 확인용
 	  @RequestMapping(value = "/delReqConfirm", method = RequestMethod.POST)
 	  @ResponseBody 
 	  public String modifyDeliveryReq(@RequestParam(value = "list[]") 

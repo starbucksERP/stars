@@ -26,7 +26,7 @@
 	insert into delivery values(#{deliverySeq}, #{requestNum}, #{storeId}, 40, sysdate, null)
 </insert>
 
-
+<!-- 머지 확인용 -->
 
 <select id="selectDeliveryList" parameterType="Delivery" resultType="Delivery">
 <!-- nowDeliveryState의 값에 배송요청조회는 40 / 배송현황조회는 40이 아닌 경우 적용하여 검색 -->
