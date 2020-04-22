@@ -1,10 +1,11 @@
 package site.bucks.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,16 +24,23 @@ public class DeliveryController {
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>> 배송요청확인 페이지에서 사용할 메소드 시작 
 	
-	// 1. 배송요청확인 페이지의 기본 테이블 출력을 위해 사용되는 select 메소드  
-	@RequestMapping(value = "/deliveryReq")
-	public String getDeliveryReq(@ModelAttribute Delivery delivery, Model model) {
-		delivery.setNowDeliveryState(40);
-		model.addAttribute("deliveryReqList", deliveryService.getDeliveryList(delivery));
+	// 1. 배송요청확인 페이지의 링크 
+	@RequestMapping("/deliveryReq") 
+	public String delReqList() {
 		return "delivery/delivery_req_list";
 	}
 	
+	// 2. 배송요청확인 페이지의 기본테이블 출력용 
+	@RequestMapping(value = "/deliveryReqList", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> getDeliveryReq(@ModelAttribute Delivery delivery) {
+		Map<String, Object>delReqListMap = new HashMap<String, Object>();
+		delivery.setNowDeliveryState(40);
+		delReqListMap.put("deliveryReqList", deliveryService.getDelReqList(delivery));
+		return delReqListMap;
+	}
 	
-	// 2. 배송요청확인 페이지의 요청확인처리 버튼을 눌렀을때 사용되는 update 메소드 
+	// 3. 배송요청확인 페이지의 요청확인처리 버튼을 눌렀을때 사용되는 update 메소드 
 	  @RequestMapping(value = "/delReqConfirm", method = RequestMethod.POST)
 	  @ResponseBody 
 	  public String modifyDeliveryReq(@RequestParam(value = "list[]") 
@@ -43,17 +51,39 @@ public class DeliveryController {
 		 }	  
 	  return"redirect:delivery/delivery_req_list"; 
 	  }
+	  
+	 // 4. 배송요청확인 페이지의 단일검색을 위한 select 메소드  
+	  @RequestMapping(value = "/deliveryReqSearch", method = RequestMethod.POST)
+	   @ResponseBody
+	   public Map<String, Object> deliveryReqSearch(@RequestBody Delivery delivery) {
+
+		  Map<String, Object>searchMap = new HashMap<String, Object>();
+	      delivery.setNowDeliveryState(40);   
+	      searchMap.put("reqSearchList", deliveryService.getDelReqList(delivery)); 
+	      return searchMap;
+	     
+	   }
+	  
+	  
 	  // >>>>>>>>>>>>>>>>>>>>>>>>> 배송요청확인 페이지에서 사용할 메소드 종료 
 	  
 	  
 	  // >>>>>>>>>>>>>>>>>>>>>>>>> 배송현황조회 페이지에서 사용할 메소드 시작 
 	  
-	  // 1. 배송현황조회 페이지의 기본 테이블 출력을 위해 사용되는 select 메소드 
-	  @RequestMapping(value = "/deliveryList")
-		public String getDeliveryReady(@ModelAttribute Delivery delivery, Model model) {
-		   delivery.setNowDeliveryState(50);
-		   model.addAttribute("deliveryReadyList", deliveryService.getDeliveryList(delivery));
+	  // 1. 배송현황조회 페이지의 링크 
+	  @RequestMapping("/deliveryList") 
+		public String delReadyList() {
 			return "delivery/delivery_list";
+		}
+	  
+	  // 1. 배송현황조회 페이지의 기본 테이블 출력을 위해 사용되는 select 메소드 
+	  @RequestMapping(value = "/deliveryReadyList")
+	  @ResponseBody
+	  public Map<String, Object> getDeliveryReady(@ModelAttribute Delivery delivery) {
+		  delivery.setNowDeliveryState(50);
+		  Map<String, Object>delReadyListMap = new HashMap<String, Object>();
+		   delReadyListMap.put("deliveryReadyList", deliveryService.getDelReadyList(delivery));
+			return delReadyListMap;
 		}
 	  
 	  // 2. 배송현황조회 페이지에서 배송시작 버튼을 눌렀을때 사용되는 update 메소드 
@@ -61,9 +91,6 @@ public class DeliveryController {
 	  @ResponseBody 
 	  public String modifyDelivery(@RequestParam(value = "list[]") 
 	  List<Integer> deliveryList ) {
-		  System.out.println("일단 여기까지 오는데 성공했다.");
-		  System.out.println("승인번호: = "+deliveryList );			
-		  
 		  for(int deliverySeq:deliveryList) { 
 			  System.out.println(deliverySeq);
 			  
@@ -73,6 +100,17 @@ public class DeliveryController {
 	  return"redirect:delivery/delivery_list"; 
 	  }
 	  
+	// 4. 배송현황조회 페이지의 다중검색을 위한 select 메소드  
+		  @RequestMapping(value = "/deliveryReadySearch", method = RequestMethod.POST)
+		   @ResponseBody
+		   public Map<String, Object> deliveryReadySearch(@RequestBody Delivery delivery) {
+			  delivery.setNowDeliveryState(10);
+			  Map<String, Object>searchMap = new HashMap<String, Object>();
+		      searchMap.put("readySearchList", deliveryService.getDelReadyList(delivery));
+		    
+		      return searchMap;
+		     
+		   }
 	  
 	  // >>>>>>>>>>>>>>>>>>>>>>>>> 배송현황조회 페이지에서 사용할 메소드 종료 
 		
