@@ -30,8 +30,8 @@
 		<ul class="drop-menu" style="padding-left: 5%">
 			<li onclick="location.href='productList'">품목현황</li>
 			<li onclick="location.href='itemList'">재고현황</li>
-			<li onclick="location.href='saleRecord'">판매등록</li>
-			<li onclick="location.href='saleList'">판매조회</li>
+			<li onclick="location.href='sale_record'">판매등록</li>
+			<li onclick="location.href='sale_list'">판매조회</li>
 		</ul>
 		<ul class="drop-menu" style="padding-left: 5%">
 			<li onclick="location.href='orderReq'">발주요청조회</li>

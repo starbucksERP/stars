@@ -2,15 +2,14 @@ package site.bucks.dto;
 
 /*	
  
-이름             널?       유형           
--------------- -------- ------------ 
-SALE_SEQ       NOT NULL NUMBER       
-STORE_ID       NOT NULL NUMBER       
-SALE_PRODUCT   NOT NULL VARCHAR2(50) 
-SALE_QTY       NOT NULL NUMBER       
-SALE_PRICE_SUM NOT NULL NUMBER       
-SALE_DATE               DATE     
-
+이름           널?       유형            
+------------ -------- ------------- 
+SALE_SEQ     NOT NULL NUMBER        
+STORE_ID     NOT NULL NUMBER        
+SALE_PRODUCT NOT NULL VARCHAR2(100) 
+SALE_QTY     NOT NULL NUMBER        
+SALE_PRICE   NOT NULL NUMBER        
+SALE_DATE    NOT NULL DATE  
  */
 
 public class Sale {
@@ -18,7 +17,7 @@ public class Sale {
 	private int storeId;
 	private String saleProduct;
 	private double saleQty;
-	private int salePriceSum;
+	private int salePrice;
 	private String saleDate;
 	
 //	검색용
@@ -65,14 +64,6 @@ public class Sale {
 		this.saleQty = saleQty;
 	}
 
-	public int getSalePriceSum() {
-		return salePriceSum;
-	}
-
-	public void setSalePriceSum(int salePriceSum) {
-		this.salePriceSum = salePriceSum;
-	}
-
 	public String getSaleDate() {
 		return saleDate;
 	}
@@ -81,7 +72,13 @@ public class Sale {
 		this.saleDate = saleDate;
 	}
 
+	public int getSalePrice() {
+		return salePrice;
+	}
 
+	public void setSalePrice(int salePrice) {
+		this.salePrice = salePrice;
+	}
 
 	public String getSaleDate1() {
 		return saleDate1;
@@ -99,23 +96,6 @@ public class Sale {
 		this.saleDate2 = saleDate2;
 	}
 
-
-	public String getsaleCategory() {
-		return saleCategory;
-	}
-
-	public void setsaleCategory(String saleCategory) {
-		this.saleCategory = saleCategory;
-	}
-
-	public String getsaleSubCategory() {
-		return saleSubCategory;
-	}
-
-	public void setsaleSubCategory(String saleSubCategory) {
-		this.saleSubCategory = saleSubCategory;
-	}
-
 	public String getSaleQty1() {
 		return saleQty1;
 	}
@@ -131,6 +111,25 @@ public class Sale {
 	public void setSaleQty2(String saleQty2) {
 		this.saleQty2 = saleQty2;
 	}
+
+	public String getSaleCategory() {
+		return saleCategory;
+	}
+
+	public void setSaleCategory(String saleCategory) {
+		this.saleCategory = saleCategory;
+	}
+
+	public String getSaleSubCategory() {
+		return saleSubCategory;
+	}
+
+	public void setSaleSubCategory(String saleSubCategory) {
+		this.saleSubCategory = saleSubCategory;
+	}
+
+	
+	
 	
 	
 	

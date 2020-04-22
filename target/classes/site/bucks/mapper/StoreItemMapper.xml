@@ -6,7 +6,7 @@
 <!-- 판매등록시 sql -->
 	<!-- 완제품인지 재료인지 구별용 -->
 	<select id="selectProduct" resultType="ProductRecipe">
-		select * from product_recipe where product=#{product}
+		select * from product_recipe where product=#{saleProduct}
 	</select>
 	
 	<!-- 판매제품이름으로 완제품 가격 검색 -->
@@ -19,7 +19,7 @@
 		<selectKey resultType="int" keyProperty="saleSeq" order="BEFORE">
 			select sale_seq.nextval from dual		
 		</selectKey>
-		insert into sale values(#{saleSeq},#{storeId},#{saleProduct},#{saleQty},#{salePriceSum},sysdate)
+		insert into sale values(#{saleSeq},#{storeId},#{saleProduct},#{saleQty},#{salePrice},sysdate)
 	</insert>
 	
 	<!-- 판매기록 등록시 지점재고 업데이트 -->
@@ -46,55 +46,30 @@
 	</update>
 <!-- 지점에서 입고 확인시 storeItemHistory 테이블에서 일어나는 일련의 메소드 -->
 
-	<resultMap type="SaleItem" id="saleRM">
-		<association property="sale" javaType="Sale">
-			<id column="sale_seq" property="saleSeq"/>
-			<result column="store_id" property="storeId"/>
-			<result column="sale_product" property="saleProduct"/>
-			<result column="sale_qty" property="saleQty"/>
-			<result column="sale_date" property="saleDate"/>
-		</association>
-		<association property="storeItem" javaType="StoreItem">
-			<id column="item_num" property="itemNum"/>
-			<result column="item_name" property="itemName"/>		
-			<result column="item_price" property="itemPrice"/>
-		</association>
-		<association property="productRecipe" javaType="ProductRecipe">
-			<id column="product" property="product"/>		
-			<result column="product_price" property="productPrice"/>
-		</association>
-	</resultMap>
-
 	<!-- 판매 기록 검색 -->
-	<select id="selectSaleList" resultMap="saleRM">
-		select A.*,B.item_num,B.item_price,C.product_price from (sale A left join store_item B on A.sale_product=B.item_name) left join product_recipe C on A.sale_product=C.product 
+	<select id="selectSaleList" resultType="Sale">
+		select * from sale
 		<where>
-			<if test="saleCategory!=null and saleCategory!=''">
-				A.sale_product like #{saleCategory}||'%' 
-			</if>
-			<if test="saleSubCategory!=null and saleSubCategory!=''">
-				and A.sale_product like '_'||#{salesubCategory}||'%'
-			</if>
 			<if test="saleProduct!=null and saleProduct!=''">
-				and A.sale_product=#{saleProduct}
+				and sale_product like '_'||#{saleProduct}||'%'
 			</if>
 			<if test="saleQty1!=null and saleQty1!='' and saleQty2!=null and saleQty2!=''">
-				and A.sale_qty between #{saleQty1} and #{saleQty2}
+				and sale_qty between #{saleQty1} and #{saleQty2}
 			</if>
 			<if test="saleDate1!=null and saleDate1!='' and saleDate2!=null and saleDate2!=''">
-				and A.sale_date between #{saleDate1} and #{saleDate2}
+				and sale_date between #{saleDate1} and #{saleDate2}
 			</if>
 			<if test="saleDate!='' and saleDate!=null">
-				and A.sale_date between #{saleDate} and #{saleDate}+1 and
+				and sale_date between #{saleDate} and #{saleDate}+1 and
 			</if>
-		</where> 
-		order by A.sale_seq desc, B.item_num
+		</where>
+		order by sale_seq desc, sale_date
 	</select>
 	
 		
 	<!-- 대분류, 소분류 상품 검색 -->
 	<select id="selectSaleProductName1" resultType="string">
-		select sale_product from sale where sale_product like #{saleCategory}||'%' and sale_product like '_'||#{saleSubCategory}||'%'
+		select item_name from store_item where ITEM_NUM like #{saleCategory}||'%' and ITEM_NUM like '_'||#{saleSubCategory}||'%' and store_id=#{storeId}
 	</select>
 	
 	<!-- 조합상품 검색 -->
@@ -102,5 +77,12 @@
 		select product from product_recipe where category=#{saleSubCategory}
 	</select>
 	
+	<!-- 상품 가격 검색  -->
+	<select id="searchProduct1" resultType="Item">
+		select * from item where ITEM_NAME=#{saleProduct}
+	</select>
+	<select id="searchProduct2" resultType="ProductRecipe">
+		select * from product_recipe where product=#{saleProduct}
+	</select>
 	
 </mapper>

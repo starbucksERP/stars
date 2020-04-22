@@ -28,7 +28,7 @@
       
          <h3>발주현황조회</h3>
          <form:form action="storeOrderSta" method="post" id="form" modelAttribute="orderItem">
-            <div class="right"><button type="submit" class="a-button big">검색</button></div>
+            <div class="right"><button type=button class="a-button big search" onclick="startState()">검색</button><input type="hidden"/></div>
             <hr />
             <div class="information">
                   <table class="table">
@@ -39,18 +39,24 @@
                            <label class="gLabel"><input type="text" name="requestDate" class="datepicker" value=""/>&nbsp;<i class="far fa-calendar-alt"></i></label> &nbsp;-&nbsp;
                            <label class="gLabel"><input type="text" name="requestDatePair"  class="datepicker"  value=""/>&nbsp;<i class="far fa-calendar-alt"></i></label></td>
                            <th>발주지점</th>
-                           <td><form:input path="storeId" id="storeId"/>1021</td>
+                           <td><form:input path="storeId" id="storeId" name="storeId" value="1021"/></td>
                         </tr>
                         <tr>
-                           <th>품목</th>
-                           <td colspan="3"><form:input path="itemNum" />&nbsp;<a href="" class="a-button white" style="font-size: 15px;"><i class="fas fa-file-alt"></i></a></td>
+                           <th>품목명</th>
+                           <td>
+                           		<input type="search" />&nbsp;<a href="" class="a-button white" style="font-size: 15px;"><i class="fas fa-file-alt"></i></a>
+                           </td>
+                           <th>품목코드</th>
+                           <td>
+                           		<form:input path="itemNum" />&nbsp;<a href="" class="a-button white" style="font-size: 15px;"><i class="fas fa-file-alt"></i></a>
+                          	</td>
                         </tr>
                         <tr>
                            <th>진행상태</th>
-                           <td>
+                           <td>	
                            		<form:checkbox path="states" class="fChk" label="발주요청" value="10" />
                            		<form:checkbox path="states" class="fChk" label="발주완료" value="20" />
-                           		<form:checkbox path="states" class="fChk" label="배송중" value="60" />
+                           		<form:checkbox path="states" class="fChk" label="배송중"   value="60" />
                            		<form:checkbox path="states" class="fChk" label="입고완료" value="70" />
                            </td>
                            <th>가격 범위</th>
@@ -61,13 +67,13 @@
             </div>
          </form:form>
       
-         <div class="right" style="float: right;">
+      <!--    <div class="right" style="float: right;">
             <ul class="order-sta">
-               <li class="blackgray">전체</li>
-               <li >발주진행</li>
-               <li >완료</li>
+               <li class="blackgray" id="All">전체</li>
+               <li id="Ing">발주진행</li>
+               <li id="End">완료</li>
             </ul>
-         </div>
+         </div> -->
          <br />
          <hr style="margin-top: 14px;" />
          <br />
@@ -82,7 +88,7 @@
                   <tr>
                      <th><input type="checkbox" class="allChk"></th>
                      <th>발주일자</th>
-                     <th>발주번호</th>
+                     <th>요청번호</th>
                      <th>품목</th>
                      <th>총 수량</th>
                      <th>총 금액</th>
@@ -103,7 +109,7 @@
                            <td>${oi.requestNum }</td>            
                            <td>${oi.itemNum }</td>
                            <td>${oi.orderQty }</td>
-                           <td>${oi.itemSprice }</td>      
+                           <td>${oi.itemSprice }</td> 
                            <c:choose>
                               <c:when test="${oi.requestState==20}">
                                  <td class="darkgreen-font">발주완료</td>
@@ -153,9 +159,9 @@
 		    	
 		    	storeOrder = {
 		    		requestState	: $(this).val(),
-		    		requestNum	: tr.find("td:eq(2)").text(),	
-	        		itemNum        : tr.find("td:eq(3)").text(),
-		    		orderQty		 	: tr.find("td:eq(4)").text(),
+		    		requestNum		: tr.find("td:eq(2)").text(),	
+	        		itemNum       	: tr.find("td:eq(3)").text(),
+		    		orderQty		: tr.find("td:eq(4)").text(),
 		    		itemSprice		: tr.find("td:eq(5)").text(),
 		        	storeId			: $("#storeId").val()
 	        	};
@@ -180,7 +186,7 @@
 				success: function(text) {
 					if(text=="success") {
 						alert("입고완료 처리되었습니다.");
-						location.href="${pageContext.request.contextPath }/storeOrderSta";
+						location.href="${pageContext.request.contextPath }/storeOrderSta"
 					}
 				},
 				error: function(xhr) {
@@ -206,7 +212,7 @@
 				success: function(text) {
 					if(text=="success") {
 						alert("발주가 취소되었습니다.");
-						location.href="${pageContext.request.contextPath }/storeOrderSta";
+						location.href="${pageContext.request.contextPath }/storeOrderSta"
 					}
 				},
 				error: function(xhr) {
@@ -218,6 +224,36 @@
 			return;
 		}
 	});
+	
+	
+		
+	function startState(){
+		
+		var states=[];
+			
+		 $(".fChk:checked").each(function(i) {
+			 if($(this).val()=='10'){
+				 states.push(10);
+			 }else if($(this).val()=='20'){
+				 states.push(20);
+			 }else if($(this).val()=='60'){
+				 states.push(60);
+			 }else{
+				 states.push(70);
+			 }
+		 });
+			 
+		 if(states.length==0){
+			 states.push(10);
+			 states.push(20);
+			 states.push(60);
+			 states.push(70);
+		 }
+		 
+		 $("input[type='hidden']").val(states);
+		 $("#form").submit();
+	}
+	
 	
 	
 </script>

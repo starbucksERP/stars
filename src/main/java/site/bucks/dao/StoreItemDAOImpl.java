@@ -6,10 +6,10 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import site.bucks.dto.Item;
 import site.bucks.dto.OrderItem;
 import site.bucks.dto.ProductRecipe;
 import site.bucks.dto.Sale;
-import site.bucks.dto.SaleItem;
 import site.bucks.dto.StoreItem;
 import site.bucks.mapper.StoreItemMapper;
 
@@ -20,8 +20,8 @@ public class StoreItemDAOImpl implements StoreItemDAO {
 	private SqlSession sqlSession;
 	
 	@Override
-	public ProductRecipe selectProduct(String product) {
-		return sqlSession.getMapper(StoreItemMapper.class).selectProduct(product);
+	public ProductRecipe selectProduct(String saleProduct) {
+		return sqlSession.getMapper(StoreItemMapper.class).selectProduct(saleProduct);
 	}
 	
 	@Override
@@ -59,7 +59,7 @@ public class StoreItemDAOImpl implements StoreItemDAO {
 	}
 
 	@Override
-	public List<SaleItem> selectSaleList(Sale sale) {
+	public List<Sale> selectSaleList(Sale sale) {
 		return sqlSession.getMapper(StoreItemMapper.class).selectSaleList(sale);
 	}
 
@@ -71,6 +71,16 @@ public class StoreItemDAOImpl implements StoreItemDAO {
 	@Override
 	public List<String> selectSaleProductName2(Sale sale) {
 		return sqlSession.getMapper(StoreItemMapper.class).selectSaleProductName2(sale);
+	}
+
+	@Override
+	public Item searchProduct1(String saleProduct) {
+		return sqlSession.getMapper(StoreItemMapper.class).searchProduct1(saleProduct);
+	}
+
+	@Override
+	public ProductRecipe searchProduct2(String saleProduct) {
+		return sqlSession.getMapper(StoreItemMapper.class).searchProduct2(saleProduct);
 	}
 
 	

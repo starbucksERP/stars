@@ -38,32 +38,13 @@
                             <td style="width: 40%;"><label class="gLabel"><input type="text" name="saleDate1" class="datepicker" readonly="readonly" value="${sale.saleDate1}"/>&nbsp;<i class="far fa-calendar-alt"></i></label>
                            &nbsp;-&nbsp;<label class="gLabel"><input type="text" name="saleDate2"  class="datepicker" readonly="readonly" value="${sale.saleDate2}"/>&nbsp;<i class="far fa-calendar-alt"></i></label></td>
                            	<th>지점명</th>
-                           	<td>asdf</td>
-                        </tr>
-                        <tr>
-                            <th>대분류</th>
-                            <td>
-	                            <select name="saleCategory" class="saleCategory">
-	                            	<option value="">전체</option>
-	                            	<option value="A">제조음료</option>
-	                            	<option value="B">푸드</option>
-	                            	<option value="C">상품</option>
-	                            </select>
-                            </td>
-                           	<th>소분류</th>
-                           	<td>
-                         		<select name="saleSubCategory" class="saleSubCategory">
-                         		</select>
-                           	</td>
+                           	<td><input type="search" value="1021" readonly="readonly" id="storeId" class="storeId"/></td>
                         </tr>
                         <tr>
                            <th>판매상품명</th>
-                           <td>
-                           		<select name="saleProduct" class="saleProduct">
-                           		</select>
-                           	</td>
-	                        <th>판매량 범위</th>
-	                        <td><input type="number" name="saleQty1" value="${sale.saleQty1}"/> 개&nbsp;&nbsp;-&nbsp;&nbsp;<input type="number" name="saleQty2" value="${sale.saleQty2}"/> 개</td>
+                           <td><input type="search" value="${sale.saleProduct}"  name="saleProduct"/></td>
+	                       <th>판매량 범위</th>
+	                       <td><input type="number" name="saleQty1" value="${sale.saleQty1}"/> 개&nbsp;&nbsp;-&nbsp;&nbsp;<input type="number" name="saleQty2" value="${sale.saleQty2}"/> 개</td>
                         </tr>
                      </thead>
                   </table>
@@ -78,14 +59,12 @@
             <table class="table">
                <tbody>
                   <tr>
-                     <th>판매지점</th>
                      <th>판매날짜</th>
-                     <th>대분류</th>
-                     <th>소분류</th>
+                     <th>판매지점</th>
                      <th>판매상품명</th>
                      <th>판매량</th>
                      <th>총판매액</th>
-                     <th>옵션</th>
+                     <th width="10%">옵션</th>
                   </tr>
                   <c:choose>
                      <c:when test="${empty(saleList) }">
@@ -94,54 +73,26 @@
                         </tr>
                      </c:when>
                      <c:otherwise>
-                        <c:forEach var="saleItem" items="${saleList }">
+                   	  <c:set var = "qtyTotal" value = "0" />
+                   	  <c:set var = "priceSum" value = "0" />
+                        <c:forEach var="sale" items="${saleList }">
                         <tr>
-                           <td>${saleItem.sale.storeId }</td>            
-                           <td>${fn:substring(saleItem.sale.saleDate,0,10)}</td>            
-                           <c:choose>
-                           		<c:when test="${fn:startsWith(saleItem.storeItem.itemNum,'A')}">
-                          		   <td>커피</td>
-                          		   <c:choose>
-                           				<c:when test="${fn:substring(saleItem.storeItem.itemNum,1,3)==01}"><td>원두</td></c:when>
-                           				<c:when test="${fn:substring(saleItem.storeItem.itemNum,1,3)==02}"><td>티백</td></c:when>
-                           				<c:otherwise><td>부재료</td></c:otherwise>
-                           			</c:choose>
-                           		</c:when>
-                           		<c:when test="${fn:startsWith(saleItem.storeItem.itemNum,'B')}">
-                           			 <td>푸드</td>
-                           			 <c:choose>
-                           			 <c:when test="${fn:substring(saleItem.storeItem.itemNum,1,3)==01}"><td>베이커리</td></c:when>
-                         			 <c:when test="${fn:substring(saleItem.storeItem.itemNum,1,3)==02}"><td>케이크</td></c:when>
-                         			 <c:when test="${fn:substring(saleItem.storeItem.itemNum,1,3)==03}"><td>샌드위치</td></c:when>
-                         			 <c:when test="${fn:substring(saleItem.storeItem.itemNum,1,3)==04}"><td>디저트</td></c:when>
-                         			 <c:when test="${fn:substring(saleItem.storeItem.itemNum,1,3)==05}"><td>아이스크림</td></c:when>
-                           			 <c:otherwise><td>병음료</td></c:otherwise>
-                           			 </c:choose>
-                           		</c:when>
-                           		<c:otherwise>
-                           			  <td>상품</td>
-                           			  <c:choose>
-                           			 <c:when test="${fn:substring(saleItem.storeItem.itemNum,1,3)==01}"><td>머그</td></c:when>
-                         			 <c:when test="${fn:substring(saleItem.storeItem.itemNum,1,3)==02}"><td>글라스</td></c:when>
-                         			 <c:when test="${fn:substring(saleItem.storeItem.itemNum,1,3)==03}"><td>텀블러</td></c:when>
-                         			 <c:when test="${fn:substring(saleItem.storeItem.itemNum,1,3)==04}"><td>보온병</td></c:when>
-                         			 <c:when test="${fn:substring(saleItem.storeItem.itemNum,1,3)==05}"><td>액세서리</td></c:when>
-                           			 <c:otherwise><td>커피용품</td></c:otherwise>
-                           			 </c:choose>
-                           		</c:otherwise> 
-                           </c:choose>
-                           <td>${fn:substring(saleItem.sale.saleProduct,1,3)}</td>      
-                           <td class="qty"><fmt:parseNumber integerOnly= "true" value="${saleItem.sale.saleQty }"/></td>     
-                           <td class="price">${saleItem.sale.saleQty }</td> 
-                           <td><form action="sale_delete" method="post"><button type="button" class="a-button blackgray inner-button deleteSale">삭제</button><input type="hidden" name="saleSeq" value="${saleItem.sale.saleSeq }"/></form></td>   
+                           <td>${fn:substring(sale.saleDate,0,10)} </td>            
+                           <td>${sale.storeId }</td>            
+                           <td>${sale.saleProduct}</td>      
+                           <td class="qty"><fmt:formatNumber value="${sale.saleQty }" type="number"/> 개 </td>     
+                           <td class="price"><fmt:formatNumber value="${(sale.salePrice)*(sale.saleQty)}" type="currency"/></td> 
+                           <td><form action="sale_delete" method="post"><button type="button" class="a-button blackgray inner-button deleteSale">삭제</button><input type="hidden" name="saleSeq" value="${sale.saleSeq }"/></form></td>   
                         </tr>
+                        <c:set var="qtyTotal" value="${qtyTotal+sale.saleQty}"/>
+                        <c:set var="priceSum" value="${priceSum+(sale.salePrice)*(sale.saleQty)}"/>
                         </c:forEach>
                      </c:otherwise>
                   </c:choose>
-               		<tr>
-               			<td colspan="5">총 합계</td>
-               			<td colspan="1" id="qtySum"></td>
-               			<td colspan="1" id="priceSum">123</td>
+               		<tr class="blue">
+               			<td colspan="3">총 합계</td>
+               			<td colspan="1"><fmt:formatNumber value="${qtyTotal}" type="number"/><c:if test="${qtyTotal!=0}">개</c:if> </td>
+               			<td colspan="1" ><fmt:formatNumber value="${priceSum}" type="currency"/></td>
                			<td colspan="1"></td>
                		</tr>
                </tbody>
@@ -167,7 +118,7 @@
 	}
 	
 	
-	qtySum();
+	/* qtySum();
 	priceSum();
 	
 	//테이블 행에 qty 클래스 부여후 그 행들의 합 qtySum 아이디에 구현
@@ -186,7 +137,8 @@
 			priceAdd+=Number(($(this).text()));
 		})
 		$("#priceSum").text(priceAdd);
-	}
+	} */
 	
 
+	
 </script>
