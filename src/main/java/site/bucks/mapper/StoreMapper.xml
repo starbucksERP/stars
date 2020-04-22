@@ -4,7 +4,7 @@
 <mapper namespace="site.bucks.mapper.StoreMapper">
 	<!-- 지점 등록(관리자만) -->
 	<insert id="insertStore">
-		insert into STORE values(concat(store_seq.nextval,SUBSTR(#{storePhone},0,3)),#{storeName},#{storeAddress},#{storeOwner},#{storePhone},1,#{storeOpen},#{storeClose})
+		insert into STORE values(concat(store_seq.nextval,SUBSTR(#{storePhone},0,3)),#{storeName},#{storeAddress},#{storeOwner},#{storePhone},#{storeState},#{storeOpen},#{storeClose})
 	</insert>
 	
 	<!-- 지점 수정(관리자만 가능) : 폐점변경 및 폐업일 등록 -->

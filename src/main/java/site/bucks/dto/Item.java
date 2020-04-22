@@ -2,18 +2,18 @@ package site.bucks.dto;
  
 /*ass
 
-이름          널?       유형           
------------ -------- ------------ 
-ITEM_NUM    NOT NULL VARCHAR2(50) 
-ITEM_NAME   NOT NULL VARCHAR2(20) 
-ITEM_QTY    NOT NULL NUMBER       
-MIN_QTY              NUMBER       
-ITEM_PPRICE NOT NULL NUMBER       
-ITEM_SPRICE NOT NULL NUMBER       
-ITEM_MARGIN          NUMBER       
-ITEM_VENDOR NOT NULL VARCHAR2(50) 
-ITEM_DM              VARCHAR2(20) 
-ITEM_USAGE  NOT NULL NUMBER       
+이름          널?       유형            
+----------- -------- ------------- 
+ITEM_NUM    NOT NULL VARCHAR2(50)  
+ITEM_NAME   NOT NULL VARCHAR2(100) 
+ITEM_QTY    NOT NULL NUMBER        
+MIN_QTY              NUMBER        
+ITEM_PPRICE NOT NULL NUMBER        
+ITEM_SPRICE NOT NULL NUMBER        
+ITEM_MARGIN          NUMBER        
+ITEM_VENDOR NOT NULL VARCHAR2(50)  
+ITEM_DM              VARCHAR2(20)  
+ITEM_USAGE  NOT NULL NUMBER        
  
  */
 
@@ -30,7 +30,7 @@ public class Item {
 	private int itemUsage;
 	private int seq;
 	
-//	검색용
+//	寃�����
 	private String category;
 	private String subCategory;
 	
@@ -127,7 +127,7 @@ public class Item {
 	}
 
 	
-//	검색용
+//	寃�����
 	public String getCategory() {
 		return category;
 	}

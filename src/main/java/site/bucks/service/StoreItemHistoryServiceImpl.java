@@ -45,36 +45,43 @@ public class StoreItemHistoryServiceImpl implements StoreItemHistoryService{
 	
 	
 	@Override
-	public void modifyCancelRecipt(List<OrderItem> orderItem) {
-//		if(orderItem.size()==0) {
-//			throw new RuntimeException("취소할 발주가 없습니다.");	
-//		}
-//		
-//		for(OrderItem oi:orderItem) {
-//			if(storeItemHistoryDAO.selectState10(oi).getItemState()!=10) {
-//				throw new RuntimeException("이미 발주가 접수되었습니다.");
-//			}else {
-//				storeItemHistoryDAO.updateCancelProcess(oi);
-//			}
-//		}
+	public void modifyCancelRecipt(List<OrderItem> orderItemList) {
+		for(OrderItem orderItem:orderItemList) {
+			if(orderItem.getRequestState()!=10) {
+				throw new RuntimeException("이미 발주가 접수되었습니다.");
+			}else {
+				orderItem.setRequestState(99);
+				
+//			주문 상태 변경
+				orderItemDAO.updateOrderItem(orderItem);
+//			지점 history 상태 변경
+				storeItemHistoryDAO.updateCancelStoreOrder(orderItem);
+			}
+		}
+		
 	}
 	
 	
 //	지점에 물품 입하시 일어나는 메소드
 	@Override
-	public void modifyReceiptProcess(OrderItem orderItem) {
-		
-//		발주상태 발주요청 70으로
-		orderItem.setRequestState(70);
-		
-//		지점발주상태바꿔서 삽입
-		storeItemHistoryDAO.insertSIH(orderItem);
-//		배송상태변경
-		deliveryDAO.updateDeliveryReceiptProcess(orderItem);
-//		주문상태변경
-		orderItemDAO.updateOrderReceiptProcess(orderItem);
-//		지점재고수량변경
-		storeItemDAO.updateStoreItemReceiptProcess(orderItem);
+	public void modifyReceiptProcess(List<OrderItem> orderItemList) {
+		for(OrderItem orderItem:orderItemList) {
+			if(orderItem.getRequestState()==60) {
+//				발주상태 발주요청 70으로
+				orderItem.setRequestState(70);
+				
+//				지점발주상태바꿔서 삽입
+				storeItemHistoryDAO.insertSIH(orderItem);
+//				배송상태변경
+				deliveryDAO.updateDeliveryReceiptProcess(orderItem);
+//				주문상태변경
+				orderItemDAO.updateOrderItem(orderItem);
+//				지점재고수량변경
+				storeItemDAO.updateStoreItemReceiptProcess(orderItem);
+			}else {
+				throw new RuntimeException("아직 배송완료되지 않았습니다.");
+			}
+		}
 	}
 
 
