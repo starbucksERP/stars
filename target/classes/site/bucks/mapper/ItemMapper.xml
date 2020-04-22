@@ -112,9 +112,6 @@
 	<update id="updateTotalQty" parameterType="double">
 		update item set ITEM_QTY+=#{change} where ITEM_NUM=#{itemNum}
 	</update>
-<<<<<<< HEAD
-=======
 	
->>>>>>> branch 'master' of https://github.com/starbucksERP/stars.git
 
 </mapper>

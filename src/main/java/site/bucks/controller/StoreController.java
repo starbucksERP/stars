@@ -42,6 +42,7 @@ public class StoreController {
 		store.setStoreAddress(HtmlUtils.htmlEscape(store.getStoreAddress()));
 		store.setStoreOwner(HtmlUtils.htmlEscape(store.getStoreOwner()));
 		storeService.addStore(store);
+		System.out.println("storeId="+store.getStoreState());
 		 return"success"; 
 	}
 
@@ -51,13 +52,14 @@ public class StoreController {
 	public Store storeIdView(@PathVariable int storeId) {
 		return storeService.getStoreId(storeId);
 	}
-	
+		
 	
 //	지점수정
-	@RequestMapping(value = "/storeModify", method = {RequestMethod.PUT,RequestMethod.PATCH})
+	@RequestMapping(value = "/storeModify/{storeId}", method = {RequestMethod.PUT,RequestMethod.PATCH})
 	@ResponseBody
-	public String storeModify(@RequestBody Store store) {
+	public String storeModify(@RequestBody Store store, @PathVariable int storeId) {
 //		★ 관리자가 아니라면 수정불가 코드작성해야함 ★
+		store.setStoreId(storeId);
 		storeService.modifyStore(store);
 		return "success";
 	}

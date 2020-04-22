@@ -1,16 +1,16 @@
 package site.bucks.dto;
 
 /*
- 이름                널?       유형           
------------------ -------- ------------ 
-STORE_HISTORY_SEQ NOT NULL NUMBER       
-STORE_ID          NOT NULL NUMBER       
-REQUEST_NUM       NOT NULL VARCHAR2(50) 
-ITEM_NUM          NOT NULL VARCHAR2(50) 
-ITEM_NAME         NOT NULL VARCHAR2(20) 
-ITEM_STATE        NOT NULL NUMBER       
-ITEM_QTY          NOT NULL NUMBER       
-HISTORY_DATE      NOT NULL DATE  
+이름                널? 유형            
+----------------- -- ------------- 
+STORE_HISTORY_SEQ    NUMBER        
+STORE_ID             NUMBER        
+REQUEST_NUM          VARCHAR2(50)  
+ITEM_NUM             VARCHAR2(50)  
+ITEM_NAME            VARCHAR2(100) 
+ITEM_STATE           NUMBER        
+ITEM_QTY             NUMBER        
+HISTORY_DATE         DATE   
  */
 
 public class StoreItemHistory {
