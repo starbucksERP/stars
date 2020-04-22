@@ -118,7 +118,7 @@
 <script type="text/javascript">
 
 
-// 배송요청을 확인처리하기 위한 함수 //테스팅
+// 배송요청을 확인처리하기 위한 함수 //테스팅 확인용
 $("#deliveryStartBtn").click(function() {
 		
 		

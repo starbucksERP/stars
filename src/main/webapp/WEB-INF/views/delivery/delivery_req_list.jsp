@@ -121,7 +121,7 @@ function deliveryReqSearch(){
 	/* alert($("#delReqSearchInput").val());
 	alert($(".delReqCategory").val());
 	$("#delReqSearchForm").submit();
-	alert("뭔지몰겠는데 서브밋 성공"); 머지 확인용 */
+	alert("뭔지몰겠는데 서브밋 성공"); 머지 확인용 태그 */
 	
 }
 	
