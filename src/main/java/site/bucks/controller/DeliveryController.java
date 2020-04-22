@@ -1,6 +1,8 @@
 package site.bucks.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,13 +26,28 @@ public class DeliveryController {
 	// >>>>>>>>>>>>>>>>>>>>>>>>> 배송요청확인 페이지에서 사용할 메소드 시작 
 	
 	// 1. 배송요청확인 페이지의 기본 테이블 출력을 위해 사용되는 select 메소드  
+	/*
 	@RequestMapping(value = "/deliveryReq")
 	public String getDeliveryReq(@ModelAttribute Delivery delivery, Model model) {
 		delivery.setNowDeliveryState(40);
 		model.addAttribute("deliveryReqList", deliveryService.getDeliveryList(delivery));
 		return "delivery/delivery_req_list";
 	}
+	*/
+	@RequestMapping("/deliveryReq") 
+	public String storeStaff() {
+		return "delivery/delivery_req_list";
+	}
 	
+	
+	@RequestMapping(value = "/deliveryReqList", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> getDeliveryReq(@ModelAttribute Delivery delivery) {
+		Map<String, Object>delReqListMap = new HashMap<String, Object>();
+		delivery.setNowDeliveryState(40);
+		delReqListMap.put("deliveryReqList", deliveryService.getDeliveryList(delivery));
+		return delReqListMap;
+	}
 	
 	// 2. 배송요청확인 페이지의 요청확인처리 버튼을 눌렀을때 사용되는 update 메소드 
 	  @RequestMapping(value = "/delReqConfirm", method = RequestMethod.POST)
@@ -43,6 +60,32 @@ public class DeliveryController {
 		 }	  
 	  return"redirect:delivery/delivery_req_list"; 
 	  }
+	  
+	 // 3. 배송요청확인 페이지의 단일검색을 위한 select 메소드  
+	  @RequestMapping(value = "/deliveryReqSearch", method = RequestMethod.POST)
+	   @ResponseBody
+	   public Map<String, Object> deliveryReqSearch(@RequestBody Delivery delivery) {
+
+		  Map<String, Object>searchMap = new HashMap<String, Object>();
+	      delivery.setNowDeliveryState(40);
+	      
+	      if(delivery.getRequestNum()!=null) {
+	    	  String requestNum = delivery.getRequestNum();
+	    	  delivery.setRequestNum(requestNum);
+	    	  System.out.println("******************* requestNum = " + requestNum);
+	      } else {
+	    	  int storeId = delivery.getStoreId();
+	    	  delivery.setStoreId(storeId);
+	    	  System.out.println("******************* storeId = " + storeId);
+	      }
+	      
+	      searchMap.put("reqSearchList", deliveryService.getDeliveryList(delivery));
+	    
+	      return searchMap;
+	     
+	   }
+	  
+	  
 	  // >>>>>>>>>>>>>>>>>>>>>>>>> 배송요청확인 페이지에서 사용할 메소드 종료 
 	  
 	  
