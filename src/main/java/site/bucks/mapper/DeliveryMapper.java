@@ -9,8 +9,9 @@ public interface DeliveryMapper {
 	int updateDeliveryReceiptProcess(OrderItem orderItem);
 	
 	
-	int insertDeliveryRequest(Delivery delivery); // 근형  
-	List<Delivery> selectDeliveryList(Delivery delivery); // 근형
+	int insertDeliveryRequest(Delivery delivery); // 근형 
+	List<Delivery> selectDelReqList(Delivery delivery); // 근형
+	List<Delivery> selectDelReadyList(Delivery delivery); // 근형
 	//int updateDeliveryState(int deliverySeq); // 근형
 	int updateDeliveryReq(int deliverySeq);
 	int updateDeliveryReady(int deliverySeq);

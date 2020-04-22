@@ -23,8 +23,12 @@ public class DeliveryServiceImpl implements DeliveryService{
 	}
 
 	@Override
-	public List<Delivery> getDeliveryList(Delivery delivery) {
-		return deliveryDAO.selectDeliveryList(delivery);
+	public List<Delivery> getDelReqList(Delivery delivery) {
+		return deliveryDAO.selectDelReqList(delivery);
+	}
+	@Override
+	public List<Delivery> getDelReadyList(Delivery delivery) {
+		return deliveryDAO.selectDelReadyList(delivery);
 	}
 
 	/*

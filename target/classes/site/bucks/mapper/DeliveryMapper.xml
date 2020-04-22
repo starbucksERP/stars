@@ -6,7 +6,7 @@
 	<update id="updateDeliveryReceiptProcess" parameterType="OrderItem">
 		update delivery set delivery_state=#{requestState}, delivery_end=sysdate where request_num=#{requestNum}
 	</update>
-<!-- 지점에서 입고 확인시 storeItemHistory 테이블에서 일어나는 일련의 메소드  -->
+<!-- 지점에서 입고 확인시 storeItemHistory 테이블에서 일어나는 일련의 메소드 -->
 
 
 
@@ -26,23 +26,38 @@
 	insert into delivery values(#{deliverySeq}, #{requestNum}, #{storeId}, 40, sysdate, null)
 </insert>
 
-<!-- 머지 확인용 테스팅-->
-
-<select id="selectDeliveryList" parameterType="Delivery" resultType="Delivery">
-<!-- nowDeliveryState의 값에 배송요청조회는 40 / 배송현황조회는 40이 아닌 경우 적용하여 검색 -->
-	select * from delivery
+<select id="selectDelReqList" parameterType="Delivery" resultType="Delivery">
+	select * from delivery 
 	<where>
-	<!-- 배송요청조회 페이지인 경우 -->
-	<if test="nowDeliveryState==40"> 
+	<if test="nowDeliveryState==40">
 		delivery_state = #{nowDeliveryState}
 	</if>
 	
-	<!-- 배송현황조회 페이지인 경우 -->
-	<if test="nowDeliveryState==50"> 
+	<if test="requestNum!=null and requestNum!=''"> 
+		and request_num = #{requestNum}
+	</if>
+	
+	<if test="storeId!=null and storeId!='' ">
+		and store_id = #{storeId} 
+	</if>
+	</where>
+	 order by delivery_seq desc
+</select>
+
+<select id="selectDelReadyList" parameterType="Delivery" resultType="Delivery">
+<!-- nowDeliveryState의 값에 배송요청조회는 40 / 배송현황조회는 40이 아닌 경우 적용하여 검색 -->
+	select * from delivery
+	<where>
+	
+	<if test="nowDeliveryState==50">
 		delivery_state >= #{nowDeliveryState}
 	</if>
 	
-	<if test="deliveryState!=null and deliveryState!=''">
+	<if test="nowDeliveryState==10 and deliveryState==10">
+		delivery_state >= 50
+	</if>
+	
+	<if test="nowDeliveryState==10 and deliveryState!=10">
 		delivery_state = #{deliveryState}
 	</if>
 	
@@ -52,7 +67,8 @@
 	</if>
 	
 	<!-- 매장코드 검색 -->
-	<if test="storeId!=null and storeId!=''">
+	
+	<if test="storeId!=null and storeId!='' ">
 		and store_id = #{storeId}
 	</if>
 	
@@ -75,12 +91,10 @@
 	<if test="deliveryEnd!=null and deliveryEnd!='' and deliveryEndTwo!=null and deliveryEndTwo!=''">
 		and delivery_end between #{deliveryEnd} and #{deliveryEndTwo}
 	</if>
-	
+
 	</where>
 	 order by delivery_seq desc
 </select>
-
-
 
 <update id="updateDeliveryReq">
 	update delivery set delivery_state=50 where delivery_seq=#{deliverySeq}
