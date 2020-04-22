@@ -138,7 +138,7 @@ function requestConfirmation() {
 		
 		if($(".rowChk:checked").length==0) {
 			alert("배송요청확인: 요청승인할 배송정보를 선택해 주세요.");
-		} else {
+		} else { 
 			
 			var delivery =[];
 			var rowChk = $(".rowChk:checked");
