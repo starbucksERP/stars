@@ -35,9 +35,9 @@
 						<tr>
 							<th>구분</th>
 							<td>
-								<label class="gLabel"><input type="checkbox" class="fChk" name="state" value="본점">본점</label>
-								<label class="gLabel"><input type="checkbox" class="fChk" name="state" value="지점">지점</label>
-								<label class="gLabel"><input type="checkbox" class="fChk" name="state" value="폐점">폐점</label>
+								<label class="gLabel"><input type="checkbox" class="fChk" name="state" value="head">본점</label>
+								<label class="gLabel"><input type="checkbox" class="fChk" name="state" value="branch">지점</label>
+								<label class="gLabel"><input type="checkbox" class="fChk" name="state" value="close">폐점</label>
 								<input type="hidden" name="states"/>
 							</td>
 						</tr>
@@ -119,11 +119,11 @@
 		var states=[];
 			
 		 $(".fChk:checked").each(function(i) {
-			 if($(this).val()=='본점'){
+			 if($(this).val()=='head'){
 				 states.push(0);
-			 }else if($(this).val()=='지점'){
+			 }else if($(this).val()=='branch'){
 				 states.push(1);
-			 }else if($(this).val()=='폐점'){
+			 }else if($(this).val()=='close'){
 				 states.push(9);
 			 }
 		 });

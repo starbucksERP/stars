@@ -17,6 +17,7 @@
 			<li class="nav-item" style="width: 160px; padding: 0px;">[지점] 발주/구매관리<br /><span class="tri">▲</span></li>
 			<li class="nav-item">배송관리<br /><span class="tri">▲</span></li>
 			<li class="nav-item">회계관리<br /><span class="tri">▲</span></li>
+			<li class="nav-item" style="width: 160px; padding: 0px;">[지점] 회계관리<br /><span class="tri">▲</span></li>
 		</ul>
 	</div>
 	
@@ -58,7 +59,12 @@
 			<li onclick="location.href='purchaseMonth'">매입 월별현황</li>
 			<li onclick="location.href='salesMonth'">매출 월별현황</li>
 			<li onclick="location.href='incomeMonth'">월별 손익분석</li>
-		</ul>		
+		</ul>
+		<ul class="drop-menu" style="padding-left: 18%">
+			<li onclick="location.href='st_accountPurchase'">매입 현황</li>
+			<li onclick="location.href='st_accountSales'">매출 현황</li>
+			<li onclick="location.href='st_accountIncome'">손익 분석</li>
+		</ul>					
 	</div>
 		
 </div>
