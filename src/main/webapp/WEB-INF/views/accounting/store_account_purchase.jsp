@@ -30,8 +30,12 @@
 						</td>
 					</tr>
 					<tr>
-						<th>지점명</th>
-						<td><input type="search" >&nbsp;<a href="" class="a-button gray search-icon"><i class="fas fa-search"></i></a></td>
+						<th>품목명</th>
+						<td><input type="search" /></td>
+					</tr>
+					<tr>
+						<th>거래처</th>
+						<td><input type="text" readonly="readonly" disabled="disabled" value="본 사" style="text-align: center;"/></td>
 					</tr>
 				</thead>
 			</table>

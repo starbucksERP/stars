@@ -1,22 +1,25 @@
 package site.bucks.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import site.bucks.dto.AccountPS;
+import site.bucks.dto.Account;
 import site.bucks.mapper.AccountMapper;
 
 @Repository
 public class AccountDAOImpl implements AccountDAO {
-	
-	private SqlSession sqlsession;
 
-	//지점매입, 본사매출 조건별 출력 
+	@Autowired
+	private SqlSession sqlSession;
+	
 	@Override
-	public List<AccountPS> selectPurchaseSale(AccountPS account) {
-		return sqlsession.getMapper(AccountMapper.class).selectPurchaseSale(account);
+	public List<Account> selectPurchaseSaleList(Account account) {
+		return sqlSession.getMapper(AccountMapper.class).selectPurchaseSaleList(account);
 	}
+	
 
 }

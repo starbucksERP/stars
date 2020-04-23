@@ -3,7 +3,8 @@
 <!-- 사용 테이블 :  (매퍼끼리는 성격 맞는거 묶어서 해주시면 감사)-->
 <mapper namespace="site.bucks.mapper.AccountMapper">
 
-	<!-- 지점매입과 본사매출 공통(테이블 사용하는것 같음)으로 사용
+	<!-- 지점매입과 본사매출 공통(테이블 사용하는것 같음)으로 사용 -->
+	<!--  
 	<resultMap type="AccountPS" id="stPurchaseMainSaleMap">
 		<association property="sih" javaType="StoreItemHistory">
 			<result column="store_id" property="storeId"/>
@@ -16,25 +17,24 @@
 			<result column="item_sprice" property="itemSprice"/>
 		</association>
 	</resultMap>
+	-->
 
-	지점매입,본사매출 출력 & 검색조건
-	<select id="selectPurchaseSale" resultMap="stPurchaseMainSaleMap">
-		select * from store_item_history sih join order_item ot
-			on sih.request_num=ot.request_num where	sih.item_state=70 
-			<trim prefix="and (" suffix=")">
+	<!-- 지점매입,본사매출 출력 & 검색조건 -->
+	<select id="selectPurchaseSaleList" resultType="Account">
+		select sih.store_id, sih.history_date,sih.item_num, sih.item_name, ot.item_sprice, ot.item_pprice from 
+			store_item_history sih join order_item oi
+				on sih.request_num=oi.request_num where	sih.item_state=70
 				<if test="storeId!=null and storeId!=''">
-					sih.store_id=#{storeId}
+					and sih.store_id=#{storeId}
 				</if>
 				<if test="accountDate1!=null and accountDate1!='' and accountDate2!=null and accountDate2!=''">
-					sih.history_date between #{accountDate1} and #{accountDate2} 
+					and sih.history_date between #{accountDate1} and #{accountDate2} 
 				</if>
 				<if test="itemName!=null and itemName!=''">
-					sih.itemName like '%'||#{itemName}||'%'
+					and sih.item_name like '%'||#{itemName}||'%'
 				</if>
-			</trim>
-			order by sih.store_history_seq	
-	</select> -->
-	
+			order by sih.history_date desc	
+	</select>
 </mapper>
 
 

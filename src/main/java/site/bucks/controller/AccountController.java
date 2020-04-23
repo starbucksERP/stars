@@ -1,14 +1,24 @@
 package site.bucks.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import site.bucks.dto.Account;
+import site.bucks.service.AccountService;
+
 @Controller
-public class StoreAccountController {
+public class AccountController {
+	
+	@Autowired
+	private AccountService accountService;
 	
 //	지점 매입현황 
 	@RequestMapping(value = "/st_accountPurchase")
-	public String st_accountPurchase() {
+	public String st_accountPurchase(@ModelAttribute Account account, Model model) {
+		model.addAttribute("accountPSList", accountService.getPurchaseSaleList(account));   
 		return "accounting/store_account_purchase";
 	}
 	
