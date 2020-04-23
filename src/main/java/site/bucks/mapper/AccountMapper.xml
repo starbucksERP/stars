@@ -1,9 +1,9 @@
-<!-- <?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-사용 테이블 :  (매퍼끼리는 성격 맞는거 묶어서 해주시면 감사)
+<!-- 사용 테이블 :  (매퍼끼리는 성격 맞는거 묶어서 해주시면 감사)-->
 <mapper namespace="site.bucks.mapper.AccountMapper">
 
-	지점매입과 본사매출 공통(테이블 사용하는것 같음)으로 사용
+	<!-- 지점매입과 본사매출 공통(테이블 사용하는것 같음)으로 사용
 	<resultMap type="AccountPS" id="stPurchaseMainSaleMap">
 		<association property="sih" javaType="StoreItemHistory">
 			<result column="store_id" property="storeId"/>
@@ -33,7 +33,7 @@
 				</if>
 			</trim>
 			order by sih.store_history_seq	
-	</select>
+	</select> -->
 	
 </mapper>
 
@@ -49,4 +49,3 @@
 
 
 
- -->
