@@ -33,7 +33,7 @@
 						<thead>
 							<tr>
 								<th>요청번호</th>
-								<td colspan="1"><input type="search" name="requestNum" id="requestNumInput" value="0"/>&nbsp;<a href="${pageContext.request.contextPath }/delivery/choice_store_code.jsp" onClick="window.open(this.href, '', 'width=400, height=430'); return false;" class="a-button white" style="font-size: 15px;"><i class="fas fa-file-alt"></i></a></td>
+								<td colspan="1"><input type="search" name="requestNum" id="requestNumInput" value=""/>&nbsp;<a href="${pageContext.request.contextPath }/delivery/choice_store_code.jsp" onClick="window.open(this.href, '', 'width=400, height=430'); return false;" class="a-button white" style="font-size: 15px;"><i class="fas fa-file-alt"></i></a></td>
 								<th>매장코드</th>
 								<td colspan="1"><input type="search" name="storeId" id="storeIdInput" value="0" />&nbsp;<a href="" class="a-button white" style="font-size: 15px;"><i class="fas fa-file-alt"></i></a></td>
 							</tr>

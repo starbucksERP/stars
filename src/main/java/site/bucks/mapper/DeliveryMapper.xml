@@ -21,7 +21,7 @@
 <select id="searchDelReqList" parameterType="Delivery" resultType="Delivery">
 	select * from delivery where delivery_state = 40 
 	
-	<if test="requestNum!=null and requestNum!=''"> 
+	<if test="requestNum!=null or requestNum!=''"> 
 		and request_num = #{requestNum}
 	</if>
 	
@@ -49,15 +49,15 @@
 
 <select id="searchDelReadyList" resultType="Delivery">
 <!-- nowDeliveryState의 값에 배송요청조회는 40 / 배송현황조회는 40이 아닌 경우 적용하여 검색 -->
-	select * from delivery where delivery_state >=50
+	select * from delivery where
 	
-<!-- 	<if test="deliveryState == null and deliveryState == ' ' ">
+    <if test="deliveryState == 0 and deliveryState == '' ">
 		delivery_state >=50
 	</if>
 	
-	<if test="deliveryState!=null and deliveryState!=''">
+	<if test="deliveryState!= 0 and deliveryState != ''">
 		delivery_state = #{deliveryState}
-	</if> -->
+	</if> 
 	
 	<!-- 요청번호 검색 -->
 	<if test="requestNum != 0 and requestNum != null "> 
