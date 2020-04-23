@@ -5,16 +5,12 @@
 		<div class="sidebar">
 			<ul class="side-menu">
 				<li>
-					<button class="dropdown-btn">지점 등록<i class="fa fa-caret-down"></i></button>
-				</li>
-				<li>
-					<button class="dropdown-btn">지점 현황<i class="fa fa-caret-down"></i></button>
-				</li>
-				<li>
-					<button class="dropdown-btn">지점 정보<i class="fa fa-caret-down"></i></button>
-				</li>
-				<li>
-					<button class="dropdown-btn">점주 정보<i class="fa fa-caret-down"></i></button>
+					<button class="dropdown-btn">지점 관리<i class="fa fa-caret-down"></i></button>
+					<div class="dropdown-container">
+						<a href="${pageContext.request.contextPath}/store/storeEnroll">지점 등록</a><br /><br />
+						<a href="${pageContext.request.contextPath}/store/storeSta">지점 현황</a><br /><br />
+						<a href="${pageContext.request.contextPath}/store/storeStaff">점주 정보</a>
+					</div>
 				</li>
 			</ul>
 		</div>

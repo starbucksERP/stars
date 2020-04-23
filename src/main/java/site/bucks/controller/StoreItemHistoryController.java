@@ -18,6 +18,7 @@ import site.bucks.dto.OrderItem;
 import site.bucks.service.StoreItemHistoryService;
 
 @Controller
+@RequestMapping("/sic")
 public class StoreItemHistoryController {
 	@Autowired
 	private StoreItemHistoryService storeItemHistoryService;
