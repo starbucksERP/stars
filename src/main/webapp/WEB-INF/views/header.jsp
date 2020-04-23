@@ -30,7 +30,7 @@
 		</ul>
 		<!-- 관리자용 재고 -->
 		<ul class="drop-menu" style="padding-left: 5%">
-			<li onclick="location.href='${pageContext.request.contextPath}/item/productList'">품목현황</li>
+			<li onclick="location.href='${pageContext.request.contextPath}/item/product'">품목현황</li>
 			<li onclick="location.href='${pageContext.request.contextPath}/item/itemList'">재고현황</li>
 			<li onclick="location.href='${pageContext.request.contextPath}/storeItem/sale_list'">판매조회</li>
 			<li onclick="location.href='${pageContext.request.contextPath}/storeItem/sale_record'">판매등록</li>
@@ -44,8 +44,8 @@
 		</ul> --%>
 		<!-- 관리자용 발주 -->
 		<ul class="drop-menu" style="padding-left: 5%">
-			<li onclick="location.href='${pageContext.request.contextPath}/order/orderReq'">발주요청조회</li>
-			<li onclick="location.href='${pageContext.request.contextPath}/order/orderList'">발주현황조회</li>
+			<li onclick="location.href='${pageContext.request.contextPath}/order/orderRequestList'">발주요청조회</li>
+			<li onclick="location.href='${pageContext.request.contextPath}/order/orderStateList'">발주현황조회</li>
 			<li onclick="location.href='${pageContext.request.contextPath}/purchase/purchasePlan'">구매계획</li>
 			<li onclick="location.href='${pageContext.request.contextPath}/purchase/purchaselist'">구매현황</li>
 			<li onclick="location.href='${pageContext.request.contextPath}/purchase/purchaseAdd'">구매입력</li>
