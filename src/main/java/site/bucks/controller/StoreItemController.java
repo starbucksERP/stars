@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,11 +22,6 @@ public class StoreItemController {
 	
 	@Autowired
 	private StoreItemService storeItemService;
-	
-	
-	
-	
-	
 	
 	
 	
@@ -46,12 +42,15 @@ public class StoreItemController {
 		return "success";
 	}
 	
+	
+	
 //	판매삭제
 	@RequestMapping(value = "/sale_delete", method = RequestMethod.POST)
 	public String sale_delete(Sale sale) {
 		storeItemService.removeSale(sale);
 		return "redirect:/sale_list";
 	}
+	
 	
 	
 //	판매조회
@@ -62,11 +61,19 @@ public class StoreItemController {
 	}
 	
 	
+	
 //	카테고리 별 검색 후 상품 조회
 	@RequestMapping(value = "/saleProduct", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String , Object> saleProduct(@RequestBody Sale sale) {
 		return storeItemService.getSaleProductName(sale);
+	}
+	
+//	판매상품의 가격 검색 
+	@RequestMapping(value = "/searchProduct/{saleProduct}", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> searchProduct(@PathVariable String saleProduct) {
+		return storeItemService.getSaleProduct(saleProduct);
 	}
 	
 

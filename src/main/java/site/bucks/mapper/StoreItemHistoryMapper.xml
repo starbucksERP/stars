@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="site.bucks.mapper.StoreItemHistoryMapper">
-<!-- 지점에서 발주 입력시 +  지점에서 입고 확인시 storeItemHistory 테이블에서 일어나는 일련의 메소드 -->
+<!-- 지점에서 발주 입력시 	+  지점에서 입고 확인시 storeItemHistory 테이블에서 일어나는 일련의 메소드 -->
 	<!-- store_item_history : 지점 발주 테이블 (주체 :order) -->
-	<sql id="itemName">
-	 	(select item_name from item where item_num=#{itemNum})
-	</sql>
 	<insert id="insertSIH" parameterType="OrderItem">
-		insert into store_item_history values(STORE_HISTORY_SEQ.nextval, #{storeId}, #{requestNum}, #{itemNum}, <include refid="itemName"/>, #{requestState}, #{orderQty}, sysdate)
+		insert into store_item_history values(store_history_seq.nextval, #{storeId}, #{requestNum}, #{itemNum}, #{itemName}, #{requestState}, #{orderQty}, sysdate)
 	</insert>
 <!-- 지점에서 발주 입력시 -->	
 
+	<!-- 발주 취소요청(상태만 취소로 변환)  -->
+	<update id="updateCancelStoreOrder" parameterType="OrderItem">
+		update store_item_history set item_state=#{requestState} where request_num=#{requestNum}
+	</update>
 
 	<!-- itemName으로 정보 찾기  -->
 	<select id="searchItem" resultType="item">
@@ -24,10 +25,6 @@
 
 
 
-<!-- 발주 상태 10 검색 -->
-	<!-- <select id="selectState10" parameterType="OrderItem">
-		select * from order_Item where order_seq=#{orderSeq} and REQUEST_STATE=10
-	</select> -->
 	
 <!-- 지점에서 취소 요청시 storeItemHistory 테이블에서 일어나는 일련의 메소드 -->
 	<!-- store_item_history : 지점에서 취소 요청시 기록상태 변화 

@@ -26,55 +26,70 @@
 	insert into delivery values(#{deliverySeq}, #{requestNum}, #{storeId}, 40, sysdate, null)
 </insert>
 
-
-
-<select id="selectDeliveryList" parameterType="Delivery" resultType="Delivery">
-<!-- nowDeliveryState의 값에 배송요청조회는 40 / 배송현황조회는 40이 아닌 경우 적용하여 검색 -->
-	select * from delivery
+<select id="selectDelReqList" parameterType="Delivery" resultType="Delivery">
+	select * from delivery 
 	<where>
-	<!-- 배송요청조회 페이지인 경우 -->
-	<if test="nowDeliveryState==40"> 
+	<if test="nowDeliveryState==40">
 		delivery_state = #{nowDeliveryState}
 	</if>
 	
-	<!-- 배송현황조회 페이지인 경우 -->
-	<if test="nowDeliveryState==50"> 
+	<if test="requestNum!=null and requestNum!=''"> 
+		and request_num = #{requestNum}
+	</if>
+	
+	<if test="storeId!=null and storeId!='' ">
+		and store_id = #{storeId} 
+	</if>
+	</where>
+	 order by delivery_seq desc
+</select>
+
+<select id="selectDelReadyList" parameterType="Delivery" resultType="Delivery">
+<!-- nowDeliveryState의 값에 배송요청조회는 40 / 배송현황조회는 40이 아닌 경우 적용하여 검색 -->
+	select * from delivery
+	<where>
+	
+	<if test="nowDeliveryState==50">
 		delivery_state >= #{nowDeliveryState}
 	</if>
 	
-	<!-- 배송현황조회 페이지이면서 배송상태 검색이 실행된 경우  -->
-	<if test="deliveryState!=null and deliveryState!=''">
+	<if test="nowDeliveryState==10 and deliveryState==10">
+		delivery_state >= 50
+	</if>
+	
+	<if test="nowDeliveryState==10 and deliveryState!=10">
 		delivery_state = #{deliveryState}
 	</if>
 	
 	<!-- 요청번호 검색 -->
 	<if test="requestNum!=null and requestNum!=''"> 
-		request_num = #{requestNum}
+		and request_num = #{requestNum}
 	</if>
 	
 	<!-- 매장코드 검색 -->
-	<if test="storeId!=null and storeId!=''">
-		store_id = #{storeId}
+	
+	<if test="storeId!=null and storeId!='' ">
+		and store_id = #{storeId}
 	</if>
 	
 	<!-- 배송현황조회 페이지에서 배송시작일 단일검색인 경우 -->
 	<if test="deliveryStart!=null and deliveryStart!='' and deliveryStartTwo==null and deliveryStartTwo==''">
-		delivery_start = #{deliveryStart}
+		and delivery_start = #{deliveryStart}
 	</if>
 	
 	<!-- 배송현황조회 페이지에서 배송시작일 범위검색인 경우 -->
 	<if test="deliveryStart!=null and deliveryStart!='' and deliveryStartTwo!=null and deliveryStartTwo!=''">
-		delivery_start between #{deliveryStart} and #{deliveryStartTwo}
+		and delivery_start between #{deliveryStart} and #{deliveryStartTwo}
 	</if>
 	
 	<!-- 배송현황조회 페이지에서 배송완료일 단위검색인 경우 -->
 	<if test="deliveryEnd!=null and deliveryEnd!='' and deliveryEndTwo==null and deliveryEndTwo==''">
-		delivery_end = #{deliveryEnd}
+		and delivery_end = #{deliveryEnd}
 	</if>
 	
 	<!-- 배송현황조회 페이지에서 배송완료일 범위검색인 경우 -->
 	<if test="deliveryEnd!=null and deliveryEnd!='' and deliveryEndTwo!=null and deliveryEndTwo!=''">
-		delivery_end between #{deliveryEnd} and #{deliveryEndTwo}
+		and delivery_end between #{deliveryEnd} and #{deliveryEndTwo}
 	</if>
 
 	</where>
