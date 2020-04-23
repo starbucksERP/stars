@@ -119,7 +119,7 @@
 	<beans:bean class="site.bucks.util.AdminAuthInterceptor" id="adminAuthInterceptor"/>
 	<beans:bean class="site.bucks.util.LoginAuthInterceptor" id="loginAuthInterceptor"/>
 	
-	
+	 
 </beans:beans>
 
 
