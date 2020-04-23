@@ -80,19 +80,19 @@ public class StoreItemHistoryController {
 		return returnMap;
 	}
 	
-	
 	@ModelAttribute("itemStateList")
 	public List<String> itemStateList(){
 		return Arrays.asList("발주요청","발주완료","배송중","입고완료");
 	}
 
 	*/
-//	지점 발주 입력
+//	지점 발주 입력페이지
 	@RequestMapping(value = "/storeOrderInput",method = RequestMethod.GET)
 	public String storeOrderInput() {
 		return "storeItem/order_input";
 	}
 	
+//	지점 발주 요청
 	@RequestMapping(value = "/storeOrderInput", method = RequestMethod.POST)
 	@ResponseBody
 	public String storeOrderInput(@RequestBody List<OrderItem> orderItemList) {
@@ -100,37 +100,38 @@ public class StoreItemHistoryController {
 		for(OrderItem orderItem:orderItemList) {
 			storeItemHistoryService.addRecipt(orderItem);
 		}
+		
 		return "success";
 	}
+	
 	
 	
 //	지점 발주 조회
 	@RequestMapping(value = "/storeOrderSta")
 	public String storeOrderSta(@ModelAttribute(value = "orderItem") OrderItem orderItem, Model model) {
-		
 		model.addAttribute("orderItemList", storeItemHistoryService.getReciptSta(orderItem));
 		return "storeItem/order_status";
 	}
+	
+	
+	
 	
 	
 //	지점 발주 입고처리
 	@RequestMapping(value = "/checkStoreOrder", method = RequestMethod.POST)
 	@ResponseBody
 	public String checkStoreOrder(@RequestBody List<OrderItem> orderItemList) {
-		
-		for(OrderItem orderItem:orderItemList) {
-			storeItemHistoryService.modifyReceiptProcess(orderItem);
-		}
+		storeItemHistoryService.modifyReceiptProcess(orderItemList);
 		return "success";
 	}
+	
+	
+	
 //	지점 발주 취소
 	@RequestMapping(value = "/cancelStoreOrder", method = RequestMethod.POST)
 	@ResponseBody
 	public String cancelStoreOrder(@RequestBody List<OrderItem> orderItemList) {
-		
-		for(OrderItem orderItem:orderItemList) {
-			
-		}
+		storeItemHistoryService.modifyCancelRecipt(orderItemList);
 		return "success";
 	}
 	
@@ -150,8 +151,6 @@ public class StoreItemHistoryController {
 	public Map<String, Object> searchItem(@PathVariable String itemName) {
 		return storeItemHistoryService.getItemName(itemName);
 	}
-	
-	
 	
 	
 }

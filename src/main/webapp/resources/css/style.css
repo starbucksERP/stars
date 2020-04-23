@@ -404,8 +404,20 @@ legend {
 	color:  rgb(188, 78, 67) !important;
 }
 
+.darkgreen-font{
+	color: #006C49 !important;
+}
+
 .gray-font{
 	color: rgb(190, 190, 190) !important;
+}
+
+.beige-font{
+	color: rgb(243, 156, 18, 0.19) !important;
+}
+
+.blue-font{
+	color: rgb(52, 152, 219) !important;
 }
 
 .enroll-ul{
@@ -494,15 +506,15 @@ legend {
 }
 
 .category, saleCategory{
-	width: 120px;
+	min-width: 120px;
 }
 
 .subCategory, .saleSubCategory{
-	width: 170px;
+	min-width: 180px;
 }
 
-.itemName{
-	width: 220px;
+.itemName, .saleProduct{
+	min-width: 260px;
 }
 
 /*	 

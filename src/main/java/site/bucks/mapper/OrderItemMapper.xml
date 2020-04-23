@@ -3,26 +3,24 @@
 <mapper namespace="site.bucks.mapper.OrderItemMapper">
 <!-- 지점 발주시 -->
 	<!-- order_item : 지점 발주 테이블에 기록시 주문 기록(주체가 order) -->
-	<!--<sql id="orderItemPprice">
-	 	(select item_Pprice from item where item_num=#{itemNum})
-	</sql>
- 	<sql id="orderItemSprice">
-	 	(select item_Sprice from item where item_num=#{itemNum})
-	</sql> -->
-	<!-- <insert id="insertStoreOrder" parameterType="OrderItem">
+	<insert id="insertStoreOrder" parameterType="OrderItem">
 		<selectKey resultType="int" keyProperty="orderSeq" order="BEFORE">
 			select order_seq.nextval from dual		
 		</selectKey>
 		insert into order_item values(#{orderSeq}, #{requestNum}, #{storeId}, #{itemNum},
-		 #{orderQty}, 980, #{itemSprice}, 10, sysdate, null, 0)
-	</insert> -->
+		 #{orderQty},(select item_Pprice from item where item_num=#{itemNum}), #{itemSprice}, 10, sysdate, null, 1)
+	</insert> 
 	
 <!-- 지점 발주시 -->
 
 <!-- 지점 발주 조회 -->
 	<select id="selectStoreOrderItemList" resultType="OrderItem">
-		select * from order_item <!--where STORE_ID=#{storeId}
-			 <if test="requestDate!=null and requestDate!=''">
+		select * from order_item 
+		<where>
+			<if test="storeId!=null and storeId!=''">
+				store_id=#{storeId}			
+			</if>
+			<if test="requestDate!=null and requestDate!=''">
 				AND REQUEST_DATE BETWEEN #{requestDate} AND #{requestDatePair}
 			</if>
 			<if test="itemNum!=null and itemNum!=''">
@@ -30,7 +28,14 @@
 			</if>
 			<if test="price1!=null and price1!='' and price2!=null and price2!=''">
 				AND ITEM_SPRICE between #{price1} and #{price2}
-			</if> -->
+			</if>
+			<if test="states!=null">
+				and REQUEST_STATE in
+				<foreach collection="states" item="state" open="(" close=")" separator=",">
+				 	#{state}
+				</foreach>
+			</if>
+		</where>
 		order by REQUEST_DATE desc
 	</select>
 <!-- 지점 발주 조회 -->

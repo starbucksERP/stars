@@ -1,4 +1,4 @@
-// 상단 메뉴바 마우스 엔터시 메뉴 보임 및 숨김
+	// 상단 메뉴바 마우스 엔터시 메뉴 보임 및 숨김
 	$(".nav-item").mouseenter(function(){
 		$(".drop-menu").hide();
 		$(".tri").hide();
@@ -219,7 +219,8 @@
 			$(".saleProduct").empty();
 			$(".saleProduct").append($("<option value=''>-------------------------------</option>")); 
 			
-			var sales={
+			var sale={
+				storeId			: $(".storeId").val(),
 				saleCategory	: $(".saleCategory").val(),
 				saleSubCategory : $(this).val()
 			}
@@ -228,20 +229,16 @@
 				type: "POST",
 				url: "saleProduct",
 				headers: {"content-type":"application/json"},
-				data: JSON.stringify(sales),
+				data: JSON.stringify(sale),
 				dataType:"json",
 				success: function(json) {
 					if($(".saleCategory").val()=='A'){
 						$(json.saleProduct2).each(function(i) {
-							$(".saleProduct").append($("<option value=''>"+json.saleProduct2[i]+"</option>"));
+							$(".saleProduct").append($("<option value='"+json.saleProduct2[i]+"'>"+json.saleProduct2[i]+"</option>"));
 						});
-					}else if($(".saleCategory").val()=='B'){
+					}else {
 						$(json.saleProduct1).each(function(i) {
-							$(".saleProduct").append($("<option value=''>"+json.saleProduct1[i]+"</option>"));
-						});
-					}else{
-						$(json.saleProduct1).each(function(i) {
-							$(".saleProduct").append($("<option value=''>"+json.saleProduct1[i]+"</option>"));
+							$(".saleProduct").append($("<option value='"+json.saleProduct1[i]+"'>"+json.saleProduct1[i]+"</option>"));
 						});
 					}
 					
@@ -252,6 +249,8 @@
 			});
 		});
 	 
+		
+		
 	 
 	 
 	 
