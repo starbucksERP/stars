@@ -42,7 +42,6 @@ public class StoreController {
 		store.setStoreAddress(HtmlUtils.htmlEscape(store.getStoreAddress()));
 		store.setStoreOwner(HtmlUtils.htmlEscape(store.getStoreOwner()));
 		storeService.addStore(store);
-		System.out.println("storeId="+store.getStoreState());
 		 return"success"; 
 	}
 
