@@ -64,7 +64,7 @@ public class StoreItemHistoryServiceImpl implements StoreItemHistoryService{
 				orderItem.setRequestState(99);
 				
 //			주문 상태 변경
-				orderItemDAO.updateOrderItem(orderItem);
+				//orderItemDAO.updateOrderItemState(numAndStateMap)(orderItem);
 //			지점 history 상태 변경
 				storeItemHistoryDAO.updateCancelStoreOrder(orderItem);
 			}
@@ -90,7 +90,7 @@ public class StoreItemHistoryServiceImpl implements StoreItemHistoryService{
 //				배송상태변경
 				deliveryDAO.updateDeliveryReceiptProcess(orderItem);
 //				주문상태변경
-				orderItemDAO.updateOrderItem(orderItem);
+				//orderItemDAO.updateOrderItem(orderItem);
 //				지점재고수량변경
 				storeItemDAO.updateStoreItemReceiptProcess(orderItem);
 		}
