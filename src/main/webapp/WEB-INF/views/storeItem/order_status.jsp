@@ -7,17 +7,18 @@
       <div class="sidebar">
          <ul class="side-menu">
             <li>
-               <button class="dropdown-btn">발주<i class="fa fa-caret-down"></i></button>
+               <button class="dropdown-btn">발주관리<i class="fa fa-caret-down"></i></button>
                <div class="dropdown-container">
-                  <a href="">발주계획조회</a><br /><br />
-                  <a href="">발주현황조회</a><br /><br />
-                  <a href="">발주입력</a>
+                  <a href="${pageContext.request.contextPath}/sic/storeOrderReq">발주요청조회</a><br /><br />
+                  <a href="${pageContext.request.contextPath}/sic/storeOrderSta">발주현황조회</a><br /><br />
+                  <a href="${pageContext.request.contextPath}/sic/storeOrderInput">발주입력</a>
                </div>
             </li>
             <li>
                <button class="dropdown-btn">입출하기록<i class="fa fa-caret-down"></i></button>
                <div class="dropdown-container">
-                  <a href="">입출하조회</a>
+                  <a href="${pageContext.request.contextPath}/sic/storeReceipt">입출하조회</a>
+                  <a href="${pageContext.request.contextPath}/delivery/deliveryList">배송조회</a>
                </div>
             </li>
             
@@ -186,7 +187,7 @@
 				success: function(text) {
 					if(text=="success") {
 						alert("입고완료 처리되었습니다.");
-						location.href="${pageContext.request.contextPath }/storeOrderSta"
+						location.href="${pageContext.request.contextPath }/sic/storeOrderSta"
 					}
 				},
 				error: function(xhr) {
@@ -212,7 +213,7 @@
 				success: function(text) {
 					if(text=="success") {
 						alert("발주가 취소되었습니다.");
-						location.href="${pageContext.request.contextPath }/storeOrderSta"
+						location.href="${pageContext.request.contextPath }/sic/storeOrderSta"
 					}
 				},
 				error: function(xhr) {

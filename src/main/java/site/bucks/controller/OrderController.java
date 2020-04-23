@@ -17,6 +17,7 @@ import site.bucks.dto.OrderItem;
 import site.bucks.service.OrderItemService;
 
 @Controller
+@RequestMapping("/order")
 public class OrderController {
 	@Autowired
 	private OrderItemService orderItemService;
