@@ -63,11 +63,7 @@ public class OrderController {
 	
 	
 	
-	
-	@RequestMapping(value = "/orderList")
-	public String orderItemList() {
-		return "order/order_item_list";
-	}
+
 	@RequestMapping(value = "/purchasePlan")
 	public String purchasePlan() {
 		return "purchase/purchase_plan";
@@ -84,5 +80,7 @@ public class OrderController {
 	public String historyList() {
 		return "history/history_list";
 	}
+
+	
 
 }

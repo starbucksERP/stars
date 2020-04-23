@@ -1,32 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<style type="text/css">
-#messageBox {
-	width: 400px;
-	height: 160px;
-	border: 3px solid #4C4C4C;
-	background-color: white;
-	text-align: center;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	margin-top: -40px;
-	margin-left: -120px;
-	padding: 5px;
-	z-index: 100;
-	display: none;
-}
-.innerMessage {
-	width:80%;
-	margin:0 auto;
-	padding-top: 35px;
-	text-align: center;
-	z-index: 101;
-	color: #4C4C4C;
-	font-size: 15px;
-}
-</style>
-
 <div class="container">
 		<div class="row">
 			<div class="sidebar">
@@ -34,8 +7,8 @@
 					<li>
 						<button class="dropdown-btn">발주<i class="fa fa-caret-down"></i></button>
 						<div class="dropdown-container">
-							<a href="${pageContext.request.contextPath}/order/orderReq">발주요청조회</a><br /><br />
-							<a href="${pageContext.request.contextPath}/order/orderList">발주현황조회</a>
+							<a href="${pageContext.request.contextPath}/order/orderRequestList">발주요청조회</a><br /><br />
+							<a href="${pageContext.request.contextPath}/order/orderStateList">발주현황조회</a>
 						</div>
 					</li>
 					<li>
@@ -96,11 +69,6 @@
 				</table>
 			</div>
 			
-			<div id="messageBox">
-				<div class="innerMessage"></div>
-				<div><button type='button' class='a-button green inner-button' onclick="closeBox()">확인</button></div>
-			</div>
-			
 		   	<div class="right" style="float: right;">
 	            <ul class="order-sta">
 	               <li class="blackgray">전체</li>
@@ -132,48 +100,6 @@
 						</thead>
 						<tbody id="resultOrder"></tbody>
 					</table>
-				
-						<!-- <tr>
-							<td>D</td>
-							<td>2020-03-03</td>
-							<td>2020341128124</td>
-							<td>강남역점(2124121233)</td>
-							<td>리저브 노브리틱스와 과테말라<br>리저브 노브리틱스와 과테말라<br>리저브 노브리틱스와 과테말라</td>
-							<td class="green-font">&nbsp;발주확인</td>
-						</tr>
-						<tr>
-							<td>D</td>
-							<td>2020-03-03</td>
-							<td>2020341128124</td>
-							<td>강남역점(2124121233)</td>
-							<td>리저브 노브리틱스와 과테말라</td>
-							<td class="red-font">취소완료</td>
-						</tr>
-						<tr>
-							<td>D</td>
-							<td>2020-03-03</td>
-							<td>2020341128124</td>
-							<td>강남역점(2124121233)</td>
-							<td>리저브 노브리틱스와 과테말라</td>
-							<td class="gray-font">대기-미입고</td>
-						</tr>
-						<tr>
-							<td>D</td>
-							<td>2020-03-03</td>
-							<td>2020341128124</td>
-							<td>강남역점(2124121233)</td>
-							<td>리저브 노브리틱스와 과테말라</td>
-							<td class="green-font">종결</td>
-						</tr>
-						<tr>
-							<td>A</td>
-							<td>2020-03-03</td>
-							<td>2020341128124</td>
-							<td>강남역점(2124121233)</td>
-							<td>리저브 노브리틱스와 과테말라</td>
-							<td>출고</td>
-						</tr> -->
-						
 			</div>
 		</div>
 	</div>
@@ -277,9 +203,4 @@
 		});
 	}
 
-	function closeBox() {
-		$(".innerMessage").val("");    
-		$("#messageBox").hide(300); 
-	}
-	
 </script>

@@ -7,8 +7,8 @@
 				<li>
 					<button class="dropdown-btn">발주<i class="fa fa-caret-down"></i></button>
 					<div class="dropdown-container">
-						<a href="${pageContext.request.contextPath}/order/orderReq">발주요청조회</a><br /><br />
-						<a href="${pageContext.request.contextPath}/order/orderList">발주현황조회</a>
+							<a href="${pageContext.request.contextPath}/order/orderRequestList">발주요청조회</a><br /><br />
+							<a href="${pageContext.request.contextPath}/order/orderStateList">발주현황조회</a>
 					</div>
 				</li>
 				<li>

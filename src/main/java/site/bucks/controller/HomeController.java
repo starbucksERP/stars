@@ -14,20 +14,7 @@ public class HomeController {
 		return "home";
 	}
 	
-//	�����ϰ���
-	@RequestMapping(value = "/receipt")
-	public String receiptList() {
-		return "receipt/receipt_list";
-	}
-	
-	
-//	������
-	@RequestMapping(value = "/productList")
-	public String productList() {
-		return "item/product_list";
-	}
-	
-	
+
 
 	
 

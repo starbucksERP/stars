@@ -43,26 +43,20 @@
 			<div class="sidebar">
 				<ul class="side-menu">
 					<li>
-						<button class="dropdown-btn">발주<i class="fa fa-caret-down"></i></button>
-						<div class="dropdown-container">
-							<a href="${pageContext.request.contextPath}/order/orderRequestList">발주요청조회</a><br /><br />
-							<a href="${pageContext.request.contextPath}/order/orderStateList">발주현황조회</a>
-						</div>
-					</li>
-					<li>
-						<button class="dropdown-btn">구매<i class="fa fa-caret-down"></i></button>
-						<div class="dropdown-container">
-							<a href="${pageContext.request.contextPath}/purchase/purchasePlan">구매계획</a><br /><br />
-							<a href="${pageContext.request.contextPath}/purchase/purchaselist">구매현황</a><br /><br />
-							<a href="${pageContext.request.contextPath}/purchase/purchaseAdd">구매입력</a>
-						</div>
-					</li>
-					<li>
-						<button class="dropdown-btn">입출하기록<i class="fa fa-caret-down"></i></button>
-						<div class="dropdown-container">
-							<a href="${pageContext.request.contextPath}/order/history">입출하조회</a>
-						</div>
-					</li>
+		               <button class="dropdown-btn">발주관리<i class="fa fa-caret-down"></i></button>
+		               <div class="dropdown-container">
+		                  <a href="${pageContext.request.contextPath}/sic/storeOrderRequestList">발주요청조회</a><br /><br />
+		                  <a href="${pageContext.request.contextPath}/sic/storeOrderStateList">발주현황조회</a><br /><br />
+		                  <a href="${pageContext.request.contextPath}/sic/storeOrderInput">발주입력</a>
+		               </div>
+		            </li>
+		            <li>
+		               <button class="dropdown-btn">입출하기록<i class="fa fa-caret-down"></i></button>
+		               <div class="dropdown-container">
+		                  <a href="${pageContext.request.contextPath}/sic/storeReceipt">입출하조회</a>
+		                  <a href="${pageContext.request.contextPath}/delivery/deliveryList">배송조회</a>
+		               </div>
+	          	 	 </li>
 				</ul>
 			</div>
 
@@ -83,23 +77,18 @@
 						</tr>
 						<tr>
 							<th>지점명 / 지점코드</th>
-							<td><input type="search" id="storeId"/>&nbsp;<a href="" class="a-button white" style="font-size: 15px;"><i class="fas fa-file-alt"></i></a></td>
+							<td><input type="text" id="storeId" value="1021"/></td>
 							<th>품목</th>
 							<td><input type="text" id="itemNum">&nbsp;<a href="" class="a-button gray search-icon"><i class="fas fa-search"></i></a></td>
 						</tr>
 						<tr>
 							<th>진행상태</th>
-							<td>
+							<td colspan="3">
 								<label class="gLabel"><input type="checkbox" name="states" class="fChk choice" value="10" >발주요청</label>
 								<label class="gLabel"><input type="checkbox" name="states" class="fChk choice" value="20">발주완료</label>
+								<label class="gLabel"><input type="checkbox" name="states" class="fChk choice" value="70">입고완료</label>
 								<label class="gLabel"><input type="checkbox" name="states" class="fChk choice" value="99">발주취소</label>
 							</td> 
-							<th>발주주체</th>
-							<td>
-								<label class="gLabel"><input type="radio" name="orderType" class="fChk owner" checked="checked" value="0">전체</label>&nbsp;&nbsp;&nbsp;|
-								<label class="gLabel"><input type="radio" name="orderType" class="fChk owner" value="1">지점</label>
-								<label class="gLabel"><input type="radio" name="orderType" class="fChk owner" value="2">본사</label>
-							</td>
 						</tr>
 					</thead>
 				</table>
@@ -110,18 +99,7 @@
 					<div><button type='button' class='a-button green inner-button' onclick="closeBox()">확인</button></div>
 				</div>
 			
-			<!-- 
-			<div>품목검색</div>
-			<div>매장검색</div>
-			-->
 			
-		   	<div class="right" style="float: right;">
-	            <ul class="order-sta">
-	               <li class="blackgray">전체</li> 
-	               <li >발주진행</li>   <!--  10= x -->
-	               <li >완료</li>       <!--  20<= x < 99-->
-	            </ul>
-        	 </div>
 			<br />
 			<hr  style="margin-top: 14px;"/>
 			<br />
@@ -139,14 +117,13 @@
 					<thead style="line-height: 20px;">
 						<tr>
 							<th width="5%"><input type="checkbox" class="allChk"></th>
-							<th width="10%">발주타입</th>
 							<th width="10%">발주요청일</th>
 							<th width="10%">발주번호</th>
 							<th width="10%">지점명(코드)</th>
 							<th width="10%">품목</th>
 							<th width="10%">수량</th>
 							<th width="10%">총 금액</th>
-							<th width="25%">발주확인</th>
+							<th width="25%">옵션</th>
 						</tr>
 					</thead>
 					<tbody id="resultOrder"></tbody>
@@ -156,11 +133,12 @@
 	</div>
 </div>
 
-
 <script type="text/javascript">
 	var today=new Date();
 	var period=new Date();
 	period.setDate(today.getDate()-14);
+	
+	var storeId=$("#storeId").val();
 	
 	orderReqList(0);
 	
@@ -169,6 +147,7 @@
 		if (welcome==0) {
 			var requestDate=period;
 			var requestDatePair=today;
+			
 		} else {
 			var requestDate=$("#requestDate").val();
 			var requestDatePair=$("#requestDatePair").val();
@@ -181,7 +160,6 @@
 		
 		var requestNum=$("#requestNum").val();
 		var itemNum=$("#itemNum").val();
-		var storeId=$("#storeId").val();
 		
 		var states=[];
 		$(".choice:checked").each(function(i) {
@@ -191,16 +169,15 @@
 		if(states.length==0){
 			states.push(10);
 			states.push(20);
+			states.push(70);
 			states.push(99);
 		}
 		
-		var orderType=$(".owner:checked").val(); 
-		
 		$.ajax({
 			type: "POST",
-			url: "orderRequestList",
+			url: "storeOrderRequestList",
 			headers: {"content-type":"application/json"},
-			data: JSON.stringify({"requestDate":requestDate,"requestDatePair":requestDatePair,"requestNum":requestNum,"itemNum":itemNum,"storeId":storeId,"states":states,"orderType":orderType}),
+			data: JSON.stringify({"requestDate":requestDate,"requestDatePair":requestDatePair,"requestNum":requestNum,"itemNum":itemNum,"storeId":storeId,"states":states}),
 			dataType: "json",
 			success: function(json) {
 				$("#resultOrder").empty();
@@ -208,7 +185,7 @@
 				$("#countDiv").html("총 검색결과 : "+json.length+"건");
 				
 				if(json.length==0) {
-					var html="<tr><td colspan='9'>검색된 발주요청정보가 존재하지않습니다.</td><tr>";
+					var html="<tr><td colspan='8'>검색된 발주요청정보가 존재하지않습니다.</td><tr>";
 					$("#resultOrder").html(html);
 					return;
 				}
@@ -219,14 +196,6 @@
 	       			
 	       			html+="<tr><td><input type='checkbox' class='rowChk' value='"+this.requestNum+"'></td>";
 	       			
-	       			if (this.orderType == 1) {
-	       				html+="<td>대리점</td>";
-	       			} else if (orderType == 2) {
-	       				html+="<td>본사</td>";
-	       			} else if (orderType == 0) { // DB정리후 삭제
-	       				html+="<td>&nbsp;</td>";
-	       			}
-	       			
 	        		html+="<td>"+this.requestDate+"</td>"
 					+"<td>"+this.requestNum+"</td>"
 					+"<td>"+this.storeId+"</td>"
@@ -234,7 +203,9 @@
 					+"<td>"+this.orderQty+"</td>"
 					+"<td>"+total+"</td>";
 					if(this.requestState==10) {
-						html+="<td class='green-font'><button type='button' class='a-button green inner-button' onclick='orderReqConfirm("+this.requestNum+")'>발주확인</button></td></tr>";
+						html+="<td class='green-font'><button type='button' class='a-button blackgray inner-button' onclick='orderReqConfirm("+this.requestNum+")'>취소요청</button></td></tr>";
+					} else if(this.requestState==70){
+						html+="<td class='blue-font'>입고완료</td></tr>";
 					} else if(this.requestState>10 && this.requestState<99) {
 						html+="<td class='green-font'>발주완료</td></tr>";
 					} else if(this.requestState==99) {
@@ -258,10 +229,34 @@
 		var reqNums=[];
 		
 		if (reqNum!=0) {
+			// 취소
 			reqNums.push(reqNum);
+			
+			$.ajax({
+				type: "PUT",
+				url: "storeOrderModify",
+				headers: {"content-type":"application/json","X-HTTP-Method-override":"PUT"},
+				data: JSON.stringify({"requestState":99, "reqNums":reqNums,"storeId":storeId}),
+				dataType: "text", 
+				success: function(text) {
+					if(text=="success") {
+						$(".rowChk").prop("checked", false); // 체크박스초기화
+						//$(".innerMessage").html("선택된 발주가 완료되었습니다.<br><br><br>");
+						//$("#popupBox").show(300); 
+						openModal("선택된 발주가 취소처리되었습니다.<br><br><br>");
+						orderReqList(1);
+					}
+				},
+				error: function(xhr) {
+					alert("에러코드 = "+xhr.status)
+				}
+			});
+			
+			return;
+			
 		} else {
 			if($('.rowChk:checked').length==0) {
-				openModal("선택된 발주가 존재하지않습니다.<br>발주요청을 처리할 발주를 선택해주세요.<br><br>");
+				openModal("선택된 발주가 존재하지않습니다.<br>입고처리할 발주를 선택해주세요.<br><br>");
 				//$(".innerMessage").html("선택된 발주가 존재하지않습니다.<br>발주요청을 처리할 발주를 선택해주세요.<br><br>");
 				$("#popupBox").show(300);  
 				return;
@@ -277,16 +272,16 @@
 		
 		$.ajax({
 			type: "PUT",
-			url: "orderReqConfirm",
+			url: "storeOrderModify",
 			headers: {"content-type":"application/json","X-HTTP-Method-override":"PUT"},
-			data: JSON.stringify({"requestState":20, "reqNums":reqNums}),
+			data: JSON.stringify({"requestState":70, "reqNums":reqNums,"storeId":storeId}),
 			dataType: "text", 
 			success: function(text) {
 				if(text=="success") {
 					$(".rowChk").prop("checked", false); // 체크박스초기화
 					//$(".innerMessage").html("선택된 발주가 완료되었습니다.<br><br><br>");
 					//$("#popupBox").show(300); 
-					openModal("선택된 발주가 완료되었습니다.<br><br><br>");
+					openModal("선택된 발주가 입고처리되었습니다.<br><br><br>");
 					orderReqList(1);
 				}
 			},
@@ -297,6 +292,8 @@
 	
 		 
 	}
+
+	
 	
 
 	function openModal(message) {
@@ -314,6 +311,7 @@
 		$("body").css("overflow","hidden");//body 스크롤바 없애기
 		
 	}
+	
 	
 	function closeBox() {
 		$(".innerMessage").val("");    

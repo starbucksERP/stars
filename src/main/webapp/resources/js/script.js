@@ -110,7 +110,7 @@
 	 
 		
 		
-		// 카테고리명에 따라 서브카테고리를 추가
+		/*// 카테고리명에 따라 서브카테고리를 추가
 		$(".category").change(function() {
 			$(".subCategory").empty();
 			$(".itemName").empty();
@@ -248,7 +248,7 @@
 				}
 			});
 		});
-	 
+	 */
 		
 		
 	 

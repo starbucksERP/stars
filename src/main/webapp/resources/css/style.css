@@ -420,6 +420,10 @@ legend {
 	color: rgb(52, 152, 219) !important;
 }
 
+.white-font{
+	color: white;
+}
+
 .enroll-ul{
 	list-style: none; 
 	display: flex; 
