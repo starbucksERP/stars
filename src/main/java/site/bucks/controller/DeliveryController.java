@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,12 +26,22 @@ public class DeliveryController {
 	// >>>>>>>>>>>>>>>>>>>>>>>>> 배송요청확인 페이지에서 사용할 메소드 시작 
 	
 	// 1. 배송요청확인 페이지의 링크 
+	/*
 	@RequestMapping("/deliveryReq") 
 	public String delReqList() {
 		return "delivery/delivery_req_list";
-	}
+	}*/
 	
 	// 2. 배송요청확인 페이지의 기본테이블 출력용 
+	
+	@RequestMapping(value = "/deliveryReq")
+	public String delReqList(@ModelAttribute Delivery delivery, Model model) {
+		delivery.setNowDeliveryState(40);
+		model.addAttribute("delReqList", deliveryService.getDelReqList(delivery));
+		return "delivery/delivery_req_list";
+	}
+	
+	/*
 	@RequestMapping(value = "/deliveryReqList", method = RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Object> getDeliveryReq(@ModelAttribute Delivery delivery) {
@@ -38,7 +49,7 @@ public class DeliveryController {
 		delivery.setNowDeliveryState(40);
 		delReqListMap.put("deliveryReqList", deliveryService.getDelReqList(delivery));
 		return delReqListMap;
-	}
+	}*/
 	
 	// 3. 배송요청확인 페이지의 요청확인처리 버튼을 눌렀을때 사용되는 update 메소드 
 	  @RequestMapping(value = "/delReqConfirm", method = RequestMethod.POST)

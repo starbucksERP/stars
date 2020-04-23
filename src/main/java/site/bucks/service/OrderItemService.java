@@ -1,6 +1,7 @@
 package site.bucks.service;
 
 import java.util.List;
+import java.util.Map;
 
 import site.bucks.dto.OrderItem;
 
@@ -10,9 +11,9 @@ public interface OrderItemService {
 	void updateOrderReceiptProcess(OrderItem orderItem);
 
 	// 본점용
-	void updateOrderItem(OrderItem orderItem);
-	List<OrderItem> selectOrderItemList(OrderItem orerItem);
-	List<OrderItem> selectOrderItems(String requestNum);
+	void modifyOrderItemState(Map<String, Object> numAndStateMap);
+	List<OrderItem> getOrderItemList(OrderItem orderItem);
+	List<OrderItem> getOrderItems(String requestNum);
 	void checkQty(String requestNum);
 
 }

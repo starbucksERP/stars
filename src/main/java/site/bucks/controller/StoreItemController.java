@@ -18,6 +18,7 @@ import site.bucks.dto.Sale;
 import site.bucks.service.StoreItemService;
 
 @Controller
+@RequestMapping("/storeItem")
 public class StoreItemController {
 	
 	@Autowired

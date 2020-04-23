@@ -51,45 +51,45 @@
 
 <!--  ******************************* 본점관련SQL *********************************************** -->
 
-	<!-- 매개변수값은 상태와 도착날짜뿐 -->
-	<update id="updateOrderItem" parameterType="OrderItem">
-		update order_item 
-		<trim prefix="set" suffixOverrides=",">
-			<if test="requestState!=null and requestState!=0">
-				request_state=#{requestState},
-			</if>
-			<if test="deliveryDate!=null and deliveryDate!=''">
-				delivery_date=#{deliveryDate}
-			</if>
-		</trim>
-		where request_num=#{requestNum}
+	<!-- 요청번호들을 전달받아 값을 변경 -->
+	<update id="updateOrderItemState">
+		update order_item set request_state=#{requestState} where request_num in
+		<foreach collection="reqNums" item="requestNum" open="(" close=")" separator=",">
+			#{requestNum}
+		</foreach>
 	</update>
 	
 	<!-- 검색 -->
-	<!--  => 체크박스 foreach List받기처리추가 -->
 	<select id="selectOrderItemList" resultType="OrderItem">
 		select * from order_item
 		<where>
 			<if test="requestDate!=null and requestDate!=''">
-				REQUEST_DATE BETWEEN #{requestDate} AND #{requestDatePair}
+				to_char(REQUEST_DATE,'yyyy-mm-dd') BETWEEN #{requestDate} AND #{requestDatePair}
 			</if>
-			<if test="requestState!=null and requestState!=0">
-				AND REQUEST_STATE=#{requestState}
-			</if>
-			<if test="orderQty!=null and orderQty!=0">
-				AND ORDER_QTY=#{orderQty}
+			<if test="requestNum!=null and requestNum!=''">
+				AND request_num like '%'||#{requestNum}||'%'
 			</if>
 			<if test="storeId!=null and storeId!=0">
 				AND STORE_ID=#{storeId}
 			</if>
 			<if test="itemNum!=null and itemNum!=''">
-				AND ITEM_NUM!=null=#{itemNum}
+				AND ITEM_NUM=#{itemNum}
 			</if>
-			<if test="request_num!=null and request_num!=''">
-				AND request_num=#{requestNum}
+			<if test="orderType!=null and orderType!=0">
+				AND order_type=#{orderType}
+			</if>
+			<if test="states!=null">
+				AND REQUEST_STATE IN
+				<foreach collection="states" item="state" open="(" close=")" separator=",">
+				 	#{state}
+				</foreach>
 			</if>
 		</where>
 		order by REQUEST_DATE desc
+	</select>
+	
+	<select id="selectOrderItemListAll" resultType="OrderItem">
+		select * from order_item order by REQUEST_DATE desc
 	</select>
 	
 	<!-- 요청번호에 대한 오더들 반환  -->

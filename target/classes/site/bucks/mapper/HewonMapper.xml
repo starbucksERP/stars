@@ -2,15 +2,63 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="site.bucks.mapper.HewonMapper">
-
-
-
-
-
 	<!-- store에서 사용하기 위한 SELECT 문 -->
 	<select id="selectHewonStIdList" resultType="Hewon">
 		select H.*,S.store_name from hewon H join Store S on 
 			H.hewon_st_id=S.store_id 
 				where H.hewon_st_id=${hewonStId}
 	</select>
+	
+	
+	
+	
+	<insert id="insertHewon">
+		insert into HEWON values(#{hewonId},#{hewonName}, #{hewonPassword}, 'asdf', '02-123-1594', #{hewonEmail},'9', SYSDATE, #{hewonStId})
+	</insert>
+	
+	<update id="updateHewon">
+		update HEWON 
+		<set>
+			<if test="hewonPassword!=null and hewonPassword!=''">
+				HEWON_PASSWORD=#{hewonPassword},
+			</if>
+			<if test="hewonName!=null and hewonName!=''">
+				HEWON_NAME=#{hewonName},
+			</if>
+			<if test="hewonEmail!=null and hewonEmail!=''">
+				HEWON_EMAIL=#{hewonEmail}, 
+			</if>
+			<if test="hewonGrade!=null and hewonGrade!=''">
+				HEWON_GRADE=#{hewonGrade} 
+			</if>
+			<if test="hewonGrade!=null and hewonStId!=''">
+				HEWON_ST_ID=#{hewonStId} 
+			</if>
+		</set>
+		where HEWON_ID=#{hewonId}
+	</update>
+	
+	
+	<!-- <delete id="deleteHewon">
+		delete from Hewon where HEWON_ID=#{hewonId}
+	</delete> -->
+	
+	<select id="selectHewon" resultType="Hewon">
+		select * from Hewon where HEWON_ID=#{hewonId}
+	</select>
+	
+	<select id="selectHewonList" resultType="Hewon">
+		select * from Hewon order by HEWON_ID
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </mapper>

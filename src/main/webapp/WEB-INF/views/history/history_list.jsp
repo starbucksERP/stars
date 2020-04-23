@@ -7,25 +7,23 @@
 					<li>
 						<button class="dropdown-btn">발주<i class="fa fa-caret-down"></i></button>
 						<div class="dropdown-container">
-							<a href="">발주요청조회</a><br /><br />
-							<a href="">발주요청조회</a>
-						</div>
+							<a href="${pageContext.request.contextPath}/order/orderRequestList">발주요청조회</a><br /><br />
+							<a href="${pageContext.request.contextPath}/order/orderStateList">발주현황조회</a>						</div>
 					</li>
 					<li>
 						<button class="dropdown-btn">구매<i class="fa fa-caret-down"></i></button>
 						<div class="dropdown-container">
-							<a href="">구매계획</a><br /><br />
-							<a href="">구매현황</a><br /><br />
-							<a href="">구매입력</a>
+							<a href="${pageContext.request.contextPath}/purchase/purchasePlan">구매계획</a><br /><br />
+							<a href="${pageContext.request.contextPath}/purchase/purchaselist">구매현황</a><br /><br />
+							<a href="${pageContext.request.contextPath}/purchase/purchaseAdd">구매입력</a>
 						</div>
 					</li>
 					<li>
 						<button class="dropdown-btn">입출하기록<i class="fa fa-caret-down"></i></button>
 						<div class="dropdown-container">
-							<a href="">입출하조회</a>
+							<a href="${pageContext.request.contextPath}/order/history">입출하조회</a>
 						</div>
 					</li>
-					
 				</ul>
 			</div>
 
