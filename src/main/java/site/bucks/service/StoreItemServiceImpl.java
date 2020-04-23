@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import site.bucks.dao.StoreItemDAO;
 import site.bucks.dto.ProductRecipe;
 import site.bucks.dto.Sale;
-import site.bucks.dto.SaleItem;
 
 @Service
 public class StoreItemServiceImpl implements StoreItemService{
@@ -26,8 +25,6 @@ public class StoreItemServiceImpl implements StoreItemService{
 		ProductRecipe pr=storeItemDAO.selectProduct(sale.getSaleProduct());
 		
 		if(pr!=null) {
-//			레시피 테이블에서 상품가격 가져와서 개수 곱해서 총합 저장
-			sale.setSalePriceSum(pr.getProductPrice()*(int)sale.getSaleQty());
 //			판매기록
 			storeItemDAO.insertSale(sale);
 			
@@ -37,12 +34,11 @@ public class StoreItemServiceImpl implements StoreItemService{
 			String item1=pr.getItem1();		
 			String item2=pr.getItem2();
 			String item3=pr.getItem3();
-			
+			System.out.println(pr.getItem1());
 //			기록인걸 지정해주는 숫자
 			int num=0;
 			
 			calculator(item1, sale, num);
-			
 			if(item2!=null) {
 				calculator(item2, sale, num);
 			}
@@ -51,8 +47,6 @@ public class StoreItemServiceImpl implements StoreItemService{
 			}
 			
 		}else {
-//			지점 테이블에서 상품가격 가져와서 개수 곱해서 총합 저장
-			sale.setSalePriceSum(storeItemDAO.selectStoreItemPrice(sale).getItemPrice()*(int)sale.getSaleQty());
 //			판매 기록
 			storeItemDAO.insertSale(sale);
 //			판매량 재고 업데이트 
@@ -66,7 +60,7 @@ public class StoreItemServiceImpl implements StoreItemService{
 //		상품명을 재료 명으로 다시 등록(소수점화)
 		sale.setSaleProduct(item);
 		
-		if(num==1) {
+		if(num==0) {
 //			등록한 개수 그대로 기록
 			storeItemDAO.updateStoreItemRecord(sale);
 		}else if(num==9) {
@@ -118,19 +112,39 @@ public class StoreItemServiceImpl implements StoreItemService{
 	
 //	판매조회
 	@Override
-	public List<SaleItem> getSaleList(Sale sale) {
+	public List<Sale> getSaleList(Sale sale) {
 		return storeItemDAO.selectSaleList(sale);
 	}
 
+	
 //	카테고리별 판매 상품 검색
 	@Override
 	public Map<String, Object> getSaleProductName(Sale sale) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		if(sale.getsaleCategory().equals("A")) {
+		if(sale.getSaleCategory().equals("A")) {
+			// 조합상품
 			map.put("saleProduct2", storeItemDAO.selectSaleProductName2(sale));
 		}else {
+			// 완제품
 			map.put("saleProduct1", storeItemDAO.selectSaleProductName1(sale));
 		}
+		return map;
+	}
+	
+//	상품 정보 검색
+	@Override
+	public Map<String, Object> getSaleProduct(String saleProduct) {
+		Map<String, Object> map= new HashMap<String, Object>();
+		ProductRecipe pr=storeItemDAO.selectProduct(saleProduct);
+		
+//		조합상품
+		if(pr!=null) {
+			map.put("sale2", storeItemDAO.searchProduct2(saleProduct));
+		}else {	
+//		완제품	
+			map.put("sale1", storeItemDAO.searchProduct1(saleProduct));
+		}
+				
 		return map;
 	}
 	
