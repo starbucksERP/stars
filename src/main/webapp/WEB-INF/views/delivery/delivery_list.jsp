@@ -21,32 +21,33 @@
 				<div class="right"><button type="button" class="a-button big" onclick="delReadySearch()">상세 검색</button><button type="button" class="a-button big" onclick="delReadySearchReset()">검색 초기화</button></div>
 				<hr />
 				<div class="information">
+				<form id="delReadySearchForm" method="post">
 					<table class="table">
 						<thead>
 							<tr>
 								<th>요청번호</th>
-								<td colspan="1"><input type="search" class="delReadyInput" id="requestNumInput"/>&nbsp;<a href="${pageContext.request.contextPath }/delivery/choice_store_code.jsp" onClick="window.open(this.href, '', 'width=400, height=430'); return false;" class="a-button white" style="font-size: 15px;"><i class="fas fa-file-alt"></i></a></td>
+								<td colspan="1"><input type="search" name="requestNum" id="requestNumInput" value="" />&nbsp;<a href="${pageContext.request.contextPath }/delivery/choice_store_code.jsp" onClick="window.open(this.href, '', 'width=400, height=430'); return false;" class="a-button white" style="font-size: 15px;"><i class="fas fa-file-alt"></i></a></td>
 								<th>매장코드</th>
-								<td colspan="1"><input type="search" class="delReadyInput" id="storeIdInput"/>&nbsp;<a href="" class="a-button white" style="font-size: 15px;"><i class="fas fa-file-alt"></i></a></td>
+								<td colspan="1"><input type="search" name="storeId" id="storeIdInput"/>&nbsp;<a href="" class="a-button white" style="font-size: 15px;"><i class="fas fa-file-alt"></i></a></td>
 							</tr>
 							<tr>
 								<th>배송 시작일</th>
 								<td colspan="1">
-									<label class="gLabel"><input type="date" class="delReadyInput" id="delStartInput1"/>&nbsp;<i class="far fa-calendar-alt"></i>&nbsp;&nbsp;~&nbsp;&nbsp;</label>
-									<label class="gLabel"><input type="date" class="delReadyInput" id="delStartInput2" />&nbsp;<i class="far fa-calendar-alt"></i></label>
+									<label class="gLabel"><input type="date" name="deliveryStart" id="delStartInput1"/>&nbsp;<i class="far fa-calendar-alt"></i>&nbsp;&nbsp;~&nbsp;&nbsp;</label>
+									<label class="gLabel"><input type="date" name="deliveryStartTwo"  id="delStartInput2" />&nbsp;<i class="far fa-calendar-alt"></i></label>
 								</td>
 								
 								<th>배송 완료일</th>
 								<td colspan="1">
-									<label class="gLabel"><input type="date" class="delReadyInput" id="delEndInput1" />&nbsp;<i class="far fa-calendar-alt"></i>&nbsp;&nbsp;~&nbsp;&nbsp;</label>
-									<label class="gLabel"><input type="date" class="delReadyInput" id="delEndInput2" />&nbsp;<i class="far fa-calendar-alt"></i></label>
+									<label class="gLabel"><input type="date" name="deliveryEnd" id="delEndInput1" />&nbsp;<i class="far fa-calendar-alt"></i>&nbsp;&nbsp;~&nbsp;&nbsp;</label>
+									<label class="gLabel"><input type="date" name="deliveryEndTwo" id="delEndInput2" />&nbsp;<i class="far fa-calendar-alt"></i></label>
 								</td>
 							</tr>
 							<tr>
 								<th>배송처리 현황</th>
 								<td colspan="3">
-									<select id="delReadyCategory">
-										<option value="10">배송처리 현황 선택</option>
+									<select name="deliveryState" id="delReadyCategory">
+										<option value="">배송처리 현황 선택</option>
 										<option value="50">1. 배송 준비중</option>
 										<option value="60">2. 배송중</option>
 										<option value="70">3. 배송완료</option>
@@ -55,6 +56,7 @@
 							</tr>
 						</thead>
 					</table>
+				</form>
 				</div>
 				
 				<br />
@@ -68,97 +70,86 @@
 				<hr >
 				
 				<div class="information" id="delReadyDisplay">
-					<%-- <table class="table">
+					<table class="table">
 						<tbody>
-						
 							<tr>
 								<th style="width: 10px;"><input type="checkbox" class="allChk"></th>
 								<th>번호</th>
 								<th>요청번호</th>
 								<th>매장코드</th>
 								<th>배송처리현황</th>
-								<th>배송 시작일</th>
+								<th>배송 요청일</th>
 								<th>배송 종료일</th>
 							</tr>
 							<tr>
 							<c:choose>
-								<c:when test="${empty(deliveryReadyList) }">
+								<c:when test="${empty(delReadyList) }">
 									<tr align="center">
 										<td colspan="7">검색된 배송요청이 없습니다.</td>		
 									</tr>
 								</c:when>
 								<c:otherwise>
-									<c:forEach var="deliveryReady" items="${deliveryReadyList }">
+									<c:forEach var="delReadyList" items="${delReadyList }">
 									<tr>
-										<td><input type="checkbox" class="rowChk"  value="${deliveryReady.deliverySeq }"></td>
-										<td>${deliveryReady.deliverySeq }</td>				
+										<td><input type="checkbox" class="rowChk"  value="${delReadyList.deliverySeq }"></td>
+										<td>${delReadyList.deliverySeq }</td>				
 										<!-- 팝업창 뜨는거 만들어야 함  -->
-										<td>${deliveryReady.requestNum }</td>				
-										<td>${deliveryReady.storeId }</td>
-										<td>${deliveryReady.deliveryState }</td>
-										<td>${deliveryReady.deliveryStart }</td>
-										<td>${deliveryReady.deliveryEnd }</td>
+										<td>${delReadyList.requestNum }</td>				
+										<td>${delReadyList.storeId }</td>
+										<c:choose>
+										<c:when test="${delReadyList.deliveryState == 50}">
+										<td class="red-font">배송 준비중</td>										
+										</c:when>
+										<c:when test="${delReadyList.deliveryState == 60}">
+										<td class="blue-font">배송중</td>										
+										</c:when>
+										<c:when test="${delReadyList.deliveryState == 70}">
+										<td style="color:green">배송 완료</td>										
+										</c:when>
+										</c:choose>
+										<td>${delReadyList.deliveryStart }</td>
+										<td>${delReadyList.deliveryEnd }</td>
 									</tr>	
 									</c:forEach>
 								</c:otherwise>
 							</c:choose>
 						</tr>
 						</tbody>
-					</table> --%>
+					</table>
 				</div>
 			</div>
 		</div>
 	</div>
-	
-<script id="delReadyListEmpty" type="text/x-handlebars-template">
-<table class="table">
-	<tbody>
-		<tr>
-		<th style="width: 10px;"><input type="checkbox" class="allChk"></th>
-		<th>번호</th>
-		<th>요청번호</th>
-		<th>매장코드</th>
-		<th>배송처리현황</th>
-		<th>배송 시작일</th>
-		<th>배송 종료일</th>
-		</tr>
-		<tr>
-			<tr align="center">
-    		<td colspan="7">검색된 배송기록이 없습니다.</td>		
-		</tr>
-	</tbody>
-</table>
-</script>
 
-<script id="delReadyList" type="text/x-handlebars-template">
-<table class="table">
-	<tbody>
-		<tr>
-		<th style="width: 10px;"><input type="checkbox" class="allChk"></th>
-		<th>번호</th>
-		<th>요청번호</th>
-		<th>매장코드</th>
-		<th>배송처리현황</th>
-		<th>배송 시작일</th>
-		<th>배송 종료일</th>
-		</tr>
-		{{#each.}}
-			<tr>
-				<td><input type="checkbox" class="rowChk"  value="{{deliverySeq }}"></td>
-				<td>{{deliverySeq }}</td>
-				<td>{{requestNum }}</td>				
-				<td>{{storeId }}</td>
-				<td>{{deliveryState }}</td>	
-				<td>{{deliveryStart }}</td>	
-				<td>{{deliveryEnd }}</td>	
-			</tr>
-		{{/each}}
-	</tbody>
-</table>
-</script>
-	
 <script type="text/javascript">
 
+function delReadySearch() {
+	var inputValue;
+	if($("#requestNumInput").val()!=''){
+		inputValue = $("#requestNumInput").val();
+		$("#requestNumInput").value(inputValue);
+		alert($("#requestNumInput").val());
+	}
+	
+	$("#delReadySearchForm").submit(); 
+	
+	/*
+	if($("#requestNumInput").val()=='' && $("#storeIdInput").val()=='' && $("#delStartInput1").val=='' && $("#delStartInput2").val()==''
+	&& $("#delEndInput1").val()=='' && $("#delEndInput2").val()=='' && $("#delReadyCategory").val()=='') {
+		alert("검색 사항을 선택 및 입력해 주세요.");
+		return false;
+	} else {
+	 //$("#delReadySearchForm").submit(); 
+	 console.log("실패패패패패패")
+	 return;
+	} 
+	*/
+	
+
+};
+
+
+<%--
 // 배송요청을 확인처리하기 위한 함수 //테스팅 확인용 
 
 delReadyDisplay();
@@ -188,6 +179,9 @@ function delReadyDisplay() {
 	
 };
 
+--%>
+
+<%-- 핸들바스 사용할때 이용되는 다중검색 메소드 
 function delReadySearch() {
 	var deliverySearch;
 	
@@ -236,7 +230,7 @@ function delReadySearch() {
 	          }
 	}); 
 };
-
+--%>
 function delReadySearchReset() {
 	location.href="/star/deliveryList";
 }
@@ -297,6 +291,54 @@ $("#deliveryStartBtn").click(function() {
 
 
 
+<%--  핸들바스 템플릿 
+<script id="delReadyListEmpty" type="text/x-handlebars-template">
+<table class="table">
+	<tbody>
+		<tr>
+		<th style="width: 10px;"><input type="checkbox" class="allChk"></th>
+		<th>번호</th>
+		<th>요청번호</th>
+		<th>매장코드</th>
+		<th>배송처리현황</th>
+		<th>배송 시작일</th>
+		<th>배송 종료일</th>
+		</tr>
+		<tr>
+			<tr align="center">
+    		<td colspan="7">검색된 배송기록이 없습니다.</td>		
+		</tr>
+	</tbody>
+</table>
+</script>
+
+<script id="delReadyList" type="text/x-handlebars-template">
+<table class="table">
+	<tbody>
+		<tr>
+		<th style="width: 10px;"><input type="checkbox" class="allChk"></th>
+		<th>번호</th>
+		<th>요청번호</th>
+		<th>매장코드</th>
+		<th>배송처리현황</th>
+		<th>배송 시작일</th>
+		<th>배송 종료일</th>
+		</tr>
+		{{#each.}}
+			<tr>
+				<td><input type="checkbox" class="rowChk"  value="{{deliverySeq }}"></td>
+				<td>{{deliverySeq }}</td>
+				<td>{{requestNum }}</td>				
+				<td>{{storeId }}</td>
+				<td>{{deliveryState }}</td>	
+				<td>{{deliveryStart }}</td>	
+				<td>{{deliveryEnd }}</td>	
+			</tr>
+		{{/each}}
+	</tbody>
+</table>
+</script>
+	--%>	
 
 
 			

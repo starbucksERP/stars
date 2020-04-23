@@ -102,7 +102,6 @@ function deliveryReqSearch(){
 		}
 		delivery.push($(".delReqCategory").val());
 	    $("#delReqSearchInput").attr("name","requestNum");
-		$("input[type='hidden']").val(delivery);
 		
 	}else if($(".delReqCategory").val()=='storeId') {
 		if($("#delReqSearchInput").val()=='') {
@@ -111,7 +110,6 @@ function deliveryReqSearch(){
 		}
 		delivery.push($(".delReqCategory").val());
 		$("#delReqSearchInput").attr("name","storeId");
-		$("input[type='hidden']").val(delivery);
 		
 	} else {	
 		alert("검색 항목을 선택해 주세요.");

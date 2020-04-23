@@ -50,14 +50,10 @@
 	<where>
 	
 	<if test="nowDeliveryState==50">
-		delivery_state >= #{nowDeliveryState}
-	</if>
-	
-	<if test="nowDeliveryState==10 and deliveryState==10">
 		delivery_state >= 50
 	</if>
 	
-	<if test="nowDeliveryState==10 and deliveryState!=10">
+	<if test="deliveryState!=null and deliveryState!=''">
 		delivery_state = #{deliveryState}
 	</if>
 	
