@@ -7,7 +7,7 @@ import site.bucks.dto.StoreItemHistory;
 
 public interface AccountMapper {
 	
-	//ÁöÁ¡¸ÅÀÔ, º»»ç¸ÅÃâ Á¶°Çº° Ãâ·Â 
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Çºï¿½ ï¿½ï¿½ï¿½ 
 	List<Account> selectPurchaseSaleList (StoreItemHistory sih); 
 
 }

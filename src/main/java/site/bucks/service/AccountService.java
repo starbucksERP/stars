@@ -1,14 +1,13 @@
 package site.bucks.service;
 
 import java.util.List;
-import java.util.Map;
 
 import site.bucks.dto.Account;
 import site.bucks.dto.StoreItemHistory;
 
 public interface AccountService {
 	
-	//ÁöÁ¡¸ÅÀÔ, º»»ç¸ÅÃâ Á¶°Çº° Ãâ·Â 
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Çºï¿½ ï¿½ï¿½ï¿½ 
 	List<Account> getPurchaseSaleList(StoreItemHistory sih);
 	
 	

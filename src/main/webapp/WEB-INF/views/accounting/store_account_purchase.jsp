@@ -76,36 +76,37 @@
 
 
 <script type="text/javascript">
-    stAccountPurchase1();
-
-	function stAccountPurchase1() {
+    stAccountPurchase();
+    
+	function stAccountPurchase() {
 		$.ajax({
-			type: "GET",
+			type: "POST",
 			URL: "st_accountPurchaseList",
-			dataType: "json",
+			headers: {"content-type":"application/json"},
+			data: "json",
 			success: function(json) {
-				alert(json);
+				
+				console.log(json);
 				/*
-				 if(json.storePurchaseList.length==0) {
+				 if(json.length==0) {
 					$(".table > tbody").append("<tr><td colspan='7'>검색된 결과가 없습니다.</td></tr>");
 				} else { 
-					    $(json.storePurchaseList).each(function(i) {
-						var list=json.storePurchaseList[i]; 
-						var listAdd ="<tr>"+
-									 "<td>"+list.historyDate+"</td>"+							
+					    $(json).each(function(i) {
+					    	//alert(this.storeItemHistory.historyDate)
+						var html ="<tr>"+
+									 "<td>"+this.StoreItemHistory.historyDate+"</td>"+							
 									 "<td>본사</td>"+							
-									 "<td>"+list.itemNum+"</td>"+							
-									 "<td>"+list.itemName+"</td>"+							
-									 "<td>"+list.itemSprice+"</td>"+							
+									 "<td>"+this.StoreItemHistory.itemNum+"</td>"+							
+									 "<td>"+this.StoreItemHistory.itemName+"</td>"+							
+									 "<td>"+(this.OrderItem.itemSprice)*(this.StoreItemHistory.itemQty)+"</td>"+							
 									 "<td>부가세</td>"+							
 									 "<td>총합계</td>"							
 						             +"</tr>";
-						$(".table > tbody").append(listAdd);
+						$(".table > tbody").append(html);
 					}) 
 				}
-					*/
+				*/
 			},
-			
 			error: function(xhr) {
 				alert("에러코드 ="+xhr.status);
 			}

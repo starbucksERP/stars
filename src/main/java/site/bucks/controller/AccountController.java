@@ -1,15 +1,15 @@
 package site.bucks.controller;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import site.bucks.dto.Account;
 import site.bucks.dto.StoreItemHistory;
 import site.bucks.service.AccountService;
 
@@ -20,66 +20,71 @@ public class AccountController {
 	@Autowired
 	private AccountService accountService;
 	
-//	ÁöÁ¡ ¸ÅÀÔÇöÈ² 
+//	ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È² 
 	@RequestMapping("/st_accountPurchase")
 	public String storeAccountPurchase() {
 		return "accounting/store_account_purchase";
 	}
 	
+//	ì§€ì  ë§¤ì… ì¡°íšŒ(GET)
 	@RequestMapping(value = "/st_accountPurchaseList",method = RequestMethod.GET)
+	public String st_accountPurchaseList() {
+		return "accounting/store_account_purchase";
+	}
+//	ì§€ì  ë§¤ì… ì¡°íšŒ(POST)
+	@RequestMapping(value = "/st_accountPurchaseList",method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> st_accountPurchaseList() {
-		StoreItemHistory sih= new StoreItemHistory();
-		Map<String, Object> returnMap = new HashMap<String, Object>();
-		returnMap.put("storePurchaseList",accountService.getPurchaseSaleList(sih));
-		return returnMap;
+	public List<Account> st_accountPurchaseList(@RequestBody StoreItemHistory sih) {
+		return accountService.getPurchaseSaleList(sih);
 	}
 	
+
 	
-//	ÁöÁ¡ ¸ÅÃâÇöÈ²
+	
+//	ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È²
 	@RequestMapping(value = "/st_accountSales")
 	public String st_accountSales() {
 		return "accounting/store_account_sales";
 	}	
 	
-//	ÁöÁ¡ ¼ÕÀÍºĞ¼®
+//	ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ÍºĞ¼ï¿½
 	@RequestMapping(value = "/st_accountIncome")
 	public String st_accountIncome() {
 		return "accounting/store_account_income";
 	}
 	
 	
-	//¸ÅÀÔ - º»»ç 
+	//ï¿½ï¿½ï¿½ï¿½ - ï¿½ï¿½ï¿½ï¿½ 
 	@RequestMapping(value = "/accountPurchase")
 	public String a5() {
 		return "accounting/account_purchase";
 	}
 	
-	//¸ÅÃâ - º»»ç
+	//ï¿½ï¿½ï¿½ï¿½ - ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping(value = "/accountSales")
 	public String a6() {
 		return "accounting/account_sales";
 	}
 	
-	//¼ÕÀÍºĞ¼® - º»»ç 
+	//ï¿½ï¿½ï¿½ÍºĞ¼ï¿½ - ï¿½ï¿½ï¿½ï¿½ 
 	@RequestMapping(value = "/accountIncome")
 	public String a4() {
 		return "accounting/account_income";
 	}
 	
-	//ÁöÁ¡µé ¸ÅÀÔ¿ùº° ÇöÈ² - º»»ç 
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ô¿ï¿½ï¿½ï¿½ ï¿½ï¿½È² - ï¿½ï¿½ï¿½ï¿½ 
 	@RequestMapping(value = "/purchaseMonth")
 	public String a7() {
 		return "accounting/purchase_month";
 	}
 	
-	//ÁöÁ¡µé ¸ÅÃâ¿ùº° ÇöÈ² - º»»ç 
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È² - ï¿½ï¿½ï¿½ï¿½ 
 	@RequestMapping(value = "/salesMonth")
 	public String a8() {
 		return "accounting/sales_month";
 	}
 	
-	//ÁöÁ¡µé ¼ÕÀÍºĞ¼® - º»»ç 
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ÍºĞ¼ï¿½ - ï¿½ï¿½ï¿½ï¿½ 
 	@RequestMapping(value = "/incomeMonth")
 	public String a9() {
 		return "accounting/income_month";
