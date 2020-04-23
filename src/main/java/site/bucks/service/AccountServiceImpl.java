@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import site.bucks.dao.AccountDAO;
 import site.bucks.dto.Account;
+import site.bucks.dto.StoreItemHistory;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -16,9 +17,10 @@ public class AccountServiceImpl implements AccountService {
 	private AccountDAO accountDAO;
 
 	@Override
-	public List<Account> getPurchaseSaleList(Account account) {
-		return accountDAO.selectPurchaseSaleList(account);
+	public List<Account> getPurchaseSaleList(StoreItemHistory sih) {
+		return accountDAO.selectPurchaseSaleList(sih);
 	}
+
 
 
 }
