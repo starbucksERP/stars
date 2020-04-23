@@ -86,12 +86,13 @@ public class StoreItemHistoryController {
 	}
 
 	*/
-//	지점 발주 입력
+//	지점 발주 입력페이지
 	@RequestMapping(value = "/storeOrderInput",method = RequestMethod.GET)
 	public String storeOrderInput() {
 		return "storeItem/order_input";
 	}
 	
+//	지점 발주 요청
 	@RequestMapping(value = "/storeOrderInput", method = RequestMethod.POST)
 	@ResponseBody
 	public String storeOrderInput(@RequestBody List<OrderItem> orderItemList) {
@@ -99,17 +100,21 @@ public class StoreItemHistoryController {
 		for(OrderItem orderItem:orderItemList) {
 			storeItemHistoryService.addRecipt(orderItem);
 		}
+		
 		return "success";
 	}
+	
 	
 	
 //	지점 발주 조회
 	@RequestMapping(value = "/storeOrderSta")
 	public String storeOrderSta(@ModelAttribute(value = "orderItem") OrderItem orderItem, Model model) {
-		
 		model.addAttribute("orderItemList", storeItemHistoryService.getReciptSta(orderItem));
 		return "storeItem/order_status";
 	}
+	
+	
+	
 	
 	
 //	지점 발주 입고처리
@@ -119,6 +124,7 @@ public class StoreItemHistoryController {
 		storeItemHistoryService.modifyReceiptProcess(orderItemList);
 		return "success";
 	}
+	
 	
 	
 //	지점 발주 취소
@@ -145,8 +151,6 @@ public class StoreItemHistoryController {
 	public Map<String, Object> searchItem(@PathVariable String itemName) {
 		return storeItemHistoryService.getItemName(itemName);
 	}
-	
-	
 	
 	
 }

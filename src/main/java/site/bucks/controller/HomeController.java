@@ -33,19 +33,9 @@ public class HomeController {
 	}
 	
 	
-	
-
 
 	
-	@RequestMapping(value = "/saleRecord")
-	public String s1() {
-		return "sale/sale_record";
-	}
 	
-	@RequestMapping(value = "/saleList")
-	public String s2() {
-		return "sale/sale_list";
-	}
 	
 //	ȸ�� 
 	@RequestMapping(value = "/accountAccount")

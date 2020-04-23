@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import site.bucks.dao.DeliveryDAO;
+import site.bucks.dao.ItemDAO;
 import site.bucks.dao.OrderItemDAO;
 import site.bucks.dao.StoreItemDAO;
 import site.bucks.dao.StoreItemHistoryDAO;
@@ -22,6 +23,8 @@ public class StoreItemHistoryServiceImpl implements StoreItemHistoryService{
 	private DeliveryDAO deliveryDAO;
 	@Autowired
 	private StoreItemDAO storeItemDAO;
+	@Autowired
+	private ItemDAO itemDAO;
 	@Autowired
 	private StoreItemHistoryDAO storeItemHistoryDAO;
 	
@@ -42,8 +45,16 @@ public class StoreItemHistoryServiceImpl implements StoreItemHistoryService{
 		storeItemHistoryDAO.insertSIH(orderItem);
 	}
 	
+	@Override
+	public Map<String, Object> getStoreOrderView(String requestNum) {
+		Map<String, Object> map= new HashMap<String, Object>();
+		map.put("orderItem", orderItemDAO.selectOrderItems(requestNum));
+		return map;
+	} 
 	
 	
+	
+//	발주 취소
 	@Override
 	public void modifyCancelRecipt(List<OrderItem> orderItemList) {
 		for(OrderItem orderItem:orderItemList) {
@@ -66,7 +77,11 @@ public class StoreItemHistoryServiceImpl implements StoreItemHistoryService{
 	@Override
 	public void modifyReceiptProcess(List<OrderItem> orderItemList) {
 		for(OrderItem orderItem:orderItemList) {
-			if(orderItem.getRequestState()==60) {
+			
+//				order 에 아이템 이름이 없으므로 검색하여 저장후 sql실행
+				String itemName=itemDAO.selectItem(orderItem.getItemNum()).getItemName();
+				orderItem.setItemName(itemName);
+				
 //				발주상태 발주요청 70으로
 				orderItem.setRequestState(70);
 				
@@ -78,9 +93,6 @@ public class StoreItemHistoryServiceImpl implements StoreItemHistoryService{
 				orderItemDAO.updateOrderItem(orderItem);
 //				지점재고수량변경
 				storeItemDAO.updateStoreItemReceiptProcess(orderItem);
-			}else {
-				throw new RuntimeException("아직 배송완료되지 않았습니다.");
-			}
 		}
 	}
 
@@ -99,8 +111,12 @@ public class StoreItemHistoryServiceImpl implements StoreItemHistoryService{
 		Map<String, Object> map= new HashMap<String, Object>();
 		map.put("item", storeItemHistoryDAO.searchItem(itemName));
 		return map;
-	} 
+	}
+
+
 	
+	
+
 
 
 

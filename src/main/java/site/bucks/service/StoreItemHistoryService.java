@@ -9,6 +9,8 @@ import site.bucks.dto.OrderItem;
 public interface StoreItemHistoryService {   
 	List<OrderItem> getReciptSta(OrderItem orderItem);
 	void addRecipt(OrderItem orderItem);
+	Map<String, Object> getStoreOrderView(String requestNum);
+	
 	void modifyCancelRecipt(List<OrderItem> orderItemList);
 	void modifyReceiptProcess(List<OrderItem> orderItemList); 
 	
