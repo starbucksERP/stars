@@ -159,10 +159,8 @@
 	
 <script type="text/javascript">
 
-<<<<<<< HEAD
-
 // 배송요청을 확인처리하기 위한 함수 //테스팅 확인용 
-=======
+
 delReadyDisplay();
 
 // 배송현황조회 페이지 기본 테이블 출력 메소드 
@@ -246,7 +244,6 @@ function delReadySearchReset() {
 
 
 // 배송시작승인 처리하기 위한 함수 
->>>>>>> refs/heads/master
 $("#deliveryStartBtn").click(function() {
 		
 		
@@ -287,7 +284,6 @@ $("#deliveryStartBtn").click(function() {
 				});  
 			} else {
 				alert("처리할 배송정보가 없습니다.");
-				location.href="/star/deliveryList"
 				return;
 			}
 			
