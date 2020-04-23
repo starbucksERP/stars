@@ -3,6 +3,7 @@ package site.bucks.dao;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,20 +21,19 @@ public class OrderItemDAOImpl implements OrderItemDAO {
 	public int insertStoreOrder(OrderItem orderItem) {
 		return sqlSession.getMapper(OrderItemMapper.class).insertStoreOrder(orderItem);
 	}
-
+	
 	@Override
-	public List<OrderItem> selectStoreOrderItemList(OrderItem orderItem) {
-		return  sqlSession.getMapper(OrderItemMapper.class).selectStoreOrderItemList(orderItem);
+	public List<OrderItem> selectStoreOrderItems(String requestNum, String storeId) {
+		return sqlSession.getMapper(OrderItemMapper.class).selectOrderItems(requestNum);
 	}
 
-	@Override
-	public int updateOrderReceiptProcess(OrderItem orderItem) {
-		return sqlSession.getMapper(OrderItemMapper.class).updateOrderReceiptProcess(orderItem);
-	}
 
+	
+	
+	
 	@Override
-	public int updateOrderItem(OrderItem orderItem) {
-		return sqlSession.getMapper(OrderItemMapper.class).updateOrderItem(orderItem);
+	public int updateOrderItemState(Map<String, Object> numAndStateMap) {
+		return sqlSession.getMapper(OrderItemMapper.class).updateOrderItemState(numAndStateMap);
 	}
 
 	@Override
@@ -45,6 +45,17 @@ public class OrderItemDAOImpl implements OrderItemDAO {
 	public List<OrderItem> selectOrderItems(String requestNum) {
 		return sqlSession.getMapper(OrderItemMapper.class).selectOrderItems(requestNum);
 	}
+
+
+
+
+
+
+
+
+
+
+
 
 
 

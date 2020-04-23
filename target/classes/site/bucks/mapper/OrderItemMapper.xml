@@ -12,25 +12,47 @@
 	</insert> 
 	
 <!-- 지점 발주시 -->
+	
+	<!-- 요청번호에 대한 오더들 반환  -->
+	<select id="selectStoreOrderItems" parameterType="String" resultType="OrderItem">
+		select * from order_item where request_num=#{requestNum} and store_id=#{storeId}
+	</select>
 
-<!-- 지점 발주 조회 -->
-	<select id="selectStoreOrderItemList" resultType="OrderItem">
-		select * from order_item 
+
+<!--  ******************************* 본점관련SQL *********************************************** -->
+
+	<!-- 요청번호들을 전달받아 값을 변경 -->
+	<update id="updateOrderItemState">
+		update order_item set request_state=#{requestState} where request_num in
+		<foreach collection="reqNums" item="requestNum" open="(" close=")" separator=",">
+			#{requestNum}
+		</foreach>
+		<if test="storeId!=null and storeId!=0">
+			AND STORE_ID=#{storeId}
+		</if>
+	</update>
+	
+	<!-- 검색 -->
+	<select id="selectOrderItemList" resultType="OrderItem">
+		select * from order_item
 		<where>
-			<if test="storeId!=null and storeId!=''">
-				store_id=#{storeId}			
-			</if>
 			<if test="requestDate!=null and requestDate!=''">
-				AND REQUEST_DATE BETWEEN #{requestDate} AND #{requestDatePair}
+				to_char(REQUEST_DATE,'yyyy-mm-dd') BETWEEN #{requestDate} AND #{requestDatePair}
+			</if>
+			<if test="requestNum!=null and requestNum!=''">
+				AND request_num like '%'||#{requestNum}||'%'
+			</if>
+			<if test="storeId!=null and storeId!=0">
+				AND STORE_ID=#{storeId}
 			</if>
 			<if test="itemNum!=null and itemNum!=''">
-				AND ITEM_NUM!=null=#{itemNum}
+				AND ITEM_NUM=#{itemNum}
 			</if>
-			<if test="price1!=null and price1!='' and price2!=null and price2!=''">
-				AND ITEM_SPRICE between #{price1} and #{price2}
+			<if test="orderType!=null and orderType!=0">
+				AND order_type=#{orderType}
 			</if>
 			<if test="states!=null">
-				and REQUEST_STATE in
+				AND REQUEST_STATE IN
 				<foreach collection="states" item="state" open="(" close=")" separator=",">
 				 	#{state}
 				</foreach>
@@ -38,58 +60,9 @@
 		</where>
 		order by REQUEST_DATE desc
 	</select>
-<!-- 지점 발주 조회 -->
-
-<!-- 지점 입고 확인시 storeItemHistory 테이블에서 일어나는 일련의 메소드 -->
-	<!-- order_item : 지점에서 입고확인시 주문상태 변화 -->
-	<update id="updateOrderReceiptProcess" parameterType="OrderItem">
-		update order_item set request_state=#{requestState} where request_num=#{requestNum}
-	</update>
-<!-- 지점 입고 확인시 storeItemHistory 테이블에서 일어나는 일련의 메소드 -->
-
-
-
-<!--  ******************************* 본점관련SQL *********************************************** -->
-
-	<!-- 매개변수값은 상태와 도착날짜뿐 -->
-	<update id="updateOrderItem" parameterType="OrderItem">
-		update order_item 
-		<trim prefix="set" suffixOverrides=",">
-			<if test="requestState!=null and requestState!=0">
-				request_state=#{requestState},
-			</if>
-			<if test="deliveryDate!=null and deliveryDate!=''">
-				delivery_date=#{deliveryDate}
-			</if>
-		</trim>
-		where request_num=#{requestNum}
-	</update>
 	
-	<!-- 검색 -->
-	<!--  => 체크박스 foreach List받기처리추가 -->
-	<select id="selectOrderItemList" resultType="OrderItem">
-		select * from order_item
-		<where>
-			<if test="requestDate!=null and requestDate!=''">
-				REQUEST_DATE BETWEEN #{requestDate} AND #{requestDatePair}
-			</if>
-			<if test="requestState!=null and requestState!=0">
-				AND REQUEST_STATE=#{requestState}
-			</if>
-			<if test="orderQty!=null and orderQty!=0">
-				AND ORDER_QTY=#{orderQty}
-			</if>
-			<if test="storeId!=null and storeId!=0">
-				AND STORE_ID=#{storeId}
-			</if>
-			<if test="itemNum!=null and itemNum!=''">
-				AND ITEM_NUM!=null=#{itemNum}
-			</if>
-			<if test="request_num!=null and request_num!=''">
-				AND request_num=#{requestNum}
-			</if>
-		</where>
-		order by REQUEST_DATE desc
+	<select id="selectOrderItemListAll" resultType="OrderItem">
+		select * from order_item order by REQUEST_DATE desc
 	</select>
 	
 	<!-- 요청번호에 대한 오더들 반환  -->

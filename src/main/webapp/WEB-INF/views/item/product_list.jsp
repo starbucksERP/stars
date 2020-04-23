@@ -1,38 +1,36 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 <style type="text/css">
 #insertProductDiv {
-	width: 600px;
-	height: 600px;
-	border: 3px solid darkgray;
-	background-color: white;
-	position: absolute;
-	top: 30%;
-	left: 30%;
-	margin-top: -40px;
-	margin-left: -100px;
-	padding: 5px;
-	z-index: 100;
-	display: none;
+       width  : 1000px;
+       height : 150px;
 }
 </style>
-
 <div class="container">
 	<div class="row">
 		<div class="sidebar">
 			<ul class="side-menu">
 				<li>
-					<button class="dropdown-btn">품목 현황<i class="fa fa-caret-down"></i></button>
+					<button class="dropdown-btn">재고관리<i class="fa fa-caret-down"></i></button>
+					<div class="dropdown-container">
+						<a href="${pageContext.request.contextPath}/item/productList">품목현황</a><br /><br />
+						<a href="${pageContext.request.contextPath}/item/itemList">재고현황</a>
+					</div>
 				</li>
 				<li>
-					<button class="dropdown-btn">재고 현황<i class="fa fa-caret-down"></i></button>
+					<button class="dropdown-btn">판매관리<i class="fa fa-caret-down"></i></button>
+					<div class="dropdown-container">
+						<a href="${pageContext.request.contextPath}/storeItem/sale_list">판매조회</a><br /><br />
+						<a href="${pageContext.request.contextPath}/storeItem/sale_record">판매등록</a>
+					</div>
 				</li>
 			</ul>
 		</div>
 		
-		<!--  품목 신규등록 -->
-		<div id="insertProductDiv">
+<div id="insertProductDiv" class="modal">
 			<div class="main">
 			<h3>품목등록</h3>
 			<hr />
@@ -72,7 +70,10 @@
 					</thead>
 				</table>
 			</div>
-		</div>
+  <!-- <a href="#" rel="modal:close">Close</a> -->
+</div>
+		
+		
 		
 		<div class="main">
 		
@@ -104,7 +105,8 @@
 			</table>
 			
 			<div class="right">
-				<button type="button" class="a-button brown big" id="enrollBtn"><i class="fas fa-plus-circle"></i>&nbsp;품목 등록</button>
+				<p><a href="#insertProductDiv" rel="modal:open"><button type="button" class="a-button brown big" id="productInsertBtn"><i class="fas fa-plus-circle"></i>&nbsp;품목 등록</button> </a></p>
+				<!-- <button type="button" class="a-button brown big" id="productInsertBtn"><i class="fas fa-plus-circle"></i>&nbsp;품목 등록</button> -->
 				<!-- <button type="button" class="a-button purple medium"><i class="fas fa-edit"></i>&nbsp;품목 수정</button>
 				<button type="button" class="a-button red medium"><i class="fas fa-times"></i>&nbsp;품목 삭제</button> -->
 			</div>

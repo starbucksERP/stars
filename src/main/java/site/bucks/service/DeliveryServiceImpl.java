@@ -1,8 +1,6 @@
 package site.bucks.service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,19 +21,14 @@ public class DeliveryServiceImpl implements DeliveryService{
 	}
 
 	@Override
-	public List<Delivery> getDelReqList(Delivery delivery) {
-		return deliveryDAO.selectDelReqList(delivery);
+	public List<Delivery> getSearchDelReqList(Delivery delivery) {
+		return deliveryDAO.searchDelReqList(delivery);
 	}
 	@Override
-	public List<Delivery> getDelReadyList(Delivery delivery) {
-		return deliveryDAO.selectDelReadyList(delivery);
+	public List<Delivery> getSearchDelReadyList(Delivery delivery) {
+		return deliveryDAO.searchDelReadyList(delivery);
 	}
-
-	/*
-	 * @Override public void modifyDelieveryState(int deliverySeq) {
-	 * deliveryDAO.updateDeliveryState(deliverySeq); }
-	 */
-
+	
 	@Override
 	public void modifyDeliveryReq(int deliverySeq) {
 		deliveryDAO.updateDeliveryReq(deliverySeq);
@@ -46,6 +39,16 @@ public class DeliveryServiceImpl implements DeliveryService{
 	public void modifyDeliveryReady(int deliverySeq) {
 		deliveryDAO.updateDeliveryReady(deliverySeq);
 		
+	}
+
+	@Override
+	public List<Delivery> getDisplayDelReqList(Delivery delivery) {
+		return deliveryDAO.displayDelReqList(delivery);
+	}
+
+	@Override
+	public List<Delivery> getDisplayDelReadyList(Delivery delivery) {
+		return deliveryDAO.displayDelReadyList(delivery); 
 	}
 
 	
