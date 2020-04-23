@@ -21,7 +21,7 @@
 <select id="searchDelReqList" parameterType="Delivery" resultType="Delivery">
 	select * from delivery where delivery_state = 40 
 	
-	<if test="requestNum!=null or requestNum!=''"> 
+	<if test="requestNum!=null and requestNum!=''"> 
 		and request_num = #{requestNum}
 	</if>
 	
@@ -51,50 +51,51 @@
 <!-- nowDeliveryState의 값에 배송요청조회는 40 / 배송현황조회는 40이 아닌 경우 적용하여 검색 -->
 	select * from delivery where
 	
-    <if test="deliveryState == 0 and deliveryState == '' ">
+		
+	<if test="deliveryState == 0 and deliveryState == '' ">
 		delivery_state >=50
 	</if>
 	
-	<if test="deliveryState!= 0 and deliveryState != ''">
+	<if test="deliveryState != 0 and deliveryState != null ">
 		delivery_state = #{deliveryState}
-	</if> 
+	</if>
 	
 	<!-- 요청번호 검색 -->
-	<if test="requestNum != 0 and requestNum != null "> 
+	<if test="requestNum !='' and requestNum != null "> 
 		and request_num = #{requestNum}
 	</if>
 	
 	<!-- 매장코드 검색 -->
 	
-	<if test="storeId != 0 and storeId != null">
+	<if test="storeId != 0 and storeId != null ">
 		and store_id = #{storeId}
 	</if>
 	
 	<!-- 배송현황조회 페이지에서 배송시작일 범위검색인 경우-->
-	<if test="deliveryStart != '시작일' and deliveryStartTwo != '종료일'  ">
+	<if test="deliveryStart != '' and deliveryStartTwo != ''  ">
 		and to_char(delivery_start,'yy/mm/dd') between #{deliveryStart} and #{deliveryStartTwo}
 	</if> 
 	
 	<!-- 배송현황조회 페이지에서 배송시작일 단일검색인 경우 -->
-	<if test="deliveryStart != '시작일' and deliveryStartTwo == '종료일' ">
+	<if test="deliveryStart != '' and deliveryStartTwo == '' ">
 	 	and to_char(delivery_start,'yy/mm/dd') = #{deliveryStart}
 	</if>
 	
-	<if test="deliveryStart == '시작일' and deliveryStartTwo != '종료일' ">
+	<if test="deliveryStart == '' and deliveryStartTwo != '' ">
 	 	and to_char(delivery_start,'yy/mm/dd') = #{deliveryStartTwo}
 	</if>
 
-	<if test="deliveryEnd != '시작일' and deliveryEndTwo != '종료일'  ">
+	<if test="deliveryEnd != '' and deliveryEndTwo != ''  ">
 		and to_char(delivery_end,'yy/mm/dd') between #{deliveryEnd} and #{deliveryEndTwo}
 	</if> 
 	
 
-	<if test="deliveryEnd != '시작일' and deliveryEndTwo == '종료일' ">
+	<if test="deliveryEnd != '' and deliveryEndTwo == '' ">
 	 	and to_char(delivery_end,'yy/mm/dd') = #{deliveryEnd}
 	</if>
 	
 
-	<if test="deliveryEnd == '시작일' and deliveryEndTwo != '종료일' ">
+	<if test="deliveryEnd == '' and deliveryEndTwo != '' ">
 	 	and to_char(delivery_end,'yy/mm/dd') = #{deliveryEndTwo}
 	</if>
 	
