@@ -7,8 +7,8 @@
 				<li>
 	               <button class="dropdown-btn">발주관리<i class="fa fa-caret-down"></i></button>
 	               <div class="dropdown-container">
-	                  <a href="${pageContext.request.contextPath}/sic/storeOrderReq">발주요청조회</a><br /><br />
-	                  <a href="${pageContext.request.contextPath}/sic/storeOrderSta">발주현황조회</a><br /><br />
+	                  <a href="${pageContext.request.contextPath}/sic/storeOrderRequestList">발주요청조회</a><br /><br />
+	                  <a href="${pageContext.request.contextPath}/sic/storeOrderStateList">발주현황조회</a><br /><br />
 	                  <a href="${pageContext.request.contextPath}/sic/storeOrderInput">발주입력</a>
 	               </div>
 	            </li>
