@@ -28,7 +28,7 @@ public class OrderItem {
 	private String requestDate;
 	private String deliveryDate;
 	private int orderType;
-	private List<String> states;    // 검색용
+	private List<Integer> states;    // 검색용
 	private String requestDatePair; // 검색용
 	private int price1;             // 검색용
 	private int price2;             // 검색용
@@ -125,11 +125,11 @@ public class OrderItem {
 		this.orderType = orderType;
 	}
 
-	public List<String> getStates() {
+	public List<Integer> getStates() {
 		return states;
 	}
 
-	public void setStates(List<String> states) {
+	public void setStates(List<Integer> states) {
 		this.states = states;
 	}
 

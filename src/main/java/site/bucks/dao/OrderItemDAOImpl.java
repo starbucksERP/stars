@@ -3,6 +3,7 @@ package site.bucks.dao;
 
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +33,8 @@ public class OrderItemDAOImpl implements OrderItemDAO {
 	}
 
 	@Override
-	public int updateOrderItem(OrderItem orderItem) {
-		return sqlSession.getMapper(OrderItemMapper.class).updateOrderItem(orderItem);
+	public int updateOrderItemState(Map<String, Object> numAndStateMap) {
+		return sqlSession.getMapper(OrderItemMapper.class).updateOrderItemState(numAndStateMap);
 	}
 
 	@Override
