@@ -1,6 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="./jquery-ui-1.12.1/datepicker-ko.js"></script>
+
+
 <div class="container">
 		<div class="row">
 			<div class="sidebar">
@@ -21,27 +28,27 @@
 				<div class="right"><button type="button" class="a-button big" onclick="delReadySearch()">상세 검색</button><button type="button" class="a-button big" onclick="delReadySearchReset()">검색 초기화</button></div>
 				<hr />
 				<div class="information">
-				<form id="delReadySearchForm" method="post">
+				<form action="deliveryList" id="delReadySearchForm" method="post">
 					<table class="table">
 						<thead>
 							<tr>
 								<th>요청번호</th>
-								<td colspan="1"><input type="search" name="requestNum" id="requestNumInput" value="" />&nbsp;<a href="${pageContext.request.contextPath }/delivery/choice_store_code.jsp" onClick="window.open(this.href, '', 'width=400, height=430'); return false;" class="a-button white" style="font-size: 15px;"><i class="fas fa-file-alt"></i></a></td>
+								<td colspan="1"><input type="search" name="requestNum" id="requestNumInput" value="0"/>&nbsp;<a href="${pageContext.request.contextPath }/delivery/choice_store_code.jsp" onClick="window.open(this.href, '', 'width=400, height=430'); return false;" class="a-button white" style="font-size: 15px;"><i class="fas fa-file-alt"></i></a></td>
 								<th>매장코드</th>
-								<td colspan="1"><input type="search" name="storeId" id="storeIdInput"/>&nbsp;<a href="" class="a-button white" style="font-size: 15px;"><i class="fas fa-file-alt"></i></a></td>
+								<td colspan="1"><input type="search" name="storeId" id="storeIdInput" value="0" />&nbsp;<a href="" class="a-button white" style="font-size: 15px;"><i class="fas fa-file-alt"></i></a></td>
 							</tr>
 							<tr>
 								<th>배송 시작일</th>
 								<td colspan="1">
-									<label class="gLabel"><input type="date" name="deliveryStart" id="delStartInput1"/>&nbsp;<i class="far fa-calendar-alt"></i>&nbsp;&nbsp;~&nbsp;&nbsp;</label>
-									<label class="gLabel"><input type="date" name="deliveryStartTwo"  id="delStartInput2" />&nbsp;<i class="far fa-calendar-alt"></i></label>
+									<label class="gLabel"><input type="search" name="deliveryStart" id="delStartInput1" value="시작일"/>&nbsp;<i class="far fa-calendar-alt"></i>&nbsp;&nbsp;~&nbsp;&nbsp;</label>
+									<label class="gLabel"><input type="search" name="deliveryStartTwo"  id="delStartInput2" value="종료일" />&nbsp;<i class="far fa-calendar-alt"></i></label>
 								</td>
-								
 								<th>배송 완료일</th>
 								<td colspan="1">
-									<label class="gLabel"><input type="date" name="deliveryEnd" id="delEndInput1" />&nbsp;<i class="far fa-calendar-alt"></i>&nbsp;&nbsp;~&nbsp;&nbsp;</label>
-									<label class="gLabel"><input type="date" name="deliveryEndTwo" id="delEndInput2" />&nbsp;<i class="far fa-calendar-alt"></i></label>
-								</td>
+									<label class="gLabel"><input type="search" name="deliveryEnd" id="delEndInput1" value="시작일" />&nbsp;<i class="far fa-calendar-alt"></i>&nbsp;&nbsp;~&nbsp;&nbsp;</label>
+									<label class="gLabel"><input type="search" name="deliveryEndTwo" id="delEndInput2" value="종료일" />&nbsp;<i class="far fa-calendar-alt"></i></label>
+								</td> 
+							<!--
 							</tr>
 							<tr>
 								<th>배송처리 현황</th>
@@ -53,6 +60,7 @@
 										<option value="70">3. 배송완료</option>
 									</select>
 								</td>
+							-->
 							</tr>
 						</thead>
 					</table>
@@ -106,9 +114,11 @@
 										<c:when test="${delReadyList.deliveryState == 70}">
 										<td style="color:green">배송 완료</td>										
 										</c:when>
-										</c:choose>
-										<td>${delReadyList.deliveryStart }</td>
-										<td>${delReadyList.deliveryEnd }</td>
+										</c:choose >
+										<c:set var="startDate" value="${delReadyList.deliveryStart}"/>
+										<c:set var="endDate" value="${delReadyList.deliveryEnd}"/>
+										<td>${fn:substring(startDate,0,10) }</td>
+										<td>${fn:substring(endDate,0,10) }</td>
 									</tr>	
 									</c:forEach>
 								</c:otherwise>
@@ -123,16 +133,27 @@
 
 <script type="text/javascript">
 
+$(function(){
+
+    $("#delStartInput1").datepicker();
+    $("#delStartInput2").datepicker();
+    $("#delEndInput1").datepicker();
+    $("#delEndInput2").datepicker();
+    
+	$.datepicker.setDefaults({
+	    dateFormat: 'y/mm/dd' 
+	});
+
+
+});
+
+
 function delReadySearch() {
-	var inputValue;
-	if($("#requestNumInput").val()!=''){
-		inputValue = $("#requestNumInput").val();
-		$("#requestNumInput").value(inputValue);
-		alert($("#requestNumInput").val());
-	}
-	
+
 	$("#delReadySearchForm").submit(); 
 	
+		
+		//$("#delReadySearchForm").submit(); 
 	/*
 	if($("#requestNumInput").val()=='' && $("#storeIdInput").val()=='' && $("#delStartInput1").val=='' && $("#delStartInput2").val()==''
 	&& $("#delEndInput1").val()=='' && $("#delEndInput2").val()=='' && $("#delReadyCategory").val()=='') {
@@ -145,9 +166,62 @@ function delReadySearch() {
 	} 
 	*/
 	
-
 };
 
+function delReadySearchReset() {
+	location.href="/star/deliveryList";
+}
+
+
+
+// 배송시작승인 처리하기 위한 함수 
+$("#deliveryStartBtn").click(function() {
+		
+		
+		if($(".rowChk:checked").length==0) {
+			alert("배송승인: 배송정보를 선택해 주세요.");
+		} else {
+			
+			var delivery =[];
+			var rowChk = $(".rowChk:checked");
+			
+			rowChk.each(function(i) {
+				var tr = rowChk.parent().parent().eq(i);
+				var td = tr.children();
+				
+				var deliverySeq = td.eq(1).text();
+				var deliveryState = td.eq(4).text();
+				if(deliveryState == 60) {			
+				alert(deliverySeq+"번의 배송은 이미 배송중 입니다.");
+				} else{
+				delivery.push(deliverySeq);					
+				}
+			});
+			
+			if(delivery.length!=0) {
+				var param={"list":delivery};
+			 	 $.ajax({
+					type: "POST",
+					url: "deliveryStart",
+					data: param,
+					dateType: "text",
+					success: function(text) {
+							alert(delivery + "번 배송 = 출하승인 완료");
+							location.href="/star/deliveryList";
+					},
+					error:function(request,status,error){
+			            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); 
+			          }
+				});  
+			} else {
+				alert("처리할 배송정보가 없습니다.");
+				return;
+			}
+			
+		
+		}
+	});
+			
 
 <%--
 // 배송요청을 확인처리하기 위한 함수 //테스팅 확인용 
@@ -231,60 +305,7 @@ function delReadySearch() {
 	}); 
 };
 --%>
-function delReadySearchReset() {
-	location.href="/star/deliveryList";
-}
 
-
-
-// 배송시작승인 처리하기 위한 함수 
-$("#deliveryStartBtn").click(function() {
-		
-		
-		if($(".rowChk:checked").length==0) {
-			alert("배송승인: 배송정보를 선택해 주세요.");
-		} else {
-			
-			var delivery =[];
-			var rowChk = $(".rowChk:checked");
-			
-			rowChk.each(function(i) {
-				var tr = rowChk.parent().parent().eq(i);
-				var td = tr.children();
-				
-				var deliverySeq = td.eq(1).text();
-				var deliveryState = td.eq(4).text();
-				if(deliveryState == 60) {			
-				alert(deliverySeq+"번의 배송은 이미 배송중 입니다.");
-				} else{
-				delivery.push(deliverySeq);					
-				}
-			});
-			
-			if(delivery.length!=0) {
-				var param={"list":delivery};
-			 	 $.ajax({
-					type: "POST",
-					url: "deliveryStart",
-					data: param,
-					dateType: "text",
-					success: function(text) {
-							alert(delivery + "번 배송 = 출하승인 완료");
-							location.href="/star/deliveryList";
-					},
-					error:function(request,status,error){
-			            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); 
-			          }
-				});  
-			} else {
-				alert("처리할 배송정보가 없습니다.");
-				return;
-			}
-			
-		
-		}
-	});
-			
 			
 
 </script>

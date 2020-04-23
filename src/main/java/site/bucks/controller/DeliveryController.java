@@ -22,12 +22,18 @@ public class DeliveryController {
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>> 배송요청확인 페이지에서 사용할 메소드 시작 
 	
-	// 1. 배송요청확인 페이지의 기본테이블 출력 및 단일검색 출력용 (JSTL)
+	// 1. 배송요청확인 페이지의 기본테이블 출력용
+	@RequestMapping(value = "/deliveryReq", method = RequestMethod.GET)
+	public String getDisplayDelReqList(@ModelAttribute Delivery delivery, Model model) {
+		model.addAttribute("delReqList", deliveryService.getDisplayDelReqList(delivery));
+		return "delivery/delivery_req_list";
+	}
 	
-	@RequestMapping(value = "/deliveryReq")
-	public String getdelReqList(@ModelAttribute Delivery delivery, Model model) {
+	// 2. 배송요청확인 페이지의 검색용
+	@RequestMapping(value = "/deliveryReq", method = RequestMethod.POST)
+	public String getSearchDelReqList(@ModelAttribute Delivery delivery, Model model) {
 		delivery.setNowDeliveryState(40);
-		model.addAttribute("delReqList", deliveryService.getDelReqList(delivery));
+		model.addAttribute("delReqList", deliveryService.getSearchDelReqList(delivery));
 		return "delivery/delivery_req_list";
 	}
 	
@@ -82,18 +88,22 @@ public class DeliveryController {
 	  // >>>>>>>>>>>>>>>>>>>>>>>>> 배송현황조회 페이지에서 사용할 메소드 시작 
 	  
 	  
-	  // 1. 배송요청확인 페이지의 기본테이블 출력 및 단일검색 출력용 (JSTL)
-		
-		@RequestMapping(value = "/deliveryList")
-		public String getDeliveryReady(@ModelAttribute Delivery delivery, Model model) {
-			System.out.println("getDeliveryReady");
-			delivery.setNowDeliveryState(50);
-			model.addAttribute("delReadyList", deliveryService.getDelReadyList(delivery));
+
+	    // 1. 배송현황조회 페이지의 기본테이블 출력용 
+		@RequestMapping(value = "/deliveryList", method = RequestMethod.GET)
+		public String getDisplayDelReadyList(@ModelAttribute Delivery delivery, Model model) {
+			model.addAttribute("delReadyList", deliveryService.getDisplayDelReadyList(delivery));
+			return "delivery/delivery_list";
+		}
+	
+		// 2. 배송현황조회 페이지의 검색용 	
+		@RequestMapping(value = "/deliveryList", method = RequestMethod.POST)
+		public String getSearchDelReadyList(@ModelAttribute Delivery delivery, Model model) {
+			model.addAttribute("delReadyList", deliveryService.getSearchDelReadyList(delivery));
 			return "delivery/delivery_list";
 		}
 		
-	  
-	
+		
 	  
 	  // 2. 배송현황조회 페이지에서 배송시작 버튼을 눌렀을때 사용되는 update 메소드 
 	  @RequestMapping(value = "/deliveryStart", method = RequestMethod.POST)
