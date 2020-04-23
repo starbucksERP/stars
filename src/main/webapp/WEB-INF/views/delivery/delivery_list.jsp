@@ -13,10 +13,10 @@
 			<div class="sidebar">
 				<ul class="side-menu">
 					<li>
-						<button class="dropdown-btn" style="background-color: #2C2A29;" onclick="location.href='${pageContext.request.contextPath }/deliveryReq'">배송요청조회</button>
+						<button class="dropdown-btn" style="background-color: #2C2A29;" onclick="location.href='${pageContext.request.contextPath }/delivery/deliveryReq'">배송요청조회</button>
 					</li>
 					<li>
-						<button class="dropdown-btn" style="background-color: #669900;" onclick="location.href='${pageContext.request.contextPath }/deliveryList'" >배송조회</button>
+						<button class="dropdown-btn" style="background-color: #669900;" onclick="location.href='${pageContext.request.contextPath }/delivery/deliveryList'" >배송조회</button>
 					</li>
 					
 				</ul>
@@ -25,7 +25,7 @@
 			<div class="main">
 			
 				<h3>배송조회</h3>
-				<div class="right"><button type="button" class="a-button big" onclick="delReadySearch()">상세 검색</button><button type="button" class="a-button big" onclick="delReadySearchReset()">검색 초기화</button></div>
+				<div class="right"><button type="button" class="a-button big" onclick="delReadySearch()">상세 검색</button><button type="button" class="a-button big" onclick="location.href='${pageContext.request.contextPath }/delivery/deliveryList'">검색 초기화</button></div>
 				<hr />
 				<div class="information">
 				<form action="deliveryList" id="delReadySearchForm" method="post">
@@ -168,10 +168,6 @@ function delReadySearch() {
 	
 };
 
-function delReadySearchReset() {
-	location.href="/star/deliveryList";
-}
-
 
 
 // 배송시작승인 처리하기 위한 함수 
@@ -207,7 +203,7 @@ $("#deliveryStartBtn").click(function() {
 					dateType: "text",
 					success: function(text) {
 							alert(delivery + "번 배송 = 출하승인 완료");
-							location.href="/star/deliveryList";
+							location.href="${pageContext.request.contextPath }/delivery/deliveryList"; 
 					},
 					error:function(request,status,error){
 			            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); 
