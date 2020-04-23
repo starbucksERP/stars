@@ -1,14 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+
 <style type="text/css">
 #insertProductDiv {
-       width  : 1000px;
-       height : 150px;
+	width: 600px;
+	height: 600px;
+	border: 3px solid darkgray;
+	background-color: white;
+	position: absolute;
+	top: 30%;
+	left: 30%;
+	margin-top: -40px;
+	margin-left: -100px;
+	padding: 5px;
+	z-index: 100;
+	display: none;
 }
 </style>
+
 <div class="container">
 	<div class="row">
 		<div class="sidebar">
@@ -22,7 +31,8 @@
 			</ul>
 		</div>
 		
-<div id="insertProductDiv" class="modal">
+		<!--  품목 신규등록 -->
+		<div id="insertProductDiv">
 			<div class="main">
 			<h3>품목등록</h3>
 			<hr />
@@ -62,10 +72,7 @@
 					</thead>
 				</table>
 			</div>
-  <!-- <a href="#" rel="modal:close">Close</a> -->
-</div>
-		
-		
+		</div>
 		
 		<div class="main">
 		
@@ -97,8 +104,7 @@
 			</table>
 			
 			<div class="right">
-				<p><a href="#insertProductDiv" rel="modal:open"><button type="button" class="a-button brown big" id="productInsertBtn"><i class="fas fa-plus-circle"></i>&nbsp;품목 등록</button> </a></p>
-				<!-- <button type="button" class="a-button brown big" id="productInsertBtn"><i class="fas fa-plus-circle"></i>&nbsp;품목 등록</button> -->
+				<button type="button" class="a-button brown big" id="enrollBtn"><i class="fas fa-plus-circle"></i>&nbsp;품목 등록</button>
 				<!-- <button type="button" class="a-button purple medium"><i class="fas fa-edit"></i>&nbsp;품목 수정</button>
 				<button type="button" class="a-button red medium"><i class="fas fa-times"></i>&nbsp;품목 삭제</button> -->
 			</div>

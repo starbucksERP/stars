@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style type="text/css">
-#messageBox {
+#popupBox {
 	width: 400px;
 	height: 160px;
 	border: 3px solid #4C4C4C;
@@ -11,7 +11,7 @@
 	top: 50%;
 	left: 50%;
 	margin-top: -40px;
-	margin-left: -120px;
+	/* margin-left: -120px; */
 	padding: 5px;
 	z-index: 100;
 	display: none;
@@ -24,6 +24,17 @@
 	z-index: 101;
 	color: #4C4C4C;
 	font-size: 15px;
+}
+#popup_mask { 
+	position: fixed;
+	width: 100%;
+	height: 1000px;
+	top: 0px;
+	left: 0px;
+	display: none; 
+	background-color:#000;
+	z-index: 99;
+	opacity: 0.5;
 }
 </style>
 
@@ -94,11 +105,12 @@
 					</thead>
 				</table>
 			</div>
+			<div id="popup_mask"></div>
+				<div id="popupBox">
+					<div class="innerMessage"></div>
+					<div><button type='button' class='a-button green inner-button' onclick="closeBox()">확인</button></div>
+				</div>
 			
-			<div id="messageBox">
-				<div class="innerMessage"></div>
-				<div><button type='button' class='a-button green inner-button' onclick="closeBox()">확인</button></div>
-			</div>
 			<!-- 
 			<div>품목검색</div>
 			<div>매장검색</div>
@@ -198,6 +210,7 @@
 				
 				if(json.length==0) {
 					var html="<tr><td colspan='9'>검색된 발주요청정보가 존재하지않습니다.</td><tr>";
+					$("#resultOrder").html(html);
 					return;
 				}
 				
@@ -249,8 +262,9 @@
 			reqNums.push(reqNum);
 		} else {
 			if($('.rowChk:checked').length==0) {
-				$(".innerMessage").html("선택된 발주가 존재하지않습니다.<br>발주요청을 처리할 발주를 선택해주세요.<br><br>");
-				$("#messageBox").show(300);  
+				openModal("선택된 발주가 존재하지않습니다.<br>발주요청을 처리할 발주를 선택해주세요.<br><br>");
+				//$(".innerMessage").html("선택된 발주가 존재하지않습니다.<br>발주요청을 처리할 발주를 선택해주세요.<br><br>");
+				$("#popupBox").show(300);  
 				return;
 			} else {
 				$(".message").empty();
@@ -258,7 +272,6 @@
 					alert($(this).val());
 					reqNums.push($(this).val());
 				});
-				//$(".message").text("선택된 발주가 완료되었습니다."); // 이거 디브로할거얌
 			}
 		}
 		
@@ -272,8 +285,9 @@
 			success: function(text) {
 				if(text=="success") {
 					$(".rowChk").prop("checked", false); // 체크박스초기화
-					$(".innerMessage").html("선택된 발주가 완료되었습니다.<br><br><br>");
-					$("#messageBox").show(300);  
+					//$(".innerMessage").html("선택된 발주가 완료되었습니다.<br><br><br>");
+					//$("#popupBox").show(300); 
+					openModal("선택된 발주가 완료되었습니다.<br><br><br>");
 					orderReqList(1);
 				}
 			},
@@ -285,9 +299,30 @@
 		 
 	}
 	
+
+	function openModal(message) {
+		var message=message;
+		$("#popupBox").css({
+			"top": (($(window).height()-$("#popupBox").outerHeight())/2+$(window).scrollTop())+"px",
+			"left": (($(window).width()-$("#popupBox").outerWidth())/2+$(window).scrollLeft())+"px"
+		});
+		
+		//$("#popup_mask").css("display","block"); //팝업 뒷배경 display block
+       // $("#popupBox").css("display","block"); //팝업창 display block
+        $(".innerMessage").html(message);
+		$("#popup_mask").show();
+		$("#popupBox").show(300);  
+		$("body").css("overflow","hidden");//body 스크롤바 없애기
+		
+	}
+	
 	function closeBox() {
 		$(".innerMessage").val("");    
-		$("#messageBox").hide(300); 
+		$("#popupBox").hide();
+		$("#popup_mask").hide(300); 
+		//$("#popup_mask").css("display","none"); //팝업창 뒷배경 display none
+        //$("#popupDiv").css("display","none"); //팝업창 display none
+        $("body").css("overflow","auto");//body 스크롤바 생성
 	}
 	
 </script>
