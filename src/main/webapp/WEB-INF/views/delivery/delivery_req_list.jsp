@@ -78,7 +78,7 @@
 		
 		</div>
 
-	</div>
+	</div> 
 </div>
 
 <script id="delReqListEmpty" type="text/x-handlebars-template">
