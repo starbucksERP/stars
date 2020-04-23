@@ -6,7 +6,7 @@
 	<result column="item_name" property="itemName"/>
 	<result column="item_num" property="itemNum"/>
 </resultMap>
-
+ 
 <resultMap type="Purchase" id="Purchase">
 	<result column="purchase_seq" property="purchaseSeq"/>
 	<result column="request_num" property="requestNum"/>
@@ -32,14 +32,12 @@
 		insert into purchase values(#{purchaseSeq}, #{requestNum}, 30, sysdate, #{itemNum}, #{itemQty}, #{itemPprice}, (select item_Vendor from item where item_num=#{itemNum}), #{purchaseType})
 </insert>
 
+<!-- 여기에 where절 추가해서 오늘 포함 데이터만 출력하게 해야되는데 왜 자꾸 오류나지?  -->
 <select id="displayPurchaseList" parameterType="String" resultMap="Purchase">
 	select p.purchase_seq, p.request_num, p.purchase_state, p.purchase_date,
 	p.item_num, i.item_name, p.item_qty, p.item_pprice,
 	p.item_vendor, p.purchase_type
-	from purchase p
-	left join item i on p.item_num = i.item_num 
-	order by purchase_seq desc
-	
+	from purchase p left join item i on p.item_num = i.item_num order by purchase_seq desc
 </select>
  
 <select id="selectPurchaseList" parameterType="Purchase" resultType="Purchase">
