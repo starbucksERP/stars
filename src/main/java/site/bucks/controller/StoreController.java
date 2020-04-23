@@ -22,14 +22,15 @@ import site.bucks.service.HewonService;
 import site.bucks.service.StoreService;
 
 @Controller
+@RequestMapping("/store")
 public class StoreController {
 	@Autowired
 	StoreService storeService;
 	@Autowired
 	HewonService hewonService;
 	
-//	¡Ú¡Ú¡Ú AJAX ¡Ú¡Ú¡Ú 
-//	ÁöÁ¡µî·Ï 
+//	ï¿½Ú¡Ú¡ï¿½ AJAX ï¿½Ú¡Ú¡ï¿½ 
+//	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 	@RequestMapping(value = "/storeEnroll")
 	public String storeEnroll() {
 		return "store/store_enroll";
@@ -42,11 +43,10 @@ public class StoreController {
 		store.setStoreAddress(HtmlUtils.htmlEscape(store.getStoreAddress()));
 		store.setStoreOwner(HtmlUtils.htmlEscape(store.getStoreOwner()));
 		storeService.addStore(store);
-		System.out.println("storeId="+store.getStoreState());
 		 return"success"; 
 	}
 
-//	ÁöÁ¡ ¾ÆÀÌµð¸¦ URL ÁÖ¼Ò·Î Àü´Þ¹Þ¾Æ STORE Å×ÀÌºí¿¡ ÀúÀåµÈ ÇØ´ç ÁöÁ¡À» °Ë»öÇÏ¿© JSON ÇüÅÂ·Î ÀÀ´äÇÏ´Â ¿äÃ»Ã³¸® ¸Þ¼Òµå
+//	ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ URL ï¿½Ö¼Ò·ï¿½ ï¿½ï¿½ï¿½Þ¹Þ¾ï¿½ STORE ï¿½ï¿½ï¿½Ìºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½ï¿½Ï¿ï¿½ JSON ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½Ã»Ã³ï¿½ï¿½ ï¿½Þ¼Òµï¿½
 	@RequestMapping(value = "/storeIdView/{storeId}", method = RequestMethod.GET)
 	@ResponseBody
 	public Store storeIdView(@PathVariable int storeId) {
@@ -54,11 +54,11 @@ public class StoreController {
 	}
 		
 	
-//	ÁöÁ¡¼öÁ¤
+//	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping(value = "/storeModify/{storeId}", method = {RequestMethod.PUT,RequestMethod.PATCH})
 	@ResponseBody
 	public String storeModify(@RequestBody Store store, @PathVariable int storeId) {
-//		¡Ú °ü¸®ÀÚ°¡ ¾Æ´Ï¶ó¸é ¼öÁ¤ºÒ°¡ ÄÚµåÀÛ¼ºÇØ¾ßÇÔ ¡Ú
+//		ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ú°ï¿½ ï¿½Æ´Ï¶ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ò°ï¿½ ï¿½Úµï¿½ï¿½Û¼ï¿½ï¿½Ø¾ï¿½ï¿½ï¿½ ï¿½ï¿½
 		store.setStoreId(storeId);
 		storeService.modifyStore(store);
 		return "success";
@@ -66,7 +66,7 @@ public class StoreController {
 	
 	  
 	 
-//	ÁöÁ¡ ÇöÈ²
+//	ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È²
 	@RequestMapping(value = "/storeSta")
 	public String storeSta(@ModelAttribute Store store, Model model) {
 		model.addAttribute("storeList", storeService.getStoreList(store));
@@ -91,14 +91,14 @@ public class StoreController {
 	
 // *************************************** AJAX *************************************************
 
-//	¡Ú¡Ú¡Ú ÁöÁ¡ Á¤º¸ ¡Ú¡Ú¡Ú 
+//	ï¿½Ú¡Ú¡ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¡Ú¡ï¿½ 
 	@RequestMapping("/storeStaff") 
 	public String storeStaff() {
 		return "store/store_staff";
 	}
 	
 	
-//	°Ô½Ã±Û ¸ñ·ÏÀ» AJAX·Î ¿äÃ»
+//	ï¿½Ô½Ã±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ AJAXï¿½ï¿½ ï¿½ï¿½Ã»
 	@RequestMapping(value = "/storeStaffList", method = RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Object> storeStaffList(@ModelAttribute Store store) {
@@ -109,7 +109,7 @@ public class StoreController {
 	}
 	
 	
-//	@PathVariable ¾î³ëÅ×ÀÌ¼ÇÀ» »ç¿ëÇÏ¿© URL ÁÖ¼Ò·Î Àü´ÞµÈ °ªÀ» ¸Å°³º¯¼ö¿¡ ÀúÀå °¡´É
+//	@PathVariable ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ URL ï¿½Ö¼Ò·ï¿½ ï¿½ï¿½ï¿½Þµï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Å°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping(value = "/storeStaffList/{storeName}", method = RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Object> storeStaffSearchList(@ModelAttribute Store store, @PathVariable String storeName) {
@@ -121,8 +121,8 @@ public class StoreController {
 		return returnMap;
 	}
 	
-//	¡Ú¡Ú¡Ú Á¡ÁÖ Á¤º¸ ¡Ú¡Ú¡Ú
-//	ÁöÁ¡ÄÚµå¸¦ Àü´Þ¹Þ¾Æ Á¡ÁÖÁ¤º¸¸¦ °¡Á®¿À´Â ¸Þ¼Òµå 	
+//	ï¿½Ú¡Ú¡ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¡Ú¡ï¿½
+//	ï¿½ï¿½ï¿½ï¿½ï¿½Úµå¸¦ ï¿½ï¿½ï¿½Þ¹Þ¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼Òµï¿½ 	
 	@RequestMapping(value = "/storeOwner/{storeId}",method = RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Object> storeOwner(@ModelAttribute Hewon hewon ,@PathVariable int storeId) {

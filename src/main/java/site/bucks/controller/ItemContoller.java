@@ -14,6 +14,7 @@ import site.bucks.dto.Item;
 import site.bucks.service.ItemService;
 
 @Controller
+@RequestMapping("/item")
 public class ItemContoller {
 
 	@Autowired

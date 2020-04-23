@@ -7,10 +7,10 @@
 		<div class="sidebar">
 			<ul class="side-menu">
 				<li>
-					<button class="dropdown-btn" style="background-color: #669900;" onclick="location.href='${pageContext.request.contextPath }/deliveryReq'">배송요청조회</button>
+					<button class="dropdown-btn" style="background-color: #669900;" onclick="location.href='${pageContext.request.contextPath }/delivery/deliveryReq'">배송요청조회</button>
 				</li>
 				<li>
-					<button class="dropdown-btn" style="background-color: #2C2A29;" onclick="location.href='${pageContext.request.contextPath }/deliveryList'">배송조회</button>
+					<button class="dropdown-btn" style="background-color: #2C2A29;" onclick="location.href='${pageContext.request.contextPath }/delivery/deliveryList'">배송조회</button>
 				</li>
 				
 			</ul>
@@ -31,7 +31,7 @@
 				</select>&nbsp;				
 				<input type="search" name="delReqSearchInput" id="delReqSearchInput"/>&nbsp;
 				<button type="button" class="a-button" style="padding: 3px 20px"  onclick="deliveryReqSearch()">검색</button>
-				<button type="button" class="a-button" style="padding: 3px 20px" onclick="delReqSearchReset()">검색 초기화</button>
+				<button type="button" class="a-button" style="padding: 3px 20px" onclick="location.href='${pageContext.request.contextPath }/delivery/deliveryReq'">검색 초기화</button>
 				</form>
 			</div>
 			
@@ -102,7 +102,6 @@ function deliveryReqSearch(){
 		}
 		delivery.push($(".delReqCategory").val());
 	    $("#delReqSearchInput").attr("name","requestNum");
-		$("input[type='hidden']").val(delivery);
 		
 	}else if($(".delReqCategory").val()=='storeId') {
 		if($("#delReqSearchInput").val()=='') {
@@ -111,7 +110,6 @@ function deliveryReqSearch(){
 		}
 		delivery.push($(".delReqCategory").val());
 		$("#delReqSearchInput").attr("name","storeId");
-		$("input[type='hidden']").val(delivery);
 		
 	} else {	
 		alert("검색 항목을 선택해 주세요.");
@@ -122,10 +120,6 @@ function deliveryReqSearch(){
 	
 	
 };
-
-function delReqSearchReset() {
-	location.href="/star/deliveryReq"
-}
 
 
 //배송요청을 확인처리하기 위한 함수 
@@ -156,7 +150,7 @@ function requestConfirmation() {
 				dateType: "text",
 				success: function(text) {
 				alert(delivery +"번 배송 = 배송요청 승인")
-						location.href="/star/deliveryReq"
+						location.href="${pageContext.request.contextPath }/delivery/deliveryReq"
 					
 				},
 				error:function(request,status,error){

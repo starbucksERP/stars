@@ -5,19 +5,20 @@
 		<div class="sidebar">
 			<ul class="side-menu">
 				<li>
-					<button class="dropdown-btn">발주<i class="fa fa-caret-down"></i></button>
-					<div class="dropdown-container">
-						<a href="">발주계획조회</a><br /><br />
-						<a href="">발주현황조회</a><br /><br />
-						<a href="">발주입력</a>
-					</div>
-				</li>
-				<li>
-					<button class="dropdown-btn">입출하기록<i class="fa fa-caret-down"></i></button>
-					<div class="dropdown-container">
-						<a href="">입출하조회</a>
-					</div>
-				</li>
+	               <button class="dropdown-btn">발주관리<i class="fa fa-caret-down"></i></button>
+	               <div class="dropdown-container">
+	                  <a href="${pageContext.request.contextPath}/sic/storeOrderRequestList">발주요청조회</a><br /><br />
+	                  <a href="${pageContext.request.contextPath}/sic/storeOrderStateList">발주현황조회</a><br /><br />
+	                  <a href="${pageContext.request.contextPath}/sic/storeOrderInput">발주입력</a>
+	               </div>
+	            </li>
+	            <li>
+	               <button class="dropdown-btn">입출하기록<i class="fa fa-caret-down"></i></button>
+	               <div class="dropdown-container">
+	                  <a href="${pageContext.request.contextPath}/sic/storeReceipt">입출하조회</a>
+	                  <a href="${pageContext.request.contextPath}/delivery/deliveryList">배송조회</a>
+	               </div>
+          	  </li>
 				
 			</ul>
 		</div>
@@ -34,7 +35,7 @@
 							<th>발주요청일</th>
 							<td style="width: 38%"><label class="gLabel"><input type="date" readonly="readonly"/>&nbsp;<i class="far fa-calendar-alt"></i></label>
 							<th>발주요청매장</th>
-							<td><input type="text"  value="1021" readonly="readonly" id="storeId"/></td>
+							<td><input type="search" value="1021" readonly="readonly" id="storeId"/></td>
 						</tr>
 						<tr>
 							<th>분류</th>
@@ -131,9 +132,9 @@
 			"<td><input type='text' readonly='readonly'style='border:none; text-align:center;' class='storeId' value='"+$('#storeId').val()+"'/></td>"+
 			"<td><input type='text' readonly='readonly'style='border:none; text-align:center;' class='itemNum' value='"+$('#itemNum').val()+"'/></td>"+
 			"<td><input type='text' readonly='readonly'style='border:none; text-align:center;' class='itemNames' value='"+$('#itemName').val()+"'/></td>"+
-			"<td><input type='text' readonly='readonly'style='border:none; text-align:center; width:50px;' class='orderQty' value='"+$('#orderQty').val()+"'/> 개</td>"+
-			"<td>￦<input type='text' readonly='readonly'style='border:none; text-align:center; width:70px;' class='itemSprice' value='"+$('#itemSprice').val()+"'/></td>"+
-			"<td>￦<input type='text' readonly='readonly'style='border:none; text-align:center; width:90px;' value='"+($('#orderQty').val()*$('#itemSprice').val())+"'/></td>"+
+			"<td><input type='text' readonly='readonly'style='border:none; text-align:center; width:auto;' class='orderQty' value='"+$('#orderQty').val()+"'/> 개</td>"+
+			"<td>￦<input type='text' readonly='readonly'style='border:none; text-align:center; width:auto;' class='itemSprice' value='"+$('#itemSprice').val()+"'/></td>"+
+			"<td>￦<input type='text' readonly='readonly'style='border:none; text-align:center; width:auto;' value='"+($('#orderQty').val()*$('#itemSprice').val())+"'/></td>"+
 		"</tr>";
 		
 		$(".table>tbody").append(html);
@@ -172,9 +173,9 @@
 				data: JSON.stringify(param),
 				dateType: "text",
 				success: function(text) {
-					if(text=="success") {
-						alert("발주가 성공적으로 이루어졌습니다.")
-						location.href="${pageContext.request.contextPath }/storeOrderSta";
+					if(text=="success"){
+						location.href="${pageContext.request.contextPath }/sic/storeOrderSta"
+						alert("발주가 성공적으로 신청되었습니다.");
 					}
 				},
 				error: function(xhr) {

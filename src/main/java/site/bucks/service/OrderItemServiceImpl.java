@@ -1,6 +1,7 @@
 package site.bucks.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,37 +20,27 @@ public class OrderItemServiceImpl implements OrderItemService {
 	private ItemDAO itemDAO;
 	@Autowired
 	private PurchaseDAO purchaseDAO;
+	
+	@Override
+	public List<OrderItem> getStoreOrderItems(String requestNum, String storeId) {
+		return oderItemDAO.selectStoreOrderItems(requestNum, storeId);
+	}
+	
+//	================================================================
+
 
 	@Override
-	public void insertStoreOrder(OrderItem orderItem) {
-		// TODO Auto-generated method stub
-		
+	public void modifyOrderItemState(Map<String, Object> numAndStateMap) {
+		oderItemDAO.updateOrderItemState(numAndStateMap);
 	}
 
 	@Override
-	public List<OrderItem> selectStoreOrderItemList(OrderItem orderItem) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<OrderItem> getOrderItemList(OrderItem orderItem) {
+		return oderItemDAO.selectOrderItemList(orderItem);
 	}
 
 	@Override
-	public void updateOrderReceiptProcess(OrderItem orderItem) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void updateOrderItem(OrderItem orderItem) {
-		oderItemDAO.updateOrderItem(orderItem);
-	}
-
-	@Override
-	public List<OrderItem> selectOrderItemList(OrderItem orerItem) {
-		return oderItemDAO.selectOrderItemList(orerItem);
-	}
-
-	@Override
-	public List<OrderItem> selectOrderItems(String requestNum) {
+	public List<OrderItem> getOrderItems(String requestNum) {
 		return oderItemDAO.selectOrderItems(requestNum);
 	}
 
@@ -58,7 +49,7 @@ public class OrderItemServiceImpl implements OrderItemService {
 	public void checkQty(String requestNum) {
 		List<OrderItem> oderItems=oderItemDAO.selectOrderItems(requestNum);
 		boolean possible=true;
-		String Pnum="P"+System.currentTimeMillis();
+		String Pnum="P"+System.currentTimeMillis(); // 구매요청번호 재작성
 		for (OrderItem order:oderItems) {
 			int currentQty=itemDAO.selectItemQty(order.getItemNum());
 			if(order.getOrderQty()>=currentQty) {
@@ -77,13 +68,17 @@ public class OrderItemServiceImpl implements OrderItemService {
 		if(possible==true) {
 			order.setRequestState(40); // 배송요청
 			order.setRequestNum(requestNum);
-			updateOrderItem(order);
+			//modifyOrderItem(order);
 		} else {
 			order.setRequestState(30); // 구매요청
 			order.setRequestNum(requestNum);
-			updateOrderItem(order);
+			//modifyOrderItem(order);
 		}
 		
 	}
+
+
+
+
 
 }
