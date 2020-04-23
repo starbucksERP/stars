@@ -32,7 +32,7 @@
 		<ul class="drop-menu" style="padding-left: 5%">
 			<li onclick="location.href='${pageContext.request.contextPath}/item/product'">품목현황</li>
 			<li onclick="location.href='${pageContext.request.contextPath}/item/itemList'">재고현황</li>
-			<li onclick="location.href='${pageContext.request.contextPath}/storeItem/sale_list'">판매조회</li>
+			<li onclick="location.href='${pageContext.request.contextPath}/storeItem/saleList'">판매조회</li>
 			<li onclick="location.href='${pageContext.request.contextPath}/storeItem/sale_record'">판매등록</li>
 		</ul>
 		<!-- 지점용 재고 -->
