@@ -147,22 +147,7 @@ $(function(){
 
 function delReadySearch() {
 
-	alert($("#delReadyCategory").val());
 	$("#delReadySearchForm").submit(); 
-	
-		
-		//$("#delReadySearchForm").submit(); 
-	/*
-	if($("#requestNumInput").val()=='' && $("#storeIdInput").val()=='' && $("#delStartInput1").val=='' && $("#delStartInput2").val()==''
-	&& $("#delEndInput1").val()=='' && $("#delEndInput2").val()=='' && $("#delReadyCategory").val()=='') {
-		alert("검색 사항을 선택 및 입력해 주세요.");
-		return false;
-	} else {
-	 //$("#delReadySearchForm").submit(); 
-	 console.log("실패패패패패패")
-	 return;
-	} 
-	*/
 	
 };
 

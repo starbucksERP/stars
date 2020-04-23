@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 	<div class="container">
 		<div class="row">
 			<div class="sidebar">
@@ -8,7 +9,7 @@
 						<button class="dropdown-btn">발주<i class="fa fa-caret-down"></i></button>
 						<div class="dropdown-container">
 							<a href="${pageContext.request.contextPath}/order/orderRequestList">발주요청조회</a><br /><br />
-							<a href="${pageContext.request.contextPath}/order/orderStateList">발주현황조회</a>						</div>
+							<a href="${pageContext.request.contextPath}/order/orderStateList">발주현황조회</a></div>
 					</li>
 					<li>
 						<button class="dropdown-btn">구매<i class="fa fa-caret-down"></i></button>
@@ -80,48 +81,82 @@
 						<tbody>
 							<tr>
 								<th><input type="checkbox" class="allChk"></th>
-								<th>구매타입</th>
+								<th>요청번호</th>
+								<th>구매방식</th>
 								<th>구매일자</th>
 								<th>거래처명</th>
-								<th>폼목</th>
-								<th>총 수량</th>
+								<th>물품코드</th>
+								<th>물품명</th>
+								<th>구매 수량</th>
 								<th>총 금액</th>
 								<th>진행상태</th>
 								<th>취소</th>
 							</tr>
 							<tr>
-								<td><input type="checkbox" class="rowChk"></td>
-								<td>A</td>
-								<td>2020-03-03</td>
-								<td>STARBUSKCDD</td>
-								<td>스타벅스 머그컵 외 1건</td>
-								<td>40</td>
-								<td>510,000</td>
-								<td class="green-font">요청</td>
-								<td><button type="button" class="a-button red inner-button">취소</button></td>
-							</tr>
-							<tr>
-								<td><input type="checkbox" class="rowChk"></td>
-								<td>H</td>
-								<td>2020-03-03</td>
-								<td>COJDOOEFJFJ</td>
-								<td>리저브_노브크릭위스키배럴과테말라</td>
-								<td>100</td>
-								<td>1,615,000</td>
-								<td class="green-font">종결</td>
-								<td>-</td>
-							</tr>
-							<tr>
-								<td><input type="checkbox" class="rowChk"></td>
-								<td>H</td>
-								<td>2020-03-03</td>
-								<td>COJDOOEFJFJ</td>
-								<td>리저브_노브크릭위스키배럴과테말라</td>
-								<td>100</td>
-								<td>1,615,000</td>
-								<td class="red-font">취소</td>
-								<td>-</td>
-							</tr>
+							<c:choose>
+								<c:when test="${empty(purchaseList) }">
+									<tr align="center">
+										<td colspan="11">검색된 구매기록이 없습니다.</td>		
+									</tr>
+								</c:when>
+								<c:otherwise>
+									<c:forEach var="purchaseList" items="${purchaseList }">
+									<tr>
+										<td><input type="checkbox" class="rowChk"  value="${purchaseList.purchaseSeq }"></td>
+										<td>${purchaseList.requestNum }</td>
+										<c:choose>
+										<c:when test="${purchaseList.purchaseType==1 }">
+										<td class="blue-font">대리점</td>
+										</c:when>
+										<c:when test="${purchaseList.purchaseType==2 }">
+										<td style="color:green">본사 자동</td>
+										</c:when>
+										<c:when test="${purchaseList.purchaseType==3 }">
+										<td class="red-font" >본사 수동</td>										
+										</c:when>
+										</c:choose>	
+										<c:set var="purchaseDate" value="${purchaseList.purchaseDate }"/>
+										<td>${fn:substring(purchaseDate,0,10) }</td>
+										<td>${purchaseList.itemVendor }</td>
+										<td>${purchaseList.itemNum }</td>				
+										<td>${purchaseList.item.itemName }</td>				
+										<td>${purchaseList.itemQty }</td>
+										<c:set var="itemQty" value="${purchaseList.itemQty }"/>
+										<c:set var="totalPrice" value="${purchaseList.itemPprice }"/>
+										<td>${itemQty*totalPrice }</td>
+										<c:choose>
+										<c:when test="${purchaseList.purchaseState==30 }">
+										<td style="color:green">구매 요청</td>
+										</c:when>
+										<c:when test="${purchaseList.purchaseState==31 }">
+										<td class="blue-font">구매중</td>
+										</c:when>
+										<c:when test="${purchaseList.purchaseState==32 }">
+										<td class="red-font">구매 완료</td>
+										</c:when>
+										<c:when test="${purchaseList.purchaseState==33 }">
+										<td class="red-font">본사 입고완료</td>
+										</c:when>
+										<c:when test="${purchaseList.purchaseState==99 }">
+										<td>구매 취소</td>
+										</c:when>
+										</c:choose>
+										<c:choose>
+										<c:when test="${purchaseList.purchaseType=='2' && purchaseList.purchaseState=='30'}">
+										<td><button type="button" class="a-button red inner-button">취소</button></td>
+										</c:when>
+										<c:when test="${purchaseList.purchaseType=='3' && purchaseList.purchaseState=='30'}">
+										<td><button type="button" class="a-button red inner-button">취소</button></td>
+										</c:when>	
+										<c:otherwise>
+										<td>취소 불가</td>
+										</c:otherwise>
+										</c:choose>		
+									</tr>	
+									</c:forEach>
+								</c:otherwise>
+							</c:choose>
+						</tr>
 						</tbody>
 					</table>
 				</div>
@@ -131,61 +166,7 @@
 		</div>
 	</div>
 
-<script id="purchaseListEmpty" type="text/x-handlebars-template">
-<table class="table">
-<tbody>
-	<tr>
-		<th><input type="checkbox" class="allChk"></th>
-		<th>구매타입</th>
-		<th>구매요청일자</th>
-		<th>거래처명</th>
-		<th>물품코드</th>
-		<th>물품명</th>			
-		<th>총 수량</th>
-		<th>총 금액</th>
-		<th>진행상태</th>
-		<th>취소요청</th>
-	</tr>
-		<tr align="center">
-    		<td colspan="10">검색된 구매기록이 없습니다.</td>		
-		</tr>
-	</tbody>
-</table>
-</script>
 
-<script id="purchaseList" type="text/x-handlebars-template">
-<table class="table">
-<tbody>
-	<tr>
-		<th><input type="checkbox" class="allChk"></th>
-		<th>구매타입</th>
-		<th>구매요청일자</th>
-		<th>거래처명</th>
-		<th>물품코드</th>
-		<th>물품명</th>			
-		<th>총 수량</th>
-		<th>총 금액</th>
-		<th>진행상태</th>
-		<th>취소요청</th>
-	</tr>
-		{{#each.}}
-			<tr>
-				<td><input type="checkbox" class="rowChk"  value="{{requestNum }}"></td>
-				<td>{{purchaseType }}</td>				
-				<td>{{purchaseDate }}</td>				
-				<td>{{itemVendor }}</td>
-				<td>{{itemNum }}</td>	
-				<td>{{itemName }}</td>	
-				<td>{{itemQty }}</td>	
-				<td>{{itemPprice }}</td>	
-				<td>{{purchaseState }}</td>
-				<td><button type="button" class="a-button red inner-button">취소</button></td>	
-			</tr>
-		{{/each}}
-	</tbody>
-</table>
-</script>
-	
 
 
 <script type="text/javascript">

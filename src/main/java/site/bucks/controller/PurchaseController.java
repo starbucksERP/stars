@@ -17,16 +17,10 @@ public class PurchaseController {
 	@Autowired
 	PurchaseService purchaseService;
 	
-	@RequestMapping(value = "/purchaseList")
-	public String getDisplayPurchaseList(){
-		return "purchase/purchase_list";
-	}
-	
-	
-	// 추후 이용할거고 수정해
-	@RequestMapping(value = "/purchaseList",method = RequestMethod.POST)
+	// 구매현황 페이지 기본 테이블 출력 
+	@RequestMapping(value = "/purchaseList",method = RequestMethod.GET)
 	public String getDisplayPurchaseList(@ModelAttribute Purchase purchase, Model model) {
-		model.addAttribute("purchaseList", purchaseService.getPurchaseList(purchase));
+		model.addAttribute("purchaseList", purchaseService.getDisplayPurchaseList(purchase));
 		return "purchase/purchase_list";
 	}
 	
