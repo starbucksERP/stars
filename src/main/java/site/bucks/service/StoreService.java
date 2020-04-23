@@ -6,10 +6,13 @@ import site.bucks.dto.Store;
 
 public interface StoreService {
 	void addStore(Store store);
-	/* void removeStore(Store store); */
 	void modifyStore(Store store);
 	Store getStoreId(int storeId);
 	Store getStoreName(String storeName);
 	List<Store> getStoreList(Store store);
+	
+	
+	
+	
 
 }

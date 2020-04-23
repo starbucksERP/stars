@@ -26,20 +26,14 @@ public class DeliveryDAOImpl implements DeliveryDAO {
 	}
 
 	@Override
-	public List<Delivery> selectDelReqList(Delivery delivery) {
-		return sqlSession.getMapper(DeliveryMapper.class).selectDelReqList(delivery);
+	public List<Delivery> searchDelReqList(Delivery delivery) {
+		return sqlSession.getMapper(DeliveryMapper.class).searchDelReqList(delivery);
 	}
 	
 	@Override
-	public List<Delivery> selectDelReadyList(Delivery delivery) {
-		return sqlSession.getMapper(DeliveryMapper.class).selectDelReadyList(delivery);
+	public List<Delivery> searchDelReadyList(Delivery delivery) {
+		return sqlSession.getMapper(DeliveryMapper.class).searchDelReadyList(delivery);
 	}
-
-	/*
-	 * @Override public int updateDeliveryState(int deliverySeq) { return
-	 * sqlSession.getMapper(DeliveryMapper.class).updateDeliveryState(deliverySeq);
-	 * }
-	 */
 
 	@Override
 	public int updateDeliveryReq(int deliverySeq) {
@@ -49,6 +43,16 @@ public class DeliveryDAOImpl implements DeliveryDAO {
 	@Override
 	public int updateDeliveryReady(int deliverySeq) {
 		return sqlSession.getMapper(DeliveryMapper.class).updateDeliveryReady(deliverySeq);
+	}
+
+	@Override
+	public List<Delivery> displayDelReqList(Delivery delivery) {
+		return sqlSession.getMapper(DeliveryMapper.class).displayDelReqList(delivery);
+	}
+
+	@Override
+	public List<Delivery> displayDelReadyList(Delivery delivery) {
+		return sqlSession.getMapper(DeliveryMapper.class).displayDelReadyList(delivery);
 	}
 
 

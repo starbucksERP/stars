@@ -32,7 +32,7 @@
 		<ul class="drop-menu" style="padding-left: 5%">
 			<li onclick="location.href='${pageContext.request.contextPath}/item/product'">품목현황</li>
 			<li onclick="location.href='${pageContext.request.contextPath}/item/itemList'">재고현황</li>
-			<li onclick="location.href='${pageContext.request.contextPath}/storeItem/sale_list'">판매조회</li>
+			<li onclick="location.href='${pageContext.request.contextPath}/storeItem/saleList'">판매조회</li>
 			<li onclick="location.href='${pageContext.request.contextPath}/storeItem/sale_record'">판매등록</li>
 		</ul>
 		<!-- 지점용 재고 -->
@@ -54,8 +54,8 @@
 		<!-- 지점용 발주 -->
 		<ul class="drop-menu" style="padding-left: 15%">
 			<li onclick="location.href='${pageContext.request.contextPath}/sic/storeOrderInput'">발주입력</li>
-			<li onclick="location.href='${pageContext.request.contextPath}/sic/storeOrderReq'">발주요청조회</li>
-			<li onclick="location.href='${pageContext.request.contextPath}/sic/storeOrderSta'">발주현황조회</li>
+			<li onclick="location.href='${pageContext.request.contextPath}/sic/storeOrderRequestList'">발주요청조회</li>
+			<li onclick="location.href='${pageContext.request.contextPath}/sic/storeOrderStateList'">발주현황조회</li>
 			<li onclick="location.href='${pageContext.request.contextPath}/sic/storeReceipt'">입출하조회</li>
 			<!-- 나중에 수정 -->
 			<li onclick="location.href='${pageContext.request.contextPath}/delivery/deliveryList'">배송조회사본</li>

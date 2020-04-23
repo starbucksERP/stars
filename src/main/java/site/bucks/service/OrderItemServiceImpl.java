@@ -20,24 +20,14 @@ public class OrderItemServiceImpl implements OrderItemService {
 	private ItemDAO itemDAO;
 	@Autowired
 	private PurchaseDAO purchaseDAO;
-
+	
 	@Override
-	public void insertStoreOrder(OrderItem orderItem) {
-		// TODO Auto-generated method stub
-		
+	public List<OrderItem> getStoreOrderItems(String requestNum, String storeId) {
+		return oderItemDAO.selectStoreOrderItems(requestNum, storeId);
 	}
+	
+//	================================================================
 
-	@Override
-	public List<OrderItem> selectStoreOrderItemList(OrderItem orderItem) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void updateOrderReceiptProcess(OrderItem orderItem) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void modifyOrderItemState(Map<String, Object> numAndStateMap) {
@@ -86,5 +76,9 @@ public class OrderItemServiceImpl implements OrderItemService {
 		}
 		
 	}
+
+
+
+
 
 }

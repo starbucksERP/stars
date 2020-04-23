@@ -12,41 +12,11 @@
 	</insert> 
 	
 <!-- 지점 발주시 -->
-
-<!-- 지점 발주 조회 -->
-	<select id="selectStoreOrderItemList" resultType="OrderItem">
-		select * from order_item 
-		<where>
-			<if test="storeId!=null and storeId!=''">
-				store_id=#{storeId}			
-			</if>
-			<if test="requestDate!=null and requestDate!=''">
-				AND REQUEST_DATE BETWEEN #{requestDate} AND #{requestDatePair}
-			</if>
-			<if test="itemNum!=null and itemNum!=''">
-				AND ITEM_NUM!=null=#{itemNum}
-			</if>
-			<if test="price1!=null and price1!='' and price2!=null and price2!=''">
-				AND ITEM_SPRICE between #{price1} and #{price2}
-			</if>
-			<if test="states!=null">
-				and REQUEST_STATE in
-				<foreach collection="states" item="state" open="(" close=")" separator=",">
-				 	#{state}
-				</foreach>
-			</if>
-		</where>
-		order by REQUEST_DATE desc
+	
+	<!-- 요청번호에 대한 오더들 반환  -->
+	<select id="selectStoreOrderItems" parameterType="String" resultType="OrderItem">
+		select * from order_item where request_num=#{requestNum} and store_id=#{storeId}
 	</select>
-<!-- 지점 발주 조회 -->
-
-<!-- 지점 입고 확인시 storeItemHistory 테이블에서 일어나는 일련의 메소드 -->
-	<!-- order_item : 지점에서 입고확인시 주문상태 변화 -->
-	<update id="updateOrderReceiptProcess" parameterType="OrderItem">
-		update order_item set request_state=#{requestState} where request_num=#{requestNum}
-	</update>
-<!-- 지점 입고 확인시 storeItemHistory 테이블에서 일어나는 일련의 메소드 -->
-
 
 
 <!--  ******************************* 본점관련SQL *********************************************** -->
@@ -57,6 +27,9 @@
 		<foreach collection="reqNums" item="requestNum" open="(" close=")" separator=",">
 			#{requestNum}
 		</foreach>
+		<if test="storeId!=null and storeId!=0">
+			AND STORE_ID=#{storeId}
+		</if>
 	</update>
 	
 	<!-- 검색 -->

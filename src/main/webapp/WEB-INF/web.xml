@@ -30,6 +30,11 @@
 		<filter-name>encodingFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+<<<<<<< HEAD
+=======
+	
+	
+>>>>>>> branch 'master' of https://github.com/starbucksERP/stars.git
 
 	<!-- Processes application requests -->
 	<servlet>
