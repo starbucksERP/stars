@@ -132,6 +132,62 @@
 		</div>
 	</div>
 
+<script id="purchaseListEmpty" type="text/x-handlebars-template">
+<table class="table">
+<tbody>
+	<tr>
+		<th><input type="checkbox" class="allChk"></th>
+		<th>구매타입</th>
+		<th>구매요청일자</th>
+		<th>거래처명</th>
+		<th>물품코드</th>
+		<th>물품명</th>			
+		<th>총 수량</th>
+		<th>총 금액</th>
+		<th>진행상태</th>
+		<th>취소요청</th>
+	</tr>
+		<tr align="center">
+    		<td colspan="10">검색된 구매기록이 없습니다.</td>		
+		</tr>
+	</tbody>
+</table>
+</script>
+
+<script id="purchaseList" type="text/x-handlebars-template">
+<table class="table">
+<tbody>
+	<tr>
+		<th><input type="checkbox" class="allChk"></th>
+		<th>구매타입</th>
+		<th>구매요청일자</th>
+		<th>거래처명</th>
+		<th>물품코드</th>
+		<th>물품명</th>			
+		<th>총 수량</th>
+		<th>총 금액</th>
+		<th>진행상태</th>
+		<th>취소요청</th>
+	</tr>
+		{{#each.}}
+			<tr>
+				<td><input type="checkbox" class="rowChk"  value="{{requestNum }}"></td>
+				<td>{{purchaseType }}</td>				
+				<td>{{purchaseDate }}</td>				
+				<td>{{itemVendor }}</td>
+				<td>{{itemNum }}</td>	
+				<td>{{itemName }}</td>	
+				<td>{{itemQty }}</td>	
+				<td>{{itemPprice }}</td>	
+				<td>{{purchaseState }}</td>
+				<td><button type="button" class="a-button red inner-button">취소</button></td>	
+			</tr>
+		{{/each}}
+	</tbody>
+</table>
+</script>
+	
+
 
 <script type="text/javascript">
 	// number 가격 범위에 숫자만 입력 및 콤마 입력

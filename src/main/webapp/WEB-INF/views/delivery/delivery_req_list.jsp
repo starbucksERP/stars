@@ -23,20 +23,22 @@
 			<div class="right">
 				<button type="button" class="a-button black medium" id="chk" 
 				style="float: left;">전체 선택 / 해제</button>
+				<form action="deliveryReq" id="delReqSearchForm" method="post">
 				<select name="delReqCategory" class="delReqCategory">
 					<option value="">검색조건 선택</option>
-					<option class="delSearchOpt" value="requestNum">1. 요청번호</option>
-					<option class="delSearchOpt" value="storeId">2. 매장코드</option>
-				</select>&nbsp;
-				<input type="search" id="delReqSearchInput"/>&nbsp;
+					<option  value="requestNum">1. 요청번호</option>
+					<option  value="storeId">2. 매장코드</option>
+				</select>&nbsp;				
+				<input type="search" name="delReqSearchInput" id="delReqSearchInput"/>&nbsp;
 				<button type="button" class="a-button" style="padding: 3px 20px"  onclick="deliveryReqSearch()">검색</button>
 				<button type="button" class="a-button" style="padding: 3px 20px" onclick="delReqSearchReset()">검색 초기화</button>
+				</form>
 			</div>
 			
 			<br />
 			<hr />
 			<div class="information" id="delReqDisplay" >
-			<%-- 	<table class="table">
+		 	<table class="table">
 					<tbody>
 						<tr>
 							<th style="width: 10px;"><input type="checkbox" class="allChk"></th>
@@ -44,23 +46,29 @@
 							<th>요청번호</th>
 							<th>매장코드</th>
 							<th>배송처리현황</th>
+							<th>배송요청일자</th>
 						</tr>
 						<tr>
 						<c:choose>
-								<c:when test="${empty(deliveryReqList) }">
+								<c:when test="${empty(delReqList) }">
 									<tr align="center">
-										<td colspan="5">검색된 배송요청이 없습니다.</td>		
+										<td colspan="6">검색된 배송요청이 없습니다.</td>		
 									</tr>
 								</c:when>
 								<c:otherwise>
-									<c:forEach var="deliveryReq" items="${deliveryReqList }">
+									<c:forEach var="deliveryReq" items="${delReqList }">
 									<tr>
 										<td><input type="checkbox" class="rowChk"  value="${deliveryReq.deliverySeq }"></td>
 										<td>${deliveryReq.deliverySeq }</td>				
 										<!-- 팝업창 뜨는거 만들어야 함  -->
 										<td>${deliveryReq.requestNum }</td>				
 										<td>${deliveryReq.storeId }</td>
-										<td>${deliveryReq.deliveryState }</td>
+										<c:choose>
+										<c:when test="${deliveryReq.deliveryState==40}">
+										<td class="green-font">배송 요청</td>
+										</c:when>
+										</c:choose>
+										<td>${deliveryReq.deliveryStart}</td>
 									</tr>	
 									</c:forEach>
 								</c:otherwise>
@@ -68,7 +76,7 @@
 						</tr>
 					</tbody>
 				
-				</table> --%>
+				</table>
 				
 			</div>
 				<div class="right">
@@ -81,6 +89,93 @@
 	</div>
 </div>
 
+
+<script type="text/javascript">
+
+function deliveryReqSearch(){
+	
+	var delivery=[];
+	if($(".delReqCategory").val()=='requestNum') {
+		if($("#delReqSearchInput").val()=='') {
+			alert("검색어를 입력해 주세요.");
+			return;
+		}
+		delivery.push($(".delReqCategory").val());
+	    $("#delReqSearchInput").attr("name","requestNum");
+		$("input[type='hidden']").val(delivery);
+		
+	}else if($(".delReqCategory").val()=='storeId') {
+		if($("#delReqSearchInput").val()=='') {
+			alert("검색어를 입력해 주세요.");
+			return;
+		}
+		delivery.push($(".delReqCategory").val());
+		$("#delReqSearchInput").attr("name","storeId");
+		$("input[type='hidden']").val(delivery);
+		
+	} else {	
+		alert("검색 항목을 선택해 주세요.");
+		return; 
+	}
+	
+	 $("#delReqSearchForm").submit();
+	
+	
+};
+
+function delReqSearchReset() {
+	location.href="/star/deliveryReq"
+}
+
+
+//배송요청을 확인처리하기 위한 함수 
+function requestConfirmation() {
+		
+		
+		if($(".rowChk:checked").length==0) {
+			alert("배송요청확인: 요청승인할 배송정보를 선택해 주세요.");
+		} else { 
+			
+			var delivery =[];
+			var rowChk = $(".rowChk:checked");
+			
+			rowChk.each(function(i) {
+				var tr = rowChk.parent().parent().eq(i);
+				var td = tr.children();
+				
+				var deliverySeq = td.eq(1).text();
+				delivery.push(deliverySeq);
+			});
+			
+			var param={"list":delivery};
+			
+			$.ajax({
+				type: "POST",
+				url: "delReqConfirm",
+				data: param,
+				dateType: "text",
+				success: function(text) {
+				alert(delivery +"번 배송 = 배송요청 승인")
+						location.href="/star/deliveryReq"
+					
+				},
+				error:function(request,status,error){
+		            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					 
+		          }
+
+			});
+		
+		}
+	}
+			
+			
+
+
+</script>
+
+
+<%-- 핸들바스 템플릿 
 <script id="delReqListEmpty" type="text/x-handlebars-template">
 <table class="table">
 	<tbody>
@@ -124,10 +219,9 @@
 	</tbody>
 </table>
 </script>
-
-
-<script type="text/javascript">
-
+ --%>
+<%--
+// 핸들바스 사용시 이용하는 기본 테이블 출력 메소드 
 delReqDisplay();
 
 function delReqDisplay() {
@@ -153,7 +247,9 @@ function delReqDisplay() {
 	});
 	
 };
+--%>
 
+<%-- 핸들바스 사용시 이용하는 단일검색 메소드 
 function deliveryReqSearch(){
 		
 	var delivery;
@@ -203,61 +299,11 @@ function deliveryReqSearch(){
 	
 };
 
-	
-
-
 function delReqSearchReset() {
 	delReqDisplay();
 }
 
-
-// 배송요청을 확인처리하기 위한 함수 
-function requestConfirmation() {
-		
-		
-		if($(".rowChk:checked").length==0) {
-			alert("배송요청확인: 요청승인할 배송정보를 선택해 주세요.");
-		} else { 
-			
-			var delivery =[];
-			var rowChk = $(".rowChk:checked");
-			
-			rowChk.each(function(i) {
-				var tr = rowChk.parent().parent().eq(i);
-				var td = tr.children();
-				
-				var deliverySeq = td.eq(1).text();
-				delivery.push(deliverySeq);
-			});
-			
-			var param={"list":delivery};
-			
-			$.ajax({
-				type: "POST",
-				url: "delReqConfirm",
-				data: param,
-				dateType: "text",
-				success: function(text) {
-				alert(delivery +"번 배송 = 배송요청 승인")
-						location.href="/star/deliveryReq"
-					
-				},
-				error:function(request,status,error){
-		            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-					 
-		          }
-
-			});
-		
-		}
-	}
-			
-			
-
-</script>
-
-
-
+--%>
 
 
 
