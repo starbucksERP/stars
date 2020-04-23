@@ -2,7 +2,7 @@ package site.bucks.dto;
 
 import java.util.List;
 
-/*占싱몌옙            占쏙옙?       占쏙옙占쏙옙           
+/*�̸�            ��?       ����           
 ------------- -------- ------------ 
 ORDER_SEQ     NOT NULL NUMBER       
 REQUEST_NUM   NOT NULL VARCHAR2(20) 
@@ -29,10 +29,10 @@ public class OrderItem {
 	private String deliveryDate;
 	private int orderType;
 	
-	private List<String> states;    // 寃�����
-	private String requestDatePair; // 寃�����
-	private int price1;             // 寃�����
-	private int price2;             // 寃�����
+	private List<Integer> states;    // 검색용
+	private String requestDatePair; // 검색용
+	private int price1;             // 검색용
+	private int price2;             // 검색용
 	private String itemName;
 	
 	public OrderItem() {
@@ -127,11 +127,11 @@ public class OrderItem {
 		this.orderType = orderType;
 	}
 
-	public List<String> getStates() {
+	public List<Integer> getStates() {
 		return states;
 	}
 
-	public void setStates(List<String> states) {
+	public void setStates(List<Integer> states) {
 		this.states = states;
 	}
 
@@ -158,7 +158,7 @@ public class OrderItem {
 	public void setPrice2(int price2) {
 		this.price2 = price2;
 	}
-
+	
 	public String getItemName() {
 		return itemName;
 	}
@@ -166,8 +166,6 @@ public class OrderItem {
 	public void setItemName(String itemName) {
 		this.itemName = itemName;
 	}
-
-
 	
 
 }

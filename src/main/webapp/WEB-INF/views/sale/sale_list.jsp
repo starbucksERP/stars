@@ -7,18 +7,18 @@
    <div class="row">
       <div class="sidebar">
          <ul class="side-menu">
-           	<li>
+           <li>
 				<button class="dropdown-btn">재고관리<i class="fa fa-caret-down"></i></button>
 				<div class="dropdown-container">
-					<a href="">품목관리</a><br /><br />
-					<a href="">재고관리</a><br /><br />
+					<a href="${pageContext.request.contextPath}/item/productList">품목현황</a><br /><br />
+					<a href="${pageContext.request.contextPath}/item/itemList">재고현황</a>
 				</div>
 			</li>
 			<li>
 				<button class="dropdown-btn">판매관리<i class="fa fa-caret-down"></i></button>
 				<div class="dropdown-container">
-					<a href="">판매기록</a><br /><br />
-					<a href="">판매현황</a>
+					<a href="${pageContext.request.contextPath}/storeItem/sale_list">판매조회</a><br /><br />
+					<a href="${pageContext.request.contextPath}/storeItem/sale_record">판매등록</a>
 				</div>
 			</li>
          </ul>
