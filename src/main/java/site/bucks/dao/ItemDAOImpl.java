@@ -1,6 +1,7 @@
 package site.bucks.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,25 +14,20 @@ import site.bucks.mapper.ItemMapper;
 public class ItemDAOImpl implements ItemDAO {
 	@Autowired
 	private SqlSession sqlSession;
-	
+
 	@Override
 	public int insertProduct(Item item) {
 		return sqlSession.getMapper(ItemMapper.class).insertProduct(item);
 	}
 
 	@Override
-	public int updateItem(Item item) {
-		return sqlSession.getMapper(ItemMapper.class).updateItem(item);
+	public int updateProduct(Item item) {
+		return sqlSession.getMapper(ItemMapper.class).updateProduct(item);
 	}
 
 	@Override
-	public int updateItemMinQty(Item item) {
-		return sqlSession.getMapper(ItemMapper.class).updateItemMinQty(item);
-	}
-	
-	@Override
-	public int deleteProduct(String itemNum) {
-		return sqlSession.getMapper(ItemMapper.class).deleteProduct(itemNum);
+	public int deleteProduct(Map<String, Object> itemNumMap) {
+		return sqlSession.getMapper(ItemMapper.class).deleteProduct(itemNumMap);
 	}
 
 	@Override
@@ -40,8 +36,18 @@ public class ItemDAOImpl implements ItemDAO {
 	}
 
 	@Override
+	public List<Item> selectProductList(Item item) {
+		return sqlSession.getMapper(ItemMapper.class).selectProductList(item);
+	}
+
+	@Override
 	public List<Item> selectItemList(Item item) {
 		return sqlSession.getMapper(ItemMapper.class).selectItemList(item);
+	}
+
+	@Override
+	public int updateItemMinQty(Item item) {
+		return sqlSession.getMapper(ItemMapper.class).updateItemMinQty(item);
 	}
 
 	@Override
@@ -63,5 +69,11 @@ public class ItemDAOImpl implements ItemDAO {
 	public int updateTotalQty(Double change) {
 		return sqlSession.getMapper(ItemMapper.class).updateTotalQty(change);
 	}
+
+	@Override
+	public int deleteItem(Map<String, Object> itemNumMap) {
+		return sqlSession.getMapper(ItemMapper.class).deleteItem(itemNumMap);
+	}
+	
 
 }

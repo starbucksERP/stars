@@ -20,16 +20,32 @@ public class PurchaseServiceImpl implements PurchaseService{
 	}
 	
 	@Override
+	public List<Purchase> getDisplayFutureList(Purchase purchase) {
+		return purchaseDAO.displayFutureList(purchase);
+	}
+
+	@Override
+	public List<Purchase> getDisplayPurchaseReq(Purchase purchase) {
+		return purchaseDAO.displayPurchaseReq(purchase);
+	}
+	
+	@Override
+	public List<Purchase> getDisplayInProcess(Purchase purchase) {
+		return purchaseDAO.displayInProcess(purchase);
+	}
+
+	@Override
 	public void addPurchaseRequest(Purchase purchase) {
 		// TODO Auto-generated method stub
 		
 	}
-
-
 	@Override
 	public void modifyPurchaseState(List<Purchase> purchase) {
 		// TODO Auto-generated method stub
 		
 	}
+
+	
+	
 
 }
