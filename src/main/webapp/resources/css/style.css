@@ -526,6 +526,10 @@ legend {
 	min-width: 260px;
 }
 
+.purchaseTap:active {
+	background: rgb(94, 94, 94);
+}
+
 /*	 
 	#2C2A29 : 스벅 스타일 검은색 
 	#f6f5ef   : 스벅 스타일 누렁색 
