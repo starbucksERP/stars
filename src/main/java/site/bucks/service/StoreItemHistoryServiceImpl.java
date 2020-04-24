@@ -28,11 +28,6 @@ public class StoreItemHistoryServiceImpl implements StoreItemHistoryService{
 	@Autowired
 	private StoreItemHistoryDAO storeItemHistoryDAO;
 	
-//	발주 현황 조회 리스트
-	@Override
-	public List<OrderItem> getReciptSta(OrderItem orderItem) {
-		return orderItemDAO.selectStoreOrderItemList(orderItem);
-	}
 	
 	
 //	발주 등록	(매개변수 배열로 받아서 처리 -  테스트 성공)
@@ -111,6 +106,12 @@ public class StoreItemHistoryServiceImpl implements StoreItemHistoryService{
 		Map<String, Object> map= new HashMap<String, Object>();
 		map.put("item", storeItemHistoryDAO.searchItem(itemName));
 		return map;
+	}
+
+	@Override
+	public List<OrderItem> getReciptSta(OrderItem orderItem) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

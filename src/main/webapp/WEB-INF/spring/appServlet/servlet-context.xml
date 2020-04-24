@@ -119,26 +119,7 @@
 	<beans:bean class="site.bucks.util.AdminAuthInterceptor" id="adminAuthInterceptor"/>
 	<beans:bean class="site.bucks.util.LoginAuthInterceptor" id="loginAuthInterceptor"/>
 	
-	<!-- interceptors : 인터셉터를 설정하는 상위 엘리먼트 -->
-	<interceptors>
-		<!-- interceptor : 인터셉터를 등록하는 엘리먼트 -->
-		<interceptor>
-			<!-- mapping : 인터셉터 클래스의 메소드가 호출될 URL 자원을 등록하는 엘리먼트 -->
-			<!-- path 속성 : 클라이언트가 요청하는 URL 자원을 속성값으로 설정 -->
-			<mapping path="/userinfo/join"/>
-			<mapping path="/userinfo/remove"/>
-			<!-- ref : 클라이언트 요청에 의해 동작될 인터셉터 클래스의 Spring Bean를 설정하는 엘리먼트 -->
-			<!-- bean 속성 : 인터셉터 클래스의 beanName을 속성값으로 설정 -->
-			<beans:ref bean="adminAuthInterceptor"/>
-		</interceptor>
-		
-	<!-- 	<interceptor>
-			<mapping path="/**"/>
-			<exclude-mapping path="/login"/>
-			<beans:ref bean="loginAuthInterceptor"/>
-		</interceptor> -->
-	</interceptors>
-	
+	 
 </beans:beans>
 
 

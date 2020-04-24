@@ -9,8 +9,7 @@ import site.bucks.dto.OrderItem;
 
 public interface OrderItemDAO {
 	int insertStoreOrder(OrderItem orderItem);
-	List<OrderItem> selectStoreOrderItemList(OrderItem orderItem);
-	int updateOrderReceiptProcess(OrderItem orderItem);
+	List<OrderItem> selectStoreOrderItems(String requestNum, String storeId);
 
 	// 본점용
 	int updateOrderItemState(Map<String, Object> numAndStateMap);

@@ -2,11 +2,12 @@ package site.bucks.dao;
 
 import java.util.List;
 
-import site.bucks.dto.AccountPS;
+import site.bucks.dto.Account;
+import site.bucks.dto.StoreItemHistory;
 
 public interface AccountDAO {
 
-	//ÁöÁ¡¸ÅÀÔ, º»»ç¸ÅÃâ Á¶°Çº° Ãâ·Â 
-	List<AccountPS> selectPurchaseSale (AccountPS account); 
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Çºï¿½ ï¿½ï¿½ï¿½ 
+	List<Account> selectPurchaseSaleList (StoreItemHistory sih); 
 
 }

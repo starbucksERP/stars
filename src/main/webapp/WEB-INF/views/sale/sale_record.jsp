@@ -14,7 +14,7 @@
 				<li>
 					<button class="dropdown-btn">판매관리<i class="fa fa-caret-down"></i></button>
 					<div class="dropdown-container">
-						<a href="${pageContext.request.contextPath}/storeItem/sale_list">판매조회</a><br /><br />
+						<a href="${pageContext.request.contextPath}/storeItem/saleList">판매조회</a><br /><br />
 						<a href="${pageContext.request.contextPath}/storeItem/sale_record">판매등록</a>
 					</div>
 				</li>

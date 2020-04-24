@@ -3,11 +3,11 @@
 <div class="header">
 	
 	<div class="nav">
-		<a href="#none" class="logo"><!-- <img src="" alt=""> --></a>
+		<a href="#none" class="logo"><img src="${pageContext.request.contextPath }/images/logo.png" alt="" ></a>
 		<div class="nav-right-list">
-			<a class="nav-item" onClick="location.href='${pageContext.request.contextPath}/login';"><i class="fas fa-book-reader"></i>&nbsp;관리자</a>
-			<a class="nav-item" onClick="location.href='${pageContext.request.contextPath}/join';"><i class="fas fa-address-card"></i>&nbsp;회원가입</a>
-			<a class="nav-item" onClick="location.href='${pageContext.request.contextPath}/view';"><i class="fas fa-list-alt"></i>&nbsp;회원관리</a>
+			<a class="nav-item" onClick="location.href='${pageContext.request.contextPath}/hewon/login';"><i class="fas fa-book-reader"></i>&nbsp;관리자</a>
+			<a class="nav-item" onClick="location.href='${pageContext.request.contextPath}/hewon/join';"><i class="fas fa-address-card"></i>&nbsp;회원가입</a>
+			<a class="nav-item" onClick="location.href='${pageContext.request.contextPath}/hewon/view';"><i class="fas fa-list-alt"></i>&nbsp;회원관리</a>
 			<%-- <a class="nav-item"><i class="fas fa-pen-alt"></i>&nbsp;블랑카</a> --%>
 		</div>
 		<ul class="nav-left-list">
@@ -32,7 +32,7 @@
 		<ul class="drop-menu" style="padding-left: 5%">
 			<li onclick="location.href='${pageContext.request.contextPath}/item/product'">품목현황</li>
 			<li onclick="location.href='${pageContext.request.contextPath}/item/itemList'">재고현황</li>
-			<li onclick="location.href='${pageContext.request.contextPath}/storeItem/sale_list'">판매조회</li>
+			<li onclick="location.href='${pageContext.request.contextPath}/storeItem/saleList'">판매조회</li>
 			<li onclick="location.href='${pageContext.request.contextPath}/storeItem/sale_record'">판매등록</li>
 		</ul>
 		<!-- 지점용 재고 -->
@@ -47,15 +47,15 @@
 			<li onclick="location.href='${pageContext.request.contextPath}/order/orderRequestList'">발주요청조회</li>
 			<li onclick="location.href='${pageContext.request.contextPath}/order/orderStateList'">발주현황조회</li>
 			<li onclick="location.href='${pageContext.request.contextPath}/purchase/purchasePlan'">구매계획</li>
-			<li onclick="location.href='${pageContext.request.contextPath}/purchase/purchaselist'">구매현황</li>
+			<li onclick="location.href='${pageContext.request.contextPath}/purchase/purchaseList'">구매현황</li>
 			<li onclick="location.href='${pageContext.request.contextPath}/purchase/purchaseAdd'">구매입력</li>
 			<li onclick="location.href='${pageContext.request.contextPath}/order/history'">입출하조회</li>
 		</ul>		
 		<!-- 지점용 발주 -->
 		<ul class="drop-menu" style="padding-left: 15%">
 			<li onclick="location.href='${pageContext.request.contextPath}/sic/storeOrderInput'">발주입력</li>
-			<li onclick="location.href='${pageContext.request.contextPath}/sic/storeOrderReq'">발주요청조회</li>
-			<li onclick="location.href='${pageContext.request.contextPath}/sic/storeOrderSta'">발주현황조회</li>
+			<li onclick="location.href='${pageContext.request.contextPath}/sic/storeOrderRequestList'">발주요청조회</li>
+			<li onclick="location.href='${pageContext.request.contextPath}/sic/storeOrderStateList'">발주현황조회</li>
 			<li onclick="location.href='${pageContext.request.contextPath}/sic/storeReceipt'">입출하조회</li>
 			<!-- 나중에 수정 -->
 			<li onclick="location.href='${pageContext.request.contextPath}/delivery/deliveryList'">배송조회사본</li>
