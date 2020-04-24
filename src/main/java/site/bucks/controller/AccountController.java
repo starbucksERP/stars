@@ -1,15 +1,19 @@
 package site.bucks.controller;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import site.bucks.dto.Account;
 import site.bucks.dto.StoreItemHistory;
 import site.bucks.service.AccountService;
 
@@ -20,20 +24,21 @@ public class AccountController {
 	@Autowired
 	private AccountService accountService;
 	
+	
 //	지점 매입현황 
-	@RequestMapping("/st_accountPurchase")
+	@RequestMapping(value = "/st_accountPurchase", method = RequestMethod.GET)
 	public String storeAccountPurchase() {
 		return "accounting/store_account_purchase";
 	}
 	
-	@RequestMapping(value = "/st_accountPurchaseList",method = RequestMethod.GET)
+//	지점의 아이디를 전달받아 해당지점만 출력되야함 !!! ......변수명?세션?
+	@RequestMapping(value = "/st_accountPurchase",method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> st_accountPurchaseList() {
-		StoreItemHistory sih= new StoreItemHistory();
-		Map<String, Object> returnMap = new HashMap<String, Object>();
-		returnMap.put("storePurchaseList",accountService.getPurchaseSaleList(sih));
-		return returnMap;
+	public List<Account> st_accountPurchaseList(@RequestBody StoreItemHistory sih) {
+		//System.out.println(accountDate1+" ~ "+accountDate2);
+		return accountService.getPurchaseSaleList(sih);
 	}
+	
 	
 	
 //	지점 매출현황

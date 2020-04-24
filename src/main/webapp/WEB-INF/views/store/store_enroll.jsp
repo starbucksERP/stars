@@ -38,20 +38,11 @@
 			</div>
 			
 			<div class="information-right">
-				<!-- <ul class="enroll-ul">
-					<li class="tab1" >지점정보</li>
-				</ul> -->
 				
 				<!-- 탭 컨텐츠 영역 -->
 				<div class="enroll-div">
-				<!-- 매장정보 -->
 				<%-- 매장정보 입력 영역 --%>
 				<fieldset id="insertArea" class="enroll-fieldset" style="display: block">
-					<!--  
-					<label>
-						<span>지점코드 </span><input type="text" id="storeId" readonly="readonly" />
-					</label><br/>
-					-->
 					<label>
 						<span>지점명 </span><input type="text" id="insertName" name="storeName"/>
 					</label><br />
@@ -74,8 +65,6 @@
 					<label class="gLabel"><input type="radio" name="radio-name" class="fChk" value="close">폐점</label>
 					<div class="error radioErrorMsg"   style="color:red; display: none; padding-left: 163px;">&nbsp;&nbsp;버튼을 선택해 주세요.</div>			
 					<div class="error closeErrorMsg"   style="color:red; display: none; padding-left: 163px;">&nbsp;&nbsp;폐점등록은 수정시 가능합니다.</div>
-					
-					<!-- <input type="hidden" id="hidden"  /> -->
 					<br />
 					<label>
 						<span>개업일 </span><input type="text" id="insertOpen" name="storeOpen"/>
@@ -293,16 +282,16 @@
 		
 		if(cnt>1) {
 			$(this).prop('checked',false);
-			$('.checkErrorMsg').css('display','block');
+			$('#checkErrorMsg').css('display','block');
 			return false;
 		} else {
-			$('.checkErrorMsg').css('display','none');
+			$('#checkErrorMsg').css('display','none');
 			$("#insertArea").css('display','none');
 			
 			<%-- store_id를 전달하여 입력값 반환받기 --%>
 		 	//체크박스선택값 (메소드 때문에 가져온것)
 		 	var storeId=$(".rowChk:checked").val();
-		 	alert("storeId"+storeId);
+		 	//alert("storeId"+storeId);
 			
 			<%-- 반환받은값 변경inpt태그에 저장 --%>
 			var storeName=$("#updateName").val(storeName);
