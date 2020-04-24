@@ -15,7 +15,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import site.bucks.dao.AccountDAO;
 import site.bucks.dto.Account;
+import site.bucks.dto.StoreItemHistory;
 import site.bucks.service.AccountService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -28,8 +30,15 @@ public class AccountServiceTest {
 	@Autowired
 	private AccountService accountService;
 	
+	@Autowired
+	private AccountDAO accountDAO;
 	
-	// 4/23 ÁöÁ¡¸ÅÀÔ È®ÀÎ 
+	// 4/23 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ 
+	@Test
+	public void test1() {
+		StoreItemHistory sih=new StoreItemHistory();
+		accountDAO.selectPurchaseSaleList(sih);
+	}
 
 
 }

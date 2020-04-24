@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import site.bucks.dao.StoreItemHistoryDAO;
 import site.bucks.dto.OrderItem;
+import site.bucks.dto.OrderNum;
 import site.bucks.service.OrderItemService;
 import site.bucks.service.StoreItemHistoryService;
 
@@ -23,13 +25,12 @@ public class StoreItemHistoryController {
 	@Autowired
 	private OrderItemService orderItemService;
 	
+	
 	@RequestMapping(value = "/storeReceipt")
 	public String receiptList() {
 		return "storeItem/receipt_list";
 	}
-	
-	
-	
+
 
 //	지점 발주 입력페이지
 	@RequestMapping(value = "/storeOrderInput",method = RequestMethod.GET)

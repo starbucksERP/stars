@@ -15,7 +15,7 @@
 	            <li>
 	               <button class="dropdown-btn">입출하기록<i class="fa fa-caret-down"></i></button>
 	               <div class="dropdown-container">
-	                  <a href="${pageContext.request.contextPath}/sic/storeReceipt">입출하조회</a>
+	                  <a href="${pageContext.request.contextPath}/sic/storeReceipt">입출하조회</a><br /><br />
 	                  <a href="${pageContext.request.contextPath}/delivery/deliveryList">배송조회</a>
 	               </div>
           	  </li>
@@ -90,7 +90,7 @@
 					</tfoot>
 				</table>
 				<div class="center">
-					<button type="button" class="a-button big" id="storeOrderInput" >판매 등록</button>
+					<button type="button" class="a-button big" id="storeOrderInput" >발주 입력</button>
 					<button type="button" class="a-button sea big" onclick="reset()">다시 작성</button>
 				</div>
 			</div>
@@ -129,12 +129,12 @@
 		var html="<tr>"+
 			"<td><input type='checkbox' class='rowChk'/></td>"+
 			"<td><input type='text' readonly='readonly'style='border:none; text-align:center;' class='requestDate' value='"+$("input[type='date']").val()+"'/></td>"+
-			"<td><input type='text' readonly='readonly'style='border:none; text-align:center;' class='storeId' value='"+$('#storeId').val()+"'/></td>"+
-			"<td><input type='text' readonly='readonly'style='border:none; text-align:center;' class='itemNum' value='"+$('#itemNum').val()+"'/></td>"+
-			"<td><input type='text' readonly='readonly'style='border:none; text-align:center;' class='itemNames' value='"+$('#itemName').val()+"'/></td>"+
-			"<td><input type='text' readonly='readonly'style='border:none; text-align:center; width:auto;' class='orderQty' value='"+$('#orderQty').val()+"'/> 개</td>"+
-			"<td>￦<input type='text' readonly='readonly'style='border:none; text-align:center; width:auto;' class='itemSprice' value='"+$('#itemSprice').val()+"'/></td>"+
-			"<td>￦<input type='text' readonly='readonly'style='border:none; text-align:center; width:auto;' value='"+($('#orderQty').val()*$('#itemSprice').val())+"'/></td>"+
+			"<td><span style='text-align:center;' class='storeId'>"+$('#storeId').val()+"</span></td>"+
+			"<td><span style='text-align:center;' class='itemNum'>"+$('#itemNum').val()+"</span></td>"+
+			"<td><span style='text-align:center; ' class='itemNames'>"+$('#itemName').val()+"</span></td>"+
+			"<td><span style='text-align:center; ' class='orderQty'>"+$('#orderQty').val()+"</span>개</td>"+
+			"<td>￦<span style='text-align:center; ' class='itemSprice'>"+$('#itemSprice').val()+"</span></td>"+
+			"<td>￦<span style='text-align:center; ' class='itemSprice'>"+($('#orderQty').val()*$('#itemSprice').val())+"</span></td>"+
 		"</tr>";
 		
 		$(".table>tbody").append(html);
@@ -174,7 +174,8 @@
 				dateType: "text",
 				success: function(text) {
 					if(text=="success"){
-						location.href="${pageContext.request.contextPath }/sic/storeOrderSta"
+						
+						location.href="${pageContext.request.contextPath }/sic/storeOrderRequestList"
 						alert("발주가 성공적으로 신청되었습니다.");
 					}
 				},

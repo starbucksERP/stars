@@ -21,6 +21,8 @@ public class AccountDAOImpl implements AccountDAO {
 	public List<Account> selectPurchaseSaleList(StoreItemHistory sih) {
 		return sqlSession.getMapper(AccountMapper.class).selectPurchaseSaleList(sih);
 	}
+
+	
 	
 
 }

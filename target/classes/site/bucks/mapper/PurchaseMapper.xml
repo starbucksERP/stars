@@ -2,6 +2,24 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="site.bucks.mapper.PurchaseMapper"> 
 
+<resultMap type="Item" id="Item">
+	<result column="item_name" property="itemName"/>
+	<result column="item_num" property="itemNum"/>
+</resultMap>
+ 
+<resultMap type="Purchase" id="Purchase">
+	<result column="purchase_seq" property="purchaseSeq"/>
+	<result column="request_num" property="requestNum"/>
+	<result column="purchase_state" property="purchaseState"/>
+	<result column="purchase_date" property="purchaseDate"/>
+	<result column="item_num" property="itemNum"/>
+	<result column="item_qty" property="itemQty"/>
+	<result column="item_pprice" property="itemPprice"/>
+	<result column="item_vendor" property="itemVendor"/>
+	<result column="purchase_type" property="purchaseType"/>
+	<collection property="item" resultMap="Item" />
+
+</resultMap>
 
 <!-- 200419 이근형 작성 시작 -->
 <!-- 본사 구매 관련 페이지 시작 -->
@@ -13,6 +31,35 @@
 	</selectKey>
 		insert into purchase values(#{purchaseSeq}, #{requestNum}, 30, sysdate, #{itemNum}, #{itemQty}, #{itemPprice}, (select item_Vendor from item where item_num=#{itemNum}), #{purchaseType})
 </insert>
+
+<!-- 여기에 where절 추가해서 오늘 포함 데이터만 출력하게 해야되는데 왜 자꾸 오류나지?  -->
+<select id="displayPurchaseList" parameterType="String" resultMap="Purchase">
+	<![CDATA[select p.purchase_seq, p.request_num, p.purchase_state, p.purchase_date, 
+	p.item_num, i.item_name, p.item_qty, p.item_pprice, p.item_vendor, p.purchase_type 
+    from purchase p left join item i on p.item_num = i.item_num 
+    where p.purchase_date <= sysdate order by purchase_seq desc]]>
+</select>
+
+<select id="displayFutureList" parameterType="String" resultMap="Purchase">
+	<![CDATA[select p.purchase_seq, p.request_num, p.purchase_state, p.purchase_date, 
+	p.item_num, i.item_name, p.item_qty, p.item_pprice, p.item_vendor, p.purchase_type 
+    from purchase p left join item i on p.item_num = i.item_num 
+    where p.purchase_date > sysdate order by purchase_seq desc]]>
+</select>
+
+<select id="displayPurchaseReq" parameterType="String" resultMap="Purchase">
+	select p.purchase_seq, p.request_num, p.purchase_state, p.purchase_date, p.item_num, 
+	i.item_name, p.item_qty, p.item_pprice, p.item_vendor,p.purchase_type 
+    from purchase p left join item i on p.item_num = i.item_num 
+    where p.purchase_state = 30 order by purchase_seq desc
+</select>
+
+<select id="displayInProcess" parameterType="String" resultMap="Purchase">
+	select p.purchase_seq, p.request_num, p.purchase_state, p.purchase_date, 
+	p.item_num, i.item_name, p.item_qty, p.item_pprice, p.item_vendor, p.purchase_type 
+    from purchase p left join item i on p.item_num = i.item_num 
+    where p.purchase_state = 31 order by purchase_seq desc
+</select>
  
 <select id="selectPurchaseList" parameterType="Purchase" resultType="Purchase">
 	select * from purchase
@@ -126,7 +173,11 @@
 </update>
 <!-- 200419 이근형 작성 종료 -->
 
+
+
 </mapper>
+
+
 
 
 

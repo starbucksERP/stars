@@ -53,7 +53,7 @@
 		            <li>
 		               <button class="dropdown-btn">입출하기록<i class="fa fa-caret-down"></i></button>
 		               <div class="dropdown-container">
-		                  <a href="${pageContext.request.contextPath}/sic/storeReceipt">입출하조회</a>
+		                  <a href="${pageContext.request.contextPath}/sic/storeReceipt">입출하조회</a><br /><br />
 		                  <a href="${pageContext.request.contextPath}/delivery/deliveryList">배송조회</a>
 		               </div>
 	          	 	 </li>

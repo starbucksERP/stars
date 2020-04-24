@@ -14,6 +14,7 @@ import site.bucks.dao.StoreItemDAO;
 import site.bucks.dao.StoreItemHistoryDAO;
 import site.bucks.dto.Item;
 import site.bucks.dto.OrderItem;
+import site.bucks.dto.OrderNum;
 
 @Service
 public class StoreItemHistoryServiceImpl implements StoreItemHistoryService{
@@ -28,6 +29,16 @@ public class StoreItemHistoryServiceImpl implements StoreItemHistoryService{
 	@Autowired
 	private StoreItemHistoryDAO storeItemHistoryDAO;
 	
+//	숫자 출력
+	@Override
+	public List<OrderNum> getNumNum() {
+		return storeItemHistoryDAO.numQty();
+	}
+	
+	@Override
+	public void modifyNumNum() {
+		storeItemHistoryDAO.numQtyInit(); 
+	}
 	
 	
 //	발주 등록	(매개변수 배열로 받아서 처리 -  테스트 성공)
@@ -38,6 +49,8 @@ public class StoreItemHistoryServiceImpl implements StoreItemHistoryService{
 		
 		orderItemDAO.insertStoreOrder(orderItem);
 		storeItemHistoryDAO.insertSIH(orderItem);
+		
+		storeItemHistoryDAO.numQtyPlus(orderItem);
 	}
 	
 	@Override

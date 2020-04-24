@@ -90,6 +90,7 @@
 
 
 <script type="text/javascript">
+<<<<<<< HEAD
 
 	stAccountPurchase();
  
@@ -121,18 +122,37 @@
 			$(".item").val("");
 		});
 		
+=======
+    stAccountPurchase();
+    
+>>>>>>> branch 'master' of https://github.com/starbucksERP/stars.git
 	function stAccountPurchase() {
 		$.ajax({
 			type: "POST",
+<<<<<<< HEAD
 			url: "st_accountPurchase",
 			headers:{"content-type":"application/json"},
 			data: JSON.stringify({"itemNum":itemNum,"itemName":itemName,"historyDate":historyDate,"historyDate1":historyDate1}),
 			dataType: "json",
+=======
+			URL: "st_accountPurchaseList",
+			headers: {"content-type":"application/json"},
+			data: "json",
+>>>>>>> branch 'master' of https://github.com/starbucksERP/stars.git
 			success: function(json) {
+<<<<<<< HEAD
 				 if(json.length==0) {
 					var html="<tr><td colspan='9'>검색된 결과가 없습니다.</td></tr>";
 					$("#listDiv").html(html);
+=======
+				
+				console.log(json);
+				/*
+				 if(json.length==0) {
+					$(".table > tbody").append("<tr><td colspan='7'>검색된 결과가 없습니다.</td></tr>");
+>>>>>>> branch 'master' of https://github.com/starbucksERP/stars.git
 				} else { 
+<<<<<<< HEAD
 					var html="";
 					var sumPprice=0;
 					var sumVat=0;
@@ -170,9 +190,27 @@
 							 	   "<td>"+sumTot+"</td>"+
 							 	   "</tr>";
 							   	   $("#listDiv").html(html);
+=======
+					    $(json).each(function(i) {
+					    	//alert(this.storeItemHistory.historyDate)
+						var html ="<tr>"+
+									 "<td>"+this.StoreItemHistory.historyDate+"</td>"+							
+									 "<td>본사</td>"+							
+									 "<td>"+this.StoreItemHistory.itemNum+"</td>"+							
+									 "<td>"+this.StoreItemHistory.itemName+"</td>"+							
+									 "<td>"+(this.OrderItem.itemSprice)*(this.StoreItemHistory.itemQty)+"</td>"+							
+									 "<td>부가세</td>"+							
+									 "<td>총합계</td>"							
+						             +"</tr>";
+						$(".table > tbody").append(html);
+					}) 
+>>>>>>> branch 'master' of https://github.com/starbucksERP/stars.git
 				}
+<<<<<<< HEAD
+=======
+				*/
+>>>>>>> branch 'master' of https://github.com/starbucksERP/stars.git
 			},
-			
 			error: function(xhr) {
 				alert("에러코드 ="+xhr.status);
 			}

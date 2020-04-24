@@ -1,21 +1,45 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
-<%-- 세션에 저장된 인증정보를 이용하여 로그인 사용자와 비로그인 사용자에게 다른 응답 결과를 제공하는 JSP 문서 --%>    
-<%-- 비로그인 사용자 : 인증정보를 입력받기 위한 JSP 문서 --%>    
-<%-- => [로그인]을 클릭한 경우 로그인 처리페이지(/hewoninfo/login) 요청 - POST --%>
-<%-- 로그인 사용자 : 환영메세지를 전달하기 위한 JSP 문서 --%>
-<%-- => [회원목록]을 클릭한 경우 회원목록 출력페이지(/hewoninfo/list) 요청 --%>
-<%-- => [로그아웃]을 클릭한 경우 로그아웃 처리페이지(/hewoninfo/logout) 요청 --%>
-<%-- => [회원등록]을 클릭한 경우 회원정보 저장 입력페이지(/hewoninfo/join) 요청 --%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<title>Spring</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<%-- 요청 URL 주소의 경로와 응답 JSP 문서의 경로가 같지 않을 수 있으므로
-리소스 파일은 절대경로로 표현하는 것을 권장 --%>
-<script language="JavaScript">
+<style type="text/css">
+#content{
+    position: relative;
+    background-image: url("${pageContext.request.contextPath }/images/starbucks-4620637_1920.jpg"); 
+    height: 90vh;
+    background-size: cover;                                                              
+}
+
+.img-cover{
+   position: absolute;
+   height: 100%;
+   width: 100%;
+   background-color: rgba(0, 0, 0, 0.4);                                                                 
+   z-index:1;
+}
+
+.content{
+     position: absolute;
+     top:50%;
+     left:54%;
+     transform: translate(-60%, -55%);                                                                   
+     z-index: 2;
+}
+
+
+.main{
+	z-index: 999; 
+	background: black; 
+	color: white; 
+	padding: 75px;
+}
+
+.a-button{
+	border-radius: 0px !important;
+}
+
+
+</style>
+<script type="text/javascript">
 function hewonLogin() {
 	if ( f.hewonId.value == "" ) {
 		alert("아이디를 입력하십시요.");
@@ -28,12 +52,61 @@ function hewonLogin() {
 		return;
 	}	
 	
-	f.action = "${pageContext.request.contextPath }/login";
+	f.action = "${pageContext.request.contextPath }/hewon/login";
 	f.submit();
 }
 </script>
-</head>
-<body bgcolor=#FFFFFF text=#000000 leftmargin=0 topmargin=0 marginwidth=0 marginheight=0>
+<div class="content">
+		<div class="row">
+			<div class="main">
+				<div style="font-size: 3em;" class="center">회원관리 - 로그인</div>
+				<br />
+				<hr />
+					<br />
+						<c:choose>
+						  <c:when test="${empty(loginHewon) }">
+						  <form name="f" method="post">
+							  <fieldset style="padding: 50px;">
+									<legend>로그인</legend>
+									<label>
+										<span style="padding-left: 10px;">사용자 아이디 : </span><input type="text" style="width:150; margin-right: 30px;" name="hewonId" value="${hewonId }">
+									</label>
+									<br />
+									<label>
+										<span style="padding-left: 10px;">비밀번호 :</span><input type="password" style="width:150; height: 24px; margin-right: 30px;" name="hewonPassword">
+									</label>
+								</fieldset>
+						  </form>
+						  <br>
+						 <div class="center"><button type="button" class="a-button big green"  onClick="hewonLogin();">&nbsp;로그인&nbsp;</button> </div>
+						  </c:when>
+						  
+						  <c:otherwise>
+						   <h1><span class="coral-font">${loginHewon.hewonName}&nbsp;<c:if test="${loginHewon.hewonGrade=='9'}">[관리자]</c:if></span>&nbsp;님 환영합니다.</h1>
+					     <br />
+						  <br />
+						  <br />
+							<button type="button" class="a-button big yellow" onclick="location.href='${pageContext.request.contextPath }/hewon/list';">회원목록</button>&nbsp;&nbsp;
+							<button type="button" class="a-button big red" onclick="location.href='${pageContext.request.contextPath }/hewon/logout';">로그아웃</button>&nbsp;&nbsp;
+							<c:if test="${loginHewon.hewonGrade=='9'}">
+								<button type="button" class="a-button big sea" onclick="location.href='${pageContext.request.contextPath }/hewon/join';">회원등록</button>
+							</c:if>
+				  </c:otherwise>
+				  </c:choose>
+			</div>
+		</div>
+     </div>
+<div class="img-cover"></div>
+
+
+
+
+
+
+
+
+
+<%-- <body bgcolor=#FFFFFF text=#000000 leftmargin=0 topmargin=0 marginwidth=0 marginheight=0>
 <br>
 	<table width=780 border=0 cellpadding=0 cellspacing=0>
 	<tr>
@@ -53,7 +126,7 @@ function hewonLogin() {
 	  <br>
 	  
 	  <c:choose>
-	  <%-- 비로그인 사용자의 응답 처리 --%>
+	  비로그인 사용자의 응답 처리
 	  <c:when test="${empty(loginHewon) }">
 	  <form name="f" method="post">
 	  <table border="0" cellpadding="0" cellspacing="1" width="590" bgcolor="BBBBBB">
@@ -82,7 +155,7 @@ function hewonLogin() {
 	  </table>
 	  </c:when>
 	  
-	  <%-- 로그인 사용자의 응답 처리 --%>
+	  로그인 사용자의 응답 처리
 	  <c:otherwise>
 	  <table border="0" cellpadding="0" cellspacing="1" width="590" bgcolor="BBBBBB">
 	 	 <tr>
@@ -108,7 +181,5 @@ function hewonLogin() {
 	  </c:choose>
 	  </td>
 	</tr>
-</table>  
+</table>   --%>
 
-</body>
-</html>

@@ -124,7 +124,7 @@
 		
 		var html="<tr>"+
 			"<td><input type='checkbox' class='rowChk'/></td>"+
-			"<td><input type='text' readonly='readonly'style='border:none; text-align:center;' class='requestDate' value='"+$("input[type='date']").val()+"'/></td>"+
+			"<td><input type='text' readonly='readonly'style='border:none; text-align:center;' class='saleDate' value='"+$("input[type='date']").val()+"'/></td>"+
 			"<td><span style='text-align:center;' class='storeId'>"+$('#storeId').val()+"</span></td>"+
 			"<td><span style='text-align:center;' class='saleProducts'>"+$('#saleProduct').val()+"</span></td>"+
 			"<td><span style='text-align:center; ' class='saleQty'>"+$('#saleQty').val()+"</span> 개</td>"+
