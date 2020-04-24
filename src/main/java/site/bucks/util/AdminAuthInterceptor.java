@@ -18,8 +18,7 @@ public class AdminAuthInterceptor extends HandlerInterceptorAdapter {
 	//preHandle() : 요청처리 메소드 호출 전 실행될 명령을 작성하는 메소드
 	// => false 반환 : 요청처리 메소드 미호출, true 반환 : 요청처리 메소드 호출
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-			throws Exception {
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		HttpSession session=request.getSession();
 		Hewon loginHewon=(Hewon)session.getAttribute("loginHewon");
 		if(loginHewon==null || loginHewon.getHewonGrade().equals("9")) {
@@ -35,8 +34,7 @@ public class AdminAuthInterceptor extends HandlerInterceptorAdapter {
 	// => 요청처리 메소드에서 예외가 발생될 경우 미호출
 	// => 요청처리 메소드의 반환값을 조작할 경우 사용
 	@Override
-	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-			ModelAndView modelAndView) throws Exception {
+	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
 		// TODO Auto-generated method stub
 		super.postHandle(request, response, handler, modelAndView);
 	}
@@ -45,8 +43,7 @@ public class AdminAuthInterceptor extends HandlerInterceptorAdapter {
 	// => 요청처리 메소드에서 예외가 발생될 경우 호출
 	// => 예외처리를 할 경우 사용
 	@Override
-	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
-			throws Exception {
+	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
 		// TODO Auto-generated method stub
 		super.afterCompletion(request, response, handler, ex);
 	}
