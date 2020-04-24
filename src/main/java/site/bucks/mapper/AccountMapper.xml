@@ -7,7 +7,7 @@
 <!-- 	<resultMap type="Account" id="accountResultMapOne">
  -->	
     
-	<resultMap type="Account" id="stPurchaseMainSaleMap">
+	<resultMap type="Account" id="accountResultMapOne">
 		<association property="sih" javaType="StoreItemHistory">
 			<result column="store_id" property="storeId"/>
 			<result column="history_date" property="historyDate"/>
@@ -16,13 +16,6 @@
 			<result column="item_qty" property="itemQty"/>
 			<result column="request_num" property="requestNum"/>
 			<result column="item_state" property="itemState"/>
-			<result column="STORE_ID" property="storeId"/>
-			<result column="HISTORY_DATE" property="historyDate"/>
-			<result column="ITEM_NUM" property="itemNum"/>
-			<result column="ITEM_NAME" property="itemName"/>
-			<result column="REQUEST_NUM" property="requestNum"/>
-			<result column="ITEM_STATE" property="itemState"/>
-			<result column="ITEM_QTY" property="itemQty"/>
 		</association>
 		
 		<association property="oi" javaType="OrderItem">

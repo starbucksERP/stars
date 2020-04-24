@@ -27,20 +27,11 @@ public class AccountController {
 	
 //	지점 매입현황 
 	@RequestMapping(value = "/st_accountPurchase", method = RequestMethod.GET)
-////	占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙황 
-//	@RequestMapping("/st_accountPurchase")
 	public String storeAccountPurchase() {
 		return "accounting/store_account_purchase";
 	}
 	
-////	지점의 아이디를 전달받아 해당지점만 출력되야함 !!! ......변수명?세션?
-//	@RequestMapping(value = "/st_accountPurchase",method = RequestMethod.POST)
-//	吏��� 留ㅼ�� 議고��(GET)
-	@RequestMapping(value = "/st_accountPurchaseList",method = RequestMethod.GET)
-	public String st_accountPurchaseList() {
-		return "accounting/store_account_purchase";
-	}
-//	吏��� 留ㅼ�� 議고��(POST)
+
 	@RequestMapping(value = "/st_accountPurchaseList",method = RequestMethod.POST)
 	@ResponseBody
 	public List<Account> st_accountPurchaseList(@RequestBody StoreItemHistory sih) {
