@@ -1,6 +1,7 @@
 package site.bucks.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,64 +13,67 @@ import site.bucks.dto.Item;
 public class ItemServiceImpl implements ItemService{
 	@Autowired
 	private ItemDAO itemDAO;
-	
+
 	@Override
 	public void addProduct(Item item) {
 		itemDAO.insertProduct(item);
 	}
 
 	@Override
-	public void modifyItem(Item item) {
-		// TODO Auto-generated method stub
-		
+	public void modifyProduct(Item item) {
+		itemDAO.updateProduct(item);
 	}
 
 	@Override
-	public void modifyItemMinQty(Item item) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void removeProduct(String itemNum) {
-		// TODO Auto-generated method stub
-		
+	public void removeProduct(Map<String, Object> itemNumMap) {
+		itemDAO.deleteProduct(itemNumMap);
 	}
 
 	@Override
 	public Item getItem(String itemNum) {
-		// TODO Auto-generated method stub
-		return null;
+		return itemDAO.selectItem(itemNum);
+	}
+
+	@Override
+	public List<Item> getProductList(Item item) {
+		return itemDAO.selectProductList(item);
 	}
 
 	@Override
 	public List<Item> getItemList(Item item) {
-		// TODO Auto-generated method stub
-		return null;
+		return itemDAO.selectItemList(item);
+	}
+
+	@Override
+	public void modifyItemMinQty(Item item) {
+		itemDAO.updateItemMinQty(item);
 	}
 
 	@Override
 	public List<Item> getItemPlanList(Item item) {
-		// TODO Auto-generated method stub
-		return null;
+		return itemDAO.selectItemPlanList(item);
 	}
 
 	@Override
 	public void getItemQty(String itemNum) {
-		// TODO Auto-generated method stub
-		
+		itemDAO.selectItemQty(itemNum);
 	}
 
 	@Override
 	public List<String> getItemVendorList(String itemVendor) {
-		// TODO Auto-generated method stub
-		return null;
+		return itemDAO.selectItemVendorList(itemVendor);
 	}
 
 	@Override
 	public void modifyTotalQty(Double change) {
-		// TODO Auto-generated method stub
+		itemDAO.updateTotalQty(change);
+	}
+
+	@Override
+	public void removeItem(Map<String, Object> itemNumMap) {
+		itemDAO.deleteItem(itemNumMap);
 		
 	}
+	
 
 }
