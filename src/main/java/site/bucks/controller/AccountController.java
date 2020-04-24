@@ -4,12 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-<<<<<<< HEAD
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-=======
->>>>>>> branch 'master' of https://github.com/starbucksERP/stars.git
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,90 +24,78 @@ public class AccountController {
 	@Autowired
 	private AccountService accountService;
 	
-<<<<<<< HEAD
 	
-//	���� ������Ȳ 
+//	지점 매입현황 
 	@RequestMapping(value = "/st_accountPurchase", method = RequestMethod.GET)
-=======
-//	���� ������Ȳ 
-	@RequestMapping("/st_accountPurchase")
->>>>>>> branch 'master' of https://github.com/starbucksERP/stars.git
+////	占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙황 
+//	@RequestMapping("/st_accountPurchase")
 	public String storeAccountPurchase() {
 		return "accounting/store_account_purchase";
 	}
 	
-<<<<<<< HEAD
-//	������ ���̵� ���޹޾� �ش������� ��µǾ��� !!! ......������?����?
-	@RequestMapping(value = "/st_accountPurchase",method = RequestMethod.POST)
-=======
-//	지점 매입 조회(GET)
+////	지점의 아이디를 전달받아 해당지점만 출력되야함 !!! ......변수명?세션?
+//	@RequestMapping(value = "/st_accountPurchase",method = RequestMethod.POST)
+//	吏��� 留ㅼ�� 議고��(GET)
 	@RequestMapping(value = "/st_accountPurchaseList",method = RequestMethod.GET)
 	public String st_accountPurchaseList() {
 		return "accounting/store_account_purchase";
 	}
-//	지점 매입 조회(POST)
+//	吏��� 留ㅼ�� 議고��(POST)
 	@RequestMapping(value = "/st_accountPurchaseList",method = RequestMethod.POST)
->>>>>>> branch 'master' of https://github.com/starbucksERP/stars.git
 	@ResponseBody
 	public List<Account> st_accountPurchaseList(@RequestBody StoreItemHistory sih) {
-<<<<<<< HEAD
 		//System.out.println(accountDate1+" ~ "+accountDate2);
-=======
->>>>>>> branch 'master' of https://github.com/starbucksERP/stars.git
 		return accountService.getPurchaseSaleList(sih);
 	}
 	
 
 	
 	
-<<<<<<< HEAD
-//	���� ������Ȳ
-=======
-//	���� ������Ȳ
->>>>>>> branch 'master' of https://github.com/starbucksERP/stars.git
+//	지점 매출현황
+//	占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙황
 	@RequestMapping(value = "/st_accountSales")
 	public String st_accountSales() {
 		return "accounting/store_account_sales";
 	}	
 	
-//	���� ���ͺм�
+//	占쏙옙占쏙옙 占쏙옙占싶분쇽옙
 	@RequestMapping(value = "/st_accountIncome")
 	public String st_accountIncome() {
 		return "accounting/store_account_income";
 	}
 	
 	
-	//���� - ���� 
+	//占쏙옙占쏙옙 - 占쏙옙占쏙옙 
 	@RequestMapping(value = "/accountPurchase")
 	public String a5() {
 		return "accounting/account_purchase";
 	}
 	
-	//���� - ����
+	//占쏙옙占쏙옙 - 占쏙옙占쏙옙
 	@RequestMapping(value = "/accountSales")
 	public String a6() {
 		return "accounting/account_sales";
 	}
 	
-	//���ͺм� - ���� 
+	//占쏙옙占싶분쇽옙 - 占쏙옙占쏙옙 
 	@RequestMapping(value = "/accountIncome")
 	public String a4() {
 		return "accounting/account_income";
 	}
 	
-	//������ ���Կ��� ��Ȳ - ���� 
+	//占쏙옙占쏙옙占쏙옙 占쏙옙占쌉울옙占쏙옙 占쏙옙황 - 占쏙옙占쏙옙 
 	@RequestMapping(value = "/purchaseMonth")
 	public String a7() {
 		return "accounting/purchase_month";
 	}
 	
-	//������ ������� ��Ȳ - ���� 
+	//占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙占� 占쏙옙황 - 占쏙옙占쏙옙 
 	@RequestMapping(value = "/salesMonth")
 	public String a8() {
 		return "accounting/sales_month";
 	}
 	
-	//������ ���ͺм� - ���� 
+	//占쏙옙占쏙옙占쏙옙 占쏙옙占싶분쇽옙 - 占쏙옙占쏙옙 
 	@RequestMapping(value = "/incomeMonth")
 	public String a9() {
 		return "accounting/income_month";
