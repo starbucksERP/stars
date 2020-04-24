@@ -174,7 +174,8 @@
 				dateType: "text",
 				success: function(text) {
 					if(text=="success"){
-						location.href="${pageContext.request.contextPath }/sic/storeOrderSta"
+						
+						location.href="${pageContext.request.contextPath }/sic/storeOrderRequestList"
 						alert("발주가 성공적으로 신청되었습니다.");
 					}
 				},

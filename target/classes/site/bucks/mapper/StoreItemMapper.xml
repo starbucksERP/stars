@@ -2,6 +2,7 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 사용 테이블 : 지점재고 / 지점재고history / 판매 / 상품레시피 -->
 <mapper namespace="site.bucks.mapper.StoreItemMapper">
+
 	
 <!-- 판매등록시 sql -->
 	<!-- 완제품인지 재료인지 구별용 O -->

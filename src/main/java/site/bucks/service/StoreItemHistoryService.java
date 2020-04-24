@@ -5,8 +5,11 @@ import java.util.Map;
 
 import site.bucks.dto.Item;
 import site.bucks.dto.OrderItem;
+import site.bucks.dto.OrderNum;
 
 public interface StoreItemHistoryService {   
+	public List<OrderNum> getNumNum();
+	public void modifyNumNum();
 	List<OrderItem> getReciptSta(OrderItem orderItem);
 	void addRecipt(OrderItem orderItem);
 	Map<String, Object> getStoreOrderView(String requestNum);

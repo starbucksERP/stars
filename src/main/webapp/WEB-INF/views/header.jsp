@@ -8,7 +8,11 @@
 			<a class="nav-item" onClick="location.href='${pageContext.request.contextPath}/hewon/login';"><i class="fas fa-book-reader"></i>&nbsp;관리자</a>
 			<a class="nav-item" onClick="location.href='${pageContext.request.contextPath}/hewon/join';"><i class="fas fa-address-card"></i>&nbsp;회원가입</a>
 			<a class="nav-item" onClick="location.href='${pageContext.request.contextPath}/hewon/view';"><i class="fas fa-list-alt"></i>&nbsp;회원관리</a>
-			<%-- <a class="nav-item"><i class="fas fa-pen-alt"></i>&nbsp;블랑카</a> --%>
+			<span class="nav-item numnum" onclick="location.href='${pageContext.request.contextPath}/order/orderRequestList'"><i class="fas fa-bell" style="font-size: 20px;"></i><span class="nav-counter" onclick="location.href='${pageContext.request.contextPath}/order/orderStateList'"></span></span>
+			<br />
+			<span class="notifyTri">▲</span>
+			<ul class="notifyList">
+			</ul>
 		</div>
 		<ul class="nav-left-list">
 			<li class="nav-item">지점관리<br /><span class="tri">▲</span></li>
@@ -83,3 +87,30 @@
 	</div>
 		
 </div>
+
+<script type="text/javascript">
+updateOrder();
+
+function updateOrder(){
+	$.ajax({
+		type: "GET",
+		url: "upupNum",
+		success: function(json){
+			var num=Number($(".nav-counter").text());
+			$(json).each(function(i) {
+				this.storeId
+				if(this.orderNumQty!=0){
+				$(".notifyList").append("<li>("+this.storeId+")매장에서 발주를 신청했습니다.</li>");
+				}
+				num+=1;
+			});
+			
+			$(".nav-counter").text(Number(num));
+		},
+		error: function(xhr){
+			alert("에러코드 = "+xhr.status);
+		}
+	})
+}
+</script>
+
