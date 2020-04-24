@@ -1,74 +1,83 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
-<%-- 모델에서 저장된 회원정보를 클라이언트에게 전달하는 JSP 문서 --%>
-<%-- => [수정]을 클릭한 경우 회원정보 변경 입력페이지(/hewon/modify) 요청 --%>
-<%-- => [삭제]을 클릭한 경우 회원정보 삭제 처리페이지(/hewon/remove) 요청 --%>
-<%-- => [목록]을 클릭한 경우 회원목록 출력페이지(/hewon/list) 요청 --%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<title>Spring</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script language="JavaScript">
+<style type="text/css">
+#content{
+    position: relative;
+    background-image: url("${pageContext.request.contextPath }/images/starbucks-4620637_1920.jpg"); 
+    height: 90vh;
+    background-size: cover;                                                              
+}
+
+.img-cover{
+   position: absolute;
+   height: 100%;
+   width: 100%;
+   background-color: rgba(0, 0, 0, 0.4);                                                                 
+   z-index:1;
+}
+
+.content{
+     position: absolute;
+     top:55%;
+     left:54%;
+     transform: translate(-60%, -55%);                                                                   
+     z-index: 2;
+}
+
+
+.main{
+	z-index: 999; 
+	background: black; 
+	color: white; 
+	padding: 75px;
+}
+
+</style>
+
+<script type="text/javascript">
 function hewonRemove(hewonId) {
 	if (confirm("정말로 삭제 하시겠습니까?") ) {
 		location.href='${pageContext.request.contextPath }/hewon/remove?hewonId='+hewonId;
 	}
 }
 </script>
-</head>
-<body bgcolor=#FFFFFF text=#000000 leftmargin=0 topmargin=0 marginwidth=0 marginheight=0>
-<br>
-<table width=780 border=0 cellpadding=0 cellspacing=0>
-	<tr>
-	  <td width="20"></td>
-	  <td>
-	  <table width=590 border=0 cellpadding=0 cellspacing=0>
-		  <tr>
-			<td bgcolor="f4f4f4" height="22">&nbsp;&nbsp;<b>회원관리 - 상세정보</b></td>
-		  </tr>
-	  </table>  
-	  <br>
-	  
-	  <table border="0" cellpadding="0" cellspacing="1" width="590" bgcolor="BBBBBB">
-		  <tr>
-			<td width=100 align=center bgcolor="E6ECDE" height="22">아이디</td>
-			<td width=490 bgcolor="ffffff"  style="padding-left:10px;">
-				${hewon.hewonId}
-			</td>
-		  </tr>
-		  <tr>
-			<td width=100 align=center bgcolor="E6ECDE" height="22">이름</td>
-			<td width=490 bgcolor="ffffff"  style="padding-left:10px;">
-				${hewon.hewonName}
-			</td>
-		  </tr>
-		  <tr>
-			<td width=100 align=center bgcolor="E6ECDE" height="22">이메일</td>
-			<td width=490 bgcolor="ffffff"  style="padding-left:10px;">
-				${hewon.hewonEmail}
-			</td>
-		  </tr>		  
-	  </table>
-	  <br>
-	  
-	  <table width=590 border=0 cellpadding=0 cellspacing=0>
-		  <tr>
-			<td align=center>
-			<c:if test="${loginHewon.hewonGrade=='9' || loginHewon.hewonId==hewon.hewonId }">
-				<input type="button" value="수정" onClick="location.href='${pageContext.request.contextPath }/modify?hewonId=${hewon.hewonId}';">
-			</c:if>
-			<c:if test="${loginHewon.hewonGrade=='9' }">
-				<input type="button" value="삭제" onClick="hewonRemove('${hewon.hewonId}');">
-			</c:if>
-			<input type="button" value="목록" onClick="location.href='${pageContext.request.contextPath }/list';"> 
-			</td>
-		  </tr>
-	  </table>
-
-	  </td>
-	</tr>
-</table>  
-</body>
-</html>
+<div class="content">
+		<div class="row">
+			<div class="main">
+				<div style="font-size: 3em;" class="center">회원관리 - 상세정보</div>
+				<br />
+				<hr />
+					  <fieldset style="padding: 50px;">
+							<legend>${hewon.hewonName}(${hewon.hewonId}) 정보</legend>
+							<label>
+								<span style="padding-left: 10px;">번호:</span>${hewon.hewonPhone}
+							</label>
+							<br />
+							<label>
+								<span style="padding-left: 10px;">주소:</span>${hewon.hewonAddress}
+							</label>
+							<br />
+							<label>
+								<span style="padding-left: 10px;">이메일:</span>${hewon.hewonEmail}
+							</label>
+							<br />
+							<label>
+								<span style="padding-left: 10px;">지점 코드:</span>${hewon.hewonStId}
+							</label>
+							<br />
+						</fieldset>
+				  <br>
+				  <div class="center">
+					  <c:if test="${loginHewon.hewonGrade=='9' || loginHewon.hewonId==hewon.hewonId }">
+							<button type="button" class="a-button big purple" onClick="location.href='${pageContext.request.contextPath }/hewon/modify?hewonId=${hewon.hewonId}';">수정</button>&nbsp;&nbsp;
+						</c:if>
+						<c:if test="${loginHewon.hewonGrade=='9' }">
+							<button type="button" class="a-button big red" onClick="hewonRemove('${hewon.hewonId}');">삭제</button>&nbsp;&nbsp;
+						</c:if>
+						<button type="button" class="a-button big sea" onClick="location.href='${pageContext.request.contextPath }/hewon/list';">목록</button>
+					</div>
+			</div>
+		</div>
+     </div>
+<div class="img-cover"></div>

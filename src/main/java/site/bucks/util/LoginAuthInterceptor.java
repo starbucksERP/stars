@@ -11,8 +11,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 // => 로그인 성공 후 기존 요청 페이지로 응답되도록 설정 
 public class LoginAuthInterceptor extends HandlerInterceptorAdapter {
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-			throws Exception {
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		HttpSession session=request.getSession();
 		
 		if(session.getAttribute("loginHewon")==null) {

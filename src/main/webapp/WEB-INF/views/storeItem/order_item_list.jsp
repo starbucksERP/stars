@@ -150,7 +150,7 @@
 					}  else if(this.requestState<50) {
 						html+="<td class='green-font'>배송준비중</td></tr>";
 					}  else if(this.requestState==60) {
-						html+="<td class='green-font'>출고</td></tr>";
+						html+="<td class='green-font'>배송중</td></tr>";
 					} else if(this.requestState==70 ) {
 						html+="<td class='red-font'>입고완료</td></tr>";
 					} 

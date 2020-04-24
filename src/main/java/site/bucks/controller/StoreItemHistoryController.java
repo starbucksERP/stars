@@ -51,57 +51,6 @@ public class StoreItemHistoryController {
 	
 	
 	
-	
-	
-	
-	/*
-	 * // 지점 발주 입고처리
-	 * 
-	 * @RequestMapping(value = "/checkStoreOrder", method = RequestMethod.POST)
-	 * 
-	 * @ResponseBody public String checkStoreOrder(@RequestBody List<OrderItem>
-	 * orderItemList) { storeItemHistoryService.modifyReceiptProcess(orderItemList);
-	 * return "success"; }
-	 * 
-	 * 
-	 * 
-	 * // 지점 발주 취소
-	 * 
-	 * @RequestMapping(value = "/cancelStoreOrder", method = RequestMethod.POST)
-	 * 
-	 * @ResponseBody public String cancelStoreOrder(@RequestBody List<OrderItem>
-	 * orderItemList) { storeItemHistoryService.modifyCancelRecipt(orderItemList);
-	 * return "success"; }
-	 
-	
-	
-//	아이템 카테고리로 찾아오기
-	@RequestMapping(value = "/getItem", method = RequestMethod.POST)
-	@ResponseBody
-	public Map<String , Object> getItem(@RequestBody Item item) {
-		return storeItemHistoryService.getItem(item);
-	}
-	
-	
-//	아이템 검색시 해당 item 정보 가져오기
-	@RequestMapping(value = "/searchItem/{itemName}", method = RequestMethod.GET)
-	@ResponseBody
-	public Map<String, Object> searchItem(@PathVariable String itemName) {
-		return storeItemHistoryService.getItemName(itemName);
-	}
-	*/	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	// 발주요청
 	@RequestMapping(value = "/storeOrderRequestList", method = RequestMethod.GET)
 	public String storeOrderRequestList() {
@@ -142,9 +91,6 @@ public class StoreItemHistoryController {
 	public List<OrderItem> storeOrderStateList(@RequestBody OrderItem orderItem) { 
 		return orderItemService.getOrderItemList(orderItem);
 	}
-	
-	
-	
 	
 	
 	
