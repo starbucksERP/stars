@@ -90,7 +90,6 @@
 
 
 <script type="text/javascript">
-<<<<<<< HEAD
 
 	stAccountPurchase();
  
@@ -114,56 +113,37 @@
 					historyDate1=historyDate;
 				} 
 				stAccountPurchase();
-				/* $(".item").val(""); */
-			//}
-		});	
+			});
 		
 		$("#resetBtn").click(function() {
 			$(".item").val("");
 		});
 		
-=======
-    stAccountPurchase();
+        stAccountPurchase();
     
->>>>>>> branch 'master' of https://github.com/starbucksERP/stars.git
-	function stAccountPurchase() {
-		$.ajax({
-			type: "POST",
-<<<<<<< HEAD
-			url: "st_accountPurchase",
-			headers:{"content-type":"application/json"},
-			data: JSON.stringify({"itemNum":itemNum,"itemName":itemName,"historyDate":historyDate,"historyDate1":historyDate1}),
-			dataType: "json",
-=======
-			URL: "st_accountPurchaseList",
-			headers: {"content-type":"application/json"},
-			data: "json",
->>>>>>> branch 'master' of https://github.com/starbucksERP/stars.git
-			success: function(json) {
-<<<<<<< HEAD
-				 if(json.length==0) {
-					var html="<tr><td colspan='9'>검색된 결과가 없습니다.</td></tr>";
-					$("#listDiv").html(html);
-=======
-				
-				console.log(json);
-				/*
-				 if(json.length==0) {
-					$(".table > tbody").append("<tr><td colspan='7'>검색된 결과가 없습니다.</td></tr>");
->>>>>>> branch 'master' of https://github.com/starbucksERP/stars.git
-				} else { 
-<<<<<<< HEAD
-					var html="";
-					var sumPprice=0;
-					var sumVat=0;
-					var sumTot=0;
+		function stAccountPurchase() {
+			$.ajax({
+				type: "POST",
+				url: "st_accountPurchase",
+				headers:{"content-type":"application/json"},
+				data: JSON.stringify({"itemNum":itemNum,"itemName":itemName,"historyDate":historyDate,"historyDate1":historyDate1}),
+				dataType: "json",
+				success: function(json) {
+					 if(json.length==0) {
+						var html="<tr><td colspan='9'>검색된 결과가 없습니다.</td></tr>";
+						$("#listDiv").html(html);
+					} else { 
+						var html="";
+						var sumPprice=0;
+						var sumVat=0;
+						var sumTot=0;
 					
-					$(json).each(function() {
-						 var qty=this.sih.itemQty;
-						 var price=this.oi.itemSprice;
-						 var pPrice=qty*price;
-						 var vat=(pPrice)*(0.1);
-						 var tot=parseInt((pPrice)*(1.1));
+						$(json).each(function() {
+							 var qty=this.sih.itemQty;
+							 var price=this.oi.itemSprice;
+							 var pPrice=qty*price;
+							 var vat=(pPrice)*(0.1);
+							 var tot=parseInt((pPrice)*(1.1));
 						
 						  html+="<tr>"+
 						 			 "<td>"+(this.sih.historyDate).substring(0,10)+"</td>"+							
@@ -180,7 +160,6 @@
 							 		sumPprice+=pPrice;
 							 		sumVat+=vat;
 							 		sumTot+=tot;
-						
 						});
 					
 							 html+="<tr style='height: 20px; background-color:#D4C9C2; font:bold; '>"+
@@ -190,32 +169,14 @@
 							 	   "<td>"+sumTot+"</td>"+
 							 	   "</tr>";
 							   	   $("#listDiv").html(html);
-=======
-					    $(json).each(function(i) {
-					    	//alert(this.storeItemHistory.historyDate)
-						var html ="<tr>"+
-									 "<td>"+this.StoreItemHistory.historyDate+"</td>"+							
-									 "<td>본사</td>"+							
-									 "<td>"+this.StoreItemHistory.itemNum+"</td>"+							
-									 "<td>"+this.StoreItemHistory.itemName+"</td>"+							
-									 "<td>"+(this.OrderItem.itemSprice)*(this.StoreItemHistory.itemQty)+"</td>"+							
-									 "<td>부가세</td>"+							
-									 "<td>총합계</td>"							
-						             +"</tr>";
-						$(".table > tbody").append(html);
-					}) 
->>>>>>> branch 'master' of https://github.com/starbucksERP/stars.git
-				}
-<<<<<<< HEAD
-=======
-				*/
->>>>>>> branch 'master' of https://github.com/starbucksERP/stars.git
-			},
-			error: function(xhr) {
-				alert("에러코드 ="+xhr.status);
+						}
+					},
+					error: function(xhr) {
+						alert("에러코드 ="+xhr.status);
+					}
+					
+				});
 			}
-		});
-	}
 </script>
 
 

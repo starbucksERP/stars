@@ -98,9 +98,9 @@ function updateOrder(){
 			$(json).each(function(i) {
 				this.storeId
 				if(this.orderNumQty!=0){
-				$(".notifyList").append("<li>("+this.storeId+")매장에서 발주를 신청했습니다.</li>");
+					$(".notifyList").append("<li>("+this.storeId+")매장에서 발주를 신청했습니다.</li>");
+					num+=1;
 				}
-				num+=1;
 			});
 			
 			$(".nav-counter").text(Number(num));

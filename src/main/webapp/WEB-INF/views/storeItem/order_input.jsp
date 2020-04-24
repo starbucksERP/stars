@@ -174,7 +174,6 @@
 				dateType: "text",
 				success: function(text) {
 					if(text=="success"){
-						
 						location.href="${pageContext.request.contextPath }/sic/storeOrderRequestList"
 						alert("발주가 성공적으로 신청되었습니다.");
 					}
@@ -199,7 +198,7 @@
 			dateType: "json",
 			success: function(json) {
 				$("#itemNum").val(json.item.itemNum);
-				$("#itemSprice").val(json.item.itemSprice);
+				$("#itemSprice").val(jsons.item.itemSprice);
 				
 			},
 			error: function(xhr) {
