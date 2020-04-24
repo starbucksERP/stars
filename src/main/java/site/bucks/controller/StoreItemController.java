@@ -3,14 +3,22 @@ package site.bucks.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import site.bucks.dto.Delivery;
+import site.bucks.dto.Hewon;
 import site.bucks.dto.Sale;
+import site.bucks.exception.HewonNotFoundException;
+import site.bucks.service.DeliveryService;
 import site.bucks.service.StoreItemService;
 
 @Controller
@@ -19,7 +27,8 @@ public class StoreItemController {
 	
 	@Autowired
 	private StoreItemService storeItemService;
-	
+	@Autowired
+	private DeliveryService deliveryService;
 	
 	
 	
@@ -39,14 +48,6 @@ public class StoreItemController {
 		return "success";
 	}
 
-	
-	
-//	판매삭제
-	/*
-	 * @RequestMapping(value = "/sale_delete", method = RequestMethod.POST) public
-	 * String sale_delete(Sale sale) { storeItemService.removeSale(sale); return
-	 * "redirect:sale/sale_list"; }
-	 */
 	
 	
 	// 판매삭제
@@ -70,6 +71,65 @@ public class StoreItemController {
 	public List<Sale> storeOrderRequestList(@RequestBody Sale sale) { 
 		return storeItemService.getSaleList(sale);
 	}
+	
+	
+	
+	
+//	품목현황
+	/*
+	 * @RequestMapping(value = "/product", method = RequestMethod.GET) public String
+	 * productList() { return "item/product_list"; }
+	 * 
+	 * @RequestMapping(value = "/product", method = RequestMethod.POST)
+	 * 
+	 * @ResponseBody public List<Item> productList(@RequestBody Item item) { return
+	 * itemService.getProductList(item); }
+	 * 
+	 * // 재고현황
+	 * 
+	 * @RequestMapping(value = "/itemList") public String itemList() { return
+	 * "item/item_list"; }
+	 * 
+	 * @RequestMapping(value = "/itemList", method = RequestMethod.POST)
+	 * 
+	 * @ResponseBody public List<Item> itemList(@RequestBody Item item) { return
+	 * itemService.getItemList(item); }
+	 */
+	
+	
+	
+	
+	
+	
+	
+	
+//	배송조회
+	@RequestMapping(value = "/deliveryList", method = RequestMethod.GET)
+	public String getDisplayDelReadyList(@ModelAttribute Delivery delivery, Model model, HttpSession session) throws HewonNotFoundException  {
+		
+		Hewon loginHewon=(Hewon)session.getAttribute("loginHewon");
+		if(!loginHewon.getHewonGrade().equals("9")) {
+			delivery.setStoreId(loginHewon.getHewonStId());
+		}
+		
+		model.addAttribute("delReadyList", deliveryService.getDisplayDelReadyList(delivery));
+		return "storeItem/delivery_list";
+	}
+
+	// 2. 배송현황조회 페이지의 검색용 	
+	@RequestMapping(value = "/deliveryList", method = RequestMethod.POST)
+	public String getSearchDelReadyList(@ModelAttribute Delivery delivery, Model model,  HttpSession session) throws HewonNotFoundException  {
+		
+		Hewon loginHewon=(Hewon)session.getAttribute("loginHewon");
+		if(!loginHewon.getHewonGrade().equals("9")) {
+		}
+		delivery.setStoreId(loginHewon.getHewonStId());
+		
+		model.addAttribute("delReadyList", deliveryService.getSearchDelReadyList(delivery));
+		return "storeItem/delivery_list";
+	}
+	
+	
 	
 
 }
