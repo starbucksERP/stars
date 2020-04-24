@@ -21,8 +21,8 @@ public class PurchaseDAOImpl implements PurchaseDAO{
 	}
 
 	@Override
-	public List<Purchase> selectPurchaseList(Purchase purchase) {
-		return sqlSession.getMapper(PurchaseMapper.class).selectPurchaseList(purchase);
+	public List<Purchase> displayPurchaseList(Purchase purchase) {
+		return sqlSession.getMapper(PurchaseMapper.class).displayPurchaseList(purchase);
 	}
 
 	@Override

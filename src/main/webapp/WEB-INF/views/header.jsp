@@ -47,7 +47,7 @@
 			<li onclick="location.href='${pageContext.request.contextPath}/order/orderRequestList'">발주요청조회</li>
 			<li onclick="location.href='${pageContext.request.contextPath}/order/orderStateList'">발주현황조회</li>
 			<li onclick="location.href='${pageContext.request.contextPath}/purchase/purchasePlan'">구매계획</li>
-			<li onclick="location.href='${pageContext.request.contextPath}/purchase/purchaselist'">구매현황</li>
+			<li onclick="location.href='${pageContext.request.contextPath}/purchase/purchaseList'">구매현황</li>
 			<li onclick="location.href='${pageContext.request.contextPath}/purchase/purchaseAdd'">구매입력</li>
 			<li onclick="location.href='${pageContext.request.contextPath}/order/history'">입출하조회</li>
 		</ul>		

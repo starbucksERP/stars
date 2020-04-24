@@ -9,7 +9,7 @@
 	<artifactId>controller</artifactId>
 	<name>spring</name>
 	<packaging>war</packaging>
-	<version>1.0.0-BUILD-SNAPSHOT</version> 
+	<version>1.0.0-BUILD-SNAPSHOT</version>
 	
 	<!-- properties : pom.xml 파일에서 자주 사용하는 값을 등록하기 위한 엘리먼트 -->
 	<!-- => 하위 엘리먼트가 이름이 별칭으로 사용되며 내용이 값으로 사용 - 라이브러리 버전을 효율적으로 관리 -->
