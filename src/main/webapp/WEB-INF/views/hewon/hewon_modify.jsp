@@ -17,7 +17,7 @@ function hewonModify() {
 	}
 	f.action = "${pageContext.request.contextPath}/modify";
 	f.submit();
-}
+} 
 </script>
 </head>
 <body bgcolor=#FFFFFF text=#000000 leftmargin=0 topmargin=0 marginwidth=0 marginheight=0>

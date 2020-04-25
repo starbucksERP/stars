@@ -32,44 +32,6 @@
 	</filter-mapping>
 	
 	
-	
-	<!-- 어플리케이션의 요청을 처리 -->
-	<!-- Spring Framework Web라이브러리가 만들어준것 => 이게 프론트 컨트롤러 -->
-	<!--  이제 우리가 프론트 컨트롤러 안만드러두됨~~~ -->
-	<!-- DispatcherServlet 클래스가 객체화(인스턴스)될 때 web어플리케이션 컨텍스트가 만드러져있고 얘가 xml을 읽어 Spring Bean으로 만들어 사용가능하게 해쥼 -->
-	
-	<!-- Spring Framework에서 제공하는 Front Controller 클래스(DispatcherServlet)로 서블릿 등록 -->
-	<!--  => Front Controller 역할의 서블릿을 여러개 등록 가능
-		  => Front Controller 요청에 대한 URL 패턴을 다르게 설정 -->
-	<servlet>
-		<servlet-name>springMvcServlet</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-		<!-- init-param : 서블릿 클래스에 필요한 정보를 제공하기 위한 엘리먼트 -->
-		<!-- 			  DispatcherServlet 클래스에게 Bean Configuration File 제공 -->
-		<!-- 			   => 서블릿관련 클래스에서만 사용가능한 Spring Bean 등록 (WebApplication컨텍스트가 두번째로 읽어들임)
-						  bean Configuration File을 여러개 설정 가능
-						   => 파일을 엔터 또는 ,또는 ;로 구분하여 설정 
-						   => Annotation 기반의 Bean Configuration File은 하나만 설정 가능 >> 여러개 만들어도 말짱 도루묵... -->
-		<!-- DispatcherServlet클래스가 가져다 사용, 서블릿관련 클래스만 사용가능하도록 제한을 두는거 -->
-		<init-param>
-			<param-name>contextConfigLocation</param-name>
-			<param-value>
-				/WEB-INF/spring/springMvcServlet/spring-context1.xml
-				/WEB-INF/spring/springMvcServlet/spring-context2.xml
-			</param-value>
-		</init-param>
-		<!-- WAS 실행시 자동 인스턴스 -->
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	
-	<servlet-mapping>
-		<servlet-name>springMvcServlet</servlet-name>
-		<!-- /는 모든요청을 의미 -->
-		<url-pattern>*.do</url-pattern>
-	</servlet-mapping>
-	
-	
-	
 
 	<!-- Processes application requests -->
 	<servlet>
@@ -79,7 +41,7 @@
 			<param-name>contextConfigLocation</param-name>
 			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
 		</init-param>
-		<load-on-startup>2</load-on-startup>
+		<load-on-startup>1</load-on-startup>
 	</servlet>
 		
 	<servlet-mapping>

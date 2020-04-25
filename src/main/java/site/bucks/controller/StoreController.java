@@ -29,8 +29,8 @@ public class StoreController {
 	@Autowired
 	HewonService hewonService;
 	
-//	�ڡڡ� AJAX �ڡڡ� 
-//	������� 
+//	占쌘★∽옙 AJAX 占쌘★∽옙 
+//	占쏙옙占쏙옙占쏙옙占� 
 	@RequestMapping(value = "/storeEnroll")
 	public String storeEnroll() {
 		return "store/store_enroll";
@@ -46,7 +46,7 @@ public class StoreController {
 		 return"success"; 
 	}
 
-//	���� ���̵� URL �ּҷ� ���޹޾� STORE ���̺� ����� �ش� ������ �˻��Ͽ� JSON ���·� �����ϴ� ��ûó�� �޼ҵ�
+//	占쏙옙占쏙옙 占쏙옙占싱듸옙 URL 占쌍소뤄옙 占쏙옙占쌨받억옙 STORE 占쏙옙占싱븝옙 占쏙옙占쏙옙占� 占쌔댐옙 占쏙옙占쏙옙占쏙옙 占싯삼옙占싹울옙 JSON 占쏙옙占승뤄옙 占쏙옙占쏙옙占싹댐옙 占쏙옙청처占쏙옙 占쌨소듸옙
 	@RequestMapping(value = "/storeIdView/{storeId}", method = RequestMethod.GET)
 	@ResponseBody
 	public Store storeIdView(@PathVariable int storeId) {
@@ -54,11 +54,11 @@ public class StoreController {
 	}
 		
 	
-//	��������
+//	占쏙옙占쏙옙占쏙옙占쏙옙
 	@RequestMapping(value = "/storeModify/{storeId}", method = {RequestMethod.PUT,RequestMethod.PATCH})
 	@ResponseBody
 	public String storeModify(@RequestBody Store store, @PathVariable int storeId) {
-//		�� �����ڰ� �ƴ϶�� �����Ұ� �ڵ��ۼ��ؾ��� ��
+//		占쏙옙 占쏙옙占쏙옙占쌘곤옙 占싣니띰옙占� 占쏙옙占쏙옙占쌀곤옙 占쌘듸옙占쌜쇽옙占쌔억옙占쏙옙 占쏙옙
 		store.setStoreId(storeId);
 		storeService.modifyStore(store);
 		return "success";
@@ -66,39 +66,22 @@ public class StoreController {
 	
 	  
 	 
-//	���� ��Ȳ
+//	占쏙옙占쏙옙 占쏙옙황
 	@RequestMapping(value = "/storeSta")
 	public String storeSta(@ModelAttribute Store store, Model model) {
 		model.addAttribute("storeList", storeService.getStoreList(store));
 		return "store/store_sta";
 	}
 	
-	
-	@RequestMapping(value = "/storeInfo")
-	public String storeInfo() {
-		return "store/store_info";
-	}
-	
-	
-	/*
-	 * @RequestMapping(value = "/storeStaff", method = RequestMethod.GET) public
-	 * String storeStaff(@ModelAttribute Store store, Model model) {
-	 * model.addAttribute("storeList", storeService.getStoreList(store)); return
-	 * "store/store_staff"; }
-	 * 
-	 */	
-	
-	
-// *************************************** AJAX *************************************************
 
-//	�ڡڡ� ���� ���� �ڡڡ� 
+//	占쌘★∽옙 占쏙옙占쏙옙 占쏙옙占쏙옙 占쌘★∽옙 
 	@RequestMapping("/storeStaff") 
 	public String storeStaff() {
 		return "store/store_staff";
 	}
 	
 	
-//	�Խñ� ����� AJAX�� ��û
+//	占쌉시깍옙 占쏙옙占쏙옙占� AJAX占쏙옙 占쏙옙청
 	@RequestMapping(value = "/storeStaffList", method = RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Object> storeStaffList(@ModelAttribute Store store) {
@@ -109,7 +92,7 @@ public class StoreController {
 	}
 	
 	
-//	@PathVariable ������̼��� ����Ͽ� URL �ּҷ� ���޵� ���� �Ű������� ���� ����
+//	@PathVariable 占쏙옙占쏙옙占쏙옙抉占쏙옙占� 占쏙옙占쏙옙臼占� URL 占쌍소뤄옙 占쏙옙占쌨듸옙 占쏙옙占쏙옙 占신곤옙占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙
 	@RequestMapping(value = "/storeStaffList/{storeName}", method = RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Object> storeStaffSearchList(@ModelAttribute Store store, @PathVariable String storeName) {
@@ -121,8 +104,8 @@ public class StoreController {
 		return returnMap;
 	}
 	
-//	�ڡڡ� ���� ���� �ڡڡ�
-//	�����ڵ带 ���޹޾� ���������� �������� �޼ҵ� 	
+//	占쌘★∽옙 占쏙옙占쏙옙 占쏙옙占쏙옙 占쌘★∽옙
+//	占쏙옙占쏙옙占쌘드를 占쏙옙占쌨받억옙 占쏙옙占쏙옙占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙占쏙옙 占쌨소듸옙 	
 	@RequestMapping(value = "/storeOwner/{storeId}",method = RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Object> storeOwner(@ModelAttribute Hewon hewon ,@PathVariable int storeId) {

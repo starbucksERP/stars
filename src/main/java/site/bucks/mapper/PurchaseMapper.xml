@@ -34,10 +34,31 @@
 
 <!-- 여기에 where절 추가해서 오늘 포함 데이터만 출력하게 해야되는데 왜 자꾸 오류나지?  -->
 <select id="displayPurchaseList" parameterType="String" resultMap="Purchase">
-	select p.purchase_seq, p.request_num, p.purchase_state, p.purchase_date,
-	p.item_num, i.item_name, p.item_qty, p.item_pprice,
-	p.item_vendor, p.purchase_type
-	from purchase p left join item i on p.item_num = i.item_num order by purchase_seq desc
+	<![CDATA[select p.purchase_seq, p.request_num, p.purchase_state, p.purchase_date, 
+	p.item_num, i.item_name, p.item_qty, p.item_pprice, p.item_vendor, p.purchase_type 
+    from purchase p left join item i on p.item_num = i.item_num 
+    where p.purchase_date <= sysdate order by purchase_seq desc]]>
+</select>
+
+<select id="displayFutureList" parameterType="String" resultMap="Purchase">
+	<![CDATA[select p.purchase_seq, p.request_num, p.purchase_state, p.purchase_date, 
+	p.item_num, i.item_name, p.item_qty, p.item_pprice, p.item_vendor, p.purchase_type 
+    from purchase p left join item i on p.item_num = i.item_num 
+    where p.purchase_date > sysdate order by purchase_seq desc]]>
+</select>
+
+<select id="displayPurchaseReq" parameterType="String" resultMap="Purchase">
+	select p.purchase_seq, p.request_num, p.purchase_state, p.purchase_date, p.item_num, 
+	i.item_name, p.item_qty, p.item_pprice, p.item_vendor,p.purchase_type 
+    from purchase p left join item i on p.item_num = i.item_num 
+    where p.purchase_state = 30 order by purchase_seq desc
+</select>
+
+<select id="displayInProcess" parameterType="String" resultMap="Purchase">
+	select p.purchase_seq, p.request_num, p.purchase_state, p.purchase_date, 
+	p.item_num, i.item_name, p.item_qty, p.item_pprice, p.item_vendor, p.purchase_type 
+    from purchase p left join item i on p.item_num = i.item_num 
+    where p.purchase_state = 31 order by purchase_seq desc
 </select>
  
 <select id="selectPurchaseList" parameterType="Purchase" resultType="Purchase">
@@ -152,7 +173,11 @@
 </update>
 <!-- 200419 이근형 작성 종료 -->
 
+
+
 </mapper>
+
+
 
 
 

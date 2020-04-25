@@ -1,5 +1,7 @@
 package site.bucks.dto;
- 
+
+import java.util.List;
+
 /*ass
 
 이름          널?       유형            
@@ -28,11 +30,14 @@ public class Item {
 	private String itemVendor;
 	private String itemDm;
 	private int itemUsage;
+
 	private int seq;
-	
-//	寃�����
 	private String category;
 	private String subCategory;
+	private int itemPpricePair;
+	private int itemSpricePair;
+	private double itemQtyPair;
+	private List<String> categorys;
 	
 	public Item() {
 		// TODO Auto-generated constructor stub
@@ -144,7 +149,36 @@ public class Item {
 		this.subCategory = subCategory;
 	}
 
-	
-	
+	public int getItemPpricePair() {
+		return itemPpricePair;
+	}
 
+	public void setItemPpricePair(int itemPpricePair) {
+		this.itemPpricePair = itemPpricePair;
+	}
+
+	public int getItemSpricePair() {
+		return itemSpricePair;
+	}
+
+	public void setItemSpricePair(int itemSpricePair) {
+		this.itemSpricePair = itemSpricePair;
+	}
+
+	public List<String> getCategorys() {
+		return categorys;
+	}
+
+	public void setCategorys(List<String> categorys) {
+		this.categorys = categorys;
+	}
+
+	public double getItemQtyPair() {
+		return itemQtyPair;
+	}
+
+	public void setItemQtyPair(double itemQtyPair) {
+		this.itemQtyPair = itemQtyPair;
+	}
+	
 }

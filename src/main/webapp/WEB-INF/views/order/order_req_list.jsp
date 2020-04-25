@@ -11,7 +11,6 @@
 	top: 50%;
 	left: 50%;
 	margin-top: -40px;
-	/* margin-left: -120px; */
 	padding: 5px;
 	z-index: 100;
 	display: none;
@@ -262,7 +261,6 @@
 		} else {
 			if($('.rowChk:checked').length==0) {
 				openModal("선택된 발주가 존재하지않습니다.<br>발주요청을 처리할 발주를 선택해주세요.<br><br>");
-				//$(".innerMessage").html("선택된 발주가 존재하지않습니다.<br>발주요청을 처리할 발주를 선택해주세요.<br><br>");
 				$("#popupBox").show(300);  
 				return;
 			} else {
@@ -284,8 +282,6 @@
 			success: function(text) {
 				if(text=="success") {
 					$(".rowChk").prop("checked", false); // 체크박스초기화
-					//$(".innerMessage").html("선택된 발주가 완료되었습니다.<br><br><br>");
-					//$("#popupBox").show(300); 
 					openModal("선택된 발주가 완료되었습니다.<br><br><br>");
 					orderReqList(1);
 				}
@@ -305,13 +301,10 @@
 			"top": (($(window).height()-$("#popupBox").outerHeight())/2+$(window).scrollTop())+"px",
 			"left": (($(window).width()-$("#popupBox").outerWidth())/2+$(window).scrollLeft())+"px"
 		});
-		
-		//$("#popup_mask").css("display","block"); //팝업 뒷배경 display block
-       // $("#popupBox").css("display","block"); //팝업창 display block
         $(".innerMessage").html(message);
 		$("#popup_mask").show();
 		$("#popupBox").show(300);  
-		$("body").css("overflow","hidden");//body 스크롤바 없애기
+		$("body").css("overflow","hidden");
 		
 	}
 	
@@ -319,9 +312,7 @@
 		$(".innerMessage").val("");    
 		$("#popupBox").hide();
 		$("#popup_mask").hide(300); 
-		//$("#popup_mask").css("display","none"); //팝업창 뒷배경 display none
-        //$("#popupDiv").css("display","none"); //팝업창 display none
-        $("body").css("overflow","auto");//body 스크롤바 생성
+        $("body").css("overflow","auto");
 	}
 	
 </script>
