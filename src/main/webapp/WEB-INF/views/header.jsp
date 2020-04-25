@@ -3,11 +3,11 @@
 <div class="header">
 	
 	<div class="nav">
-		<a href="#none" class="logo"><!-- <img src="" alt=""> --></a>
+		<a href="#none" class="logo"><img src="${pageContext.request.contextPath }/images/logo.png" alt="" ></a>
 		<div class="nav-right-list">
-			<a class="nav-item" onClick="location.href='${pageContext.request.contextPath}/login';"><i class="fas fa-book-reader"></i>&nbsp;관리자</a>
-			<a class="nav-item" onClick="location.href='${pageContext.request.contextPath}/join';"><i class="fas fa-address-card"></i>&nbsp;회원가입</a>
-			<a class="nav-item" onClick="location.href='${pageContext.request.contextPath}/view';"><i class="fas fa-list-alt"></i>&nbsp;회원관리</a>
+			<a class="nav-item" onClick="location.href='${pageContext.request.contextPath}/hewon/login';"><i class="fas fa-book-reader"></i>&nbsp;관리자</a>
+			<a class="nav-item" onClick="location.href='${pageContext.request.contextPath}/hewon/join';"><i class="fas fa-address-card"></i>&nbsp;회원가입</a>
+			<a class="nav-item" onClick="location.href='${pageContext.request.contextPath}/hewon/view';"><i class="fas fa-list-alt"></i>&nbsp;회원관리</a>
 			<%-- <a class="nav-item"><i class="fas fa-pen-alt"></i>&nbsp;블랑카</a> --%>
 		</div>
 		<ul class="nav-left-list">
@@ -32,7 +32,7 @@
 		<ul class="drop-menu" style="padding-left: 5%">
 			<li onclick="location.href='${pageContext.request.contextPath}/item/product'">품목현황</li>
 			<li onclick="location.href='${pageContext.request.contextPath}/item/itemList'">재고현황</li>
-			<li onclick="location.href='${pageContext.request.contextPath}/storeItem/sale_list'">판매조회</li>
+			<li onclick="location.href='${pageContext.request.contextPath}/storeItem/saleList'">판매조회</li>
 			<li onclick="location.href='${pageContext.request.contextPath}/storeItem/sale_record'">판매등록</li>
 		</ul>
 		<!-- 지점용 재고 -->

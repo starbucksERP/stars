@@ -33,8 +33,7 @@ public class HewonServiceImpl implements HewonService {
 		
 		//입력되어 전달된 비밀번호는 암호화 처리하여 변경
 		// => 요청처리 메소드 또는 JavaBean(DTO) 클래스의 Setter 메소드에서 변경 가능
-		//BCrypt.hashpw(String HewonPassword, String salt) : 전달받은 비밀번호에
-		//첨가물을 사용하여 암호화 처리 후 반환하는 메소드
+		//BCrypt.hashpw(String HewonPassword, String salt) : 전달받은 비밀번호에 첨가물을 사용하여 암호화 처리 후 반환하는 메소드
 		//BCrypt.gensalt(int log_rounds) :  첨가물의 길이를 전달받아 첨가물을 생성하여 반환하는 메소드
 		// => 매개변수에 첨가물의 길이 전달 생략 가능 - 기본값 : 10 
 		hewon.setHewonPassword(BCrypt.hashpw(hewon.getHewonPassword(), BCrypt.gensalt(10)));
@@ -52,6 +51,7 @@ public class HewonServiceImpl implements HewonService {
 		}
 		
 		String HewonPassword=hewon.getHewonPassword();
+		
 		//비밀번호를 변경할 경우
 		if(HewonPassword!=null && !HewonPassword.equals("")) {
 			hewon.setHewonPassword(BCrypt.hashpw(hewon.getHewonPassword(), BCrypt.gensalt(10)));
@@ -92,11 +92,9 @@ public class HewonServiceImpl implements HewonService {
 					, "아이디의 회원정보가 존재하지 않습니다.");
 		}
 		
-		//BCrypt.checkpw(String plaintext, String hashed) : 일반 문자열과
-		//암호화 처리된 문자열을 비교하여 같은 경우 true를 반환하는 메소드
+		//BCrypt.checkpw(String plaintext, String hashed) : 일반 문자열과 암호화 처리된 문자열을 비교하여 같은 경우 true를 반환하는 메소드
 		if(!BCrypt.checkpw(hewon.getHewonPassword(), authHewon.getHewonPassword())) {
-			throw new LoginAuthFailException(hewon.getHewonId()
-					, "아이디가 없거나 비밀번호가 맞지 않습니다.");
+			throw new LoginAuthFailException(hewon.getHewonId(), "아이디가 없거나 비밀번호가 맞지 않습니다.");
 		}
 	}
 	

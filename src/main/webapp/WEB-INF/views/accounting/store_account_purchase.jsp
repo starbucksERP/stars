@@ -41,8 +41,12 @@
 						</td>
 					</tr>
 					<tr>
-						<th>지점명</th>
-						<td><input type="search" >&nbsp;<a href="" class="a-button gray search-icon"><i class="fas fa-search"></i></a></td>
+						<th>품목명</th>
+						<td><input type="search" /></td>
+					</tr>
+					<tr>
+						<th>거래처</th>
+						<td><input type="text" readonly="readonly" disabled="disabled" value="본 사" style="text-align: center;"/></td>
 					</tr>
 				</thead>
 			</table>
@@ -51,30 +55,17 @@
 			<hr>
 			<div class="information">
 				<table class="table">
-					<tbody>
+					<tbody >
 						<tr>
 							<th>일자</th>
 							<th>거래처명</th>
+							<th>품목코드</th>
 							<th>품목명</th>
 							<th>매입금액</th>
 							<th>부가세액</th>
 							<th>총금액</th>
 						</tr>
-						<tr>
-							<td>2020-01-03</td>
-							<td>강남1호점</td>
-							<td>원두 - 블랙 퍼스트 마일드</td>
-							<td>40,000</td>
-							<td>4,000</td>
-							<td>40,000</td>
-						</tr>
-						<tr>
-							<td colspan="3" class="center">합계</td>
-							<td>134,000</td>
-							<td>1,3400</td>
-							<td>147,400</td>
-						</tr>
-					</tbody>
+					 </tbody>
 				</table>
 			</div>
 		
@@ -82,3 +73,74 @@
 
 	</div>
 </div>
+
+
+<script type="text/javascript">
+    stAccountPurchase();
+    
+	function stAccountPurchase() {
+		$.ajax({
+			type: "POST",
+			URL: "st_accountPurchaseList",
+			headers: {"content-type":"application/json"},
+			data: "json",
+			success: function(json) {
+				
+				console.log(json);
+				/*
+				 if(json.length==0) {
+					$(".table > tbody").append("<tr><td colspan='7'>검색된 결과가 없습니다.</td></tr>");
+				} else { 
+					    $(json).each(function(i) {
+					    	//alert(this.storeItemHistory.historyDate)
+						var html ="<tr>"+
+									 "<td>"+this.StoreItemHistory.historyDate+"</td>"+							
+									 "<td>본사</td>"+							
+									 "<td>"+this.StoreItemHistory.itemNum+"</td>"+							
+									 "<td>"+this.StoreItemHistory.itemName+"</td>"+							
+									 "<td>"+(this.OrderItem.itemSprice)*(this.StoreItemHistory.itemQty)+"</td>"+							
+									 "<td>부가세</td>"+							
+									 "<td>총합계</td>"							
+						             +"</tr>";
+						$(".table > tbody").append(html);
+					}) 
+				}
+				*/
+			},
+			error: function(xhr) {
+				alert("에러코드 ="+xhr.status);
+			}
+		});
+	}
+	
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -4,14 +4,9 @@
 <mapper namespace="site.bucks.mapper.StoreItemMapper">
 	
 <!-- 판매등록시 sql -->
-	<!-- 완제품인지 재료인지 구별용 -->
+	<!-- 완제품인지 재료인지 구별용 O -->
 	<select id="selectProduct" resultType="ProductRecipe">
 		select * from product_recipe where product=#{saleProduct}
-	</select>
-	
-	<!-- 판매제품이름으로 완제품 가격 검색 -->
-	<select id="selectStoreItemPrice" resultType="StoreItem">
-		select * from store_item where item_name=#{saleProduct}
 	</select>
 	
 	<!-- 판매 기록 -->
@@ -45,44 +40,28 @@
 		update store_item set item_qty=item_qty+#{orderQty} where item_num=#{itemNum} and store_id=#{storeId}
 	</update>
 <!-- 지점에서 입고 확인시 storeItemHistory 테이블에서 일어나는 일련의 메소드 -->
-
-	<!-- 판매 기록 검색 -->
+	
+	
+<!-- 판매기록 검색 -->	
 	<select id="selectSaleList" resultType="Sale">
-		select * from sale
+		select * from Sale
 		<where>
+			<if test="saleDate!=null and saleDate!=''">
+				to_char(SALE_DATE,'yyyy-mm-dd') BETWEEN #{saleDate} AND #{saleDatePair}
+			</if>
+			<if test="saleQty!=null and saleQty!=0">
+				AND SALE_QTY BETWEEN #{saleQty} AND #{saleQtyPair}
+			</if>
+			<if test="storeId!=null and storeId!=0">
+				AND STORE_ID=#{storeId}
+			</if>
 			<if test="saleProduct!=null and saleProduct!=''">
-				and sale_product like '_'||#{saleProduct}||'%'
-			</if>
-			<if test="saleQty1!=null and saleQty1!='' and saleQty2!=null and saleQty2!=''">
-				and sale_qty between #{saleQty1} and #{saleQty2}
-			</if>
-			<if test="saleDate1!=null and saleDate1!='' and saleDate2!=null and saleDate2!=''">
-				and sale_date between #{saleDate1} and #{saleDate2}
-			</if>
-			<if test="saleDate!='' and saleDate!=null">
-				and sale_date between #{saleDate} and #{saleDate}+1 and
+				AND SALE_PRODUCT=#{saleProduct}
 			</if>
 		</where>
-		order by sale_seq desc, sale_date
+		order by sale_seq desc 
 	</select>
-	
-		
-	<!-- 대분류, 소분류 상품 검색 -->
-	<select id="selectSaleProductName1" resultType="string">
-		select item_name from store_item where ITEM_NUM like #{saleCategory}||'%' and ITEM_NUM like '_'||#{saleSubCategory}||'%' and store_id=#{storeId}
-	</select>
-	
-	<!-- 조합상품 검색 -->
-	<select id="selectSaleProductName2" resultType="string">
-		select product from product_recipe where category=#{saleSubCategory}
-	</select>
-	
-	<!-- 상품 가격 검색  -->
-	<select id="searchProduct1" resultType="Item">
-		select * from item where ITEM_NAME=#{saleProduct}
-	</select>
-	<select id="searchProduct2" resultType="ProductRecipe">
-		select * from product_recipe where product=#{saleProduct}
-	</select>
+
+
 	
 </mapper>

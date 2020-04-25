@@ -28,7 +28,7 @@ fieldset {
 }
 
 legend {
-	font-size: 1.1em;
+	font-size: 1.2em;
 }
 
 .header{
@@ -45,6 +45,8 @@ legend {
 
 .logo{
 	position: absolute;
+	width: 100px; 
+	height: 110px;
 }
 
 .logo>img{
@@ -419,6 +421,9 @@ legend {
 .blue-font{
 	color: rgb(52, 152, 219) !important;
 }
+.coral-font{
+	color: #D4C9C2 !important;
+}
 
 .white-font{
 	color: white;
@@ -519,6 +524,10 @@ legend {
 
 .itemName, .saleProduct{
 	min-width: 260px;
+}
+
+.purchaseTap:active {
+	background: rgb(94, 94, 94);
 }
 
 /*	 
