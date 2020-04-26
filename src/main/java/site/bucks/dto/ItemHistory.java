@@ -26,6 +26,8 @@ public class ItemHistory {
 	private int purchaseType;
 	private String historyOwner;
 	
+
+	
 	public ItemHistory() {
 		// TODO Auto-generated constructor stub
 	}

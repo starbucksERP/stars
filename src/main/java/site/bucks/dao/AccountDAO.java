@@ -3,11 +3,27 @@ package site.bucks.dao;
 import java.util.List;
 
 import site.bucks.dto.Account;
+import site.bucks.dto.Item;
+import site.bucks.dto.Purchase;
+import site.bucks.dto.Sale;
 import site.bucks.dto.StoreItemHistory;
 
 public interface AccountDAO {
-
-	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Çºï¿½ ï¿½ï¿½ï¿½ 
+	
+//	ÁöÁ¡¸ÅÃâ
+	List<Account> selectStSaleList(Sale s);	
+	
+//	ÁöÁ¡¸ÅÀÔ
 	List<Account> selectPurchaseSaleList (StoreItemHistory sih); 
 
+//	º»»ç ¸ÅÃâ
+	List<Account> selectMainSaleList (StoreItemHistory sih);
+	
+//	º»»ç ¸ÅÀÔ 
+	List<Account> selectMainPurchaseList(Purchase p);
+	
+	
+//	º»»ç ¼ÕÀÍºÐ¼®
+//	List<Account> selectAccountIncome(int itemState);
+	
 }

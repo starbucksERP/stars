@@ -3,13 +3,25 @@ package site.bucks.service;
 import java.util.List;
 
 import site.bucks.dto.Account;
+import site.bucks.dto.Purchase;
+import site.bucks.dto.Sale;
 import site.bucks.dto.StoreItemHistory;
 
 public interface AccountService {
 	
-	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Çºï¿½ ï¿½ï¿½ï¿½ 
+//	ÁöÁ¡¸ÅÀÔ
 	List<Account> getPurchaseSaleList(StoreItemHistory sih);
 	
+//	ÁöÁ¡¸ÅÃâ 
+	List<Account> getStSaleList(Sale s);
 	
+//	º»»ç ¸ÅÀÔ 
+	List<Account> getMainPurchaseList(Purchase p);
+	
+//	º»»ç ¸ÅÃâ
+	List<Account> getMainSaleList (StoreItemHistory sih);
+	
+//	º»»ç ¼ÕÀÍºĞ¼®
+//	Map<String, Object> getAccountIncome();
 
 }
