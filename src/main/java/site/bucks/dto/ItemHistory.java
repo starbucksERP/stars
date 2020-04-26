@@ -1,5 +1,7 @@
 package site.bucks.dto;
 
+import java.util.List;
+
 /*
  �̸�            ��?       ����           
 ------------- -------- ------------ 
@@ -22,9 +24,10 @@ public class ItemHistory {
 	private int itemState;
 	private int itemQty;
 	private String historyDate;
-	private String historyDateTwo;
+	private String historyDatePair;
 	private int purchaseType;
 	private String historyOwner;
+	private List<Integer> states;
 	
 	public ItemHistory() {
 		// TODO Auto-generated constructor stub
@@ -102,18 +105,21 @@ public class ItemHistory {
 		this.historyOwner = historyOwner;
 	}
 
-	public String getHistoryDateTwo() {
-		return historyDateTwo;
+	public String getHistoryDatePair() {
+		return historyDatePair;
 	}
 
-	public void setHistoryDateTwo(String historyDateTwo) {
-		this.historyDateTwo = historyDateTwo;
+	public void setHistoryDatePair(String historyDatePair) {
+		this.historyDatePair = historyDatePair;
 	}
 
+	public List<Integer> getStates() {
+		return states;
+	}
 
-	
-	
-	
+	public void setStates(List<Integer> states) {
+		this.states = states;
+	}
 	
 	
 

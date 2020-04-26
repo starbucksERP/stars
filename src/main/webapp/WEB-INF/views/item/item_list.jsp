@@ -248,7 +248,7 @@
 				<br />
 				
 				<hr>
-				<div class="right"  id="countDiv"></div>
+				<div class="right darkgreen-font"  id="countDiv"></div>
 				<br />
 				<div class="information">
 					<button type="button" class="a-button gray medium" onclick="update(0)"><i class="fas fa-edit"></i>&nbsp;재고 수정</button>
@@ -256,16 +256,16 @@
 					<table class="table">
 						<thead>
 							<tr>
-								<th ><input type="checkbox" class="allChk"></th>
-								<th >번호</th>
-								<th >품목코드</th>
-								<th >폼목명(단위)</th>
-								<th >거래처</th>
-								<th >매입단가</th>
-								<th >공급가</th>
-								<th >총 재고 수량</th>
-								<th >최소 유지 수량</th>
-								<th >총 재고액</th>
+								<th width="5%"><input type="checkbox" class="allChk"></th>
+								<th width="5%">번호</th>
+								<th width="10%" >품목코드</th>
+								<th width="15%" >폼목명(단위)</th>
+								<th width="10%">거래처</th>
+								<th width="8%">매입단가</th>
+								<th width="8%">공급가</th>
+								<th width="10%">총 재고 수량</th>
+								<th width="14%">최소 유지 수량</th>
+								<th width="15%">총 재고액</th>
 							</tr>
 						</thead>
 						<tbody id="resultItem"></tbody>
@@ -408,7 +408,7 @@
 					} else {
 						html+="<td>"+this.itemQty+"</td>";
 					}
-					html+="<td>"+"this.itemMinQty"+"</td>" // DB정리후 출력
+					html+="<td>"+this.minQty+"</td>" 
 						+"<td>"+total+"</td>";
 				});    
 	       		
@@ -533,35 +533,6 @@
 		});
 	}
 	
-/* 안되면 이거키셈
-$("#itemUpdateBtn").click(function() {
-		var itemNum=$("#updateNum").val();
-		var itemQty=$("#updateQty").val();
-		
-		// 유효성검사 : 추후추가
-		if(itemQty=="") {
-			alert("수량을 입력해주세요.");
-			return;
-		}
-		
-		$.ajax({
-			type: "PUT",
-			url: "productModify",
-			headers: {"content-type":"application/json"},
-			data: JSON.stringify({"itemNum":itemNum,"itemQty":itemQty}),
-			dataType: "text", 
-			success: function(text) {
-				if(text=="success") {
-					closeBox("updateItemDiv");
-					itemList();
-				}
-			},
-			error: function(xhr) {
-				alert("에러코드 = "+xhr.status)
-			}
-		});
-	}); */
-	
 	function remove() {
 		var items=[];
 		if($('.rowChk:checked').length==0) {
@@ -593,7 +564,6 @@ $("#itemUpdateBtn").click(function() {
 			}
 		});
 	}
-	
 	
 	function openBox(box) {
 		var box=box;
@@ -646,6 +616,5 @@ $("#itemUpdateBtn").click(function() {
         $("body").css("overflow","auto");
 	}
 	
-
 	
 </script>

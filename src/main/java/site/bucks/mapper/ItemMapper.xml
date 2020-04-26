@@ -7,7 +7,7 @@
 		<selectKey resultType="int" keyProperty="seq" order="BEFORE">
 			select item_seq.nextval from dual
 		</selectKey>
-		insert into item values(concat(#{itemNum},#{seq}),#{itemName},0,0,#{itemPprice},#{itemSprice},0,#{itemVendor},'-',#{itemUsage})
+		insert into item values(concat(#{itemNum},#{seq}),#{itemName},0,0,#{itemPprice},#{itemSprice},0,#{itemVendor},null,#{itemUsage})
 	</insert>
 	<!--  *품목수정 / 재고 등록(수량만 변경) 및 수정 -->
 	<update id="updateProduct">
@@ -55,12 +55,12 @@
 		select * from item where ITEM_NUM = #{itemNum}
 	</select>
 
-	<!--  *품목 다중 검색 -->
+	<!--  *품목 다중 검색  -->
 	<select id="selectProductList" resultType="Item">
 		select * from item
 		<where>
 			<if test="itemNum!=null and itemNum!=''">
-				ITEM_NUM LIKE '%'||#{itemNum}||'%' 
+				ITEM_NUM=#{itemNum}
 			</if>
 			<if test="itemName!=null and itemName!=''">
 				AND ITEM_NAME LIKE '%'||#{itemName}||'%' 
@@ -114,47 +114,42 @@
 		</if>
 	</select>
 	
-	
-	
-	
-	<!--  MinQty, Margin, DM : 최소보유량 및 마진 변경 -->
-	<update id="updateItemMinQty" parameterType="Item">
-		update item set ITEM_DM=#{itemDm},
-		<trim suffix=", " suffixOverrides=",">
-			<if test="minQty!=null and minQty!=0">
-				MIN_QTY=#{minQty}
-			</if>
-			<if test="itemMargin!=null and itemMargin!=0">
-				ITEM_MARGIN=#{itemMargin}
-			</if>
-		</trim>
-		where ITEM_NUM=#{itemNum}
-	</update>
-
-	<!--  구매계획 페이지에서 all, 조건검색 -->
-	<select id="selectItemPlanList" resultType="Item">
-		select * from item where min_qty!=0
-		<trim prefix="AND">
-			<if test="itemNum!=null and itemNum!=''">
-				ITEM_NUM LIKE '%'||#{itemNum}||'%' 
-			</if>
-			<if test="itemName!=null and itemName!=''">
-				ITEM_NAME=#{itemName} 
-			</if>
-			<if test="itemVendor!=null and itemVendor!=''">
-				ITEM_VENDOR=#{itemVendor} 
-			</if>
-			<if test="itemDm!=null and itemDm!=''">
-				ITEM_DM=#{itemDm} 
-			</if>
-		</trim>
-		order by ITEM_NUM asc
-	</select>
-	
-	<!-- 재고수량체크 -->
+	<!-- *재고수량체크 -->
 	<select id="selectItemQty" parameterType="String" resultType="int">
 		select ITEM_QTY from item where ITEM_NUM=#{itemNum}
 	</select>
+	
+
+	<!--  *구매계획 조건검색 -->
+	<select id="selectItemPlanList" resultType="Item">
+		<![CDATA[select * from item where min_qty>=0 AND ITEM_USAGE!=9]]>
+		<if test="itemNum!=null and itemNum!=''">
+			AND ITEM_NUM=#{itemNum}
+		</if>
+		<if test="itemName!=null and itemName!=''">
+			AND ITEM_NAME LIKE '%'||#{itemName}||'%' 
+		</if>
+		<if test="itemVendor!=null and itemVendor!=''">
+			AND ITEM_VENDOR LIKE '%'||#{itemVendor}||'%' 
+		</if>
+		<if test="itemDm!=null and itemDm!=''">
+			AND ITEM_DM LIKE '%'||#{itemDm}||'%' 
+		</if>
+		<if test="categorys!=null">
+			<foreach collection="categorys" item="category">
+			AND ITEM_NUM LIKE '%'||#{category}||'%' 
+			</foreach>
+		</if>
+		order by ITEM_NUM asc
+	</select>
+	
+	<!-- *MinQty, Margin, DM : 최소보유량 및 마진 변경 -->
+	<update id="updateItemMinQty">
+		update item set ITEM_DM=#{itemDm}, MIN_QTY=#{minQty} where ITEM_NUM in
+		<foreach collection="items" item="itemNum" open="(" close=")" separator=",">
+			#{itemNum}
+		</foreach>
+	</update>
 	
 	<!--거래처목록 및 검색 -->
 	<select id="selectItemVendorList" parameterType="String">

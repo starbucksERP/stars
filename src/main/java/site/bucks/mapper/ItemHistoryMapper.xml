@@ -2,7 +2,6 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="site.bucks.mapper.ItemHistoryMapper">
 
-<!-- 200419 이근형 작성 시작 -->
 <insert id="insertItemHistory" parameterType="ItemHistory">
 	<selectKey resultType="int" keyProperty="historySeq" order="BEFORE">
 		select history_seq.nextval from dual
@@ -11,54 +10,47 @@
 		#{itemState}, #{itemQty}, systdate, #{purchaseType}, #{historyOwner})
 </insert>
 
+	<select id="selectItemHistoryist" resultType="ItemHistory">
+		select * from item_history
+		<where>
+			<if test="historyDate!=null and historyDate!=''">
+				to_char(HISTORY_DATE,'yyyy-mm-dd') BETWEEN #{historyDate} AND #{historyDatePair}
+			</if>
+			<if test="requestNum!=null and requestNum!=''">
+				AND request_num like '%'||#{requestNum}||'%'
+			</if>
+			<if test="itemNum!=null and itemNum!=''">
+				AND ITEM_NUM=#{itemNum}
+			</if>
+			<if test="historyOwner!=null and historyOwner!=''">
+				AND HISTORY_OWNER=#{historyOwner}
+			</if>
+			<if test="purchaseType!=null and purchaseType!=0">
+				AND PURCHASE_TYPE=#{purchaseType}
+			</if>
+			<if test="states!=null">
+				AND ITEM_STATE IN
+				<foreach collection="states" item="state" open="(" close=")" separator=",">
+				 	#{state}
+				</foreach>
+			</if>
+		</where>
+		order by HISTORY_DATE desc
+	</select>
+
+
+
+
+
+
+
+
+
 	<!-- 입출하기록 페이지에 처음 접속하면 실행되는 select 메소드: 최근 2주간의 기록만 기본적으로 출력 -->
 	<select id="recentHistoryList" parameterType="ItemHistory" resultType="ItemHistory">
 		select * from item_history where history_date between sysdate-14 and sysdate order by history_seq desc
 	</select>
-	
-	
-<select id="selectItemHistoryList" parameterType="ItemHistory" resultType="ItemHistory" >
-	select * from item_history 
-	
-	<where>
-		<!-- 입출하기록 페이지: 날짜 단일검색 (좌측 입력태그만 입력) -->
-		<if test="historyDate != null and historyDate != '' and historyDateTwo == null and historyDateTwo == '' ">
-			history_date = #{historyDate}
-		</if>
-		
-		<!-- 입출하기록 페이지: 날짜 단일검색 (우측 입력태그만 입력) -->
-		<if test="historyDate == null and historyDate == '' and historyDateTwo != null and historyDateTwo != '' ">
-			history_date = #{historyDateTwo}
-		</if>
-		
-		<!-- 입출하기록 페이지: 날짜 범위검색 -->
-		<if test="historyDate != null and historyDate != '' and historyDateTwo != null and historyDateTwo != '' ">
-			history_date between #{historyDate} and #{historyDateTwo}
-		</if>
-		
-		<!-- 입출하기록 페이지: 발주/구매번호로 검색 -->
-		<if test="requestNum != null and requestNum != '' ">
-			request_num = #{requestNum}
-		</if>
-		
-		<!-- 입출하기록 페이지: 품목(item_num)으로 검색 -->
-		<if test="itemNum != null and itemNum != '' ">
-			item_num = #{itemNum}
-		</if>
-		
-		<!-- 입출하기록 페이지: 담당자(history_owner)로 검색 -->
-		<if test="historyOwner != null and historyOwner != '' ">
-			item_num = #{historyOwner}
-		</if>
-		
-		<!-- ********** 입출하기록 페이지: 진행상태(item_state)로 검색 - 추후에 체크박스 구현을 위해 수정 필요!!!!!!! -->
-		<if test="itemState!= null and itemState != '' ">
-			history_owner = #{itemState}
-		</if>
-		
-	</where>
-	order by history_seq desc
-</select>
+
 
 	<!-- 입출하 기록 페이지 검색창 아래 탭 이용을 위한 select 메소드 -->
 	<!-- 전체 탭  -->

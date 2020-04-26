@@ -23,14 +23,22 @@
 
 	<!-- 요청번호들을 전달받아 값을 변경 -->
 	<update id="updateOrderItemState">
-		update order_item set request_state=#{requestState} where request_num in
-		<foreach collection="reqNums" item="requestNum" open="(" close=")" separator=",">
-			#{requestNum}
-		</foreach>
+		update order_item set request_state=#{requestState} where 
+		<if test="reqNums!=null">
+			request_num IN
+			<foreach collection="reqNums" item="requestNum" open="(" close=")" separator=",">
+				#{requestNum}
+			</foreach>
+		</if>
+		<if test="requestNum!=null and requestNum!=0">
+			request_num=#{requestNum}
+		</if>
 		<if test="storeId!=null and storeId!=0">
 			AND STORE_ID=#{storeId}
 		</if>
 	</update>
+	
+	<!--  요청번호 하나씩만  -->
 	
 	<!-- 검색 -->
 	<select id="selectOrderItemList" resultType="OrderItem">
