@@ -7,7 +7,7 @@ import site.bucks.dto.Purchase;
 
 public interface PurchaseService {
 	
-	void addPurchaseRequest(Purchase purchase);
+	void insertPurchaseOrder(Purchase purchase);
 	List<Purchase> getSearchPurchaseList(Purchase purchase);
 	void purchaseReqConfirm(int purchaseSeq);
 	void purchaseComplete(int purchaseSeq);

@@ -17,8 +17,8 @@ public class PurchaseDAOImpl implements PurchaseDAO{
 	private SqlSession sqlSession;
 	
 	@Override
-	public int insertPurchaseRequest(Purchase purchase) {
-		return sqlSession.getMapper(PurchaseMapper.class).insertPurchaseRequest(purchase);
+	public int insertPurchaseOrder(Purchase purchase) {
+		return sqlSession.getMapper(PurchaseMapper.class).insertPurchaseOrder(purchase);
 	}
 	
 	@Override

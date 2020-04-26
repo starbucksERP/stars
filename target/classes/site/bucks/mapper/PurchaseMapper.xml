@@ -25,11 +25,13 @@
 <!-- 본사 구매 관련 페이지 시작 -->
 <!-- ==> insert 들어왔을때 발주요청조회에서 해당 requestNum의 상태도 update해야 한다 - 미완료(확인할것) -->
 <!-- 히스토리에 insert 넣을때 Purchase_Type 신경쓸것 - 미완료 -->
-<insert id="insertPurchaseRequest" parameterType="Purchase">
+<insert id="insertPurchaseOrder" parameterType="Purchase">
 	<selectKey resultType="int" keyProperty="purchaseSeq" order="BEFORE">
 		select purchase_seq.nextval from dual
 	</selectKey>
-		insert into purchase values(#{purchaseSeq}, #{requestNum}, 30, sysdate, #{itemNum}, #{itemQty}, #{itemPprice}, (select item_Vendor from item where item_num=#{itemNum}), #{purchaseType})
+		insert into purchase values(#{purchaseSeq}, #{requestNum}, #{purchaseState}, sysdate, 
+		#{itemNum}, #{itemQty},(select item_pprice from item where item_num=#{itemNum}),
+		(select item_vendor from item where item_num=#{itemNum}), #{purchaseType}) 
 </insert>
 
 

@@ -40,8 +40,8 @@ public class PurchaseServiceImpl implements PurchaseService{
 	}
 
 	@Override
-	public void addPurchaseRequest(Purchase purchase) {
-		// TODO Auto-generated method stub
+	public void insertPurchaseOrder(Purchase purchase) {
+		purchaseDAO.insertPurchaseOrder(purchase);
 		
 	}
 
