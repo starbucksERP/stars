@@ -173,9 +173,9 @@
 			success: function(json) {
 				$("#resultHistory").empty();
 				if(historyDate=='' || historyDate==null) {
-					$("#periodDiv").html("[ "+historyDate+" ~ "+historyDatePair+" ]"); 
-				} else { 
 					$("#periodDiv").html("[ 전체기간 ]");
+				} else { 
+					$("#periodDiv").html("[ "+historyDate+" ~ "+historyDatePair+" ]"); 
 				}
 				$("#countDiv").html("총 검색결과 : "+json.length+"건   ");
 				
