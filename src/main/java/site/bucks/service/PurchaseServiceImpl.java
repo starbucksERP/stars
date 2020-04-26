@@ -34,6 +34,12 @@ public class PurchaseServiceImpl implements PurchaseService{
 	}
 	
 	@Override
+	public void purchaseCompleteHQ(int purchaseSeq) {
+		purchaseDAO.purchaseCompleteHQ(purchaseSeq);
+		
+	}
+	
+	@Override
 	public void purchaseCancel(int purchaseSeq) {
 		purchaseDAO.purchaseCancel(purchaseSeq);
 		
@@ -42,6 +48,12 @@ public class PurchaseServiceImpl implements PurchaseService{
 	@Override
 	public void insertPurchaseOrder(Purchase purchase) {
 		purchaseDAO.insertPurchaseOrder(purchase);
+		
+	}
+
+	@Override
+	public void updateQtyFromPurchase(int purchaseSeq) {
+		purchaseDAO.updateQtyFromPurchase(purchaseSeq);
 		
 	}
 

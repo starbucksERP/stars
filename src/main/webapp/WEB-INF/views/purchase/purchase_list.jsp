@@ -363,13 +363,8 @@ function searchPurchaseList(searchType) {
 					return;
 					
 				} else {
-					var answer = confirm("요청번호 ["+requestNum+"] : 구매요청을 승인 하시겠습니까?");
-					if(answer) {
 						purchase.push(purchaseSeq);
-					} else {
-						return;
-					}
-				}
+					} 
 				
 			});
 			
@@ -383,6 +378,7 @@ function searchPurchaseList(searchType) {
 					dataType: "text", 
 					success: function(text) {
 						if(text=="success") {
+							alert("구매요청이 승인 되었습니다.");
 							searchPurchaseList(4);
 						}
 					},
@@ -403,6 +399,7 @@ function searchPurchaseList(searchType) {
 			return;
 		} else {
 			var purchase =[];
+			var purchaseHQ =[];
 			var rowChk = $(".rowChk:checked");
 			
 			rowChk.each(function(i) {
@@ -412,6 +409,7 @@ function searchPurchaseList(searchType) {
 				var requestNum = td.eq(2).text(); 
 				var purchaseSeq = td.eq(1).text(); 
 				var purchaseState = td.eq(10).text();
+				var purchaseType = td.eq(3).text();
 				
 				if(purchaseState=="구매 요청") {
 					purchaseState = 30;
@@ -429,14 +427,17 @@ function searchPurchaseList(searchType) {
 					alert("요청번호 ["+requestNum+"] : 구매완료 승인 오류 ");
 					return;
 					
-				} else {
+				} else if(purchaseState==31 && purchaseType!='본사 수동' && purchaseType!='본사 자동') {
+					alert(purchaseType);
 					var answer = confirm("요청번호 ["+requestNum+"] : 구매를 완료 하시겠습니까?");
 					if(answer) {
 						purchase.push(purchaseSeq);
-					} else {
-						return;
-					}
+						}
+					
+				} else if(purchaseState==31 && purchaseType=='본사 수동' || purchaseType=='본사 자동') {
+						purchaseHQ.push(purchaseSeq);
 				}
+				
 				
 			});
 			
@@ -450,11 +451,31 @@ function searchPurchaseList(searchType) {
 					dataType: "text", 
 					success: function(text) {
 						if(text=="success") {
+							alert("구매완료가 승인 되었습니다.");
 							searchPurchaseList(5);
 						}
 					},
 					error: function(xhr) {
-						alert("에러코드 = "+xhr.status)
+						alert("에러코드 = "+xhr.status);
+					}
+					
+				});
+			} if(purchaseHQ.length!=0) {
+				var param={"list":purchaseHQ};
+				
+				$.ajax({
+					type: "POST",
+					url: "purchaseCompleteHQ",
+					data: param,
+					dataType: "text", 
+					success: function(text) {
+						if(text=="success") {
+							alert("구매완료가 승인 되었습니다.");
+							searchPurchaseList(5);
+						}
+					},
+					error: function(xhr) {
+						alert("에러코드 = "+xhr.status);
 					}
 					
 				});

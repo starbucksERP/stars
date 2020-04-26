@@ -35,9 +35,20 @@ public class PurchaseDAOImpl implements PurchaseDAO{
 	public int purchaseComplete(int purchaseSeq) {
 		return sqlSession.getMapper(PurchaseMapper.class).purchaseComplete(purchaseSeq);
 	}
+	
+	@Override
+	public int purchaseCompleteHQ(int purchaseSeq) {
+		return sqlSession.getMapper(PurchaseMapper.class).purchaseCompleteHQ(purchaseSeq);
+	}
+	
 	@Override
 	public int purchaseCancel(int purchaseSeq) {
 		return sqlSession.getMapper(PurchaseMapper.class).purchaseCancel(purchaseSeq);
+	}
+
+	@Override
+	public int updateQtyFromPurchase(int purchaseSeq) {
+		return sqlSession.getMapper(PurchaseMapper.class).updateQtyFromPurchase(purchaseSeq);
 	}
 
 	

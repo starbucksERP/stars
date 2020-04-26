@@ -10,6 +10,7 @@ public interface PurchaseDAO {
 	List<Purchase> searchPurchaseList(Purchase purchase); // 근형
 	int purchaseReqConfirm(int purchaseSeq);
 	int purchaseComplete(int purchaseSeq);
+	int purchaseCompleteHQ(int purchaseSeq);
 	int purchaseCancel(int purchaseSeq);
-	
+	int updateQtyFromPurchase(int purchaseSeq);
 }

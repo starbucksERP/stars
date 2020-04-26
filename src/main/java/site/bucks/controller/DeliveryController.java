@@ -113,7 +113,6 @@ public class DeliveryController {
 	  List<Integer> deliveryList ) {
 		  for(int deliverySeq:deliveryList) { 
 			  System.out.println(deliverySeq);
-			  
 			  deliveryService.modifyDeliveryReady(deliverySeq); 
 			  }
 		   

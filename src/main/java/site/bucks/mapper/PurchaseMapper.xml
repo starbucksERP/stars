@@ -35,6 +35,7 @@
 </insert>
 
 
+
 <!-- 여기에 where절 추가해서 오늘 포함 데이터만 출력하게 해야되는데 왜 자꾸 오류나지?  -->
 
 <select id="searchPurchaseList"  parameterType="String"  resultMap="Purchase">
@@ -117,10 +118,22 @@
 
 </update>
 
+<update id="purchaseCompleteHQ" parameterType="Purchase">
+	update purchase set purchase_state = 33 where purchase_seq = #{purchaseSeq}
+
+</update>
+
 <update id="purchaseCancel" parameterType="Purchase">
 	update purchase set purchase_state = 99 where purchase_seq = #{purchaseSeq}
 
 </update>
+
+<update id="updateQtyFromPurchase" parameterType="Purchase">
+		update item set item_qty= (select item_qty from item where item_num = 
+		(select item_num from purchase where purchase_seq = #{purchase_seq})) + 
+		(select item_qty from purchase where purchase_seq = #{purchase_seq})
+        where item_num =(select item_num from purchase where purchase_seq = #{purchase_seq})
+	</update>
 <!-- 200419 이근형 작성 종료 -->
 
 

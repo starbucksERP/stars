@@ -11,7 +11,8 @@ public interface PurchaseService {
 	List<Purchase> getSearchPurchaseList(Purchase purchase);
 	void purchaseReqConfirm(int purchaseSeq);
 	void purchaseComplete(int purchaseSeq);
+	void purchaseCompleteHQ(int purchaseSeq);
 	void purchaseCancel(int purchaseSeq);
-	
+	void updateQtyFromPurchase(int purchaseSeq);
 	
 }

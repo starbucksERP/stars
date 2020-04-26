@@ -221,12 +221,11 @@
 			 //	{orderSeq}, {requestNum}, {storeId}, {itemNum},  {orderQty}
 		    	purchaseOrder = {
 		        	requestNum	: time+$("#storeId").val().substring(0, 2),
-	        		purchaseState : 30,
 	        		itemNum        : $(this).parents('tr').find(".itemNum").text(),
+		        	itemName      : $(this).parents('tr').find(".itemNames").text(),
+	        		purchaseState : 30,
 	        		itemQty        : $(this).parents('tr').find(".orderQty").text(),
 	        		purchaseType : 3 
-	        		
-	        		
 		        };
 		        
 		 	// param 배열에 storeOrder 오브젝트를 담는다.

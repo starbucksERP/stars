@@ -10,6 +10,8 @@ public interface PurchaseMapper {
 	List<Purchase> searchPurchaseList(Purchase purchase); // 근형
 	int purchaseReqConfirm (int purchaseSeq); // 근형
 	int purchaseComplete (int purchaseSeq); // 근형
+	int purchaseCompleteHQ (int purchaseSeq); // 근형
 	int purchaseCancel (int purchaseSeq); // 근형
+	int updateQtyFromPurchase(int purchaseSeq);
 	
 }
