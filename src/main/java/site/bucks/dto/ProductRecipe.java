@@ -12,8 +12,8 @@ ITEM3                  VARCHAR2(50)
  
  */
 public class ProductRecipe {
-	private String product;
 	private String category;
+	private String product;
 	private int productPrice;
 	private String item1;
 	private String item2;
