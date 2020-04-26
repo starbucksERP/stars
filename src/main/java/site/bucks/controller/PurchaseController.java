@@ -60,13 +60,6 @@ public class PurchaseController {
 		model.addAttribute("purchaseList", purchaseService.getDisplayInProcess(purchase));
 		return "purchase/purchase_list";
 	}
-	
-
-	@RequestMapping(value = "/purchasePlan")
-	public String getDisplayPurchasePlan(){
-		return "purchase/purchase_plan";
-	}
-	
 
 	@RequestMapping(value = "/purchaseAdd")
 	public String getDisplayPurchaseAdd(){

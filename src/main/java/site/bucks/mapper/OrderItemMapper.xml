@@ -7,10 +7,9 @@
 		<selectKey resultType="int" keyProperty="orderSeq" order="BEFORE">
 			select order_seq.nextval from dual		
 		</selectKey>
-		<!-- insert into order_item values(#{orderSeq}, #{requestNum}, #{storeId}, #{itemNum},
-		 #{orderQty},(select item_Pprice from item where item_num=#{itemNum}), #{itemSprice}, 10, sysdate, null, 1) -->
-		 insert into order_item values(#{orderSeq}, #{requestNum}, #{storeId}, 123,
-		 123,123, 123, 10, sysdate, null, 1)
+		insert into order_item values(#{orderSeq}, #{requestNum}, #{storeId}, #{itemNum},
+		 #{orderQty},(select item_Pprice from item where item_num=#{itemNum}), #{itemSprice}, 10, sysdate, null, 1)
+
 	</insert> 
 	
 <!-- 지점 발주시 -->
@@ -19,20 +18,33 @@
 	<select id="selectStoreOrderItems" parameterType="String" resultType="OrderItem">
 		select * from order_item where request_num=#{requestNum} and store_id=#{storeId}
 	</select>
+	
+	<update id="updateOrderCheck">
+		update order_item set request_state=#{requestState} where request_num in #{requestNum} AND STORE_ID=#{storeId}
+	</update>
+	
 
 
 <!--  ******************************* 본점관련SQL *********************************************** -->
 
 	<!-- 요청번호들을 전달받아 값을 변경 -->
 	<update id="updateOrderItemState">
-		update order_item set request_state=#{requestState} where request_num in
-		<foreach collection="reqNums" item="requestNum" open="(" close=")" separator=",">
-			#{requestNum}
-		</foreach>
+		update order_item set request_state=#{requestState} where 
+		<if test="reqNums!=null">
+			request_num IN
+			<foreach collection="reqNums" item="requestNum" open="(" close=")" separator=",">
+				#{requestNum}
+			</foreach>
+		</if>
+		<if test="requestNum!=null and requestNum!=0">
+			request_num=#{requestNum}
+		</if>
 		<if test="storeId!=null and storeId!=0">
 			AND STORE_ID=#{storeId}
 		</if>
 	</update>
+	
+	<!--  요청번호 하나씩만  -->
 	
 	<!-- 검색 -->
 	<select id="selectOrderItemList" resultType="OrderItem">

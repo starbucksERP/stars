@@ -12,6 +12,6 @@ public interface OrderItemService {
 	void modifyOrderItemState(Map<String, Object> numAndStateMap);
 	List<OrderItem> getOrderItemList(OrderItem orderItem);
 	List<OrderItem> getOrderItems(String requestNum);
-	void checkQty(String requestNum);
+	void modifyOrderStateByCheckQty(String requestNum);
 
 }

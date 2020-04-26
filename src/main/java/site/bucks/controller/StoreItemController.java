@@ -9,14 +9,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import site.bucks.dto.Delivery;
-import site.bucks.dto.Hewon;
+import site.bucks.dto.Item;
+import site.bucks.dto.ProductRecipe;
 import site.bucks.dto.Sale;
+import site.bucks.dto.StoreItem;
 import site.bucks.exception.HewonNotFoundException;
 import site.bucks.service.DeliveryService;
 import site.bucks.service.StoreItemService;
@@ -73,28 +76,63 @@ public class StoreItemController {
 	}
 	
 	
+//	판매 상품 카테고리검색  	saleProductCategory
+	@RequestMapping(value = "/saleProduct/{itemNum}", method = RequestMethod.GET)
+	@ResponseBody
+	public List<ProductRecipe> getsaleCategory(@PathVariable String itemNum) {
+		return storeItemService.getProductCategory(itemNum);
+	}
+	
+//	판매 상품  검색 	saleProductName
+	@RequestMapping(value = "/saleProductName/{itemNum}", method = RequestMethod.GET)
+	@ResponseBody
+	public ProductRecipe getsaleProductName(@PathVariable String itemNum) {
+		return storeItemService.getProductName2(itemNum);
+	}
 	
 	
-//	품목현황
-	/*
-	 * @RequestMapping(value = "/product", method = RequestMethod.GET) public String
-	 * productList() { return "item/product_list"; }
-	 * 
-	 * @RequestMapping(value = "/product", method = RequestMethod.POST)
-	 * 
-	 * @ResponseBody public List<Item> productList(@RequestBody Item item) { return
-	 * itemService.getProductList(item); }
-	 * 
-	 * // 재고현황
-	 * 
-	 * @RequestMapping(value = "/itemList") public String itemList() { return
-	 * "item/item_list"; }
-	 * 
-	 * @RequestMapping(value = "/itemList", method = RequestMethod.POST)
-	 * 
-	 * @ResponseBody public List<Item> itemList(@RequestBody Item item) { return
-	 * itemService.getItemList(item); }
-	 */
+	
+	
+	
+	
+	
+	
+	
+// 재고 현황
+	 @RequestMapping(value = "/itemList") public String itemList() {
+		 return "storeItem/item_list"; 
+	 }
+	 
+//	  재고현황 다중검색
+	 @RequestMapping(value = "/itemList", method = RequestMethod.POST)
+	 @ResponseBody 
+	 public List<StoreItem> storeItemList(@RequestBody StoreItem storeItem) { 
+		 return storeItemService.getStoreItemList(storeItem); 
+	 }
+	 
+//	 재고 검색
+	@RequestMapping(value = "/getItem", method = RequestMethod.POST)
+	@ResponseBody
+	public StoreItem getStoreItem(@RequestBody StoreItem storeItem) {
+		return storeItemService.getStoreItem(storeItem);
+	}
+	
+//	재고삭제
+	@RequestMapping(value = "/itemDelete", method = {RequestMethod.PUT, RequestMethod.PATCH})
+	@ResponseBody
+	public String storeItemDelete(@RequestBody StoreItem storeItem) {
+		storeItemService.removeStoreItem(storeItem);
+		return "success";
+	}
+	
+//	재고 수정
+	@RequestMapping(value = "/itemModify", method = {RequestMethod.PUT, RequestMethod.PATCH })
+	@ResponseBody
+	public String storeItemModify(@RequestBody StoreItem storeItem) {
+		storeItemService.modifyStoreItem(storeItem);
+		return "success";
+	}
+	
 	
 	
 	
@@ -107,10 +145,11 @@ public class StoreItemController {
 	@RequestMapping(value = "/deliveryList", method = RequestMethod.GET)
 	public String getDisplayDelReadyList(@ModelAttribute Delivery delivery, Model model, HttpSession session) throws HewonNotFoundException  {
 		
-		Hewon loginHewon=(Hewon)session.getAttribute("loginHewon");
-		if(!loginHewon.getHewonGrade().equals("9")) {
-			delivery.setStoreId(loginHewon.getHewonStId());
-		}
+		/*
+		 * Hewon loginHewon=(Hewon)session.getAttribute("loginHewon");
+		 * if(!loginHewon.getHewonGrade().equals("9")) {
+		 * delivery.setStoreId(loginHewon.getHewonStId()); }
+		 */
 		
 		model.addAttribute("delReadyList", deliveryService.getDisplayDelReadyList(delivery));
 		return "storeItem/delivery_list";
@@ -120,10 +159,11 @@ public class StoreItemController {
 	@RequestMapping(value = "/deliveryList", method = RequestMethod.POST)
 	public String getSearchDelReadyList(@ModelAttribute Delivery delivery, Model model,  HttpSession session) throws HewonNotFoundException  {
 		
-		Hewon loginHewon=(Hewon)session.getAttribute("loginHewon");
-		if(!loginHewon.getHewonGrade().equals("9")) {
-		}
-		delivery.setStoreId(loginHewon.getHewonStId());
+		/*
+		 * Hewon loginHewon=(Hewon)session.getAttribute("loginHewon");
+		 * if(!loginHewon.getHewonGrade().equals("9")) {
+		 * delivery.setStoreId(loginHewon.getHewonStId()); }
+		 */
 		
 		model.addAttribute("delReadyList", deliveryService.getSearchDelReadyList(delivery));
 		return "storeItem/delivery_list";

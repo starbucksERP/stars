@@ -109,14 +109,15 @@
 			<br />
 			
 			<div>
-				<button type="button" class="a-button green padding-button" onclick="orderReqConfirm(0)">발주확인</button>
+				<button type="button" class="a-button green padding-button" onclick="orderReqConfirm(0)">입고확인</button>
+				${message }
 			</div>
 			
 			<div class="information" >
 				<table class="table">
 					<thead style="line-height: 20px;">
 						<tr>
-							<th width="5%"><input type="checkbox" class="allChk"></th>
+							<th width="1%"><input type="checkbox" class="allChk"></th>
 							<th width="10%">발주요청일</th>
 							<th width="10%">발주번호</th>
 							<th width="10%">지점명(코드)</th>
@@ -192,18 +193,18 @@
 				
 				var html="";
 	       		$(json).each(function() {
-	       			var total=Number(this.orderQty)*Number(this.itemPprice);
+	       			var total=Number(this.orderQty)*Number(this.itemSprice);
 	       			
 	       			html+="<tr><td><input type='checkbox' class='rowChk' value='"+this.requestNum+"'></td>";
 	       			
 	        		html+="<td>"+this.requestDate+"</td>"
-					+"<td>"+this.requestNum+"</td>"
-					+"<td>"+this.storeId+"</td>"
-					+"<td>"+this.itemNum+"</td>"
-					+"<td>"+this.orderQty+"</td>"
+					+"<td class='requestNum'>"+this.requestNum+"</td>"
+					+"<td class='storeId'>"+this.storeId+"</td>"
+					+"<td class='itemNum'>"+this.itemNum+"</td>"
+					+"<td class='orderQty'>"+this.orderQty+"</td>"
 					+"<td>"+total+"</td>";
 					if(this.requestState==10) {
-						html+="<td class='green-font'><button type='button' class='a-button blackgray inner-button' onclick='orderReqConfirm("+this.requestNum+")'>취소요청</button></td></tr>";
+						html+="<td class='green-font'><button type='button' class='a-button blackgray inner-button' onclick='orderReqConfirm("+this.requestNum+")'>취소요청</button><input type='hidden' value='"+this.itemSprice+"' class='itemSprice' /></td></tr>";
 					} else if(this.requestState==70){
 						html+="<td class='blue-font'>입고완료</td></tr>";
 					} else if(this.requestState>10 && this.requestState<99) {
@@ -233,16 +234,14 @@
 			reqNums.push(reqNum);
 			
 			$.ajax({
-				type: "PUT",
-				url: "storeOrderModify",
-				headers: {"content-type":"application/json","X-HTTP-Method-override":"PUT"},
-				data: JSON.stringify({"requestState":99, "reqNums":reqNums,"storeId":storeId}),
+				type: "POST",
+				url: "storeOrderCancel",
+				headers: {"content-type":"application/json",},
+				data: JSON.stringify({"requestState":10, "requestNum":reqNum,"storeId":storeId}),
 				dataType: "text", 
 				success: function(text) {
 					if(text=="success") {
-						$(".rowChk").prop("checked", false); // 체크박스초기화
-						//$(".innerMessage").html("선택된 발주가 완료되었습니다.<br><br><br>");
-						//$("#popupBox").show(300); 
+						$(".rowChk").prop("checked", false);
 						openModal("선택된 발주가 취소처리되었습니다.<br><br><br>");
 						orderReqList(1);
 					}
@@ -262,38 +261,52 @@
 				return;
 			} else {
 				$(".message").empty();
-				$(".rowChk:checked").each(function(i) {
-					alert($(this).val());
-					reqNums.push($(this).val());
+				
+				var param = [];
+			 	var sih=[];
+			 	
+			
+			    $(".rowChk:checked").each(function(i) {
+			    	sih = {
+		    			requestNum	:$(this).parents('tr').find(".requestNum").text(),
+			        	//storeId			: $(this).parents('tr').find(".storeId").text(),
+			        	storeId			: 1021,
+		        		itemNum        : $(this).parents('tr').find(".itemNum").text(),
+		        		itemSprice		: $(this).parents('tr').find(".itemSprice").val(),
+		        		orderQty        : $(this).parents('tr').find(".orderQty").text()
+			        };
+			    	
+			    	console.log(sih.storeId)
+			    	console.log(sih.itemNum)
+			    	console.log(sih.itemSprice)
+			    	console.log(sih.orderQty)
+			    	
+			 	// param 배열에 storeOrder 오브젝트를 담는다.
+			        param.push(sih);
+			    });
+			    
+		
+			    $.ajax({
+					type: "POST",
+					url: "storeOrderCheck",
+					headers: {"content-type":"application/json"},
+					data: JSON.stringify(param),
+					dateType: "text",
+					success: function(text) {
+						if(text=="success") {
+							$(".rowChk").prop("checked", false); 
+							openModal("선택된 발주가 입고처리되었습니다.<br><br><br>");
+							orderReqList(1);
+						}
+					},
+					error: function(xhr) {
+						alert("에러코드 = "+xhr.status)
+					}
+			    
 				});
 			}
 		}
-		
-		
-		$.ajax({
-			type: "PUT",
-			url: "storeOrderModify",
-			headers: {"content-type":"application/json","X-HTTP-Method-override":"PUT"},
-			data: JSON.stringify({"requestState":70, "reqNums":reqNums,"storeId":storeId}),
-			dataType: "text", 
-			success: function(text) {
-				if(text=="success") {
-					$(".rowChk").prop("checked", false); // 체크박스초기화
-					//$(".innerMessage").html("선택된 발주가 완료되었습니다.<br><br><br>");
-					//$("#popupBox").show(300); 
-					openModal("선택된 발주가 입고처리되었습니다.<br><br><br>");
-					orderReqList(1);
-				}
-			},
-			error: function(xhr) {
-				alert("에러코드 = "+xhr.status)
-			}
-		});
-	
-		 
 	}
-
-	
 	
 
 	function openModal(message) {
