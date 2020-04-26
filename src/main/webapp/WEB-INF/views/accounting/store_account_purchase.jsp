@@ -1,6 +1,55 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-  
+<style type="text/css">
+
+#accountTable {
+   margin-left: -1px;
+   border-collapse: collapse !important;
+   font-size: 13px;
+   width: 100%;
+   max-width: 100%;
+   margin: 50px 0;
+   border: 1px solid #ddd;
+   line-height: 1.5;
+   border-spacing: 0;
+}
+
+#accountTable thead>tr>th, #accountTable tbody>tr>th, #accountTable tfoot>tr>th, #accountTable>thead>tr>td,
+   #accountTable tbody>tr>td, #accountTable tfoot>tr>td {
+   padding: 9px;
+   line-height: 1.4;
+   border-top: 1px solid #ddd;
+   border-bottom-width: 2px;
+   vertical-align: middle !important;   
+}
+
+#accountTable thead>tr>th {
+	width: 9%;
+}
+
+#accountTable thead>tr>td {
+	padding-left: 20px;
+}
+
+#accountTable tbody+tbody {
+   border-top: 2px solid #ddd;
+}
+
+#accountTable th {
+     background: #D4C9C2;
+      text-align: center;
+}
+
+#accountTable>thead>tr>td {
+   text-align: left;
+}
+
+#accountTable>tbody>tr>td{
+	padding: 8px 20px;
+	text-align: center;
+}
+
+</style>
 
 <div class="container">
 	<div class="row">
@@ -32,7 +81,7 @@
 		
 			<h3>매입 현황 - 지점</h3>
 			<div class="right">
-			<button type="button" class="a-button big" id="searchBtn" ><i class="fas fa-search" ></i>&nbsp;검색</button>
+			<button type="button" class="a-button darkgreen big" id="searchBtn" ><i class="fas fa-search" ></i>&nbsp;검색</button>
 			<button type="button" class="a-button sea big" id="resetBtn" ><i class="fas fa-search" ></i>&nbsp;초기화</button>
 			</div>
 			<hr />
@@ -43,7 +92,7 @@
 						<th>기준일자</th>
 						<td>
 							<label class="gLabel"><input type="date" class="item historyDate" id="historyDate" name="historyDate"/>&nbsp;<i class="far fa-calendar-alt"></i></label>
-							&nbsp;-&nbsp;<label class="gLabel"><input type="date" class="item historyDate1" id="historyDate1" name="historyDate1"/>&nbsp;<i class="far fa-calendar-alt"></i></label>
+							&nbsp;-&nbsp;&nbsp;<label class="gLabel"><input type="date" class="item historyDate1" id="historyDate1" name="historyDate1"/>&nbsp;<i class="far fa-calendar-alt"></i></label>    
 						</td>
 					</tr>
 					<tr>
@@ -56,17 +105,30 @@
 					</tr>
 					<tr>
 						<th>거래처</th>
-						<td><input type="text" readonly="readonly" disabled="disabled" value="본 사" style="text-align: center;"/></td>
+						<td><button type="button" class="a-button darkgreen" style="width: 100px; text-align: center" >본  사</button></td>
+					</tr>
+					<tr>
+						<th>
+							총 매입금액<br /><br />
+							<input type="search" class=" item money Total" id="total" readonly="readonly" style="text-align: center; border:none; background: #D4C9C2;"/>
+						</th>
+						<td>
+							매입금액&nbsp;&nbsp;<input type="search" class="item money Tot" readonly="readonly" id="totPrice" style="text-align: center; border:none;"/>
+							<br /><br />
+							&nbsp;&nbsp;&nbsp;세액 &nbsp;&nbsp;&nbsp;&nbsp;<input type="search" class="item momey Vat" readonly="readonly" id="totVat" style="text-align: center; border:none;"/>
+						</td>
 					</tr>
 				</thead>
 			</table>
 			
 			<br />
 			<hr>
+			<br />
 			<div class="information">
-				<table class="table" >
+				<div id="resultLength" class="right"></div>
+				<table id="accountTable" >
 					<thead>
-						<tr>
+						<tr style="height: 20px; background-color:#D4C9C2; font:bold;">
 							<th>일자</th>
 							<th>거래처명</th>
 							<th>품목코드</th>
@@ -74,7 +136,7 @@
 							<th>수량</th>
 							<th>단가</th>
 							<th>매입금액</th>
-							<th>부가세액</th>
+							<th>세액</th>
 							<th>총금액</th>
 						</tr>
 					 </thead>
@@ -90,6 +152,7 @@
 
 
 <script type="text/javascript">
+
 
 	stAccountPurchase();
  
@@ -126,12 +189,16 @@
 				type: "POST",
 				url: "st_accountPurchase",
 				headers:{"content-type":"application/json"},
-				data: JSON.stringify({"itemNum":itemNum,"itemName":itemName,"historyDate":historyDate,"historyDate1":historyDate1}),
+				data: JSON.stringify({"itemNum":itemNum,"itemName":itemName,"itemState":70 ,"historyDate":historyDate,"historyDate1":historyDate1}),
 				dataType: "json",
 				success: function(json) {
+					$("#resultLength").html("총 검색결과 : "+json.length+"건");
 					 if(json.length==0) {
 						var html="<tr><td colspan='9'>검색된 결과가 없습니다.</td></tr>";
 						$("#listDiv").html(html);
+				   	    $("#totPrice").val("");
+				   	    $("#totVat").val("");
+				   	    $("#total").val("");
 					} else { 
 						var html="";
 						var sumPprice=0;
@@ -142,7 +209,7 @@
 							 var qty=this.sih.itemQty;
 							 var price=this.oi.itemSprice;
 							 var pPrice=qty*price;
-							 var vat=(pPrice)*(0.1);
+							 var vat=parseInt((pPrice)*(0.1));
 							 var tot=parseInt((pPrice)*(1.1));
 						
 						  html+="<tr>"+
@@ -151,10 +218,10 @@
 								     "<td>"+this.sih.itemNum+"</td>"+							
 									 "<td>"+this.sih.itemName+"</td>"+							
 									 "<td>"+qty+"</td>"+							
-									 "<td>"+price+"</td>"+							
-								 	 "<td>"+pPrice+"</td>"+							
-								 	 "<td>"+vat+"</td>"+							
-								 	 "<td>"+tot+"</td>"+
+									 "<td>￦"+numeral(price).format('0,0')+"</td>"+							
+								 	 "<td>￦"+numeral(pPrice).format('0,0')+"</td>"+							
+								 	 "<td>￦"+numeral(vat).format('0,0')+"</td>"+							
+								 	 "<td>￦"+numeral(tot).format('0,0')+"</td>"+
 								 	 "</tr>";
 							 	 
 							 		sumPprice+=pPrice;
@@ -164,12 +231,16 @@
 					
 							 html+="<tr style='height: 20px; background-color:#D4C9C2; font:bold; '>"+
 							 	   "<td colspan='6'>합계</td>"+
-							 	   "<td>"+sumPprice+"</td>"+
-							 	   "<td>"+sumVat+"</td>"+
-							 	   "<td>"+sumTot+"</td>"+
+							 	   "<td>￦"+numeral(sumPprice).format('0,0')+"</td>"+
+							 	   "<td>￦"+numeral(sumVat).format('0,0')+"</td>"+
+							 	   "<td>￦"+numeral(sumTot).format('0,0')+"</td>"+
 							 	   "</tr>";
 							   	   $("#listDiv").html(html);
+							   	   $("#totPrice").val('￦'+numeral(sumPprice).format('0,0'));
+							   	   $("#totVat").val('￦'+numeral(sumVat).format('0,0')); 
+							   	   $("#total").val('￦'+numeral(sumTot).format('0,0'));
 						}
+						
 					},
 					error: function(xhr) {
 						alert("에러코드 ="+xhr.status);

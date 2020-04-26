@@ -4,7 +4,6 @@
 <mapper namespace="site.bucks.mapper.AccountMapper">
 
     <!-- 지점매입과 본사매출 공통(테이블 사용하는것 같음)으로 사용-->
-    
 	<resultMap type="Account" id="accountResultMapOne">
 		<association property="sih" javaType="StoreItemHistory">
 			<result column="store_id" property="storeId"/>
@@ -21,15 +20,21 @@
 			<result column="ITEM_PPRICE" property="itemPprice"/>
 			<result column="ITEM_SPRICE" property="itemSprice"/>
 		</association>
+		
+		<association property="st" javaType="Store">
+			<id column="store_id" property="storeId"/>
+			<result column="store_name" property="storeName"/>
+		</association>
 	</resultMap>
 
 
 	<!-- 지점매입 검색조건 -->
-	<select id="selectPurchaseSaleList" resultMap="accountResultMapOne">
-		select * from store_item_history s join order_item o
-				on s.request_num=o.request_num where s.item_state=70 and s.store_id=1021
+	<select id="selectPurchaseSaleList" resultMap="accountResultMapOne" parameterType="StoreItemHistory">
+		select * from store_item_history SIH join order_item OI
+				on SIH.request_num=OI.request_num
+				 where SIH.item_state=70 and SIH.store_id=4042
 				<if test="historyDate!=null and historyDate!=''">
-					and to_char(s.history_date,'yyyy-mm-dd') between #{historyDate} and #{historyDate1} 
+					and to_char(SIH.history_date,'yyyy-mm-dd') between #{historyDate} and #{historyDate1} 
 				</if>
 				<!-- 				
 				<if test="accountDate1!='' and accountDate2=''">
@@ -40,14 +45,139 @@
 				</if>
 				 -->
 				<if test="itemNum!=null and itemNum!=''">
-					and s.item_num like '%'||#{itemNum}||'%'
+					and SIH.item_num like '%'||#{itemNum}||'%'
 				</if>
 				<if test="itemName!=null and itemName!=''">
-					and s.item_name like '%'||#{itemName}||'%'
+					and SIH.item_name like '%'||#{itemName}||'%'
 				</if>
-				order by s.history_date desc	
+				order by SIH.history_date desc	
 	</select>
-
+	
+	
+	
+	<!-- 본사매출 검색조건  -->
+	<select id="selectMainSaleList" resultMap="accountResultMapOne" >
+		select * from (store_item_history SIH join order_item OI
+				on SIH.request_num=OI.request_num) join store ST on SIH.store_id=ST.store_id
+				 where SIH.item_state=70
+				<if test="historyDate!=null and historyDate!=''">
+					and to_char(SIH.history_date,'yyyy-mm-dd') between #{historyDate} and #{historyDate1} 
+				</if>
+				<if test="itemNum!=null and itemNum!=''">
+					and SIH.item_num like '%'||#{itemNum}||'%'
+				</if>
+				<if test="storeName!=null and storeName!=''">
+					and ST.store_name like '%'||#{storeName}||'%'
+				</if>
+				<if test="itemName!=null and itemName!=''">
+					and SIH.item_name like '%'||#{itemName}||'%'
+				</if>
+				order by SIH.history_date desc	
+	</select>
+	
+	<!-- 본사 매입 --> 
+	<resultMap type="Account" id="accountResultMapTwo">
+		<!-- 
+		<association property="ih" javaType="ItemHistory">
+			<result column="HISTORY_DATE" property="historyDate"/>
+			<result column="ITEM_NUM" property="itemNum"/>
+			<result column="ITEM_NAME" property="itemName"/>
+			<result column="ITEM_QTY" property="itemQty"/>
+			<result column="ITEM_STATE" property="itemState"/>
+		</association>
+		 -->	
+		
+		<association property="p" javaType="Purchase">
+			<result column="PURCHASE_STATE" property="purchaseState"/>
+			<result column="PURCHASE_DATE" property="purchaseDate"/>
+			<result column="ITEM_NUM" property="itemNum"/>
+			<result column="ITEM_QTY" property="itemQty"/>
+			<result column="ITEM_VENDOR" property="itemVendor"/>
+			<result column="ITEM_PPRICE" property="itemPprice"/>
+		</association>
+		
+		<association property="i" javaType="Item">
+			<result column="ITEM_NUM" property="itemNum"/>
+			<result column="ITEM_NAME" property="itemName"/>
+		</association>
+	</resultMap>
+	
+	<select id="selectMainPurchaseList" resultMap="accountResultMapTwo">
+	<!-- 	select * from item_history IH join item I 
+			on IH.item_num=I.item_num where IH.item_state=33  -->
+			select * from purchase P join item I on P.item_num=I.item_num
+			      where P.purchase_state between 32 and 33
+				<if test="purchaseDate!=null and purchaseDate!=''">
+					and to_char(P.purchase_date,'yyyy-mm-dd') between #{purchaseDate} and #{purchaseDateTwo} 
+				</if>
+				<if test="itemNum!=null and itemNum!=''">
+					and P.item_num like '%'||#{itemNum}||'%'
+				</if>
+				<!-- 
+				<if test="itemName!=null and itemName!=''">
+					and P.item_name like '%'||#{itemName}||'%'
+				</if>	
+				 -->
+				<if test="itemVendor!=null and itemVendor!=''">
+					and P.item_vendor like '%'||#{itemVendor}||'%'
+				</if>
+			order by P.purchase_date desc
+	</select>
+	
+	
+	<!-- 지점매출 =>> storeItemMapper 사용 -->
+	<resultMap type="Account" id="accountResultMapThree">
+		<association property="s" javaType="Sale">
+			<result column="SALE_DATE" property="saleDate"/>
+			<result column="SALE_PRODUCT" property="saleProduct"/>
+			<result column="SALE_QTY" property="saleQty"/>
+			<result column="SALE_PRICE" property="salePrice"/>
+		</association>		
+	</resultMap>
+	
+	<select id="selectStSaleList" resultMap="accountResultMapThree">
+		select * from sale where store_id=4042
+			<if test="saleDate!=null and saleDate!=''">
+				and to_char(sale_date,'yyyy-mm-dd') between #{saleDate} and #{saleDatePair} 
+			</if>
+			<if test="saleProduct!=null and saleProduct!=''">
+				and sale_product like '%'||#{saleProduct}||'%'
+			</if>
+			<if test="saleQty!=null and saleQty!=''">
+				and sale_Qty between #{saleQty} and #{saleQtyPair} 
+			</if>
+			order by sale_date desc
+	</select>
+	
+	
+	
+	
+<!-- 본사 손익분석	
+	<resultMap type="Account" id="accountIncomeRM">
+		<association property="ih" javaType="ItemHistory">
+			<result column="ITEM_QTY" property="itemQty"/>
+			<result column="ITEM_STATE" property="itemState"/>
+			<result column="HISTORY_DATE" property="historyDate"/>
+		</association>
+		
+		<association property="item" javaType="Item">
+			<result column="ITEM_PPRICE" property="itemPprice"/>
+			<result column="ITEM_SPRICE" property="itemSprice"/>
+		</association>
+	</resultMap>
+	
+	<select id="selectAccountIncome" resultMap="accountIncomeRM">
+		select * from item_history IH join item I on IH.item_num=I.item_num
+	</select>
+ -->
+	
+	
+	
+	
+	
+	
+	
+	
 </mapper>
 
 

@@ -39,6 +39,7 @@ public class Item {
 	private double itemQtyPair;
 	private List<String> categorys;
 	
+	
 	public Item() {
 		// TODO Auto-generated constructor stub
 	}
@@ -180,5 +181,7 @@ public class Item {
 	public void setItemQtyPair(double itemQtyPair) {
 		this.itemQtyPair = itemQtyPair;
 	}
+
+
 	
 }

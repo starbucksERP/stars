@@ -102,13 +102,6 @@ public class PurchaseController {
 		}
 		return "success";
 	}
-	
-
-	@RequestMapping(value = "/purchasePlan")
-	public String getDisplayPurchasePlan(){
-		return "purchase/purchase_plan";
-	}
-	
 
 	@RequestMapping(value = "/purchaseAdd", method = RequestMethod.GET)
 	public String insertPurchaseOrder(){
