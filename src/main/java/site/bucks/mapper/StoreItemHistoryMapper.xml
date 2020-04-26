@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="site.bucks.mapper.StoreItemHistoryMapper">
+<!-- 지점 주문 개수 출력 -->
+	<select id="numQty" resultType="OrderNum">
+		select * from order_num
+	</select>
+	<update id="numQtyPlus" >
+		update order_num set ORDER_NUM_QTY=ORDER_NUM_QTY+1 where store_id=#{storeId}
+	</update>
+	<update id="numQtyInit">
+		update order_num set ORDER_NUM_QTY=0
+	</update>
+	<insert id="orerNumInsertStore">
+		insert into order_num values(#{storeId}, 0)
+	</insert>
+
 <!-- 지점에서 발주 입력시 	+  지점에서 입고 확인시 storeItemHistory 테이블에서 일어나는 일련의 메소드 -->
 	<!-- store_item_history : 지점 발주 테이블 (주체 :order) -->
 	<insert id="insertSIH" parameterType="OrderItem">
