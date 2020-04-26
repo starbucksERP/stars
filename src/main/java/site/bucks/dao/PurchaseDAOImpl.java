@@ -19,6 +19,11 @@ public class PurchaseDAOImpl implements PurchaseDAO{
 	public int insertPurchaseRequest(Purchase purchase) {
 		return sqlSession.getMapper(PurchaseMapper.class).insertPurchaseRequest(purchase);
 	}
+	
+	@Override
+	public int updatePurchaseState(int purchaseSeq) {
+		return sqlSession.getMapper(PurchaseMapper.class).updatePurchaseState(purchaseSeq);
+	}
 
 	@Override
 	public List<Purchase> displayPurchaseList(Purchase purchase) {
@@ -26,8 +31,18 @@ public class PurchaseDAOImpl implements PurchaseDAO{
 	}
 
 	@Override
-	public int updatePurchaseState(int purchaseSeq) {
-		return sqlSession.getMapper(PurchaseMapper.class).updatePurchaseState(purchaseSeq);
+	public List<Purchase> displayFutureList(Purchase purchase) {
+		return sqlSession.getMapper(PurchaseMapper.class).displayFutureList(purchase);
+	}
+
+	@Override
+	public List<Purchase> displayPurchaseReq(Purchase purchase) {
+		return sqlSession.getMapper(PurchaseMapper.class).displayPurchaseReq(purchase);
+	}
+	
+	@Override
+	public List<Purchase> displayInProcess(Purchase purchase) {
+		return sqlSession.getMapper(PurchaseMapper.class).displayInProcess(purchase);
 	}
 
 }

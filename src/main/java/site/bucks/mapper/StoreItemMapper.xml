@@ -2,19 +2,28 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 사용 테이블 : 지점재고 / 지점재고history / 판매 / 상품레시피 -->
 <mapper namespace="site.bucks.mapper.StoreItemMapper">
+
 	
 <!-- 판매등록시 sql -->
-	<!-- 완제품인지 재료인지 구별용 O -->
+	<!-- 완제품인지 재료인지 구별용 O  + 이름 검색-->
 	<select id="selectProduct" resultType="ProductRecipe">
 		select * from product_recipe where product=#{saleProduct}
+	</select>
+	
+	<select id="selectCategory" resultType="ProductRecipe">
+		select * from product_recipe where category  LIKE '%'||#{category}||'%'
+	</select>
+	
+	<select id="selectProductName" resultType="ProductRecipe">
+		select * from product_recipe where category=#{category}
 	</select>
 	
 	<!-- 판매 기록 -->
 	<insert id="insertSale" parameterType="Sale">
 		<selectKey resultType="int" keyProperty="saleSeq" order="BEFORE">
 			select sale_seq.nextval from dual		
-		</selectKey>
-		insert into sale values(#{saleSeq},#{storeId},#{saleProduct},#{saleQty},#{salePrice},sysdate)
+		</selectKey> 
+		insert into sale values(#{saleSeq},#{storeId},#{saleProduct},#{saleQty},#{salePrice}, sysdate)
 	</insert>
 	
 	<!-- 판매기록 등록시 지점재고 업데이트 -->
@@ -34,11 +43,26 @@
 	
 	
 	
-<!-- 지점에서 입고 확인시 storeItemHistory 테이블에서 일어나는 일련의 메소드 -->
+<!-- 지점에서 입고 확인시 storeItemHistory 테이블에서 일어나는 일련의 메소드 orderItem -->
 	<!-- store_item : 지점에서 입고확인시 재고수량 변화 -->
 	<update id="updateStoreItemReceiptProcess" parameterType="OrderItem">
 		update store_item set item_qty=item_qty+#{orderQty} where item_num=#{itemNum} and store_id=#{storeId}
 	</update>
+	
+	
+	<!-- 입고확인시 지점 재고에 있는 아이템인지 찾는 메소드  -->
+	<select id="selectExistStoreItem" parameterType="OrderItem" resultType="StoreItem">
+		select * from store_item where item_num=#{itemNum} and store_id=#{storeId}
+	</select>
+	
+	<!-- 입고확인시 없는 재고일시 insert 메소드 -->
+	<insert id="insertStoreItemReceiptProcess" parameterType="OrderItem">
+		<selectKey resultType="int" keyProperty="storeItemSeq" order="BEFORE">
+			select store_item_seq.nextval from dual		
+		</selectKey>
+		insert into sale values(#{storeItemSeq},#{itemNum}, (select item_name from item where item_num=#{itemNum}),#{storeId},#{orderQty},100,#{itemSprice},1)
+	</insert>
+	
 <!-- 지점에서 입고 확인시 storeItemHistory 테이블에서 일어나는 일련의 메소드 -->
 	
 	
@@ -56,11 +80,78 @@
 				AND STORE_ID=#{storeId}
 			</if>
 			<if test="saleProduct!=null and saleProduct!=''">
-				AND SALE_PRODUCT=#{saleProduct}
+				AND SALE_PRODUCT LIKE '%'||#{saleProduct}||'%'
 			</if>
 		</where>
-		order by sale_seq desc 
+		order by sale_seq
 	</select>
+
+
+
+<!-- 지점 재고 다중 검색 -->
+	<select id="selectStoreItemList" resultType="StoreItem">
+		select * from store_item where  store_id=#{storeId}
+		<if test="itemNum!=null and itemNum!=''">
+			AND ITEM_NUM LIKE '%'||#{itemNum}||'%' 
+		</if>
+		<if test="itemName!=null and itemName!=''">
+			AND ITEM_NAME LIKE '%'||#{itemName}||'%' 
+		</if>
+		<if test="itemPrice!=null and itemPrice!=0">
+			AND item_Price BETWEEN #{itemPrice} AND #{itemPricePair}
+		</if>
+		<if test="itemQty!=null and itemQty!=0">
+			AND ITEM_QTY BETWEEN #{itemQty} AND #{itemQtyPair}
+		</if>
+		<if test="itemUsage!=null and itemUsage!=0">
+				AND ITEM_USAGE=#{itemUsage}
+			</if>
+		<if test="categorys!=null">
+			<foreach collection="categorys" item="category">
+			AND ITEM_NUM LIKE '%'||#{category}||'%' 
+			</foreach>
+		</if>
+		order by ITEM_NUM
+	</select>
+
+
+<!-- *아이템 단일검색 및 재고등록 가능리스트 출력 -->
+	<select id="selectStoreItem" resultType="StoreItem">
+		select * from store_item where ITEM_NUM = #{itemNum} and store_id=#{storeId}
+	</select>
+
+
+<!-- 지점 재고 품절 처리 -->
+	<update id="deleteStoreItem">
+		update STORE_ITEM set ITEM_QTY=0 where store_id=#{storeId} and ITEM_NUM in
+		<foreach collection="items" item="itemNum" open="(" close=")" separator=",">
+			#{itemNum}
+		</foreach>
+	</update>
+
+<!-- 지점재고 상태 업데이트 -->
+	<update id="updateStoreItem">
+		update store_item 
+		<set >
+			<if test="itemUsage!=null and itemUsage!=0">
+				ITEM_USAGE=#{itemUsage},
+			</if>
+			<if test="minQty!=null and minQty!=0">
+				MIN_QTY=#{minQty},
+			</if>
+			<if test="itemQty!=null and itemQty!=0">
+				ITEM_QTY=#{itemQty}
+			</if>
+		</set>	
+		where ITEM_NUM=#{itemNum} and store_id=#{storeId}
+	</update>
+
+
+
+
+
+
+
 
 
 	

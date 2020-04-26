@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import site.bucks.dao.StoreDAO;
+import site.bucks.dao.StoreItemHistoryDAO;
 import site.bucks.dto.Store;
 
 @Service
@@ -13,10 +14,13 @@ public class StoreServiceImpl implements StoreService{
 
 	@Autowired
 	private StoreDAO storeDAO;
+	@Autowired
+	private StoreItemHistoryDAO storeItemHistoryDAO; 
 	
 	@Override
 	public void addStore(Store store) {
 		storeDAO.insertStore(store);
+		storeItemHistoryDAO.orerNumInsertStore(store);
 	}
 /*
 	@Override

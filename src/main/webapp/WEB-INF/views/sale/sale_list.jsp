@@ -145,9 +145,9 @@
 			
 			var saleQty=$("#saleQty").val();
 			var saleQtyPair=$("#saleQtyPair").val();
-			if (saleQty=="" && saleQtyPair!="") {
+			if (saleQty==0 && saleQtyPair!=0) {
 				saleQty=saleQtyPair;
-			} else if (saleQtyPair=="" && saleQty!="") {
+			} else if (saleQtyPair==0 && saleQty!=0) {
 				saleQtyPair=saleQty;
 			} 
 		}

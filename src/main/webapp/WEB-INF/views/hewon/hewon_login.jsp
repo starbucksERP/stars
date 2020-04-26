@@ -33,6 +33,10 @@
 	padding: 75px;
 }
 
+.a-button{
+	border-radius: 0px !important;
+}
+
 
 </style>
 <script type="text/javascript">
