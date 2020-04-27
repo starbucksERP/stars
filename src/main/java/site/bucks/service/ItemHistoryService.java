@@ -1,10 +1,14 @@
 package site.bucks.service;
 
-import java.util.List;
-
-import site.bucks.dto.ItemHistory;
+import site.bucks.dto.Purchase;
 
 public interface ItemHistoryService {
+<<<<<<< HEAD
+	
+	void newPOItemHist(Purchase purchase);
+	void updatedPOItemHist(int purchaseSeq);
+	
+=======
 	void addItemHistory (ItemHistory itemHistory); 
 	List<ItemHistory> getItemHistoryist(ItemHistory itemHistory);
 
@@ -17,4 +21,5 @@ public interface ItemHistoryService {
 	List<ItemHistory> getGoodsShippedList();
 	List<ItemHistory> getRequestConfirmedList();
 	*/
+>>>>>>> branch 'master' of https://github.com/starbucksERP/stars.git
 }

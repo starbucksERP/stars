@@ -42,11 +42,11 @@ public class DeliveryController {
 	// 2. 배송요청확인 페이지의 요청확인처리 버튼을 눌렀을때 사용되는 update 메소드 
 	  @RequestMapping(value = "/delReqConfirm", method = RequestMethod.POST)
 	  @ResponseBody 
-	  public String modifyDeliveryReq(@RequestParam(value = "list[]") 
-	  List<Integer> deliveryList ) {
+	  public String modifyDeliveryReq(@RequestParam(value = "list[]") List<Integer> deliveryList ) {
 		  
 		 for(int deliverySeq:deliveryList) {
 			 deliveryService.modifyDeliveryReq(deliverySeq);
+			 deliveryService.insertDelReqConfimIH(deliverySeq);
 		 }	  
 	  return"redirect:delivery/delivery_req_list"; 
 	  }
@@ -114,8 +114,11 @@ public class DeliveryController {
 	  List<Integer> deliveryList ) {
 		  for(int deliverySeq:deliveryList) { 
 			  System.out.println(deliverySeq);
-			  
 			  deliveryService.modifyDeliveryReady(deliverySeq); 
+			  deliveryService.insertDelReadyIH(deliverySeq);
+			  deliveryService.insertSihFromDelInProcess(deliverySeq);
+			  deliveryService.updateQtyFromDelivery(deliverySeq);
+			  
 			  }
 		   
 	  return"redirect:delivery/delivery_list"; 

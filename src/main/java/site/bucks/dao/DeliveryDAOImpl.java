@@ -55,6 +55,29 @@ public class DeliveryDAOImpl implements DeliveryDAO {
 		return sqlSession.getMapper(DeliveryMapper.class).displayDelReadyList(delivery);
 	}
 
+	@Override
+	public int updateQtyFromDelivery(int deliverySeq) {
+		return sqlSession.getMapper(DeliveryMapper.class).updateQtyFromDelivery(deliverySeq);
+	
+	}
+
+	@Override
+	public int insertDelReqConfimIH(int deliverySeq) {
+		return sqlSession.getMapper(DeliveryMapper.class).insertDelReqConfimIH(deliverySeq);
+		
+	}
+
+	@Override
+	public int insertDelReadyIH(int deliverySeq) {
+		return sqlSession.getMapper(DeliveryMapper.class).insertDelReadyIH(deliverySeq);
+		
+	}
+
+	@Override
+	public int insertSihFromDelInProcess(int deliverySeq) {
+		return sqlSession.getMapper(DeliveryMapper.class).insertSihFromDelInProcess(deliverySeq);
+	}
+
 
 
 	

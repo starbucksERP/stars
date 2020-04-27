@@ -64,8 +64,13 @@ public class OrderItemServiceImpl implements OrderItemService {
 				purchase.setItemNum(order.getItemNum());
 				purchase.setItemQty(order.getOrderQty());
 				purchase.setItemPprice(order.getItemPprice());
+<<<<<<< HEAD
+				purchase.setPurchaseType(0);
+				purchaseDAO.insertPurchaseOrder(purchase);
+=======
 				purchase.setPurchaseType(1);
 				purchaseDAO.insertPurchaseRequest(purchase);  
+>>>>>>> branch 'master' of https://github.com/starbucksERP/stars.git
 				possible=false;
 			}
 		}

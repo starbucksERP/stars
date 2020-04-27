@@ -24,13 +24,21 @@ public class Purchase {
 	private Item item; // 援щℓ���� 議고������ Join�� �댁�⑺�� select �ъ�⑹�� ������ 蹂��� 
 	private int ItemQty;
 	private int itemPprice;
+<<<<<<< HEAD
+	private int itemPpriceTwo; // 구매현황조회에서 가격 범위검색을 위한 변수
+=======
 	private int itemPpriceTwo; // 援щℓ���⑹“������ 媛�寃� 踰���寃����� ���� 蹂���
 	private int nowPurchaseState; // 援щℓ愿��� ���댁�蹂� �대�� ���댁��� 湲곕낯 list 異��μ�� ���� 蹂���
+>>>>>>> branch 'master' of https://github.com/starbucksERP/stars.git
 	private String itemVendor;
 	private int purchaseType;
+	private int nowPurchaseState;
 
+<<<<<<< HEAD
+=======
 	private String itemName;
 	
+>>>>>>> branch 'master' of https://github.com/starbucksERP/stars.git
 	public Purchase() {
 		// TODO Auto-generated constructor stub
 	}
@@ -83,6 +91,14 @@ public class Purchase {
 		this.itemNum = itemNum;
 	}
 
+	public Item getItem() {
+		return item;
+	}
+
+	public void setItem(Item item) {
+		this.item = item;
+	}
+
 	public int getItemQty() {
 		return ItemQty;
 	}
@@ -99,12 +115,12 @@ public class Purchase {
 		this.itemPprice = itemPprice;
 	}
 
-	public int getNowPurchaseState() {
-		return nowPurchaseState;
+	public int getItemPpriceTwo() {
+		return itemPpriceTwo;
 	}
 
-	public void setNowPurchaseState(int nowPurchaseState) {
-		this.nowPurchaseState = nowPurchaseState;
+	public void setItemPpriceTwo(int itemPpriceTwo) {
+		this.itemPpriceTwo = itemPpriceTwo;
 	}
 
 	public String getItemVendor() {
@@ -123,13 +139,18 @@ public class Purchase {
 		this.purchaseType = purchaseType;
 	}
 
-	public int getItemPpriceTwo() {
-		return itemPpriceTwo;
+	public int getNowPurchaseState() {
+		return nowPurchaseState;
 	}
 
-	public void setItemPpriceTwo(int itemPpriceTwo) {
-		this.itemPpriceTwo = itemPpriceTwo;
+	public void setNowPurchaseState(int nowPurchaseState) {
+		this.nowPurchaseState = nowPurchaseState;
 	}
+<<<<<<< HEAD
+	
+	
+	
+=======
 
 	public Item getItem() {
 		return item;
@@ -149,6 +170,7 @@ public class Purchase {
 
 	
 
+>>>>>>> branch 'master' of https://github.com/starbucksERP/stars.git
 
 	
 	

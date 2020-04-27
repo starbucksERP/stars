@@ -51,6 +51,30 @@ public class DeliveryServiceImpl implements DeliveryService{
 		return deliveryDAO.displayDelReadyList(delivery); 
 	}
 
+	@Override
+	public void updateQtyFromDelivery(int deliverySeq) {
+		 deliveryDAO.updateQtyFromDelivery(deliverySeq);
+		
+	}
+
+	@Override
+	public void insertDelReqConfimIH(int deliverySeq) {
+		deliveryDAO.insertDelReqConfimIH(deliverySeq);
+		
+	}
+
+	@Override
+	public void insertDelReadyIH(int deliverySeq) {
+		deliveryDAO.insertDelReadyIH(deliverySeq);
+		
+	}
+
+	@Override
+	public void insertSihFromDelInProcess(int deliverySeq) {
+		deliveryDAO.insertSihFromDelInProcess(deliverySeq);
+		
+	}
+
 	
 
 }
