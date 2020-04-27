@@ -101,10 +101,6 @@
 						<td><input type="search" class="item Num" id="itemNum" name="itemNum"/></td>
 					</tr>
 					<tr>
-						<th>품목명</th>
-						<td><input type="search" class="item Name" id="itemName" name="itemName"/></td>
-					</tr>
-					<tr>
 						<th>
 							총 매입금액<br /><br />
 							<input type="text" class="item money Name" id="total" readonly="readonly" style="text-align: center; border:none; background: #D4C9C2;"/>
