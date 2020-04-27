@@ -28,8 +28,14 @@
 
 .main{
 	z-index: 999; 
-	background: black; 
+	background: rgba(0,0,0,0.6);
 	color: white; 
+	border: 1px solid #79726a;
+	
+}
+
+.a-button{
+	border-radius: 0px !important;
 }
 
 
@@ -198,9 +204,9 @@ function hewonCreate() {
      }
       $("#address_check").text("");
  
-     alert("asdf");
    	 f.action = "${pageContext.request.contextPath}/hewon/join";
 	 f.submit();
+     alert("회원가입이 성공적으로 이루어졌습니다.");
 }
 
 

@@ -41,6 +41,36 @@
 	insert into delivery values(#{deliverySeq}, #{requestNum}, #{storeId}, 40, sysdate, null)
 </insert>
 
+<!-- 배송요청 승인시 사용되는 히스토리 insert 문  -->
+<insert id="insertDelReqConfimIH" parameterType="Delivery">
+	insert into item_history select history_seq.nextval, request_num, item_num, item_name, 50, item_qty, sysdate,
+	purchase_type, '로그인사용자' from item_history where request_num = (select request_num from delivery
+	where delivery_seq = #(deliverySeq))  
+
+</insert>
+
+<!-- 배송 시작 승인시 사용되는 히스토리 insert 문  -->
+<insert id="insertDelReadyIH" parameterType="Delivery">
+	insert into item_history select history_seq.nextval, request_num, item_num, item_name, 60, item_qty, sysdate,
+	purchase_type, '로그인사용자' from item_history where request_num = (select request_num from delivery
+	where delivery_seq = #(deliverySeq))  
+
+</insert>
+
+<!-- 배송시작 승인시 Store_Item_Histroy에 insert 날려야함  -->
+<insert id="insertSihFromDelInProcess">
+	insert into store_item_histry select store_history_seq.nextval, store_id, request_num, item_num, item_name, 
+	60, item_Qty, sydate where item_history where request_num = (select request_num from delivery
+	where delivery_seq = #(deliverySeq))  
+</insert>
+
+<!-- 배송중 상태가 되면 재고가 감소하는 update문 ==> 대가리 안돌아감 모르겠음  -->
+<update id="updateQtyFromDelivery">
+	update item set item_qty= (select item_qty from item where item_num = 
+		(select item_num from purchase where purchase_seq = #{purchase_seq})) - 
+		(select item_qty from purchase where purchase_seq = #{purchase_seq})
+        where item_num =(select item_num from purchase where purchase_seq = #{purchase_seq})
+</update>
 
 
 <select id="displayDelReadyList" parameterType="Delivery" resultType="Delivery">

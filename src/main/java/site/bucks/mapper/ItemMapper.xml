@@ -167,9 +167,10 @@
 		order by ITEM_VENDOR asc
 	</select>
 	
-	<!-- 재고수량 수정 -->
+	<!-- 재고수량 수정 출고는 음수로 넣어야 됨 -->
 	<update id="updateTotalQty" parameterType="double">
 		update item set ITEM_QTY+=${change} where ITEM_NUM=#{itemNum}
 	</update>
+	
 	
 </mapper>

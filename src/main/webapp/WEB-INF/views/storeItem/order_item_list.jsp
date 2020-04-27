@@ -15,7 +15,7 @@
 		            <li>
 		               <button class="dropdown-btn">입출하기록<i class="fa fa-caret-down"></i></button>
 		               <div class="dropdown-container">
-		                  <a href="${pageContext.request.contextPath}/sic/storeReceipt">입출하조회</a>
+		                  <a href="${pageContext.request.contextPath}/sic/storeReceipt">입출하조회</a><br /><br />
 		                  <a href="${pageContext.request.contextPath}/delivery/deliveryList">배송조회</a>
 		               </div>
 	          	 	 </li>
@@ -146,13 +146,13 @@
 					if(this.requestState==10) {
 						html+="<td class='green-font'>발주신청</td></tr>";
 					} else if(this.requestState==20) {
-						html+="<td class='green-font'>발주완료</td></tr>";
+						html+="<td class='darkgreen-font'>발주완료</td></tr>";
 					}  else if(this.requestState<50) {
-						html+="<td class='green-font'>배송준비중</td></tr>";
+						html+="<td class='darkgreen-font'>배송준비중</td></tr>";
 					}  else if(this.requestState==60) {
-						html+="<td class='green-font'>배송중</td></tr>";
+						html+="<td class='darkgreen-font'>배송중</td></tr>";
 					} else if(this.requestState==70 ) {
-						html+="<td class='red-font'>입고완료</td></tr>";
+						html+="<td class='blue-font'>입고완료</td></tr>";
 					} 
 				});    
 				$("#resultOrder").html(html);

@@ -74,6 +74,8 @@ public class ItemDAOImpl implements ItemDAO {
 	public int deleteItem(Map<String, Object> itemNumMap) {
 		return sqlSession.getMapper(ItemMapper.class).deleteItem(itemNumMap);
 	}
+
+
 	
 
 }

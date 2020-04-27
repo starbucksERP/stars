@@ -10,7 +10,7 @@ import site.bucks.dto.OrderItem;
 public interface OrderItemDAO {
 	int insertStoreOrder(OrderItem orderItem);
 	List<OrderItem> selectStoreOrderItems(String requestNum, String storeId);
-
+	int updateOrderCheck(OrderItem orderItem);
 	// 본점용
 	int updateOrderItemState(Map<String, Object> numAndStateMap);
 	List<OrderItem> selectOrderItemList(OrderItem orerItem);

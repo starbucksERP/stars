@@ -10,6 +10,47 @@
 		}
 	});
 	
+	
+	
+	$(".numnum").mouseenter(function() {
+		if($(".nav-counter").text()!=0){
+			$(".notifyTri").show();
+			$(".notifyList").show();
+		}
+	});
+
+	
+	$(".notifyList").mouseleave(function() {
+		$(".notifyTri").hide();
+		$(".notifyList").hide();
+	});
+	
+	$(".numnum").click(function() {
+		$.ajax({
+			type: "GET",
+			url: "upupNumDel",
+			success: function(json){
+				
+				$(".notifyTri").attr("display", "none");
+				$(".notifyList").removeChild();
+				
+				var num=0;
+				$(json).each(function(i) {
+					if(this.orderNumQty!=0){
+						num++;
+					}
+				});
+				alert(num);
+				
+				$(".nav-counter").text(num);
+			},
+			error: function(xhr){
+				alert("에러코드 = "+xhr.status);
+			}
+		})
+	});
+	
+	
 	// 날짜 스크립트
 	$(function() {
 	    $( ".datepicker" ).datepicker({

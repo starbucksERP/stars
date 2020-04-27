@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<style type="text/css">
+.details{
+	display: none;
+}
+</style>
 <div class="container">
 	<div class="row">
 		<div class="sidebar">
@@ -30,36 +35,68 @@
 				<table class="table">
 					<thead>
 						<tr>
-							<th>판매등록일</th>
-							<td style="width: 38%"><label class="gLabel"><input type="date" readonly="readonly"/>&nbsp;<i class="far fa-calendar-alt"></i></label>
-							<th>판매등록 매장</th>
-							<td><input type="search" value="1021" readonly="readonly" id="storeId" class="storeId"/></td>
-						</tr>
-						<tr>
-							<th>분류</th>
+							<th>발주요청일</th>
+							<td style="width: 38%"><input type="hidden" id="storeId" value="1021"/><label class="gLabel"><input type="date" readonly="readonly"/>&nbsp;<i class="far fa-calendar-alt"></i></label>
+							<th>대분류</th>
 							<td>
-								<select class="saleCategory">
-	                            	<option value="">전체</option>
-	                            	<option value="A">제조음료</option>
-	                            	<option value="B">푸드</option>
-	                            	<option value="C">상품</option>
-	                            </select>
-                            </td>
-                            <th>소분류</th>
-                            <td>
-								<select class="saleSubCategory">
-								</select>
+								<label class="gLabel"><input type="radio" class="fChk category1" name="category1" value="P" id="repMain">음료</label>
+								<label class="gLabel"><input type="radio" class="fChk category1" name="category1" value="B" >푸드</label>
+								<label class="gLabel"><input type="radio" class="fChk category1" name="category1" value="C" >MD상품</label>
+								<label class="gLabel"><input type="radio" class="fChk category1" name="category1" value="D" >기타</label>
 							</td>
 						</tr>
 						<tr>
-							<th>품목</th>
-							<td>
-								<select class="saleProduct" id="saleProduct">
-								</select>
+							<th>소분류</th>
+							<td colspan="3">
+								<span class="ddd">대분류를 선택해주세요.</span>
+								<span id="detailP" class="details">
+									<label class="gLabel"><input type="radio" class="fChk category2 categoryP" name="category2" value="71-" id="repP">커피</label>
+									<label class="gLabel"><input type="radio" class="fChk category2 categoryP" name="category2" value="72-" >라떼/모카/초콜릿</label>
+									<label class="gLabel"><input type="radio" class="fChk category2 categoryP" name="category2" value="73-" >프라프치노</label>
+									<label class="gLabel"><input type="radio" class="fChk category2 categoryP" name="category2" value="74-" >블랜디드</label>
+									<label class="gLabel"><input type="radio" class="fChk category2 categoryP" name="category2" value="75-" >피지오</label>
+									<label class="gLabel"><input type="radio" class="fChk category2 categoryP" name="category2" value="76-" >티</label>
+									<label class="gLabel"><input type="radio" class="fChk category2 categoryP" name="category2" value="77-" >기타</label>
+								</span>
+								<span id="detailB" class="details">
+									<label class="gLabel"><input type="radio" class="fChk category2 categoryB" name="category2" value="05-" id="repB">베이커리</label>
+									<label class="gLabel"><input type="radio" class="fChk category2 categoryB" name="category2" value="06-" >케이크</label>
+									<label class="gLabel"><input type="radio" class="fChk category2 categoryB" name="category2" value="07-" >샌드위치</label>
+									<label class="gLabel"><input type="radio" class="fChk category2 categoryB" name="category2" value="08-" >디저트</label>
+									<label class="gLabel"><input type="radio" class="fChk category2 categoryB" name="category2" value="09-" >아이스크림</label>
+									<label class="gLabel"><input type="radio" class="fChk category2 categoryB" name="category2" value="10-" >병음료</label>
+									<label class="gLabel"><input type="radio" class="fChk category2 categoryB" name="category2" value="11-" >기타</label>
+								</span>
+								<span id="detailC" class="details">
+									<label class="gLabel"><input type="radio" class="fChk category2 categoryC" name="category2" value="12-" id="repC">머그컵</label>
+									<label class="gLabel"><input type="radio" class="fChk category2 categoryC" name="category2" value="13-" >글라스컵</label>
+									<label class="gLabel"><input type="radio" class="fChk category2 categoryC" name="category2" value="14-" >텀블러</label>
+									<label class="gLabel"><input type="radio" class="fChk category2 categoryC" name="category2" value="15-" >콜드컵</label>
+									<label class="gLabel"><input type="radio" class="fChk category2 categoryC" name="category2" value="16-" >악세서리</label>
+									<label class="gLabel"><input type="radio" class="fChk category2 categoryC" name="category2" value="17-" >커피용품</label>
+									<label class="gLabel"><input type="radio" class="fChk category2 categoryC" name="category2" value="18-" >기타</label>
+								</span>
+								<span id="detailD" class="details">
+									<label class="gLabel"><input type="radio" class="fChk category2 categoryD" name="category2" value="00-" id="repD">선택사항없음</label>
+								</span>
 							</td>
-							<th>수량</th>
-							<td><input type="number" id="saleQty"/>  &nbsp;개 <input type="hidden" id="salePrice" /></td>
-						</tr>
+							</tr>
+							<tr>
+							<th>판매상품 정보</th>
+							<td>
+								<select name="" id="CategoryListOption" style="width: 300px;">
+									<option value="">소분류를 선택해주세요.</option>
+								</select>
+								</td>
+								<th>판매상품명</th>
+								<td><span id="saleProduct">판매상품 정보를 선택해주세요</span>&nbsp;</td>
+							</tr>
+							<tr>
+								<th>판매단가</th>
+								<td>￦<span id="salePrice"></span></td>
+								<th>수량</th>
+								<td colspan="3"><input type="number" id="saleQty"/>  &nbsp;개 </td>
+							</tr>
 					</thead>
 				</table>
 				<div class="right"><button type="button" class="a-button darkgreen large padding-button addTr">항목추가</button>&nbsp;</div>
@@ -120,15 +157,32 @@
 	$(".addTr").click(function() {
 		$(".message").text(" ");
 		
-		var salePriceSum=$('#saleQty').val()*$('#salePrice').val();
+		if($('#salePrice').text()=='' || $('#salePrice').text()=="상품정보를 선택해주세요."){
+			alert("상품정보를 선택하지 않았습니다.");
+			return false;
+		}
+		if($('#salePrice').text()==''){
+			alert("상품정보를 선택하지 않았습니다.");		
+			return false;
+		}
+		if($('#saleQty').val()=='' ){
+			alert("판매등록 개수를 선택하지 않았습니다.");
+			return false;
+		}else if(Number($('#saleQty').val())<=0){
+			alert("음수 또는 0개는 등록할 수 없습니다.");
+			return false;
+		}
+		
+		
+		var salePriceSum=$('#saleQty').val()*$('#salePrice').text();
 		
 		var html="<tr>"+
 			"<td><input type='checkbox' class='rowChk'/></td>"+
-			"<td><input type='text' readonly='readonly'style='border:none; text-align:center;' class='requestDate' value='"+$("input[type='date']").val()+"'/></td>"+
+			"<td><input type='text' readonly='readonly'style='border:none; text-align:center;' class='saleDate' value='"+$("input[type='date']").val()+"'/></td>"+
 			"<td><span style='text-align:center;' class='storeId'>"+$('#storeId').val()+"</span></td>"+
-			"<td><span style='text-align:center;' class='saleProducts'>"+$('#saleProduct').val()+"</span></td>"+
+			"<td><span style='text-align:center;' class='saleProducts'>"+$('#saleProduct').text()+"</span></td>"+
 			"<td><span style='text-align:center; ' class='saleQty'>"+$('#saleQty').val()+"</span> 개</td>"+
-			"<td>￦<span style='text-align:center; ' class='salePrice'>"+$('#salePrice').val()+"</span></td>"+
+			"<td>￦<span style='text-align:center; ' class='salePrice'>"+$('#salePrice').text()+"</span></td>"+
 			"<td>￦<span style='text-align:center; ' class='salePriceSum'>"+salePriceSum+"</span></td>"+
 		"</tr>";
 		
@@ -148,7 +202,7 @@
 		    $(".rowChk:checked").each(function(i) {
 		    	storeSale = {
 		        	storeId			: $("#storeId").val(),
-        	   		saleProduct     : $(this).parents('tr').find(".saleProducts").text(),
+        	   		saleProduct    : $(this).parents('tr').find(".saleProducts").text(),
         	   		salePrice		: $(this).parents('tr').find(".salePrice").text(),
 	        		saleQty         : $(this).parents('tr').find(".saleQty").text()
 		        };
@@ -168,7 +222,7 @@
 				success: function(text) {
 					if(text=="success") {
 						alert("판매등록이 성공적으로 이루어졌습니다.")
-						location.href="${pageContext.request.contextPath }/storeItem/sale_list";
+						location.href="${pageContext.request.contextPath }/storeItem/saleList";
 					}
 				},
 				error: function(xhr) {
@@ -181,7 +235,7 @@
 	
 	
 	// 가격 등록
-	$("#saleProduct").change(function() {
+	/* $("#saleProduct").change(function() {
 		
 		var saleProduct = $(this).val();
 		
@@ -202,7 +256,137 @@
 	    
 		});
 		
-	}); 
+	});  */
+	
+	
+	$("input[name='category1']").change(function() {
+		$(".ddd").hide();
+		var category=$(".category1:checked").val();
+		$(".details").hide();
+		$('.category2').removeAttr('checked');
+		if(category == 'P') {
+			$('#detailP').show();
+			$("#repP").prop("checked", true);
+		} else if(category == 'B') {
+			$('#detailB').show();
+			$("#repB").prop("checked", true);
+		} else if(category == 'C') {
+			$('#detailC').show();
+			$("#repC").prop("checked", true);
+		} else {
+			$('#detailD').show();
+			$("#repD").prop("checked", true);
+		}
+		
+	});
+	
+	
+	$("input[name='category2']").change(function() {
+		var category1=$(".category1:checked").val();
+		var category2=$(".category2:checked").val();
+		var itemNum=category1+category2;
+		
+		if(category1=='P'){
+			$.ajax({
+				type: "GET",
+				url: "saleProduct/"+itemNum,
+				headers: {"content-type":"application/json"},
+				dataType: "json",
+				success: function(json) {
+					$("#CategoryListOption").empty();
+					if(json.length==0) {
+						$("#CategoryListOption").append("<option value=''>해당품목이 존재하지 않습니다. </option>"); 
+						return;
+					}
+				
+		       		$(json).each(function() {
+		       			$("#CategoryListOption").append("<option value="+this.category+">"+this.product+"</option>"); 
+					});    
+		       		
+				},
+				error: function(xhr) {
+					alert("에러코드 = "+xhr.status)
+				}
+			});
+			
+			
+			
+		}else{
+			
+			$.ajax({
+				type: "POST",
+				url: "${pageContext.request.contextPath }/item/product",
+				headers: {"content-type":"application/json"},
+				data: JSON.stringify({"itemNum":itemNum,"itemUsage":1}),
+				dataType: "json",
+				success: function(json) {
+					$("#CategoryListOption").empty();
+					if(json.length==0) {
+						$("#CategoryListOption").append("<option value=''>해당품목이 존재하지 않습니다. </option>"); 
+						return;
+					}
+				
+		       		$(json).each(function() {
+		       			$("#CategoryListOption").append("<option value="+this.itemNum+">"+this.itemName+"</option>"); 
+					});    
+		       		
+				},
+				error: function(xhr) {
+					alert("에러코드 = "+xhr.status)
+				}
+			});
+			
+		}
+		
+		
+	});
+	
+	
+	
+	
+	$("#CategoryListOption").change(function() {
+		var itemNum = $(this).val();
+		var category1=$(".category1:checked").val();	
+		console.log(itemNum);
+		if(category1=='P'){
+			
+			$.ajax({
+				type: "GET",
+				url: "saleProductName/"+itemNum,
+				dataType: "json",
+				success: function(json) {
+					$("#saleProduct").text(json.product);
+					$("#salePrice").text(Number(json.productPrice)*1.5);
+				},
+				error: function(xhr) {
+					alert("에러코드 = "+xhr.status)
+				}
+			});
+			
+			
+		}else{
+			
+			$.ajax({
+				type: "GET",
+				url: "${pageContext.request.contextPath }/item/getItem/"+itemNum,
+				dataType: "json",
+				success: function(json) {
+					$("#saleProduct").text(json.itemName);
+					$("#salePrice").text(Number(json.itemSprice)*1.5);
+				},
+				error: function(xhr) {
+					alert("에러코드 = "+xhr.status)
+				}
+			});
+			
+		}
+		
+		
+		
+	});
+	
+	
+	
 	
 	
 	

@@ -8,11 +8,16 @@
 			<a class="nav-item" onClick="location.href='${pageContext.request.contextPath}/hewon/login';"><i class="fas fa-book-reader"></i>&nbsp;관리자</a>
 			<a class="nav-item" onClick="location.href='${pageContext.request.contextPath}/hewon/join';"><i class="fas fa-address-card"></i>&nbsp;회원가입</a>
 			<a class="nav-item" onClick="location.href='${pageContext.request.contextPath}/hewon/view';"><i class="fas fa-list-alt"></i>&nbsp;회원관리</a>
-			<%-- <a class="nav-item"><i class="fas fa-pen-alt"></i>&nbsp;블랑카</a> --%>
+			<span class="nav-item numnum" onclick="location.href='${pageContext.request.contextPath}/order/orderRequestList'"><i class="fas fa-bell" style="font-size: 20px;"></i><span class="nav-counter" onclick="location.href='${pageContext.request.contextPath}/order/orderStateList'"></span></span>
+			<br />
+			<span class="notifyTri">▲</span>
+			<ul class="notifyList">
+			</ul>
 		</div>
 		<ul class="nav-left-list">
 			<li class="nav-item">지점관리<br /><span class="tri">▲</span></li>
 			<li class="nav-item">재고관리<br /><span class="tri">▲</span></li>
+			<li class="nav-item" style="width: 160px;">지점재고관리<br /><span class="tri">▲</span></li>
 			<li class="nav-item" style="width: 160px; padding: 0px;">발주/구매관리<br /><span class="tri">▲</span></li>
 			<li class="nav-item" style="width: 160px; padding: 0px;">[지점] 발주/구매관리<br /><span class="tri">▲</span></li>
 			<li class="nav-item">배송관리<br /><span class="tri">▲</span></li>
@@ -35,13 +40,11 @@
 			<li onclick="location.href='${pageContext.request.contextPath}/storeItem/saleList'">판매조회</li>
 			<li onclick="location.href='${pageContext.request.contextPath}/storeItem/sale_record'">판매등록</li>
 		</ul>
-		<!-- 지점용 재고 -->
-		<%-- <ul class="drop-menu" style="padding-left: 5%">
-			<li onclick="location.href='${pageContext.request.contextPath}/item/productList'">품목현황</li>
-			<li onclick="location.href='${pageContext.request.contextPath}/item/itemList'">재고현황</li>
-			<li onclick="location.href='${pageContext.request.contextPath}/storeItem/sale_list'">판매조회</li>
+		<ul class="drop-menu" style="padding-left: 5%">
+			<li onclick="location.href='${pageContext.request.contextPath}/storeItem/itemList'">재고현황</li>
+			<li onclick="location.href='${pageContext.request.contextPath}/storeItem/saleList'">판매조회</li>
 			<li onclick="location.href='${pageContext.request.contextPath}/storeItem/sale_record'">판매등록</li>
-		</ul> --%>
+		</ul>
 		<!-- 관리자용 발주 -->
 		<ul class="drop-menu" style="padding-left: 5%">
 			<li onclick="location.href='${pageContext.request.contextPath}/order/orderRequestList'">발주요청조회</li>
@@ -57,8 +60,6 @@
 			<li onclick="location.href='${pageContext.request.contextPath}/sic/storeOrderRequestList'">발주요청조회</li>
 			<li onclick="location.href='${pageContext.request.contextPath}/sic/storeOrderStateList'">발주현황조회</li>
 			<li onclick="location.href='${pageContext.request.contextPath}/sic/storeReceipt'">입출하조회</li>
-			<!-- 나중에 수정 -->
-			<li onclick="location.href='${pageContext.request.contextPath}/delivery/deliveryList'">배송조회사본</li>
 			<li onclick="location.href='${pageContext.request.contextPath}/storeItem/deliveryList'">배송조회</li>
 		</ul>		
 		<ul class="drop-menu" style="/* padding-left: 20% */padding-left:35%">
@@ -83,3 +84,30 @@
 	</div>
 		
 </div>
+
+<script type="text/javascript">
+updateOrder();
+
+function updateOrder(){
+	$.ajax({
+		type: "GET",
+		url: "upupNum",
+		success: function(json){
+			var num=Number($(".nav-counter").text());
+			$(json).each(function(i) {
+				this.storeId
+				if(this.orderNumQty!=0){
+					$(".notifyList").append("<li>("+this.storeId+")매장에서 발주를 신청했습니다.</li>");
+					num+=1;
+				}
+			});
+			
+			$(".nav-counter").text(Number(num));
+		},
+		error: function(xhr){
+			alert("에러코드 = "+xhr.status);
+		}
+	})
+}
+</script>
+

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+  
+
 <div class="container">
 	<div class="row">
 		<div class="sidebar">
@@ -29,20 +31,28 @@
 		<div class="main">
 		
 			<h3>매입 현황 - 지점</h3>
-			<div class="right"><button type="button" class="a-button big"><i class="fas fa-search"></i>&nbsp;검색</button></div>
+			<div class="right">
+			<button type="button" class="a-button big" id="searchBtn" ><i class="fas fa-search" ></i>&nbsp;검색</button>
+			<button type="button" class="a-button sea big" id="resetBtn" ><i class="fas fa-search" ></i>&nbsp;초기화</button>
+			</div>
 			<hr />
+			<input type="hidden" id="hStoreId" name="storeId" />
 			<table class="table">
 				<thead>
 					<tr>
 						<th>기준일자</th>
 						<td>
-							<label class="gLabel"><input type="date" />&nbsp;<i class="far fa-calendar-alt"></i></label>
-							&nbsp;-&nbsp;<label class="gLabel"><input type="date" />&nbsp;<i class="far fa-calendar-alt"></i></label>
+							<label class="gLabel"><input type="date" class="item historyDate" id="historyDate" name="historyDate"/>&nbsp;<i class="far fa-calendar-alt"></i></label>
+							&nbsp;-&nbsp;<label class="gLabel"><input type="date" class="item historyDate1" id="historyDate1" name="historyDate1"/>&nbsp;<i class="far fa-calendar-alt"></i></label>
 						</td>
 					</tr>
 					<tr>
+						<th>품목코드</th>
+						<td><input type="search" class="item Num" id="itemNum" name="itemNum"/></td>
+					</tr>
+					<tr>
 						<th>품목명</th>
-						<td><input type="search" /></td>
+						<td><input type="search" class="item Name" id="itemName" name="itemName"/></td>
 					</tr>
 					<tr>
 						<th>거래처</th>
@@ -54,17 +64,21 @@
 			<br />
 			<hr>
 			<div class="information">
-				<table class="table">
-					<tbody >
+				<table class="table" >
+					<thead>
 						<tr>
 							<th>일자</th>
 							<th>거래처명</th>
 							<th>품목코드</th>
 							<th>품목명</th>
+							<th>수량</th>
+							<th>단가</th>
 							<th>매입금액</th>
 							<th>부가세액</th>
 							<th>총금액</th>
 						</tr>
+					 </thead>
+					 <tbody id="listDiv">
 					 </tbody>
 				</table>
 			</div>
@@ -76,44 +90,93 @@
 
 
 <script type="text/javascript">
-    stAccountPurchase();
-    
-	function stAccountPurchase() {
-		$.ajax({
-			type: "POST",
-			URL: "st_accountPurchaseList",
-			headers: {"content-type":"application/json"},
-			data: "json",
-			success: function(json) {
-				
-				console.log(json);
-				/*
-				 if(json.length==0) {
-					$(".table > tbody").append("<tr><td colspan='7'>검색된 결과가 없습니다.</td></tr>");
-				} else { 
-					    $(json).each(function(i) {
-					    	//alert(this.storeItemHistory.historyDate)
-						var html ="<tr>"+
-									 "<td>"+this.StoreItemHistory.historyDate+"</td>"+							
-									 "<td>본사</td>"+							
-									 "<td>"+this.StoreItemHistory.itemNum+"</td>"+							
-									 "<td>"+this.StoreItemHistory.itemName+"</td>"+							
-									 "<td>"+(this.OrderItem.itemSprice)*(this.StoreItemHistory.itemQty)+"</td>"+							
-									 "<td>부가세</td>"+							
-									 "<td>총합계</td>"							
-						             +"</tr>";
-						$(".table > tbody").append(html);
-					}) 
-				}
-				*/
-			},
-			error: function(xhr) {
-				alert("에러코드 ="+xhr.status);
-			}
-		});
-	}
-	
 
+	stAccountPurchase();
+ 
+		//var today=new Date();
+		//var period=new Date();
+		//period.setDate(today.getDate()-14);
+		var historyDate=$("#historyDate").val();
+		var historyDate1=$("#historyDate1").val();
+		var itemNum=$("#itemNum").val();
+		var itemName=$("#itemName").val();
+	
+		$("#searchBtn").click(function() {
+			
+			   itemNum=$("#itemNum").val();
+			   itemName=$("#itemName").val();
+			   historyDate=$("#historyDate").val();
+			   historyDate1=$("#historyDate1").val();
+				if (historyDate=="" && historyDate1!="") {
+					historyDate=historyDate1;
+				} else if (historyDate1=="" && historyDate!="") {
+					historyDate1=historyDate;
+				} 
+				stAccountPurchase();
+			});
+		
+		$("#resetBtn").click(function() {
+			$(".item").val("");
+		});
+		
+        stAccountPurchase();
+    
+		function stAccountPurchase() {
+			$.ajax({
+				type: "POST",
+				url: "st_accountPurchase",
+				headers:{"content-type":"application/json"},
+				data: JSON.stringify({"itemNum":itemNum,"itemName":itemName,"historyDate":historyDate,"historyDate1":historyDate1}),
+				dataType: "json",
+				success: function(json) {
+					 if(json.length==0) {
+						var html="<tr><td colspan='9'>검색된 결과가 없습니다.</td></tr>";
+						$("#listDiv").html(html);
+					} else { 
+						var html="";
+						var sumPprice=0;
+						var sumVat=0;
+						var sumTot=0;
+					
+						$(json).each(function() {
+							 var qty=this.sih.itemQty;
+							 var price=this.oi.itemSprice;
+							 var pPrice=qty*price;
+							 var vat=(pPrice)*(0.1);
+							 var tot=parseInt((pPrice)*(1.1));
+						
+						  html+="<tr>"+
+						 			 "<td>"+(this.sih.historyDate).substring(0,10)+"</td>"+							
+								 	 "<td>본사</td>"+							
+								     "<td>"+this.sih.itemNum+"</td>"+							
+									 "<td>"+this.sih.itemName+"</td>"+							
+									 "<td>"+qty+"</td>"+							
+									 "<td>"+price+"</td>"+							
+								 	 "<td>"+pPrice+"</td>"+							
+								 	 "<td>"+vat+"</td>"+							
+								 	 "<td>"+tot+"</td>"+
+								 	 "</tr>";
+							 	 
+							 		sumPprice+=pPrice;
+							 		sumVat+=vat;
+							 		sumTot+=tot;
+						});
+					
+							 html+="<tr style='height: 20px; background-color:#D4C9C2; font:bold; '>"+
+							 	   "<td colspan='6'>합계</td>"+
+							 	   "<td>"+sumPprice+"</td>"+
+							 	   "<td>"+sumVat+"</td>"+
+							 	   "<td>"+sumTot+"</td>"+
+							 	   "</tr>";
+							   	   $("#listDiv").html(html);
+						}
+					},
+					error: function(xhr) {
+						alert("에러코드 ="+xhr.status);
+					}
+					
+				});
+			}
 </script>
 
 
