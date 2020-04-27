@@ -32,20 +32,20 @@
 						<thead>
 							<tr>
 								<th>요청번호</th>
-								<td colspan="1"><input type="search" name="requestNum" id="requestNumInput" value=""/>&nbsp;<a href="${pageContext.request.contextPath }/delivery/choice_store_code.jsp" onClick="window.open(this.href, '', 'width=400, height=430'); return false;" class="a-button white" style="font-size: 15px;"><i class="fas fa-file-alt"></i></a></td>
+								<td colspan="1"><input type="search" name="requestNum" id="requestNumInput" value="" placeholder="요청번호 입력"/>&nbsp;<a href="${pageContext.request.contextPath }/delivery/choice_store_code.jsp" onClick="window.open(this.href, '', 'width=400, height=430'); return false;" class="a-button white" style="font-size: 15px;"><i class="fas fa-file-alt"></i></a></td>
 								<th>매장코드</th>
 								<td colspan="1"><input type="search" name="storeId" id="storeIdInput" value="0"/>&nbsp;<a href="" class="a-button white" style="font-size: 15px;"><i class="fas fa-file-alt"></i></a></td>
 							</tr>
 							<tr>
 								<th>배송 시작일</th>
 								<td colspan="1">
-									<label class="gLabel"><input type="search" name="deliveryStart" id="delStartInput1" value=""/>&nbsp;<i class="far fa-calendar-alt"></i>&nbsp;&nbsp;~&nbsp;&nbsp;</label>
-									<label class="gLabel"><input type="search" name="deliveryStartTwo"  id="delStartInput2" value="" />&nbsp;<i class="far fa-calendar-alt"></i></label>
+									<label class="gLabel"><input type="search" name="deliveryStart" id="delStartInput1" value="" placeholder="yy/mm/dd"/>&nbsp;<i class="far fa-calendar-alt"></i>&nbsp;&nbsp;~&nbsp;&nbsp;</label>
+									<label class="gLabel"><input type="search" name="deliveryStartTwo"  id="delStartInput2" value="" placeholder="yy/mm/dd"/>&nbsp;<i class="far fa-calendar-alt"></i></label>
 								</td>
 								<th>배송 완료일</th>
 								<td colspan="1">
-									<label class="gLabel"><input type="search" name="deliveryEnd" id="delEndInput1" value="" />&nbsp;<i class="far fa-calendar-alt"></i>&nbsp;&nbsp;~&nbsp;&nbsp;</label>
-									<label class="gLabel"><input type="search" name="deliveryEndTwo" id="delEndInput2" value="" />&nbsp;<i class="far fa-calendar-alt"></i></label>
+									<label class="gLabel"><input type="search" name="deliveryEnd" id="delEndInput1" value="" placeholder="yy/mm/dd"/>&nbsp;<i class="far fa-calendar-alt"></i>&nbsp;&nbsp;~&nbsp;&nbsp;</label>
+									<label class="gLabel"><input type="search" name="deliveryEndTwo" id="delEndInput2" value="" placeholder="yy/mm/dd"/>&nbsp;<i class="far fa-calendar-alt"></i></label>
 								</td> 
 							</tr>
 							<tr>

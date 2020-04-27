@@ -25,11 +25,10 @@ public class Purchase {
 	private int ItemQty;
 	private int itemPprice;
 	private int itemPpriceTwo; // 구매현황조회에서 가격 범위검색을 위한 변수
-	private int nowPurchaseState; // 구매관련 페이지별 해당 페이지의 기본 list 출력을 위한 변수
 	private String itemVendor;
 	private int purchaseType;
+	private int nowPurchaseState;
 
-	
 	public Purchase() {
 		// TODO Auto-generated constructor stub
 	}
@@ -82,6 +81,14 @@ public class Purchase {
 		this.itemNum = itemNum;
 	}
 
+	public Item getItem() {
+		return item;
+	}
+
+	public void setItem(Item item) {
+		this.item = item;
+	}
+
 	public int getItemQty() {
 		return ItemQty;
 	}
@@ -98,12 +105,12 @@ public class Purchase {
 		this.itemPprice = itemPprice;
 	}
 
-	public int getNowPurchaseState() {
-		return nowPurchaseState;
+	public int getItemPpriceTwo() {
+		return itemPpriceTwo;
 	}
 
-	public void setNowPurchaseState(int nowPurchaseState) {
-		this.nowPurchaseState = nowPurchaseState;
+	public void setItemPpriceTwo(int itemPpriceTwo) {
+		this.itemPpriceTwo = itemPpriceTwo;
 	}
 
 	public String getItemVendor() {
@@ -122,23 +129,16 @@ public class Purchase {
 		this.purchaseType = purchaseType;
 	}
 
-	public int getItemPpriceTwo() {
-		return itemPpriceTwo;
+	public int getNowPurchaseState() {
+		return nowPurchaseState;
 	}
 
-	public void setItemPpriceTwo(int itemPpriceTwo) {
-		this.itemPpriceTwo = itemPpriceTwo;
+	public void setNowPurchaseState(int nowPurchaseState) {
+		this.nowPurchaseState = nowPurchaseState;
 	}
-
-	public Item getItem() {
-		return item;
-	}
-
-	public void setItem(Item item) {
-		this.item = item;
-	}
-
-
+	
+	
+	
 
 	
 	

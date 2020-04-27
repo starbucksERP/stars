@@ -1,6 +1,7 @@
 package site.bucks.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,33 +17,43 @@ public class PurchaseDAOImpl implements PurchaseDAO{
 	private SqlSession sqlSession;
 	
 	@Override
-	public int insertPurchaseRequest(Purchase purchase) {
-		return sqlSession.getMapper(PurchaseMapper.class).insertPurchaseRequest(purchase);
+	public int insertPurchaseOrder(Purchase purchase) {
+		return sqlSession.getMapper(PurchaseMapper.class).insertPurchaseOrder(purchase);
 	}
 	
 	@Override
-	public int updatePurchaseState(int purchaseSeq) {
-		return sqlSession.getMapper(PurchaseMapper.class).updatePurchaseState(purchaseSeq);
+	public List<Purchase> searchPurchaseList(Purchase purchase) {
+		return sqlSession.getMapper(PurchaseMapper.class).searchPurchaseList(purchase);
 	}
 
 	@Override
-	public List<Purchase> displayPurchaseList(Purchase purchase) {
-		return sqlSession.getMapper(PurchaseMapper.class).displayPurchaseList(purchase);
-	}
-
-	@Override
-	public List<Purchase> displayFutureList(Purchase purchase) {
-		return sqlSession.getMapper(PurchaseMapper.class).displayFutureList(purchase);
-	}
-
-	@Override
-	public List<Purchase> displayPurchaseReq(Purchase purchase) {
-		return sqlSession.getMapper(PurchaseMapper.class).displayPurchaseReq(purchase);
+	public int purchaseReqConfirm(int purchaseSeq) {
+		return sqlSession.getMapper(PurchaseMapper.class).purchaseReqConfirm(purchaseSeq);
 	}
 	
 	@Override
-	public List<Purchase> displayInProcess(Purchase purchase) {
-		return sqlSession.getMapper(PurchaseMapper.class).displayInProcess(purchase);
+	public int purchaseComplete(int purchaseSeq) {
+		return sqlSession.getMapper(PurchaseMapper.class).purchaseComplete(purchaseSeq);
 	}
+	
+	@Override
+	public int purchaseCompleteHQ(int purchaseSeq) {
+		return sqlSession.getMapper(PurchaseMapper.class).purchaseCompleteHQ(purchaseSeq);
+	}
+	
+	@Override
+	public int purchaseCancel(int purchaseSeq) {
+		return sqlSession.getMapper(PurchaseMapper.class).purchaseCancel(purchaseSeq);
+	}
+
+	@Override
+	public int updateQtyFromPurchase(int purchaseSeq) {
+		return sqlSession.getMapper(PurchaseMapper.class).updateQtyFromPurchase(purchaseSeq);
+	}
+
+	
+	
+	
+	
 
 }

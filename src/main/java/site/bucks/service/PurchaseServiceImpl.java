@@ -1,6 +1,7 @@
 package site.bucks.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,34 +15,45 @@ public class PurchaseServiceImpl implements PurchaseService{
 	@Autowired
 	PurchaseDAO purchaseDAO;
 
-	@Override
-	public List<Purchase> getDisplayPurchaseList(Purchase purchase) {
-		return purchaseDAO.displayPurchaseList(purchase);
-	}
 	
 	@Override
-	public List<Purchase> getDisplayFutureList(Purchase purchase) {
-		return purchaseDAO.displayFutureList(purchase);
+	public List<Purchase> getSearchPurchaseList(Purchase purchase) {
+		return purchaseDAO.searchPurchaseList(purchase);
 	}
 
 	@Override
-	public List<Purchase> getDisplayPurchaseReq(Purchase purchase) {
-		return purchaseDAO.displayPurchaseReq(purchase);
-	}
-	
-	@Override
-	public List<Purchase> getDisplayInProcess(Purchase purchase) {
-		return purchaseDAO.displayInProcess(purchase);
-	}
-
-	@Override
-	public void addPurchaseRequest(Purchase purchase) {
-		// TODO Auto-generated method stub
+	public void purchaseReqConfirm(int purchaseSeq) {
+		purchaseDAO.purchaseReqConfirm(purchaseSeq);
 		
 	}
+	
 	@Override
-	public void modifyPurchaseState(List<Purchase> purchase) {
-		// TODO Auto-generated method stub
+	public void purchaseComplete(int purchaseSeq) {
+		purchaseDAO.purchaseComplete(purchaseSeq);
+		
+	}
+	
+	@Override
+	public void purchaseCompleteHQ(int purchaseSeq) {
+		purchaseDAO.purchaseCompleteHQ(purchaseSeq);
+		
+	}
+	
+	@Override
+	public void purchaseCancel(int purchaseSeq) {
+		purchaseDAO.purchaseCancel(purchaseSeq);
+		
+	}
+
+	@Override
+	public void insertPurchaseOrder(Purchase purchase) {
+		purchaseDAO.insertPurchaseOrder(purchase);
+		
+	}
+
+	@Override
+	public void updateQtyFromPurchase(int purchaseSeq) {
+		purchaseDAO.updateQtyFromPurchase(purchaseSeq);
 		
 	}
 

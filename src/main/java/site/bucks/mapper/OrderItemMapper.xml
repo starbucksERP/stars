@@ -9,6 +9,7 @@
 		</selectKey>
 		insert into order_item values(#{orderSeq}, #{requestNum}, #{storeId}, #{itemNum},
 		 #{orderQty},(select item_Pprice from item where item_num=#{itemNum}), #{itemSprice}, 10, sysdate, null, 1)
+
 	</insert> 
 	
 <!-- 지점 발주시 -->
@@ -17,6 +18,11 @@
 	<select id="selectStoreOrderItems" parameterType="String" resultType="OrderItem">
 		select * from order_item where request_num=#{requestNum} and store_id=#{storeId}
 	</select>
+	
+	<update id="updateOrderCheck">
+		update order_item set request_state=#{requestState} where request_num in #{requestNum} AND STORE_ID=#{storeId}
+	</update>
+	
 
 
 <!--  ******************************* 본점관련SQL *********************************************** -->

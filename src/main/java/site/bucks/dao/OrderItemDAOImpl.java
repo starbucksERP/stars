@@ -27,6 +27,10 @@ public class OrderItemDAOImpl implements OrderItemDAO {
 		return sqlSession.getMapper(OrderItemMapper.class).selectOrderItems(requestNum);
 	}
 
+	@Override
+	public int updateOrderCheck(OrderItem orderItem) {
+		return sqlSession.getMapper(OrderItemMapper.class).updateOrderCheck(orderItem);
+	}
 
 	
 	
@@ -45,6 +49,8 @@ public class OrderItemDAOImpl implements OrderItemDAO {
 	public List<OrderItem> selectOrderItems(String requestNum) {
 		return sqlSession.getMapper(OrderItemMapper.class).selectOrderItems(requestNum);
 	}
+
+	
 
 
 

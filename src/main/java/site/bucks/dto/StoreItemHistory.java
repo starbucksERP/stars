@@ -23,6 +23,8 @@ public class StoreItemHistory {
 	private int itemQty;
 	private String historyDate;
 	
+	private String historyDate1;
+	
 	public StoreItemHistory() {
 		// TODO Auto-generated constructor stub
 	}
@@ -90,5 +92,14 @@ public class StoreItemHistory {
 	public void setHistoryDate(String historyDate) {
 		this.historyDate = historyDate;
 	}
+
+	public String getHistoryDate1() {
+		return historyDate1;
+	}
+
+	public void setHistoryDate1(String historyDate1) {
+		this.historyDate1 = historyDate1;
+	}
+	
 	
 }
