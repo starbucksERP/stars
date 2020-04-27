@@ -1,9 +1,6 @@
 package site.bucks.dao;
-<<<<<<< HEAD
 
 import java.util.List;
-=======
->>>>>>> branch 'master' of https://github.com/starbucksERP/stars.git
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
