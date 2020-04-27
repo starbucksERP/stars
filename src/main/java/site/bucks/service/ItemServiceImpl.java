@@ -45,8 +45,8 @@ public class ItemServiceImpl implements ItemService{
 	}
 
 	@Override
-	public void modifyItemMinQty(Item item) {
-		itemDAO.updateItemMinQty(item);
+	public void modifyItemMinQty(Map<String, Object> itemNumMap) {
+		itemDAO.updateItemMinQty(itemNumMap);
 	}
 
 	@Override

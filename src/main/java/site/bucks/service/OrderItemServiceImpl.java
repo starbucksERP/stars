@@ -1,14 +1,17 @@
 package site.bucks.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import site.bucks.dao.DeliveryDAO;
 import site.bucks.dao.ItemDAO;
 import site.bucks.dao.OrderItemDAO;
 import site.bucks.dao.PurchaseDAO;
+import site.bucks.dto.Delivery;
 import site.bucks.dto.OrderItem;
 import site.bucks.dto.Purchase;
 
@@ -20,6 +23,8 @@ public class OrderItemServiceImpl implements OrderItemService {
 	private ItemDAO itemDAO;
 	@Autowired
 	private PurchaseDAO purchaseDAO;
+	@Autowired
+	private DeliveryDAO deliveryDAO;
 	
 	@Override
 	public List<OrderItem> getStoreOrderItems(String requestNum, String storeId) {
@@ -44,35 +49,46 @@ public class OrderItemServiceImpl implements OrderItemService {
 		return oderItemDAO.selectOrderItems(requestNum);
 	}
 
-	// 추후 인터셉터로 변경
 	@Override
-	public void checkQty(String requestNum) {
+	public void modifyOrderStateByCheckQty(String requestNum) {
 		List<OrderItem> oderItems=oderItemDAO.selectOrderItems(requestNum);
 		boolean possible=true;
-		String Pnum="P"+System.currentTimeMillis(); // 구매요청번호 재작성
+		int StoreId=0;
+		
 		for (OrderItem order:oderItems) {
+			StoreId=order.getStoreId();
+			// 가을아,, 시간남으면 조인하잠...!
 			int currentQty=itemDAO.selectItemQty(order.getItemNum());
 			if(order.getOrderQty()>=currentQty) {
 				Purchase purchase=new Purchase();
-				purchase.setRequestNum(Pnum);
 				purchase.setItemNum(order.getItemNum());
 				purchase.setItemQty(order.getOrderQty());
 				purchase.setItemPprice(order.getItemPprice());
+<<<<<<< HEAD
 				purchase.setPurchaseType(0);
 				purchaseDAO.insertPurchaseOrder(purchase);
+=======
+				purchase.setPurchaseType(1);
+				purchaseDAO.insertPurchaseRequest(purchase);  
+>>>>>>> branch 'master' of https://github.com/starbucksERP/stars.git
 				possible=false;
 			}
 		}
 		
-		OrderItem order=new OrderItem();
-		if(possible==true) {
-			order.setRequestState(40); // 배송요청
-			order.setRequestNum(requestNum);
-			//modifyOrderItem(order);
-		} else {
-			order.setRequestState(30); // 구매요청
-			order.setRequestNum(requestNum);
-			//modifyOrderItem(order);
+		if(possible) {
+			Map<String, Object> goDelivery=new HashMap<String, Object>();
+			Delivery delivery=new Delivery();
+			delivery.setRequestNum(requestNum);
+			delivery.setStoreId(StoreId);
+			deliveryDAO.insertDeliveryRequest(delivery);
+			goDelivery.put("requestState", 40);
+			goDelivery.put("requestNum", requestNum);
+			modifyOrderItemState(goDelivery); 
+		} else { 
+			Map<String, Object> stayDelivery=new HashMap<String, Object>();
+			stayDelivery.put("requestState", 30);
+			stayDelivery.put("requestNum", requestNum);
+			modifyOrderItemState(stayDelivery);
 		}
 		
 	}

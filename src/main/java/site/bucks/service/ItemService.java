@@ -13,7 +13,7 @@ public interface ItemService {
 	Item getItem (String itemNum);
 	List<Item> getProductList(Item item);
 	List<Item> getItemList(Item item);
-	void modifyItemMinQty(Item item);
+	void modifyItemMinQty(Map<String, Object> itemNumMap);
 	List<Item> getItemPlanList(Item item);
 	void getItemQty(String itemNum);
 	List<String> getItemVendorList(String itemVendor);

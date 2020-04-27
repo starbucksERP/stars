@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<style type="text/css">
+.error {
+	color: #006C49;
+}
+</style>
 <div class="container">
 	<div class="row">
 		<div class="sidebar">
@@ -20,9 +25,11 @@
 			<hr />
 			<div class="information-left">
 			<br />
-				<span id="length"></span>
 				<span style="float: right;"><button type="button" class="a-button yellow medium" id="modifyBtn" >수정</button></span>
-				<div id="checkErrorMsg" style="color:red; display: none;">하나만 체크해 주세요.</div>
+				<br />
+				<!-- <div class="errorCheckMsg" style="color:red; display: none;">check 부탁드립니다.(1개)</div> -->
+				<button type="button" class="a-button darkgreen" id="errorCheckMsg" style="display: none; width: 200px; height: 35px; font-size: 15px;">check 부탁드립니다.(1개)</button>
+				<br /><div id="resultLength" class="right" style="display:inline-block;"></div>
 				<div id="storeInsertDiv"></div>
 				<table class="table">
 					<tbody>
@@ -38,49 +45,39 @@
 			</div>
 			
 			<div class="information-right">
-				<!-- <ul class="enroll-ul">
-					<li class="tab1" >지점정보</li>
-				</ul> -->
-				
 				<!-- 탭 컨텐츠 영역 -->
 				<div class="enroll-div">
 				<!-- 매장정보 -->
 				<%-- 매장정보 입력 영역 --%>
 				<fieldset id="insertArea" class="enroll-fieldset" style="display: block">
-					<!--  
-					<label>
-						<span>지점코드 </span><input type="text" id="storeId" readonly="readonly" />
-					</label><br/>
-					-->
 					<label>
 						<span>지점명 </span><input type="text" id="insertName" name="storeName"/>
 					</label><br />
-					<div class="error nameErrorMsg"  style="color:red; display: none;  padding-left: 163px; ">&nbsp;&nbsp;지점명을 반드시 입력해 주세요.</div>
+					<div class="error nameErrorMsg"  style=" display: none;  padding-left: 163px; ">&nbsp;&nbsp;지점명을 반드시 입력해 주세요.</div>
 					<label>
 						<span>지점주소 </span><input type="text" id="insertAddress" name="storeAddress" style="width: 250px;"/>
 					</label><br />
-					<div class="error addressErrorMsg"   style="color:red; display: none; padding-left: 163px;">&nbsp;&nbsp;지점주소를 반드시 입력해 주세요.</div>
+					<div class="error addressErrorMsg"   style="display: none; padding-left: 163px;">&nbsp;&nbsp;지점주소를 반드시 입력해 주세요.</div>
 					<label>
 						<span>점주명 </span><input type="text" id="insertOwner" name="storeOwner"/>
 					</label><br />
-					<div class="error ownerErrorMsg"   style="color:red; display: none; padding-left: 163px;">&nbsp;&nbsp;점주명을 반드시 입력해 주세요.</div>
+					<div class="error ownerErrorMsg"   style="display: none; padding-left: 163px;">&nbsp;&nbsp;점주명을 반드시 입력해 주세요.</div>
 					<label>
 						<span>지점 전화번호 </span><input type="text" id="insertPhone" name="storePhone"/>
 					</label><br />		
-					<div class="error phoneErrorMsg"   style="color:red; display: none; padding-left: 163px;">&nbsp;&nbsp;전화번호를 반드시 입력해 주세요.</div>			
+					<div class="error phoneErrorMsg"   style="display: none; padding-left: 163px;">&nbsp;&nbsp;전화번호를 반드시 입력해 주세요.</div>			
 					<span class="staff">구분 </span>	
 					<label class="gLabel"><input type="radio" name="radio-name" class="fChk" value="head" >본점</label>
 					<label class="gLabel"><input type="radio" name="radio-name" class="fChk" value="branch" >지점</label>
 					<label class="gLabel"><input type="radio" name="radio-name" class="fChk" value="close">폐점</label>
-					<div class="error radioErrorMsg"   style="color:red; display: none; padding-left: 163px;">&nbsp;&nbsp;버튼을 선택해 주세요.</div>			
-					<div class="error closeErrorMsg"   style="color:red; display: none; padding-left: 163px;">&nbsp;&nbsp;폐점등록은 수정시 가능합니다.</div>
+					<div class="error radioErrorMsg"   style="display: none; padding-left: 163px;">&nbsp;&nbsp;버튼을 선택해 주세요.</div>			
+					<div class="error closeErrorMsg"   style="display: none; padding-left: 163px;">&nbsp;&nbsp;폐점등록은 수정시 가능합니다.</div>
 					
-					<!-- <input type="hidden" id="hidden"  /> -->
 					<br />
 					<label>
 						<span>개업일 </span><input type="text" id="insertOpen" name="storeOpen"/>
 					</label><br />
-					<div class="error openErrorMsg"   style="color:red; display: none; padding-left: 163px;">&nbsp;&nbsp;개업일을 반드시 입력해 주세요.</div>
+					<div class="error openErrorMsg"   style="display: none; padding-left: 163px;">&nbsp;&nbsp;개업일을 반드시 입력해 주세요.</div>
 					<label>
 						<span>폐업일 </span><input type="text" id="insertClose" name="storeClose" disabled="disabled"  />
 					</label><br />
@@ -94,36 +91,39 @@
 				<%-- 매장정보 수정 영역 --%>
 				<fieldset id="updateArea" class="enroll-fieldset" style="display: none">
 					<label>
+						<span>지점코드 </span><input type="text" id="updateStoreId" name="storeId" readonly="readonly" />
+					</label><br/>				
+					<label>
 						<span>지점명 </span><input type="text" id="updateName" name="storeName"/>
 					</label><br />
-					<div class="error unameErrorMsg"   style="color:red; display: none; padding-left: 163px; ">&nbsp;&nbsp;지점명을 반드시 입력해 주세요.</div>
+					<div class="error unameErrorMsg"   style="display: none; padding-left: 163px; ">&nbsp;&nbsp;지점명을 반드시 입력해 주세요.</div>
 					<label>
 						<span>지점주소 </span><input type="text" id="updateAddress" name="storeAddress" style="width: 250px;"/>
 					</label><br />
-					<div class="error uaddressErrorMsg"   style="color:red; display: none; padding-left: 163px;">&nbsp;&nbsp;지점주소를 반드시 입력해 주세요.</div>
+					<div class="error uaddressErrorMsg"   style="display: none; padding-left: 163px;">&nbsp;&nbsp;지점주소를 반드시 입력해 주세요.</div>
 					<label>
 						<span>점주명 </span><input type="text" id="updateOwner" name="storeOwner"/>
 					</label><br />
-					<div class="error uownerErrorMsg"   style="color:red; display: none; padding-left:163px;">&nbsp;&nbsp;점주명을 반드시 입력해 주세요.</div>
+					<div class="error uownerErrorMsg"   style="display: none; padding-left:163px;">&nbsp;&nbsp;점주명을 반드시 입력해 주세요.</div>
 					<label>
 						<span>지점 전화번호 </span><input type="text" id="updatePhone" name="storePhone"/>
 					</label><br />
-					<div class="error uphoneErrorMsg"   style="color:red; display: none; padding-left: 163px;">&nbsp;&nbsp;전화번호를 반드시 입력해 주세요.</div>			
+					<div class="error uphoneErrorMsg"   style="display: none; padding-left: 163px;">&nbsp;&nbsp;전화번호를 반드시 입력해 주세요.</div>			
 					<span class="staff">구분 </span>	
 					<label class="gLabel"><input type="radio" name="radio-name" class="fChk" value="head">본점</label>
 					<label class="gLabel"><input type="radio" name="radio-name" class="fChk" value="branch">지점</label>
 					<label class="gLabel"><input type="radio" name="radio-name" class="fChk" value="close">폐점</label>
-					<div class="error uradioErrorMsg"   style="color:red; display: none; padding-left: 163px;">&nbsp;&nbsp;버튼을 선택해 주세요.</div>			
-					<div class="error ucloseErrorMsg"   style="color:red; display: none; padding-left: 163px;">&nbsp;&nbsp;폐점을 클릭해 주세요.</div>
+					<div class="error uradioErrorMsg"   style="display: none; padding-left: 163px;">&nbsp;&nbsp;버튼을 선택해 주세요.</div>			
+					<div class="error ucloseErrorMsg"   style="display: none; padding-left: 163px;">&nbsp;&nbsp;폐점을 클릭해 주세요.</div>
 					<br />
 					<label>
 						<span>개업일 </span><input type="text" id="updateOpen" name="storeOpen"/>
 					</label><br />
-					<div class="error uopenErrorMsg"   style="color:red; display: none; padding-left: 163px;">&nbsp;&nbsp;개업일을 반드시 입력해 주세요.</div>
+					<div class="error uopenErrorMsg"   style="display: none; padding-left: 163px;">&nbsp;&nbsp;개업일을 반드시 입력해 주세요.</div>
 					<label>
 						<span>폐업일 </span><input type="text" id="updateClose" name="storeClose" />
 					</label><br />
-					<div class="error ucloseMsg"   style="color:red; display: none; text-align:center; padding-left: 17px;">&nbsp;&nbsp;폐업일을 입력해 주세요.</div>
+					<div class="error ucloseMsg"   style="display: none; text-align:center; padding-left: 17px;">&nbsp;&nbsp;폐업일을 입력해 주세요.</div>
 					
 					<div class="center" style="margin-top: 70px;">
 						<button type="button" class="a-button yellow medium" id="updateBtn" >수정완료</button>
@@ -150,6 +150,7 @@
 			 url: "storeStaffList",
 			 dataType: "json",
 			 success: function(json) {
+				 $("#resultLength").html("총 검색결과 : "+json.storeList.length+"건");
 				 if(json.storeList.length==0){
 					 $(".table>tbody").append("<tr><td colspan='5'>검색된 지점정보가 없습니다.</td></tr>");
 				 } else {
@@ -173,11 +174,6 @@
 						 "</tr>";
 						$(".table>tbody").append(storeAdd);
 					 })
-
-						//var n = ($( 'tr' ).length)-1;
-					 	//alert(n);
-						//var nAdd = "<p style='display: inline-block;'>총 매장수 :"+n+"</p>";
-						//$("#length").append(nAdd);
 				 }
 				 
 			 },
@@ -282,7 +278,7 @@
 		 		$(".openErrorMsg").hide();
 		 		$(".radioErrorMsg").hide();
 		 		$(".openErrorMsg").hide();
-		 		$(".closeErrorMsg").hide(); 
+		 		$(".closeErrorMsg").hide(); 	 	
 		 	
 		 });
 
@@ -291,20 +287,19 @@
 	$("#modifyBtn").click(function() {
 		var cnt = $(".rowChk:checked").length;
 		
-		if(cnt>1) {
+		if(cnt>1 || cnt==0) {
+			$("#errorCheckMsg").css('display','block');
 			$(this).prop('checked',false);
-			$('.checkErrorMsg').css('display','block');
-			return false;
 		} else {
-			$('.checkErrorMsg').css('display','none');
+			$("#errorCheckMsg").css('display','none');
 			$("#insertArea").css('display','none');
 			
 			<%-- store_id를 전달하여 입력값 반환받기 --%>
 		 	//체크박스선택값 (메소드 때문에 가져온것)
 		 	var storeId=$(".rowChk:checked").val();
-		 	alert("storeId"+storeId);
 			
 			<%-- 반환받은값 변경inpt태그에 저장 --%>
+			$("#updateStoreId").val(storeId);
 			var storeName=$("#updateName").val(storeName);
 			var storeAddress=$("#updateAddress").val(storeAddress);
 			var storeOwner=$("#updateOwner").val(storeOwner);
@@ -312,8 +307,6 @@
 			 
 			var storeOpen=$("#updateOpen").val(storeOpen);
 			var storeClose=$("#updateClose").val(storeClose);
-			
-			
 			
 			$.ajax({
 				type: "GET",
@@ -392,7 +385,6 @@
 		 	if(storeState==0 || storeState==1) {
 		 		if(storeOpen=="") {
 		 			$(".uopenErrorMsg").show();
-		 			//$("#ucloseErrorMsg").show();
 		 			return;
 		 		} else if (storeClose!="") {
 		 			$(".ucloseErrorMsg").show();
@@ -432,6 +424,7 @@
 			$("#updateArea").css('display','none');
 			$("#insertArea").show();
 		
+			/*
 	 		$(".unameErrorMsg").hide();
 	 		$(".uaddressErrorMsg").hide();
 	 		$(".uownerErrorMsg").hide();
@@ -441,6 +434,8 @@
 	 		$(".ucloseErrorMsg").hide(); 
 	 		$(".uopenErrorMsg").hide();
 	 		$(".ucloseMsg").hide();
+	 		*/
+	 		$(".error").hide();
 		});
 		
 	<%-- 초기화 버튼 클릭시 --%>

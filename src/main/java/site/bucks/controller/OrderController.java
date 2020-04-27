@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import site.bucks.dto.ItemHistory;
 import site.bucks.dto.OrderItem;
+import site.bucks.service.ItemHistoryService;
 import site.bucks.service.OrderItemService;
 
 @Controller
@@ -19,6 +21,8 @@ import site.bucks.service.OrderItemService;
 public class OrderController {
 	@Autowired
 	private OrderItemService orderItemService;
+	@Autowired
+	private ItemHistoryService itemHistoryService;
 	
 	// 발주요청
 	@RequestMapping(value = "/orderRequestList", method = RequestMethod.GET)
@@ -33,15 +37,24 @@ public class OrderController {
 		return orderItemService.getOrderItemList(orderItem);
 	}
 
-	// 발주요청확인
+	// 발주요청확인 
 	@RequestMapping(value = "/orderReqConfirm", method = RequestMethod.PUT)
 	@ResponseBody
 	public String orderReqConfirm(@RequestBody Map<String, Object> param) {
 		orderItemService.modifyOrderItemState(param);
+		
+		List reqNums=(List)param.get("reqNums");
+		if (reqNums.size()==1) {
+			String num=(String)reqNums.get(0);
+			orderItemService.modifyOrderStateByCheckQty(num);
+		}
+		for (int i=0; i<reqNums.size(); i++) {
+			String num=(String)reqNums.get(i);
+			orderItemService.modifyOrderStateByCheckQty(num);
+		}
+		
 		return "success";
 	}
-	
-	// 수량체크해서 구매입력 또는 배송처리 >> 만들어야해
 	
 	// 발주현황
 	@RequestMapping(value = "/orderStateList", method = RequestMethod.GET)
@@ -56,12 +69,20 @@ public class OrderController {
 		return orderItemService.getOrderItemList(orderItem);
 	}
 
+	@RequestMapping(value = "/history", method = RequestMethod.GET)
+	public String historyList() {
+		return "history/history_list";
+	}
+	
+	@RequestMapping(value = "/history", method = RequestMethod.POST)
+	@ResponseBody
+	public List<ItemHistory> historyList(@RequestBody ItemHistory itemHistory) {
+		return itemHistoryService.getItemHistoryist(itemHistory);
+	}
 	
 	
 	
-	
-	
-
+/*
 	@RequestMapping(value = "/purchasePlan")
 	public String purchasePlan() {
 		return "purchase/purchase_plan";
@@ -74,10 +95,7 @@ public class OrderController {
 	public String purchaseList() {
 		return "purchase/purchase_list";
 	}
-	@RequestMapping(value = "/history")
-	public String historyList() {
-		return "history/history_list";
-	}
+	*/
 
 	
 
