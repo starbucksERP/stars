@@ -2,24 +2,22 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="site.bucks.mapper.ItemHistoryMapper">
 
-<<<<<<< HEAD
 
 
 <!-- 새로운 구매에 대한 히스토리 insert (본사직접주문) -->
 <insert id="newPOItemHist" parameterType="Purchase">
 	insert into item_history values(history_seq.nextval, #{requestNum}, #{itemNum},
 	#{purchaseState}, #{itemQty}, sysdate, #{purchaseType}, 'login사용자') 
-=======
+</insert>
+
 <insert id="insertItemHistory" parameterType="ItemHistory">
 	<selectKey resultType="int" keyProperty="historySeq" order="BEFORE">
 		select history_seq.nextval from dual
 	</selectKey>
 		insert into item_history values(#{historySeq}, #{requestNum}, #{itemNum}, #{itemName},
 		#{itemState}, #{itemQty}, systdate, #{purchaseType}, #{historyOwner})
->>>>>>> branch 'master' of https://github.com/starbucksERP/stars.git
 </insert>
 
-<<<<<<< HEAD
 
 <!-- 상태가 변경된 purchase에 대한 히스토리 insert --> 
 <insert id="updatedPOItemHist" parameterType="Purchase">
@@ -29,12 +27,8 @@ item_qty, sysdate, purchase_type, 'login사용자' from purchase where purchase_
 
 
 
-
-
-
-
 <!-- 200419 이근형 작성 시작 -->
-=======
+
 	<select id="selectItemHistoryist" resultType="ItemHistory">
 		select * from item_history
 		<where>
@@ -66,12 +60,6 @@ item_qty, sysdate, purchase_type, 'login사용자' from purchase where purchase_
 
 
 
-
-
-
-
->>>>>>> branch 'master' of https://github.com/starbucksERP/stars.git
-
 	<!-- 입출하기록 페이지에 처음 접속하면 실행되는 select 메소드: 최근 2주간의 기록만 기본적으로 출력 -->
 	<select id="recentHistoryList" parameterType="ItemHistory" resultType="ItemHistory">
 		select * from item_history where history_date between sysdate-14 and sysdate order by history_seq desc
@@ -100,15 +88,6 @@ item_qty, sysdate, purchase_type, 'login사용자' from purchase where purchase_
 	</select>
 	
 <!-- 200419 이근형 작성 종료 -->
-
-
-
-
-
-
-
-
-
 
 
 

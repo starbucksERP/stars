@@ -74,11 +74,12 @@ public class OrderController {
 		return "history/history_list";
 	}
 	
-	@RequestMapping(value = "/history", method = RequestMethod.POST)
-	@ResponseBody
-	public List<ItemHistory> historyList(@RequestBody ItemHistory itemHistory) {
-		return itemHistoryService.getItemHistoryist(itemHistory);
-	}
+	/*
+	 * @RequestMapping(value = "/history", method = RequestMethod.POST)
+	 * 
+	 * @ResponseBody public List<ItemHistory> historyList(@RequestBody ItemHistory
+	 * itemHistory) { return itemHistoryService.getItemHistoryist(itemHistory); }
+	 */
 	
 	
 	
