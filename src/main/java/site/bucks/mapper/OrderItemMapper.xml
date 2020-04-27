@@ -36,7 +36,7 @@
 				#{requestNum}
 			</foreach>
 		</if>
-		<if test="requestNum!=null and requestNum!=0">
+		<if test="requestNum!=null and requestNum!=''">
 			request_num=#{requestNum}
 		</if>
 		<if test="storeId!=null and storeId!=0">
