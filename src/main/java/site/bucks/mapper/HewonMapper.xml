@@ -13,7 +13,7 @@
 	
 	
 	<insert id="insertHewon">
-		insert into HEWON values(#{hewonId},#{hewonName}, #{hewonPassword}, #{hewonAddress}, #{hewonPhone}, #{hewonEmail},'0', SYSDATE, #{hewonStId})
+		insert into HEWON values(#{hewonId},#{hewonName}, #{hewonPassword}, #{hewonAddress}, #{hewonPhone}, #{hewonEmail},'1', SYSDATE, #{hewonStId})
 	</insert>
 	
 	<update id="updateHewon">

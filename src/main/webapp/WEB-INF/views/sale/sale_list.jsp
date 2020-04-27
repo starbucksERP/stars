@@ -41,11 +41,10 @@
 		<div class="row">
 			<div class="sidebar">
 				<ul class="side-menu">
-					 <li>
+					<li>
 						<button class="dropdown-btn">재고관리<i class="fa fa-caret-down"></i></button>
 						<div class="dropdown-container">
-							<a href="${pageContext.request.contextPath}/item/productList">품목현황</a><br /><br />
-							<a href="${pageContext.request.contextPath}/item/itemList">재고현황</a>
+							<a href="${pageContext.request.contextPath}/storeItem/itemList">재고현황</a>
 						</div>
 					</li>
 					<li>
@@ -71,7 +70,16 @@
 							<td width="40%"><label class="gLabel"><input type="date" id="saleDate" />&nbsp;<i class="far fa-calendar-alt"></i></label>
 							&nbsp;-&nbsp;<label class="gLabel"><input type="date" id="saleDatePair" />&nbsp;<i class="far fa-calendar-alt"></i></label></td>
 							<th>지점명 / 지점코드</th>
-							<td><input type="text" id="storeId" value="1021"/></td>
+							<td>
+								<c:choose>
+									<c:when test="${loginHewon.hewonGrade=='9'}">
+										<input type="text" name="storeId" id="storeId" value=""/>	
+									</c:when>
+									<c:otherwise>
+										<input type="text" name="storeId" id="storeId" value="${loginHewon.hewonStId}" readonly="readonly"/>
+									</c:otherwise>
+								</c:choose>
+							</td>
 						</tr>
 						<tr>
 						   <th>판매상품명</th>
@@ -123,7 +131,8 @@
 	var period=new Date();
 	period.setDate(today.getDate()-14);
 	
-	var storeId=$("#storeId").val();
+	
+	
 	
 	saleList(0);
 	
@@ -145,14 +154,15 @@
 			
 			var saleQty=$("#saleQty").val();
 			var saleQtyPair=$("#saleQtyPair").val();
-			if (saleQty==0 && saleQtyPair!=0) {
+			if (saleQty=='' && saleQtyPair!='') {
 				saleQty=saleQtyPair;
-			} else if (saleQtyPair==0 && saleQty!=0) {
+			} else if (saleQtyPair=='' && saleQty!='') {
 				saleQtyPair=saleQty;
 			} 
 		}
 		
 		var saleProduct=$("#saleProduct").val();
+		var storeId=$("#storeId").val();
 		
 		$.ajax({
 			type: "POST",
@@ -165,24 +175,23 @@
 				$("#countDiv").html("총 검색결과 : "+json.length+"건");
 				
 				if(json.length==0) {
-					var html="<tr><td colspan='7'>검색된 판매정보가 존재하지않습니다.</td><tr>";
-					$("#resultSale").html(html);
-					return;
+						var html="<tr><td colspan='7'>검색된 판매정보가 존재하지않습니다.</td><tr>";
+						$("#resultSale").html(html);
+						return;
 				}
 				
 				var html="";
 	       		$(json).each(function() {
 	       			var total=Number(this.saleQty)*Number(this.salePrice);
 	       			
-	       			html+="<tr><td>"+this.saleSeq+"</td>";
+	       			html+="<tr><td class="+this.saleSeq+">"+this.saleSeq+"</td>";
 	       			
-	        		html+="<td>"+this.saleDate+"</td>"
+	        		html+="<td>"+this.saleDate.substr(0, 10)+"</td>"
 					+"<td>"+this.storeId+"</td>"
 					+"<td class='saleProduct'>"+this.saleProduct+"</td>"
 					+"<td class='saleQty'>"+this.saleQty+"</td>"
 					+"<td>"+total+"</td>"
 					+"<td class='green-font'><button type='button' class='a-button blackgray inner-button' onclick='saleDelete("+this.saleSeq+")'>판매취소</button></td></tr>";
-					
 				});    
 	       		
 	       		
@@ -197,14 +206,15 @@
 	
 	
 	function saleDelete(saleSeq) {
+		var saleQty=$("."+saleSeq+"").parents('tr').find(".saleQty").text();
+		var saleProduct=$("."+saleSeq+"").parents('tr').find(".saleProduct").text();
+		var storeId=$("#storeId").val();
 		
-		var saleQty=Number($(this).parents('tr').find(".saleQty").text());
-		var saleProduct=$(this).parents('tr').find(".saleProduct").text();
 		
 		$.ajax({
-			type: "PUT",
+			type: "POST",
 			url: "saleCancel",
-			headers: {"content-type":"application/json","X-HTTP-Method-override":"PUT"},
+			headers: {"content-type":"application/json"},
 			data: JSON.stringify({"saleQty":saleQty, "saleSeq":saleSeq,"storeId":storeId, "saleProduct":saleProduct}),
 			dataType: "text", 
 			success: function(text) {

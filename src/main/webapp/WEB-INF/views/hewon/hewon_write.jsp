@@ -19,7 +19,7 @@
 
 .content{
      position: absolute;
-     top:52%;
+     top:60%;
      left:55%;
      transform: translate(-60%, -55%);                                                                   
      z-index: 2;

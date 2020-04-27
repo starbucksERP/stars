@@ -9,18 +9,6 @@
 					<div class="dropdown-container">
 						<a href="${pageContext.request.contextPath}/account/accountPurchase">매입현황</a><br /><br />
 						<a href="${pageContext.request.contextPath}/account/accountSales">매출현황</a>
-						<a href="${pageContext.request.contextPath}/account/accountIncome">손익분석</a>
-						<a href="${pageContext.request.contextPath}/account/purchaseMonth">매입 월별현황</a><br /><br />
-						<a href="${pageContext.request.contextPath}/account/salesMonth">매출 월별현황</a><br /><br />
-						<a href="${pageContext.request.contextPath}/account/incomeMonth">손익분석</a>
-					</div>
-				</li>
-				<li>
-					<button class="dropdown-btn">지점<i class="fa fa-caret-down"></i></button>
-					<div class="dropdown-container">
-						<a href="${pageContext.request.contextPath}/account/st_accountPurchase">매입 현황</a><br /><br />
-						<a href="${pageContext.request.contextPath}/account/st_accountSales">매출 현황</a><br /><br />
-						<a href="${pageContext.request.contextPath}/account/st_accountIncome">손익분석</a>
 					</div>
 				</li>
 			</ul>

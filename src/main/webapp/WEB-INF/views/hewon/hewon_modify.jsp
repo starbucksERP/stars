@@ -66,7 +66,6 @@ $('document').ready(function(){
 	
 		
 function hewonModify() {
-	
 	var hewonAddress=$("#sample4_roadAddress").val()+" ("+$("#sample4_jibunAddress").val()+") "+$("#sample4_detailAddress").val();
 	$("#hewonAddress").val(hewonAddress);
 	
@@ -78,14 +77,6 @@ function hewonModify() {
         return false;
      }
     
-     if (($('#hewonPassword').val() == ($('#hewonPassword2').val())) && pwJ.test($('#hewonPassword').val())) {
-        $("#password_check").text(" ");
-     } else {
-        $("#password_check").text("비밀번호를 확인하세요.");
-        $('#hewonPassword').focus();
-        return false;
-     }
- 
      if (nameJ.test($('#hewonName').val())) {
         $("#name_check").text(" ");
      } else {
@@ -114,10 +105,11 @@ function hewonModify() {
          $("#address_check").text("주소를 확인하세요.");
          return false;
       }
+     
      $("#address_check").text("");
      
-    f.action = "${pageContext.request.contextPath}/hewon/modify";
- 	f.submit();
+     
+ 	$("#formform").submit();
  	alert("정보 수정이 이루어졌습니다."); 
   
 }
@@ -181,58 +173,58 @@ function sample4_execDaumPostcode() {
 </script>
 
 	<div class="content">
-			<div class="row">
-				<div class="main">
-					<div style="font-size: 2em;" class="center">회원관리 - 회원정보수정</div>
-					<form name="f" method="post">
+		<div class="row">
+			<div class="main">
+				<div style="font-size: 2em;" class="center">회원관리 - 회원정보수정</div>
+				<form name="f" method="post" id="formform" action="${pageContext.request.contextPath}/hewon/modify">
 					<br />
-						<br />
-							<h3>'${hewon.hewonName}[${hewon.hewonId }]' 님의 이용정보 수정</h3>
-							<hr />
-							<br />
-							<br />
-							<input type="text" style="width:250px; margin:10px; margin-bottom: 0px; " id="hewonEmail" name="hewonEmail" value="${hewon.hewonEmail }" placeholder="이메일"><br />
-							<span style="margin-left: 10px; font-size:12px;" class="coral-font" id="email_check"></span>
-						<br />
-							<input type="text" style="width:250px; margin:10px; margin-bottom: 0px; " id="hewonPhone" name="hewonPhone" value="${hewon.hewonPhone }" placeholder="전화번호 ('-'없이 번호만 입력해주세요)"><br />
-							<span style="margin-left: 10px; font-size:12px;" class="coral-font" id="phone_check"></span>
-						<br />
-							<input type="text" style="margin:10px;" id="sample4_postcode" placeholder="우편번호">
-							<button type="button" class="a-button gray" onclick="sample4_execDaumPostcode()"><i class="fa fa-search"></i> 우편번호 찾기</button><br>
-							<input type="text" style="margin:10px; width:230px;" id="sample4_roadAddress" placeholder="도로명주소">
-							<input type="text" style="margin:10px; width:230px;" id="sample4_jibunAddress" placeholder="지번주소"><br />
-							<span id="guide" style="color:#999;display:none"></span>
-							<input type="text" style="margin:10px; width:250px;;" id="sample4_detailAddress" placeholder="상세주소">
-							<input type="text" id="sample4_extraAddress" placeholder="참고항목"><br />
-							<span style="margin-left: 10px; font-size:12px;" class="coral-font" id="addres_check"></span>
-							<input type="hidden"  id="hewonAddress" name="hewonAddress" value="${hewon.hewonAddress}"/>
-						<br />
-							<%-- 관리자만 볼 수 잇음 --%>
-							<c:if test="${hewon.hewonGrade=='9'}">
-								<br/>
-									<input type="text" style="width:250px; margin:10px; margin-bottom: 0px; " id="hewonGrade" name="hewonGrade" value="${hewon.hewonGrade }" placeholder="회원등급"><br />
-									<span style="margin-left: 10px; font-size:12px;" class="coral-font" id="phone_check"></span>
-								<br>
-								 	<input type="text" style="width:250px; margin:10px; margin-bottom: 0px; " id="hewonStId" name="hewonStId" value="${hewon.hewonStId }" placeholder="매장 코드"><br />
-									<span style="margin-left: 10px; font-size:12px;" class="coral-font" id="phone_check"></span>
-							</c:if>
-						<br />
-						<hr />
-						<br />
-							<h4>비밀번호 확인</h4>
-							<input type="password" style="width:250px; margin:10px; height :24px" id="hewonPassword" name="hewonPassword" value="${hewon.hewonPassword }" placeholder="비밀번호">
-							<input type="password" style="width:250px; margin:10px; height:24px" id="hewonPassword2" name="hewonPassword2" value="" placeholder="비밀번호확인"><br />
-							<span style="margin-left: 10px; font-size:12px;" class="coral-font" id="password_check"></span>
-						<br />
-						<br />
-					</form>
 					<br />
-					<div class="center">
-						<button type="button" class="a-button big purple" onClick="hewonModify();">수정</button>&nbsp;&nbsp;
-						<button type="button" class="a-button big sea" onClick="location.href='${pageContext.request.contextPath}/hewon/list';">목록</button>
-					</div>
+						<h3>'${hewon.hewonName}[${hewon.hewonId } - 등급 : ${hewon.hewonGrade}]' 님의 이용정보 수정</h3>
+						<input type="hidden" id="hewonId" name="hewonId"  value="${hewon.hewonId }"/>
+						<input type="hidden" id="hewonName" name="hewonName" value="${hewon.hewonName}"/>
+						<br />
+						<br />
+						<input type="text" style="width:250px; margin:10px; margin-bottom: 0px; " id="hewonEmail" name="hewonEmail" value="${hewon.hewonEmail }" placeholder="이메일"><br />
+						<span style="margin-left: 10px; font-size:12px;" class="coral-font" id="email_check"></span>
+					<br />
+						<input type="text" style="width:250px; margin:10px; margin-bottom: 0px; " id="hewonPhone" name="hewonPhone" value="${hewon.hewonPhone }" placeholder="전화번호 ('-'없이 번호만 입력해주세요)"><br />
+						<span style="margin-left: 10px; font-size:12px;" class="coral-font" id="phone_check"></span>
+					<br />
+						<input type="text" style="margin:10px;" id="sample4_postcode" placeholder="우편번호">
+						<button type="button" class="a-button gray" onclick="sample4_execDaumPostcode()"><i class="fa fa-search"></i> 우편번호 찾기</button><br>
+						<input type="text" style="margin:10px; width:230px;" id="sample4_roadAddress" placeholder="도로명주소">
+						<input type="text" style="margin:10px; width:230px;" id="sample4_jibunAddress" placeholder="지번주소"><br />
+						<span id="guide" style="color:#999;display:none"></span>
+						<input type="text" style="margin:10px; width:250px;;" id="sample4_detailAddress" placeholder="상세주소">
+						<input type="text" id="sample4_extraAddress" placeholder="참고항목"><br />
+						<span style="margin-left: 10px; font-size:12px;" class="coral-font" id="addres_check"></span>
+						<input type="hidden"  id="hewonAddress" name="hewonAddress" value="${hewon.hewonAddress}"/>
+					<br />
+						<span style="margin-left: 10px; font-size:12px;" class="coral-font" >
+							지점권한 부여 등급 : 5 <br />
+							&nbsp;&nbsp;관리자권한 부여 등급 : 9 <br />
+							&nbsp;&nbsp;일반 회원 등급 : 1 <br />
+						</span>
+						<%-- 관리자만 볼 수 잇음 --%>
+						<c:if test="${loginHewon.hewonGrade=='9'}">
+							<br/>
+								<input type="text" style="width:250px; margin:10px; margin-bottom: 0px; " id="hewonGrade" name="hewonGrade" placeholder="회원등급"><br />
+								<span style="margin-left: 10px; font-size:12px;" class="coral-font" id="phone_check"></span>
+							<br>
+							 	<input type="text" style="width:250px; margin:10px; margin-bottom: 0px; " id="hewonStId" name="hewonStId" value="${hewon.hewonStId }" placeholder="매장 코드"><br />
+								<span style="margin-left: 10px; font-size:12px;" class="coral-font" id="phone_check"></span>
+						</c:if>
+					<br />
+					<hr />
+					<br />
+				</form>
+				<br />
+				<div class="center">
+					<button type="button" class="a-button big purple" onClick="hewonModify();">수정</button>&nbsp;&nbsp;
+					<button type="button" class="a-button big sea" onClick="location.href='${pageContext.request.contextPath}/hewon/list';">목록</button>
 				</div>
 			</div>
+		</div>
       </div>
 	<div class="img-cover"></div>
 
