@@ -14,6 +14,9 @@ public interface DeliveryService {
 	//void modifyDelieveryState(int delivery);
 	void modifyDeliveryReq(int deliverySeq);
 	void modifyDeliveryReady(int deliverySeq);
-	
+	void updateQtyFromDelivery(int deliverySeq);
+	void insertDelReqConfimIH(int deliverySeq); 
+	void insertDelReadyIH(int deliverySeq);
+	void insertSihFromDelInProcess(int deliverySeq);
 	
 }

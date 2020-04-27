@@ -28,7 +28,8 @@
 				<span style="float: right;"><button type="button" class="a-button yellow medium" id="modifyBtn" >수정</button></span>
 				<br />
 				<!-- <div class="errorCheckMsg" style="color:red; display: none;">check 부탁드립니다.(1개)</div> -->
-				<button type="button" class="a-button darkgreen" id="errorCheckMsg" style="display: none; width: 200px; height: 35px; font-size: 15px;">check 부탁드립니다.(1개)</button>
+				<button type="button" class="a-button darkgreen" id="errorCheckMsg1" style="display: none; width: 200px; height: 35px; font-size: 15px;">check 부탁드립니다.(1개)</button>
+				<button type="button" class="a-button darkgreen" id="errorCheckMsg2" style="display: none; width: 200px; height: 35px; font-size: 15px;">수정할 정보가 없습니다.</button>
 				<br /><div id="resultLength" class="right" style="display:inline-block;"></div>
 				<div id="storeInsertDiv"></div>
 				<table class="table">
@@ -287,11 +288,15 @@
 	$("#modifyBtn").click(function() {
 		var cnt = $(".rowChk:checked").length;
 		
-		if(cnt>1 || cnt==0) {
-			$("#errorCheckMsg").css('display','block');
+		if(cnt==0) {
+			$("#errorCheckMsg2").css('display','block');
+		} else if(cnt>1) {
+			$("#errorCheckMsg1").css('display','block');
+			$("#errorCheckMsg2").css('display','none');
 			$(this).prop('checked',false);
 		} else {
-			$("#errorCheckMsg").css('display','none');
+			$("#errorCheckMsg1").css('display','none');
+			$("#errorCheckMsg2").css('display','none');
 			$("#insertArea").css('display','none');
 			
 			<%-- store_id를 전달하여 입력값 반환받기 --%>

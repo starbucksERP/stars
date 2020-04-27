@@ -115,7 +115,7 @@
 			<br />
 			
 			<div>
-				<button type="button" class="a-button green padding-button" onclick="orderReqConfirm(0)">발주확인</button>
+				<button type="button" class="a-button green padding-button" onclick="orderReqConfirm(0);">발주확인</button>
 			</div>
 			
 			<div class="information" >
@@ -228,9 +228,9 @@
 			success: function(json) {
 				$("#resultOrder").empty();
 				if(requestDate=='' || requestDate==null) {
-					$("#periodDiv").html("[ "+requestDate+" ~ "+requestDatePair+" ]"); 
-				} else { 
 					$("#periodDiv").html("[ 전체기간 ]");
+				} else { 
+					$("#periodDiv").html("[ "+requestDate+" ~ "+requestDatePair+" ]"); 
 				}
 				
 				$("#countDiv").html("총 검색결과 : "+json.length+"건");
@@ -248,19 +248,19 @@
 	       			html+="<tr><td><input type='checkbox' class='rowChk' value='"+this.requestNum+"'></td>";
 	       			
 	       			if (this.orderType == 1) {
-	       				html+="<td>대리점</td>";
+	       				html+="<td>대리점<input type='hidden' class='orderType' value='"+this.orderType+"'></td>";
 	       			} else if (this.orderType == 2) {
 	       				html+="<td>본사</td>";
 	       			} 
 	       			
 	        		html+="<td>"+this.requestDate+"</td>"
-					+"<td>"+this.requestNum+"</td>"
-					+"<td>"+this.storeId+"</td>"
-					+"<td>"+this.itemNum+"</td>"
-					+"<td>"+this.orderQty+"</td>"
+					+"<td >"+this.requestNum+"</td>"
+					+"<td class='storeId'>"+this.storeId+"</td>"
+					+"<td class='itemNum'>"+this.itemNum+"</td>"
+					+"<td class='orderQty'>"+this.orderQty+"</td>"
 					+"<td>"+total+"</td>";
 					if(this.requestState==10) {
-						html+="<td class='green-font'><button type='button' class='a-button green inner-button' onclick='orderReqConfirm("+this.requestNum+")'>발주확인</button></td></tr>";
+						html+="<td class='green-font'><button type='button' class='a-button green inner-button' onclick='orderReqConfirm("+this.requestNum+");'>발주확인</button></td></tr>";
 					} else if(this.requestState>10 && this.requestState<99) {
 						html+="<td class='green-font'>발주완료</td></tr>";
 					} else if(this.requestState==99) {
@@ -298,7 +298,7 @@
 		$.ajax({
 			type: "PUT",
 			url: "orderReqConfirm",
-			headers: {"content-type":"application/json","X-HTTP-Method-override":"PUT"},
+			headers: {"content-type":"application/json"},
 			data: JSON.stringify({"requestState":20, "reqNums":reqNums}),
 			dataType: "text", 
 			success: function(text) {
@@ -314,6 +314,42 @@
 		}); 
 		
 	}
+	
+	/* function addHistory() {
+		var historyList=[];
+		var ItemHistory=[];
+		
+		if ($('.rowChk:checked').length==0) {
+			return;
+		} else {
+		    $(".rowChk:checked").each(function(i) {
+		    	ItemHistory = {
+		    		requestNum : $(this).val(),
+		    		itemNum	:  $(this).parents('tr').find(".itemNum").text(),
+		    		itemState : 20,
+		    		itemQty : $(this).parents('tr').find(".itemQty").text(),
+		    		purchaseType : $(this).parents('tr').find(".orderType").text(),
+		    	};
+	    		alert(requestNum+","+itemNum+","+requestNum+","+itemState+","+itemQty+","+purchaseType);
+		        historyList.push(ItemHistory);
+		        
+		    });
+		}
+		
+		$.ajax({
+			type: "POST",
+			url: "historyAdd",
+			headers: {"content-type":"application/json","X-HTTP-Method-override":"PUT"},
+			data: JSON.stringify(historyList),
+			dataType: "text", 
+			success: function(text) {
+	    		alert("history완료");
+			},
+			error: function(xhr) {
+				alert("에러코드 = "+xhr.status)
+			}
+		}); 
+	} */
 
 	function openModal(message) {
 		var message=message;

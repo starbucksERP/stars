@@ -19,5 +19,4 @@ public interface ItemDAO {
 	List<String> selectItemVendorList(String itemVendor);
 	int updateTotalQty(Double change);
 	
-	
 }
