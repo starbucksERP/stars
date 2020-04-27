@@ -52,6 +52,12 @@ public class PurchaseServiceImpl implements PurchaseService{
 	}
 
 	@Override
+	public void insertDeliveryFromPurchase(String requestNum) {
+		purchaseDAO.insertDeliveryFromPurchase(requestNum);
+		
+	}
+
+	@Override
 	public void updateQtyFromPurchase(int purchaseSeq) {
 		purchaseDAO.updateQtyFromPurchase(purchaseSeq);
 		

@@ -34,6 +34,12 @@
 		(select item_vendor from item where item_num=#{itemNum}), #{purchaseType}) 
 </insert>
 
+<insert id="insertDeliveryFromPurchase" parameterType="Purchase">
+	insert into delivery select delivery_seq.nextval, #{requestNum}, (select store_id from order where request_num = #{requestNum}),
+	40, sysdate, null from purchase where purchase_seq = #{purchaseSeq}
+	
+</insert>
+
 
 
 <!-- 여기에 where절 추가해서 오늘 포함 데이터만 출력하게 해야되는데 왜 자꾸 오류나지?  -->
