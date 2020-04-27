@@ -77,6 +77,8 @@ public class PurchaseController {
 		return "success";
 	}
 	
+	
+	// 이거 시부래 작동 안됨 
 	@RequestMapping(value = "/inserDeliveryFromPurchase", method = RequestMethod.POST)
 	@ResponseBody
 	public String inserDeliveryFromPurchase(@RequestParam(value = "list[]") List<String> uniqueReqNums) {

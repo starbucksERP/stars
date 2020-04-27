@@ -53,22 +53,4 @@ item_qty, sysdate, purchase_type, 'login사용자' from purchase where purchase_
 	</select>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </mapper> 
