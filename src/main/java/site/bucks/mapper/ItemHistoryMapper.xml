@@ -6,7 +6,7 @@
 	<selectKey resultType="int" keyProperty="historySeq" order="BEFORE">
 		select history_seq.nextval from dual
 	</selectKey>
-		insert into item_history values(#{historySeq}, #{requestNum}, #{itemNum}, #{itemName},
+		insert into item_history values(#{historySeq}, #{requestNum}, #{itemNum},
 		#{itemState}, #{itemQty}, systdate, #{purchaseType}, #{historyOwner})
 </insert>
 

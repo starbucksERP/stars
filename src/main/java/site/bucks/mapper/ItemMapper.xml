@@ -60,7 +60,7 @@
 		select * from item
 		<where>
 			<if test="itemNum!=null and itemNum!=''">
-				ITEM_NUM=#{itemNum}
+				ITEM_NUM LIKE '%'||#{itemNum}||'%'
 			</if>
 			<if test="itemName!=null and itemName!=''">
 				AND ITEM_NAME LIKE '%'||#{itemName}||'%' 
@@ -124,7 +124,7 @@
 	<select id="selectItemPlanList" resultType="Item">
 		<![CDATA[select * from item where min_qty>=0 AND ITEM_USAGE!=9]]>
 		<if test="itemNum!=null and itemNum!=''">
-			AND ITEM_NUM=#{itemNum}
+			AND ITEM_NUM LIKE '%'||#{itemNum}||'%'
 		</if>
 		<if test="itemName!=null and itemName!=''">
 			AND ITEM_NAME LIKE '%'||#{itemName}||'%' 

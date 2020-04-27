@@ -12,6 +12,7 @@ import site.bucks.dao.ItemDAO;
 import site.bucks.dao.OrderItemDAO;
 import site.bucks.dao.PurchaseDAO;
 import site.bucks.dto.Delivery;
+import site.bucks.dto.ItemHistory;
 import site.bucks.dto.OrderItem;
 import site.bucks.dto.Purchase;
 
@@ -37,6 +38,7 @@ public class OrderItemServiceImpl implements OrderItemService {
 	@Override
 	public void modifyOrderItemState(Map<String, Object> numAndStateMap) {
 		oderItemDAO.updateOrderItemState(numAndStateMap);
+		
 	}
 
 	@Override
@@ -61,6 +63,7 @@ public class OrderItemServiceImpl implements OrderItemService {
 			int currentQty=itemDAO.selectItemQty(order.getItemNum());
 			if(order.getOrderQty()>=currentQty) {
 				Purchase purchase=new Purchase();
+				purchase.setRequestNum(requestNum);
 				purchase.setItemNum(order.getItemNum());
 				purchase.setItemQty(order.getOrderQty());
 				purchase.setItemPprice(order.getItemPprice());
@@ -70,6 +73,7 @@ public class OrderItemServiceImpl implements OrderItemService {
 			}
 		}
 		
+		//ItemHistory history=new ItemHistory();
 		if(possible) {
 			Map<String, Object> goDelivery=new HashMap<String, Object>();
 			Delivery delivery=new Delivery();
@@ -79,7 +83,9 @@ public class OrderItemServiceImpl implements OrderItemService {
 			goDelivery.put("requestState", 40);
 			goDelivery.put("requestNum", requestNum);
 			modifyOrderItemState(goDelivery); 
+			
 		} else { 
+			
 			Map<String, Object> stayDelivery=new HashMap<String, Object>();
 			stayDelivery.put("requestState", 30);
 			stayDelivery.put("requestNum", requestNum);

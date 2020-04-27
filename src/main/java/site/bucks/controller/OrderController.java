@@ -41,18 +41,18 @@ public class OrderController {
 	@RequestMapping(value = "/orderReqConfirm", method = RequestMethod.PUT)
 	@ResponseBody
 	public String orderReqConfirm(@RequestBody Map<String, Object> param) {
-		orderItemService.modifyOrderItemState(param);
+		orderItemService.modifyOrderItemState(param);  //20
 		
 		List reqNums=(List)param.get("reqNums");
 		if (reqNums.size()==1) {
 			String num=(String)reqNums.get(0);
 			orderItemService.modifyOrderStateByCheckQty(num);
+		} else {
+			for (int i=0; i<reqNums.size(); i++) {
+				String num=(String)reqNums.get(i);
+				orderItemService.modifyOrderStateByCheckQty(num);
+			}
 		}
-		for (int i=0; i<reqNums.size(); i++) {
-			String num=(String)reqNums.get(i);
-			orderItemService.modifyOrderStateByCheckQty(num);
-		}
-		
 		return "success";
 	}
 	
@@ -80,23 +80,19 @@ public class OrderController {
 		return itemHistoryService.getItemHistoryist(itemHistory);
 	}
 	
-	
-	
-/*
-	@RequestMapping(value = "/purchasePlan")
-	public String purchasePlan() {
-		return "purchase/purchase_plan";
+	// history Insert
+	@RequestMapping(value = "/historyAdd", method = RequestMethod.POST)
+	@ResponseBody
+	public String historyAdd(@RequestBody List<ItemHistory> historyList) {
+		for (ItemHistory history:historyList) {
+			history.setHistoryOwner("LoginUser(Session)");
+			System.out.println("===============================");
+			System.out.println(history.getItemNum());
+			System.out.println("===============================");
+			itemHistoryService.addItemHistory(history);
+		}
+		return "success";
 	}
-	@RequestMapping(value = "/purchaseAdd")
-	public String purchaseAdd() {
-		return "purchase/purchase_add";
-	}
-	@RequestMapping(value = "/purchaselist")
-	public String purchaseList() {
-		return "purchase/purchase_list";
-	}
-	*/
-
 	
 
 }
