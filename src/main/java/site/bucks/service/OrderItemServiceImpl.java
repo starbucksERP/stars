@@ -59,7 +59,6 @@ public class OrderItemServiceImpl implements OrderItemService {
 		
 		for (OrderItem order:oderItems) {
 			StoreId=order.getStoreId();
-			// 가을아,, 시간남으면 조인하잠...!
 			int currentQty=itemDAO.selectItemQty(order.getItemNum());
 			if(order.getOrderQty()>=currentQty) {
 				Purchase purchase=new Purchase();
@@ -67,17 +66,13 @@ public class OrderItemServiceImpl implements OrderItemService {
 				purchase.setItemNum(order.getItemNum());
 				purchase.setItemQty(order.getOrderQty());
 				purchase.setItemPprice(order.getItemPprice());
-
-				purchase.setPurchaseType(0);
-				purchaseDAO.insertPurchaseOrder(purchase);
-
+				purchase.setPurchaseState(30);
 				purchase.setPurchaseType(1);
-				purchaseDAO.insertPurchaseOrder(purchase);  
+				purchaseDAO.insertPurchaseOrder(purchase);
 				possible=false;
 			}
 		}
 		
-		//ItemHistory history=new ItemHistory();
 		if(possible) {
 			Map<String, Object> goDelivery=new HashMap<String, Object>();
 			Delivery delivery=new Delivery();
@@ -87,6 +82,8 @@ public class OrderItemServiceImpl implements OrderItemService {
 			goDelivery.put("requestState", 40);
 			goDelivery.put("requestNum", requestNum);
 			modifyOrderItemState(goDelivery); 
+			ItemHistory history=new ItemHistory();
+			
 			
 		} else { 
 			

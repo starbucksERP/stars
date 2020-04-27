@@ -2,14 +2,6 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="site.bucks.mapper.ItemHistoryMapper">
 
-<insert id="insertItemHistory" parameterType="ItemHistory">
-	<selectKey resultType="int" keyProperty="historySeq" order="BEFORE">
-		select history_seq.nextval from dual
-	</selectKey>
-		insert into item_history values(#{historySeq}, #{requestNum}, #{itemNum},
-		#{itemState}, #{itemQty}, systdate, #{purchaseType}, #{historyOwner})
-</insert>
-
 <!-- 새로운 구매에 대한 히스토리 insert (본사직접주문) -->
 <insert id="newPOItemHist" parameterType="Purchase">
 	insert into item_history values(history_seq.nextval, #{requestNum}, #{itemNum},
@@ -20,8 +12,8 @@
 	<selectKey resultType="int" keyProperty="historySeq" order="BEFORE">
 		select history_seq.nextval from dual
 	</selectKey>
-		insert into item_history values(#{historySeq}, #{requestNum}, #{itemNum}, #{itemName},
-		#{itemState}, #{itemQty}, systdate, #{purchaseType}, #{historyOwner})
+		insert into item_history values(#{historySeq}, #{requestNum}, #{itemNum},
+		#{itemState}, #{itemQty}, sysdate, #{purchaseType}, #{historyOwner})
 </insert>
 
 
@@ -32,33 +24,33 @@ item_qty, sysdate, purchase_type, 'login사용자' from purchase where purchase_
 </insert>
 
 
-	<select id="selectItemHistoryist" resultType="ItemHistory">
-		select * from item_history
-		<where>
-			<if test="historyDate!=null and historyDate!=''">
-				to_char(HISTORY_DATE,'yyyy-mm-dd') BETWEEN #{historyDate} AND #{historyDatePair}
-			</if>
-			<if test="requestNum!=null and requestNum!=''">
-				AND request_num like '%'||#{requestNum}||'%'
-			</if>
-			<if test="itemNum!=null and itemNum!=''">
-				AND ITEM_NUM=#{itemNum}
-			</if>
-			<if test="historyOwner!=null and historyOwner!=''">
-				AND HISTORY_OWNER=#{historyOwner}
-			</if>
-			<if test="purchaseType!=null and purchaseType!=0">
-				AND PURCHASE_TYPE=#{purchaseType}
-			</if>
-			<if test="states!=null">
-				AND ITEM_STATE IN
-				<foreach collection="states" item="state" open="(" close=")" separator=",">
-				 	#{state}
-				</foreach>
-			</if>
-		</where>
-		order by HISTORY_DATE desc
-	</select>
+<select id="selectItemHistoryist" resultType="ItemHistory">
+	select * from item_history
+	<where>
+		<if test="historyDate!=null and historyDate!=''">
+			to_char(HISTORY_DATE,'yyyy-mm-dd') BETWEEN #{historyDate} AND #{historyDatePair}
+		</if>
+		<if test="requestNum!=null and requestNum!=''">
+			AND request_num like '%'||#{requestNum}||'%'
+		</if>
+		<if test="itemNum!=null and itemNum!=''">
+			AND ITEM_NUM=#{itemNum}
+		</if>
+		<if test="historyOwner!=null and historyOwner!=''">
+			AND HISTORY_OWNER=#{historyOwner}
+		</if>
+		<if test="purchaseType!=null and purchaseType!=0">
+			AND PURCHASE_TYPE=#{purchaseType}
+		</if>
+		<if test="states!=null">
+			AND ITEM_STATE IN
+			<foreach collection="states" item="state" open="(" close=")" separator=",">
+			 	#{state}
+			</foreach>
+		</if>
+	</where>
+	order by HISTORY_DATE desc
+</select>
 
 
 

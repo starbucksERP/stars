@@ -115,7 +115,7 @@
 			<br />
 			
 			<div>
-				<button type="button" class="a-button green padding-button" onclick="orderReqConfirm(0);">발주확인</button>
+				<button type="button" class="a-button green padding-button" onclick="orderReqConfirm(0); addHistory(20);">발주확인</button>
 			</div>
 			
 			<div class="information" >
@@ -248,9 +248,9 @@
 	       			html+="<tr><td><input type='checkbox' class='rowChk' value='"+this.requestNum+"'></td>";
 	       			
 	       			if (this.orderType == 1) {
-	       				html+="<td>대리점<input type='hidden' class='orderType' value='"+this.orderType+"'></td>";
+	       				html+="<td><input type='hidden' class='orderType' value='"+this.orderType+"'>대리점</td>";
 	       			} else if (this.orderType == 2) {
-	       				html+="<td>본사</td>";
+	       				html+="<td><input type='hidden' class='orderType' value='"+this.orderType+"'>본사</td>";
 	       			} 
 	       			
 	        		html+="<td>"+this.requestDate+"</td>"
@@ -289,7 +289,6 @@
 			} else {
 				$(".message").empty();
 				$(".rowChk:checked").each(function(i) {
-					alert($(this).val());
 					reqNums.push($(this).val());
 				});
 			}
@@ -315,41 +314,42 @@
 		
 	}
 	
-	/* function addHistory() {
+
+	
+	function addHistory(targetValue) {
 		var historyList=[];
 		var ItemHistory=[];
-		
-		if ($('.rowChk:checked').length==0) {
-			return;
-		} else {
-		    $(".rowChk:checked").each(function(i) {
-		    	ItemHistory = {
-		    		requestNum : $(this).val(),
-		    		itemNum	:  $(this).parents('tr').find(".itemNum").text(),
-		    		itemState : 20,
-		    		itemQty : $(this).parents('tr').find(".itemQty").text(),
-		    		purchaseType : $(this).parents('tr').find(".orderType").text(),
-		    	};
-	    		alert(requestNum+","+itemNum+","+requestNum+","+itemState+","+itemQty+","+purchaseType);
-		        historyList.push(ItemHistory);
-		        
-		    });
-		}
-		
-		$.ajax({
+		var targetValue=targetValue;
+			
+	    $(".rowChk:checked").each(function(i) {
+	    	ItemHistory = {
+	    		requestNum : $(this).val(),
+	    		itemNum	:  $(this).parents('tr').find(".itemNum").text(),
+	    		itemState : targetValue,
+	    		itemQty : $(this).parents('tr').find(".orderQty").text(),
+	    		purchaseType : $(this).parents('tr').find(".orderType").val(),
+	    	};
+	    	
+	        historyList.push(ItemHistory);
+	    });
+	    
+	    $.ajax({
 			type: "POST",
 			url: "historyAdd",
 			headers: {"content-type":"application/json","X-HTTP-Method-override":"PUT"},
 			data: JSON.stringify(historyList),
 			dataType: "text", 
 			success: function(text) {
-	    		alert("history완료");
+
 			},
 			error: function(xhr) {
 				alert("에러코드 = "+xhr.status)
 			}
 		}); 
-	} */
+		
+	} 
+	
+
 
 	function openModal(message) {
 		var message=message;
