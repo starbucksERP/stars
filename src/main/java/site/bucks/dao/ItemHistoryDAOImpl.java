@@ -1,6 +1,10 @@
 package site.bucks.dao;
-
 <<<<<<< HEAD
+
+import java.util.List;
+=======
+>>>>>>> branch 'master' of https://github.com/starbucksERP/stars.git
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -24,31 +28,16 @@ public class ItemHistoryDAOImpl implements ItemHistoryDAO{
 	public int updatedPOItemHist(int purchaseSeq) {
 		return sqlSession.getMapper(ItemHistoryMapper.class).updatedPOItemHist(purchaseSeq); 
 	}
-	
-	
-=======
-import java.util.List;
-
-import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
-
-import site.bucks.dto.ItemHistory;
-import site.bucks.mapper.ItemHistoryMapper;
-@Repository
-public class ItemHistoryDAOImpl implements ItemHistoryDAO{
-	@Autowired
-	private SqlSession sqlSession;
 
 	@Override
-	public int insertItemHistory(ItemHistory itemHistory) {
-		return sqlSession.getMapper(ItemHistoryMapper.class).insertItemHistory(itemHistory);
+	public List<ItemHistory> selectItemHistoryist(ItemHistory history) {
+		return sqlSession.getMapper(ItemHistoryMapper.class).selectItemHistoryist(history);
 	}
 
 	@Override
-	public List<ItemHistory> selectItemHistoryist(ItemHistory itemHistory) {
-		return sqlSession.getMapper(ItemHistoryMapper.class).selectItemHistoryist(itemHistory);
+	public int insertItemHistory(ItemHistory history) {
+		return sqlSession.getMapper(ItemHistoryMapper.class).insertItemHistory(history);
 	}
-
->>>>>>> branch 'master' of https://github.com/starbucksERP/stars.git
+	
+	
 }

@@ -56,22 +56,10 @@
 		<div class="sidebar">
 			<ul class="side-menu">
 				<li>
-					<button class="dropdown-btn">본사<i class="fa fa-caret-down"></i></button>
-					<div class="dropdown-container">
-						<a href="${pageContext.request.contextPath}/account/accountPurchase">매입현황</a><br /><br />
-						<a href="${pageContext.request.contextPath}/account/accountSales">매출현황</a>
-						<a href="${pageContext.request.contextPath}/account/accountIncome">손익분석</a>
-						<a href="${pageContext.request.contextPath}/account/purchaseMonth">매입 월별현황</a><br /><br />
-						<a href="${pageContext.request.contextPath}/account/salesMonth">매출 월별현황</a><br /><br />
-						<a href="${pageContext.request.contextPath}/account/incomeMonth">손익분석</a>
-					</div>
-				</li>
-				<li>
-					<button class="dropdown-btn">지점<i class="fa fa-caret-down"></i></button>
+					<button class="dropdown-btn">회계관리<i class="fa fa-caret-down"></i></button>
 					<div class="dropdown-container">
 						<a href="${pageContext.request.contextPath}/account/st_accountPurchase">매입 현황</a><br /><br />
 						<a href="${pageContext.request.contextPath}/account/st_accountSales">매출 현황</a><br /><br />
-						<a href="${pageContext.request.contextPath}/account/st_accountIncome">손익분석</a>
 					</div>
 				</li>
 			</ul>
@@ -85,7 +73,7 @@
 			<button type="button" class="a-button sea big" id="resetBtn" ><i class="fas fa-search" ></i>&nbsp;초기화</button>
 			</div>
 			<hr />
-			<input type="hidden" id="hStoreId" name="storeId" />
+			<input type="hidden" id="storeId" name="storeId" value="${loginHewon.hewonStId} " />
 			<table class="table">
 				<thead>
 					<tr>
@@ -163,6 +151,7 @@
 		var historyDate1=$("#historyDate1").val();
 		var itemNum=$("#itemNum").val();
 		var itemName=$("#itemName").val();
+		var storeId=$("#storeId").val();
 	
 		$("#searchBtn").click(function() {
 			
@@ -189,7 +178,7 @@
 				type: "POST",
 				url: "st_accountPurchase",
 				headers:{"content-type":"application/json"},
-				data: JSON.stringify({"itemNum":itemNum,"itemName":itemName,"itemState":70 ,"historyDate":historyDate,"historyDate1":historyDate1}),
+				data: JSON.stringify({"itemNum":itemNum,"itemName":itemName,"itemState":70 ,"historyDate":historyDate,"historyDate1":historyDate1, "storeId":storeId}),
 				dataType: "json",
 				success: function(json) {
 					$("#resultLength").html("총 검색결과 : "+json.length+"건");

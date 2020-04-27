@@ -17,4 +17,8 @@ public interface DeliveryDAO {
 	//int updateDeliveryState(int deliverySeq); // 근형
 	int updateDeliveryReq(int deliverySeq);
 	int updateDeliveryReady(int deliverySeq);
+	int updateQtyFromDelivery(int deliverySeq);
+	int insertDelReqConfimIH(int deliverySeq); 
+	int insertDelReadyIH(int deliverySeq);
+	int insertSihFromDelInProcess(int deliverySeq);
 }

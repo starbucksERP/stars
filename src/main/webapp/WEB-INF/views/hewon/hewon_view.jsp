@@ -28,7 +28,7 @@
 
 .main{
 	z-index: 999; 
-	background: black; 
+ 	background-color: rgba(0, 0, 0, 0.4); 	
 	color: white; 
 	padding: 75px;
 }
@@ -55,8 +55,9 @@ function hewonRemove(hewonId) {
 							</label>
 							<br />
 							<label>
-								<span style="padding-left: 10px;">주소:</span>${hewon.hewonAddress}
+								<span style="padding-left: 10px;">주소</span><br />&nbsp;&nbsp;:${hewon.hewonAddress}
 							</label>
+							<br />
 							<br />
 							<label>
 								<span style="padding-left: 10px;">이메일:</span>${hewon.hewonEmail}
@@ -66,6 +67,15 @@ function hewonRemove(hewonId) {
 								<span style="padding-left: 10px;">지점 코드:</span>${hewon.hewonStId}
 							</label>
 							<br />
+							<label>
+								<span style="padding-left: 10px;">회원 등급:</span>${hewon.hewonGrade}
+							</label>
+							<br />
+							<span style="margin-left: 10px; font-size:12px;" class="coral-font" >
+							지점권한 부여 등급 : 5 <br />
+							&nbsp;&nbsp;관리자권한 부여 등급 : 9 <br />
+							&nbsp;&nbsp;일반 회원 등급 : 1 <br />
+						</span>
 						</fieldset>
 				  <br>
 				  <div class="center">

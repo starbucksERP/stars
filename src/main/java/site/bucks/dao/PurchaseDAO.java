@@ -13,4 +13,5 @@ public interface PurchaseDAO {
 	int purchaseCompleteHQ(int purchaseSeq);
 	int purchaseCancel(int purchaseSeq);
 	int updateQtyFromPurchase(int purchaseSeq);
+	String insertDeliveryFromPurchase(String requestNum);
 }

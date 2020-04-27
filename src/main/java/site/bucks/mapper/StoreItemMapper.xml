@@ -77,7 +77,7 @@
 				AND SALE_QTY BETWEEN #{saleQty} AND #{saleQtyPair}
 			</if>
 			<if test="storeId!=null and storeId!=0">
-				AND STORE_ID=#{storeId}
+				AND STORE_ID  LIKE '%'||#{storeId}||'%'
 			</if>
 			<if test="saleProduct!=null and saleProduct!=''">
 				AND SALE_PRODUCT LIKE '%'||#{saleProduct}||'%'
@@ -90,7 +90,7 @@
 
 <!-- 지점 재고 다중 검색 -->
 	<select id="selectStoreItemList" resultType="StoreItem">
-		select * from store_item where  store_id=#{storeId}
+		select * from store_item where store_id=#{storeId}
 		<if test="itemNum!=null and itemNum!=''">
 			AND ITEM_NUM LIKE '%'||#{itemNum}||'%' 
 		</if>

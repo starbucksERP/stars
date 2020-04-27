@@ -46,6 +46,7 @@ public class DeliveryController {
 		  
 		 for(int deliverySeq:deliveryList) {
 			 deliveryService.modifyDeliveryReq(deliverySeq);
+			 deliveryService.insertDelReqConfimIH(deliverySeq);
 		 }	  
 	  return"redirect:delivery/delivery_req_list"; 
 	  }
@@ -114,6 +115,10 @@ public class DeliveryController {
 		  for(int deliverySeq:deliveryList) { 
 			  System.out.println(deliverySeq);
 			  deliveryService.modifyDeliveryReady(deliverySeq); 
+			  deliveryService.insertDelReadyIH(deliverySeq);
+			  deliveryService.insertSihFromDelInProcess(deliverySeq);
+			  deliveryService.updateQtyFromDelivery(deliverySeq);
+			  
 			  }
 		   
 	  return"redirect:delivery/delivery_list"; 

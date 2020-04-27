@@ -12,6 +12,7 @@ import site.bucks.dao.ItemDAO;
 import site.bucks.dao.OrderItemDAO;
 import site.bucks.dao.PurchaseDAO;
 import site.bucks.dto.Delivery;
+import site.bucks.dto.ItemHistory;
 import site.bucks.dto.OrderItem;
 import site.bucks.dto.Purchase;
 
@@ -37,6 +38,7 @@ public class OrderItemServiceImpl implements OrderItemService {
 	@Override
 	public void modifyOrderItemState(Map<String, Object> numAndStateMap) {
 		oderItemDAO.updateOrderItemState(numAndStateMap);
+		
 	}
 
 	@Override
@@ -57,19 +59,26 @@ public class OrderItemServiceImpl implements OrderItemService {
 		
 		for (OrderItem order:oderItems) {
 			StoreId=order.getStoreId();
-			// 가을아,, 시간남으면 조인하잠...!
 			int currentQty=itemDAO.selectItemQty(order.getItemNum());
 			if(order.getOrderQty()>=currentQty) {
 				Purchase purchase=new Purchase();
+				purchase.setRequestNum(requestNum);
 				purchase.setItemNum(order.getItemNum());
 				purchase.setItemQty(order.getOrderQty());
 				purchase.setItemPprice(order.getItemPprice());
 <<<<<<< HEAD
+				purchase.setPurchaseState(30);
+=======
+
 				purchase.setPurchaseType(0);
 				purchaseDAO.insertPurchaseOrder(purchase);
-=======
+
+>>>>>>> branch 'master' of https://github.com/starbucksERP/stars.git
 				purchase.setPurchaseType(1);
-				purchaseDAO.insertPurchaseRequest(purchase);  
+<<<<<<< HEAD
+				purchaseDAO.insertPurchaseOrder(purchase);
+=======
+				purchaseDAO.insertPurchaseOrder(purchase);  
 >>>>>>> branch 'master' of https://github.com/starbucksERP/stars.git
 				possible=false;
 			}
@@ -84,7 +93,11 @@ public class OrderItemServiceImpl implements OrderItemService {
 			goDelivery.put("requestState", 40);
 			goDelivery.put("requestNum", requestNum);
 			modifyOrderItemState(goDelivery); 
+			ItemHistory history=new ItemHistory();
+			
+			
 		} else { 
+			
 			Map<String, Object> stayDelivery=new HashMap<String, Object>();
 			stayDelivery.put("requestState", 30);
 			stayDelivery.put("requestNum", requestNum);

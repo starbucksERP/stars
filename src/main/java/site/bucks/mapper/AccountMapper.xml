@@ -32,18 +32,10 @@
 	<select id="selectPurchaseSaleList" resultMap="accountResultMapOne" parameterType="StoreItemHistory">
 		select * from store_item_history SIH join order_item OI
 				on SIH.request_num=OI.request_num
-				 where SIH.item_state=70 and SIH.store_id=4042
+				 where SIH.item_state=70 and SIH.store_id=#{storeId}
 				<if test="historyDate!=null and historyDate!=''">
 					and to_char(SIH.history_date,'yyyy-mm-dd') between #{historyDate} and #{historyDate1} 
 				</if>
-				<!-- 				
-				<if test="accountDate1!='' and accountDate2=''">
-					and to_char(s.history_date,'yy-mm-dd') = #{accountDate1} 
-				</if>
-				<if test="accountDate1='' and accountDate2!=''">
-					and to_char(s.history_date,'yy-mm-dd') = #{accountDate2} 
-				</if>
-				 -->
 				<if test="itemNum!=null and itemNum!=''">
 					and SIH.item_num like '%'||#{itemNum}||'%'
 				</if>
@@ -77,23 +69,15 @@
 	
 	<!-- 본사 매입 --> 
 	<resultMap type="Account" id="accountResultMapTwo">
-		<!-- 
-		<association property="ih" javaType="ItemHistory">
-			<result column="HISTORY_DATE" property="historyDate"/>
-			<result column="ITEM_NUM" property="itemNum"/>
-			<result column="ITEM_NAME" property="itemName"/>
-			<result column="ITEM_QTY" property="itemQty"/>
-			<result column="ITEM_STATE" property="itemState"/>
-		</association>
-		 -->	
 		
 		<association property="p" javaType="Purchase">
+			<result column="REQUEST_NUM" property="requestNum"/>
 			<result column="PURCHASE_STATE" property="purchaseState"/>
 			<result column="PURCHASE_DATE" property="purchaseDate"/>
 			<result column="ITEM_NUM" property="itemNum"/>
 			<result column="ITEM_QTY" property="itemQty"/>
-			<result column="ITEM_VENDOR" property="itemVendor"/>
 			<result column="ITEM_PPRICE" property="itemPprice"/>
+			<result column="ITEM_VENDOR" property="itemVendor"/>
 		</association>
 		
 		<association property="i" javaType="Item">
@@ -106,18 +90,16 @@
 	<!-- 	select * from item_history IH join item I 
 			on IH.item_num=I.item_num where IH.item_state=33  -->
 			select * from purchase P join item I on P.item_num=I.item_num
-			      where P.purchase_state between 32 and 33
+			     	 where P.purchase_state between 32 and 33
 				<if test="purchaseDate!=null and purchaseDate!=''">
 					and to_char(P.purchase_date,'yyyy-mm-dd') between #{purchaseDate} and #{purchaseDateTwo} 
 				</if>
 				<if test="itemNum!=null and itemNum!=''">
 					and P.item_num like '%'||#{itemNum}||'%'
 				</if>
-				<!-- 
-				<if test="itemName!=null and itemName!=''">
-					and P.item_name like '%'||#{itemName}||'%'
-				</if>	
-				 -->
+				<!-- <if test="itemName!=null and itemName!=''">
+					and i.item_name like '%'||#{itemName}||'%' 
+				</if>	 -->
 				<if test="itemVendor!=null and itemVendor!=''">
 					and P.item_vendor like '%'||#{itemVendor}||'%'
 				</if>
@@ -128,6 +110,7 @@
 	<!-- 지점매출 =>> storeItemMapper 사용 -->
 	<resultMap type="Account" id="accountResultMapThree">
 		<association property="s" javaType="Sale">
+			<result column="STORE_ID" property="storeId"/>
 			<result column="SALE_DATE" property="saleDate"/>
 			<result column="SALE_PRODUCT" property="saleProduct"/>
 			<result column="SALE_QTY" property="saleQty"/>
@@ -136,7 +119,7 @@
 	</resultMap>
 	
 	<select id="selectStSaleList" resultMap="accountResultMapThree">
-		select * from sale where store_id=4042
+		select * from sale where store_id=#{storeId}
 			<if test="saleDate!=null and saleDate!=''">
 				and to_char(sale_date,'yyyy-mm-dd') between #{saleDate} and #{saleDatePair} 
 			</if>
@@ -148,35 +131,6 @@
 			</if>
 			order by sale_date desc
 	</select>
-	
-	
-	
-	
-<!-- 본사 손익분석	
-	<resultMap type="Account" id="accountIncomeRM">
-		<association property="ih" javaType="ItemHistory">
-			<result column="ITEM_QTY" property="itemQty"/>
-			<result column="ITEM_STATE" property="itemState"/>
-			<result column="HISTORY_DATE" property="historyDate"/>
-		</association>
-		
-		<association property="item" javaType="Item">
-			<result column="ITEM_PPRICE" property="itemPprice"/>
-			<result column="ITEM_SPRICE" property="itemSprice"/>
-		</association>
-	</resultMap>
-	
-	<select id="selectAccountIncome" resultMap="accountIncomeRM">
-		select * from item_history IH join item I on IH.item_num=I.item_num
-	</select>
- -->
-	
-	
-	
-	
-	
-	
-	
 	
 </mapper>
 

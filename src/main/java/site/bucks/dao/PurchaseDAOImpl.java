@@ -51,6 +51,12 @@ public class PurchaseDAOImpl implements PurchaseDAO{
 		return sqlSession.getMapper(PurchaseMapper.class).updateQtyFromPurchase(purchaseSeq);
 	}
 
+	@Override
+	public String insertDeliveryFromPurchase(String requestNum) {
+		return sqlSession.getMapper(PurchaseMapper.class).insertDeliveryFromPurchase(requestNum);
+	
+	}
+
 	
 	
 	

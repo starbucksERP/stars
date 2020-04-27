@@ -35,7 +35,6 @@ public class AccountController {
 	@RequestMapping(value = "/st_accountPurchase",method = RequestMethod.POST)
 	@ResponseBody
 	public List<Account> st_accountPurchase(@RequestBody StoreItemHistory sih) {
-		//System.out.println(accountDate1+" ~ "+accountDate2);
 		return accountService.getPurchaseSaleList(sih);
 	}
 	
@@ -76,61 +75,6 @@ public class AccountController {
 	public List<Account> accountSales(@RequestBody StoreItemHistory sih) {
 		return accountService.getMainSaleList(sih);
 	}	
-	
-	
-//	본사 손익분석
-
-	@RequestMapping(value = "/accountIncome", method = RequestMethod.GET)
-	public String accountIncome() {
-		return "accounting/account_income";
-	}
-	
-/*
-	@RequestMapping(value = "/accountIncome2",method = RequestMethod.POST)
-	@ResponseBody
-	public Map<String, Object> accountIncome2() {
-		
-		
-		return accountService.getAccountIncome();
-	}
-	
-*/	
-	
-
-	
-//	지점 매출현황
-	@RequestMapping(value = "/st_accountSales")
-	public String st_accountSales() {
-		return "accounting/store_account_sales";
-	}	
-	
-	@RequestMapping(value = "/st_accountIncome")
-	public String st_accountIncome() {
-		return "accounting/store_account_income";
-	}
-	
-	
-	@RequestMapping(value = "/accountSales")
-	public String a6() {
-		return "accounting/account_sales";
-	}
-	
-	
-	
-	@RequestMapping(value = "/purchaseMonth")
-	public String a7() {
-		return "accounting/purchase_month";
-	}
-	
-	@RequestMapping(value = "/salesMonth")
-	public String a8() {
-		return "accounting/sales_month";
-	}
-	
-	@RequestMapping(value = "/incomeMonth")
-	public String a9() {
-		return "accounting/income_month";
-	}
 	
 
 }
