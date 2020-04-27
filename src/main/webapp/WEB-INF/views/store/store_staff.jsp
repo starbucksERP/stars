@@ -30,8 +30,8 @@
 				<div id="ownerInfo" class="brown staff-head">[지점] 점주 정보</div>
 				<div class="information-left" style="width: 32%" >
 				</div>
-				<div class="information-right" style="width: 60%">
-					<button id="ownerName" type="button" class="a-button green medium" style="margin-left: 20px;">이름</button>
+				<div class="information-left" style="width: 60%">
+					<button id="ownerName" type="button" class="a-button green medium" style="margin-left: 20px;">점주명</button>
 					<div>
 						<div id="ownerAddress" class="staff" style="font-weight: bold;">주소</div><span class="gray-font">주소</span>
 					</div>
@@ -50,6 +50,7 @@
 					<span class="staff" >지점명 :&nbsp;</span>
 					<input type="search" id="storeName"/>&nbsp;
 					<button type="button" id="searchBtn" class="a-button black" onclick="storeSearchDisplay()"><i class="fas fa-search"></i>&nbsp;검색</button>
+					<button type="button" id="resetBtn" class="a-button black" ><i class="fas fa-search"></i>&nbsp;초기화</button>
 				</div>
 				<br />
 				<hr />
@@ -61,7 +62,6 @@
 				
 				<%-- 지점 목록을 출력하는 영역 --%>
 				<div id="storeListDiv"></div>
-				<!-- <td><a onclick="ownerDisplay({{storeId}})">{{storeName}}</a></td> -->
 			</div>
 		</div>	
 	</div>
@@ -101,7 +101,7 @@
 	<div class="brown staff-head">[등록된 점주가 없습니다.]</div>
 	<div class="information-left" style="width: 32%">
 	</div>
-	<div class="information-right" style="width: 60%">
+	<div class="information-left" style="width: 60%">
 		<button type="button" class="a-button green medium" style="margin-left: 20px;" disabled="disabled">점주명</button>
 		<div>
 			<div class="staff" style="font-weight: bold;">주소</div><span class="gray-font">주소</span>
@@ -120,15 +120,15 @@
 	<div class="information-left" style="width: 32%">
 	</div>
 	<div class="information-right" style="width: 60%">
-		<button type="button" class="a-button green medium" style="margin-left: 20px;" disabled="disabled">{{hewonName}}</button>
+		<button type="button" class="a-button green medium owner" style="margin-left: 20px;" disabled="disabled">{{hewonName}}</button>
 		<div>
-			<div class="staff" style="font-weight: bold;">주소</div><span class="gray-font">{{hewonAddress}}</span>
+			<div class="staff" style="font-weight: bold;">주소</div><span class="gray-font owner">{{hewonAddress}}</span>
 		</div>
 		<div>
-			<div class="staff" style="font-weight: bold;">연락처</div><span class="gray-font">{{hewonPhone}}</span>
+			<div class="staff" style="font-weight: bold;">연락처</div><span class="gray-font owner">{{hewonPhone}}</span>
 		</div>
 		<div>
-			<div class="staff" style="font-weight: bold;">이메일</div><span class="gray-font">{{hewonEmail}}</span>
+			<div class="staff" style="font-weight: bold;">이메일</div><span class="gray-font owner">{{hewonEmail}}</span>
 		</div>
 	</div> 	
 </script>
@@ -189,7 +189,6 @@
 		}); 
 		
 		$("#searchBtn").submit();	
-		$("#storeName").val("");
 		
 	}; 
 	
@@ -226,12 +225,8 @@
  	    $(this).removeClass('hover');
  	});
  	
-	$("#searchBtn").click(function(){
-		/*
- 		$("#owerInfo").val("");
-		$("#owerName").val("");
-		$(".staff").val("");
-		*/
+	$("#resetBtn").click(function(){
+		$("#storeName").val("");
 	});
 		
 </script>

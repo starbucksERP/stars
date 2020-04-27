@@ -74,11 +74,12 @@ public class OrderController {
 		return "history/history_list";
 	}
 	
-	@RequestMapping(value = "/history", method = RequestMethod.POST)
-	@ResponseBody
-	public List<ItemHistory> historyList(@RequestBody ItemHistory itemHistory) {
-		return itemHistoryService.getItemHistoryist(itemHistory);
-	}
+	/*
+	 * @RequestMapping(value = "/history", method = RequestMethod.POST)
+	 * 
+	 * @ResponseBody public List<ItemHistory> historyList(@RequestBody ItemHistory
+	 * itemHistory) { return itemHistoryService.getItemHistoryist(itemHistory); }
+	 */
 	
 	// history Insert
 	@RequestMapping(value = "/historyAdd", method = RequestMethod.POST)
@@ -89,7 +90,7 @@ public class OrderController {
 			System.out.println("===============================");
 			System.out.println(history.getItemNum());
 			System.out.println("===============================");
-			itemHistoryService.addItemHistory(history);
+			
 		}
 		return "success";
 	}

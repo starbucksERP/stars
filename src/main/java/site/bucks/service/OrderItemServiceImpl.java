@@ -67,8 +67,12 @@ public class OrderItemServiceImpl implements OrderItemService {
 				purchase.setItemNum(order.getItemNum());
 				purchase.setItemQty(order.getOrderQty());
 				purchase.setItemPprice(order.getItemPprice());
+
+				purchase.setPurchaseType(0);
+				purchaseDAO.insertPurchaseOrder(purchase);
+
 				purchase.setPurchaseType(1);
-				purchaseDAO.insertPurchaseRequest(purchase);  
+				purchaseDAO.insertPurchaseOrder(purchase);  
 				possible=false;
 			}
 		}

@@ -29,6 +29,8 @@ public class ItemHistory {
 	private String historyOwner;
 	private List<Integer> states;
 	
+
+	
 	public ItemHistory() {
 		// TODO Auto-generated constructor stub
 	}

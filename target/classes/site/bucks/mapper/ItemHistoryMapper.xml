@@ -10,6 +10,28 @@
 		#{itemState}, #{itemQty}, systdate, #{purchaseType}, #{historyOwner})
 </insert>
 
+<!-- 새로운 구매에 대한 히스토리 insert (본사직접주문) -->
+<insert id="newPOItemHist" parameterType="Purchase">
+	insert into item_history values(history_seq.nextval, #{requestNum}, #{itemNum},
+	#{purchaseState}, #{itemQty}, sysdate, #{purchaseType}, 'login사용자') 
+</insert>
+
+<insert id="insertItemHistory" parameterType="ItemHistory">
+	<selectKey resultType="int" keyProperty="historySeq" order="BEFORE">
+		select history_seq.nextval from dual
+	</selectKey>
+		insert into item_history values(#{historySeq}, #{requestNum}, #{itemNum}, #{itemName},
+		#{itemState}, #{itemQty}, systdate, #{purchaseType}, #{historyOwner})
+</insert>
+
+
+<!-- 상태가 변경된 purchase에 대한 히스토리 insert --> 
+<insert id="updatedPOItemHist" parameterType="Purchase">
+	insert into item_history select history_seq.nextval, request_num, item_num, purchase_state, 
+item_qty, sysdate, purchase_type, 'login사용자' from purchase where purchase_seq = #{purchaseSeq}
+</insert>
+
+
 	<select id="selectItemHistoryist" resultType="ItemHistory">
 		select * from item_history
 		<where>
@@ -45,35 +67,6 @@
 
 
 
-
-	<!-- 입출하기록 페이지에 처음 접속하면 실행되는 select 메소드: 최근 2주간의 기록만 기본적으로 출력 -->
-	<select id="recentHistoryList" parameterType="ItemHistory" resultType="ItemHistory">
-		select * from item_history where history_date between sysdate-14 and sysdate order by history_seq desc
-	</select>
-
-
-	<!-- 입출하 기록 페이지 검색창 아래 탭 이용을 위한 select 메소드 -->
-	<!-- 전체 탭  -->
-	<select id="allHistoryTap" parameterType="ItemHistory" resultType="ItemHistory">
-		select * from item_history order by history_seq desc
-	</select>
-	
-	<!-- 입고 탭  -->
-	<select id="goodsReceivedHistoryTap" parameterType="ItemHistory" resultType="ItemHistory">
-		select * from item_history where item_state = 33 order by history_seq desc
-	</select>
-	
-	<!-- 출고 탭  -->
-	<select id="goodsShippedHistoryTap" parameterType="ItemHistory" resultType="ItemHistory">
-		select * from item_history where item_state = 60 order by history_seq desc
-	</select>
-	
-	<!-- 주문 탭: 주문요청 확인상태(20)를 검색하기 위함  -->
-	<select id="requestConfirmedHistoryTap" parameterType="ItemHistory" resultType="ItemHistory">
-		select * from item_history where item_state = 20 order by history_seq desc
-	</select>
-	
-<!-- 200419 이근형 작성 종료 -->
 
 
 
