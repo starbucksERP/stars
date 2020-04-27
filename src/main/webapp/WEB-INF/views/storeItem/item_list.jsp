@@ -75,7 +75,7 @@
 					<li>
 						<button class="dropdown-btn">판매관리<i class="fa fa-caret-down"></i></button>
 						<div class="dropdown-container">
-							<a href="${pageContext.request.contextPath}/storeItem/sale_list">판매조회</a><br /><br />
+							<a href="${pageContext.request.contextPath}/storeItem/saleList">판매조회</a><br /><br />
 							<a href="${pageContext.request.contextPath}/storeItem/sale_record">판매등록</a>
 						</div>
 					</li>
@@ -184,7 +184,7 @@
 								<label class="gLabel"><input type="checkbox" class="fChk kind" name="kind2" value="16-" >악세서리</label>
 								<label class="gLabel"><input type="checkbox" class="fChk kind" name="kind2" value="17-" >커피용품</label>
 								<label class="gLabel"><input type="checkbox" class="fChk kind" name="kind2" value="18-" >기타(MD상품)</label>
-								<input type="hidden" id="storeId" value="1021" />
+								<input type="hidden" id="storeId" value="${loginHewon.hewonStId}" />
 							</td>
 						</tr>
 					</thead>

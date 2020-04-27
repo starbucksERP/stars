@@ -37,8 +37,6 @@ public class HewonServiceImpl implements HewonService {
 		//BCrypt.gensalt(int log_rounds) :  첨가물의 길이를 전달받아 첨가물을 생성하여 반환하는 메소드
 		// => 매개변수에 첨가물의 길이 전달 생략 가능 - 기본값 : 10 
 		hewon.setHewonPassword(BCrypt.hashpw(hewon.getHewonPassword(), BCrypt.gensalt(10)));
-		//회원상태는 1(일반계정)으로 변경
-		hewon.setHewonGrade("1");
 		
 		hewonDAO.insertHewon(hewon);
 	}
@@ -50,12 +48,12 @@ public class HewonServiceImpl implements HewonService {
 			throw new HewonNotFoundException("아이디의 회원정보가 존재하지 않습니다.");
 		}
 		
-		String HewonPassword=hewon.getHewonPassword();
+//		String HewonPassword=hewon.getHewonPassword();
 		
 		//비밀번호를 변경할 경우
-		if(HewonPassword!=null && !HewonPassword.equals("")) {
-			hewon.setHewonPassword(BCrypt.hashpw(hewon.getHewonPassword(), BCrypt.gensalt(10)));
-		}
+//		if(HewonPassword!=null && !HewonPassword.equals("")) {
+//			hewon.setHewonPassword(BCrypt.hashpw(hewon.getHewonPassword(), BCrypt.gensalt(10)));
+//		}
 		
 		hewonDAO.updateHewon(hewon);
 	}

@@ -12,8 +12,7 @@
 				<li>
 					<button class="dropdown-btn">재고관리<i class="fa fa-caret-down"></i></button>
 					<div class="dropdown-container">
-						<a href="${pageContext.request.contextPath}/item/productList">품목현황</a><br /><br />
-						<a href="${pageContext.request.contextPath}/item/itemList">재고현황</a>
+						<a href="${pageContext.request.contextPath}/storeItem/itemList">재고현황</a>
 					</div>
 				</li>
 				<li>
@@ -36,7 +35,7 @@
 					<thead>
 						<tr>
 							<th>발주요청일</th>
-							<td style="width: 38%"><input type="hidden" id="storeId" value="1021"/><label class="gLabel"><input type="date" readonly="readonly"/>&nbsp;<i class="far fa-calendar-alt"></i></label>
+							<td style="width: 38%"><input type="hidden" id="storeId" value="${loginHewon.hewonStId}"/><label class="gLabel"><input type="date" readonly="readonly"/>&nbsp;<i class="far fa-calendar-alt"></i></label>
 							<th>대분류</th>
 							<td>
 								<label class="gLabel"><input type="radio" class="fChk category1" name="category1" value="P" id="repMain">음료</label>
@@ -151,6 +150,9 @@
 	
 	today = yyyy+'-'+mm+'-'+dd;
 	
+	function reset(){
+		$(".storeId").parents('tr').remove();
+	}
 	
 	$("input[type='date']").val(today);
 	
@@ -197,7 +199,7 @@
 	 	var storeSale=[];
 	 	
 	 	if($('.rowChk:checked').length==0){
-			$(".message").text("발주할 물품 리스트를 체크해주세요")
+			$(".message").text("판매등록 리스트를 체크해주세요")
 		}else{
 		    $(".rowChk:checked").each(function(i) {
 		    	storeSale = {
