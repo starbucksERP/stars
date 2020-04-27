@@ -13,7 +13,7 @@ public interface ItemDAO {
 	Item selectItem (String itemNum);
 	List<Item> selectProductList(Item item);
 	List<Item> selectItemList(Item item);
-	int updateItemMinQty(Item item);
+	int updateItemMinQty(Map<String, Object> itemNumMap);
 	List<Item> selectItemPlanList(Item item);
 	int selectItemQty(String itemNum);
 	List<String> selectItemVendorList(String itemVendor);

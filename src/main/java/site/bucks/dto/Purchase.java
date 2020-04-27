@@ -1,7 +1,7 @@
 package site.bucks.dto;
 
 /*
-이름             널?       유형            
+�대�             ��?       ����            
 -------------- -------- ------------- 
 PURCHASE_SEQ   NOT NULL NUMBER        
 REQUEST_NUM    NOT NULL VARCHAR2(200) 
@@ -19,16 +19,26 @@ public class Purchase {
 	private String requestNum;
 	private int purchaseState;
 	private String purchaseDate;
-	private String purchaseDateTwo; // 구매현황조회에서 날짜 범위검색을 위한 변수 
+	private String purchaseDateTwo; // 援щℓ���⑹“������ ��吏� 踰���寃����� ���� 蹂��� 
 	private String itemNum;
-	private Item item; // 구매현황 조회에서 Join을 이용한 select 사용시 필요한 변수 
+	private Item item; // 援щℓ���� 議고������ Join�� �댁�⑺�� select �ъ�⑹�� ������ 蹂��� 
 	private int ItemQty;
 	private int itemPprice;
+<<<<<<< HEAD
 	private int itemPpriceTwo; // 구매현황조회에서 가격 범위검색을 위한 변수
+=======
+	private int itemPpriceTwo; // 援щℓ���⑹“������ 媛�寃� 踰���寃����� ���� 蹂���
+	private int nowPurchaseState; // 援щℓ愿��� ���댁�蹂� �대�� ���댁��� 湲곕낯 list 異��μ�� ���� 蹂���
+>>>>>>> branch 'master' of https://github.com/starbucksERP/stars.git
 	private String itemVendor;
 	private int purchaseType;
 	private int nowPurchaseState;
 
+<<<<<<< HEAD
+=======
+	private String itemName;
+	
+>>>>>>> branch 'master' of https://github.com/starbucksERP/stars.git
 	public Purchase() {
 		// TODO Auto-generated constructor stub
 	}
@@ -136,9 +146,31 @@ public class Purchase {
 	public void setNowPurchaseState(int nowPurchaseState) {
 		this.nowPurchaseState = nowPurchaseState;
 	}
+<<<<<<< HEAD
 	
 	
 	
+=======
+
+	public Item getItem() {
+		return item;
+	}
+
+	public void setItem(Item item) {
+		this.item = item;
+	}
+
+	public String getItemName() {
+		return itemName;
+	}
+
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
+	}
+
+	
+
+>>>>>>> branch 'master' of https://github.com/starbucksERP/stars.git
 
 	
 	

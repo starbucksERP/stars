@@ -108,25 +108,10 @@
 					<div class="innerMessage"></div>
 					<div><button type='button' class='a-button green inner-button' onclick="closeBox()">확인</button></div>
 				</div>
-			
-			<!-- 
-			<div>품목검색</div>
-			<div>매장검색</div>
-			-->
-			
-		   	<div class="right" style="float: right;">
-	            <ul class="order-sta">
-	               <li class="blackgray">전체</li> 
-	               <li >발주진행</li>   <!--  10= x -->
-	               <li >완료</li>       <!--  20<= x < 99-->
-	            </ul>
-        	 </div>
-			<br />
 			<hr  style="margin-top: 14px;"/>
-			<br />
 			
-			<div class="date-output right"  id="periodDiv"></div>
-			<div class="right"  id="countDiv"></div>
+			<div class="date-output right"  id="periodDiv"></div> <br/>
+			<div class="right darkgreen-font"  id="countDiv"></div>
 			<br />
 			
 			<div>
@@ -161,9 +146,30 @@
 	var period=new Date();
 	period.setDate(today.getDate()-14);
 	
+	var dd = today.getDate();
+	var mm = today.getMonth()+1; 
+	var yyyy = today.getFullYear();
+	if(dd<10) {
+	    dd='0'+dd
+	} 
+	if(mm<10) {
+	    mm='0'+mm
+	} 
+	today = yyyy+'-'+mm+'-'+dd;
+	
+	dd = period.getDate();
+	mm = period.getMonth()+1; 
+	yyyy = period.getFullYear();
+	if(dd<10) {
+	    dd='0'+dd
+	} 
+	if(mm<10) {
+	    mm='0'+mm
+	} 
+	period = yyyy+'-'+mm+'-'+dd;
+	
 	orderReqList(0);
 	
-	// 발주요청목록 출력 함수 : sort기능추가
 	function orderReqList(welcome) {
 		if (welcome==0) {
 			var requestDate=period;
@@ -184,12 +190,30 @@
 		
 		var states=[];
 		$(".choice:checked").each(function(i) {
-			states.push($(this).val());
+			var checking=$(this).val();
+			states.push(checking);
+			if (checking==20) {
+				states.push(30);
+				states.push(31);
+				states.push(32);
+				states.push(33);
+				states.push(40);
+				states.push(50);
+				states.push(60);
+				states.push(70);
+			}
 		});
-		 // json편집으로 추후수정
 		if(states.length==0){
 			states.push(10);
 			states.push(20);
+			states.push(30);
+			states.push(31);
+			states.push(32);
+			states.push(33);
+			states.push(40);
+			states.push(50);
+			states.push(60);
+			states.push(70);
 			states.push(99);
 		}
 		
@@ -203,7 +227,12 @@
 			dataType: "json",
 			success: function(json) {
 				$("#resultOrder").empty();
-				//$("#periodDiv").html("[ "+requestDate+" ~ "+requestDatePair+" ]"); // 맨처음, 날짜없는 경우 null
+				if(requestDate=='' || requestDate==null) {
+					$("#periodDiv").html("[ "+requestDate+" ~ "+requestDatePair+" ]"); 
+				} else { 
+					$("#periodDiv").html("[ 전체기간 ]");
+				}
+				
 				$("#countDiv").html("총 검색결과 : "+json.length+"건");
 				
 				if(json.length==0) {
@@ -220,11 +249,9 @@
 	       			
 	       			if (this.orderType == 1) {
 	       				html+="<td>대리점</td>";
-	       			} else if (orderType == 2) {
+	       			} else if (this.orderType == 2) {
 	       				html+="<td>본사</td>";
-	       			} else if (orderType == 0) { // DB정리후 삭제
-	       				html+="<td>&nbsp;</td>";
-	       			}
+	       			} 
 	       			
 	        		html+="<td>"+this.requestDate+"</td>"
 					+"<td>"+this.requestNum+"</td>"
@@ -239,9 +266,7 @@
 					} else if(this.requestState==99) {
 						html+="<td class='red-font'>취소완료</td></tr>";
 					} 
-					
 				});    
-	       		
 	       		
 				$("#resultOrder").html(html);
 			},
@@ -250,8 +275,6 @@
 			}
 		});
 	}
-	
-	
 	
 	function orderReqConfirm(reqNum) {
 		var reqNums=[];
@@ -271,8 +294,7 @@
 				});
 			}
 		}
-		
-		
+
 		$.ajax({
 			type: "PUT",
 			url: "orderReqConfirm",
@@ -289,11 +311,9 @@
 			error: function(xhr) {
 				alert("에러코드 = "+xhr.status)
 			}
-		});
-	
-		 
+		}); 
+		
 	}
-	
 
 	function openModal(message) {
 		var message=message;
@@ -305,7 +325,6 @@
 		$("#popup_mask").show();
 		$("#popupBox").show(300);  
 		$("body").css("overflow","hidden");
-		
 	}
 	
 	function closeBox() {
