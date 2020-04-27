@@ -13,5 +13,6 @@ public interface PurchaseMapper {
 	int purchaseCompleteHQ (int purchaseSeq); // 근형
 	int purchaseCancel (int purchaseSeq); // 근형
 	int updateQtyFromPurchase(int purchaseSeq);
+	String insertDeliveryFromPurchase(String requestNum);
 	
 }

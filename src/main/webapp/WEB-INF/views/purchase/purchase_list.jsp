@@ -391,6 +391,44 @@ function searchPurchaseList(searchType) {
 		}
 	});
 	
+	
+	function reqNumForDeliveryInsert(requestNumList) {
+		
+			var requestCandidateList=[];
+		for(var i = 0; i < requestNumList.length-1; i++) {
+			
+			if(requestNumList[i] != requestNumList[i+1]) {
+				requestCandidateList.push(requestNumList[i]);
+			}
+		}
+		
+		var uniqueReqNums = [];
+
+		$.each(requestCandidateList, function(i, el){
+			if($.inArray(el, uniqueReqNums) === -1) uniqueReqNums.push(el);
+		});
+		
+		
+			if(uniqueReqNums.legnth!=0) {
+				var param={"list":uniqueReqNums};
+				
+				$.ajax({
+					type: "POST",
+					url: "inserDeliveryFromPurchase",
+					data: param,
+					dataType: "text", 
+					success: function(text) {
+						if(text=="success") {
+						}
+					},
+					error: function(xhr) {
+						alert("에러코드 = "+xhr.status);
+					}
+					
+				});
+			}
+	}
+	
 
 	// ======================================== 구매완료 승인 버튼 
  	$("#pCompleteBtn").click(function () {
@@ -399,6 +437,7 @@ function searchPurchaseList(searchType) {
 			return;
 		} else {
 			var purchase =[];
+			var requestNumList = [];
 			var purchaseHQ =[];
 			var rowChk = $(".rowChk:checked");
 			
@@ -432,6 +471,7 @@ function searchPurchaseList(searchType) {
 					var answer = confirm("요청번호 ["+requestNum+"] : 구매를 완료 하시겠습니까?");
 					if(answer) {
 						purchase.push(purchaseSeq);
+						requestNumList.push(requestNum);
 						}
 					
 				} else if(purchaseState==31 && purchaseType=='본사 수동' || purchaseType=='본사 자동') {
@@ -452,6 +492,7 @@ function searchPurchaseList(searchType) {
 					success: function(text) {
 						if(text=="success") {
 							alert("구매완료가 승인 되었습니다.");
+							reqNumForDeliveryInsert(requestNumList);
 							searchPurchaseList(5);
 						}
 					},
@@ -460,6 +501,7 @@ function searchPurchaseList(searchType) {
 					}
 					
 				});
+				
 			} if(purchaseHQ.length!=0) {
 				var param={"list":purchaseHQ};
 				
