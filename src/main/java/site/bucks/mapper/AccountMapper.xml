@@ -32,7 +32,7 @@
 	<select id="selectPurchaseSaleList" resultMap="accountResultMapOne" parameterType="StoreItemHistory">
 		select * from store_item_history SIH join order_item OI
 				on SIH.request_num=OI.request_num
-				 where SIH.item_state=70 and SIH.store_id=4042
+				 where SIH.item_state=70 and SIH.store_id=#{storeId}
 				<if test="historyDate!=null and historyDate!=''">
 					and to_char(SIH.history_date,'yyyy-mm-dd') between #{historyDate} and #{historyDate1} 
 				</if>
@@ -136,7 +136,7 @@
 	</resultMap>
 	
 	<select id="selectStSaleList" resultMap="accountResultMapThree">
-		select * from sale where store_id=4042
+		select * from sale where store_id=#{storeId}
 			<if test="saleDate!=null and saleDate!=''">
 				and to_char(sale_date,'yyyy-mm-dd') between #{saleDate} and #{saleDatePair} 
 			</if>

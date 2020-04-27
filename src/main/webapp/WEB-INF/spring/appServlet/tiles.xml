@@ -16,7 +16,7 @@
 		<!-- 				  name 속성 : put-attribute 엘리먼트의 고유값을 속성값으로 설정
 							 value 속성 : 뷰페이지에 대한 JSP문서 경로를 속성값으로 설정 -->
 		<put-attribute name="header" value="/WEB-INF/views/header.jsp"/>
-		<put-attribute name="content" value="/WEB-INF/views/content.jsp"/>
+		<put-attribute name="content" value="/WEB-INF/views/hewon/hewon_login.jsp"/>
 	</definition>
 	
 	<definition name="window/*" extends="home">

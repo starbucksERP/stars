@@ -20,7 +20,6 @@
 	            <li>
 	               <button class="dropdown-btn">입출하기록<i class="fa fa-caret-down"></i></button>
 	               <div class="dropdown-container">
-	                  <a href="${pageContext.request.contextPath}/sic/storeReceipt">입출하조회</a><br /><br />
 	                  <a href="${pageContext.request.contextPath}/delivery/deliveryList">배송조회</a>
 	               </div>
           	  </li>
@@ -38,7 +37,7 @@
 					<thead>
 						<tr>
 							<th>발주요청일</th>
-							<td style="width: 38%"><input type="hidden" id="storeId" value="1021"/><label class="gLabel"><input type="date" readonly="readonly"/>&nbsp;<i class="far fa-calendar-alt"></i></label>
+							<td style="width: 38%"><input type="hidden" id="storeId" value="${loginHewon.hewonStId} "/><label class="gLabel"><input type="date" readonly="readonly"/>&nbsp;<i class="far fa-calendar-alt"></i></label>
 							<th>대분류</th>
 							<td>
 								<label class="gLabel"><input type="radio" class="fChk category1" name="category1" value="A" id="repMain">원재료</label>
