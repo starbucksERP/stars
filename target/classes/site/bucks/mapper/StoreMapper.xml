@@ -4,7 +4,10 @@
 <mapper namespace="site.bucks.mapper.StoreMapper">
 	<!-- 지점 등록(관리자만) -->
 	<insert id="insertStore">
-		insert into STORE values(concat(store_seq.nextval,SUBSTR(#{storePhone},0,3)),#{storeName},#{storeAddress},#{storeOwner},#{storePhone},#{storeState},#{storeOpen},#{storeClose})
+		<selectKey resultType="int" keyProperty="storeId" order="BEFORE">
+			select store_seq.nextval from dual
+		</selectKey>
+		insert into STORE values(concat(#{storeId},SUBSTR(#{storePhone},0,3)),#{storeName},#{storeAddress},#{storeOwner},#{storePhone},#{storeState},#{storeOpen},#{storeClose})
 	</insert>
 	
 	<!-- 지점 수정(관리자만 가능) : 폐점변경 및 폐업일 등록 -->
@@ -48,40 +51,7 @@
 				</foreach>
 			</if>
 		</where>
-		order by store_state, store_name
+		order by store_state, store_id
 	</select>
-	
-	
-	<!-- 전체 지점 조건별 검색 -->
-	<!-- 
-	<select id="selectAllStore" resultType="Store">
-		select * from STORE 
-		<where>
-			<if test="storeId!=null and storeId!=''">
-				store_id=#{storeId}
-			</if>
-			<if test="storeName!=null and storeName!=''">
-				store_name like '%'||#{storeName}||'%'
-			</if>				
-			<if test="storeAddress!=null and storeAddress!=''">
-				store_address like '%'||#{storeAddress}||'%'
-			</if>				
-			<if test="storeName!=null and storeName!=''">
-				store_name like '%'||#{storeName}||'%'
-			</if>	
-			<if test="storeOwner!=null and storeOwner!=''">
-				store_owner like '%'||#{storeOwner}||'%'
-			</if>				
-			<if test="storeState!=null and storeState!=''">
-				store_state=#{storeState}
-			</if>				
-		</where>
-		order by store_state, store_open
-	</select>
-	 -->
-	 
-	
-
-
 	
 </mapper>
