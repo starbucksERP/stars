@@ -83,8 +83,7 @@ public class HewonController {
 	
 	//인터셉터를 이용하여 로그인 사용자가 아닌 경우 요청처리 메소드가 호출되지 않도록 설정
 	@RequestMapping(value = "/modify", method = RequestMethod.GET)
-	public String modify(@RequestParam String hewonId, Model model
-			, HttpSession session) throws HewonNotFoundException {
+	public String modify(@RequestParam String hewonId, Model model, HttpSession session) throws HewonNotFoundException {
 		//인터셉터 이용하여 처리 가능
 		Hewon loginHewon=(Hewon)session.getAttribute("loginHewon");
 		if(!loginHewon.getHewonGrade().equals("9") && !loginHewon.getHewonId().equals(hewonId)) {

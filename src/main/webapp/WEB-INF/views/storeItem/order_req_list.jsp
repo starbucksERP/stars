@@ -53,7 +53,6 @@
 		            <li>
 		               <button class="dropdown-btn">입출하기록<i class="fa fa-caret-down"></i></button>
 		               <div class="dropdown-container">
-		                  <a href="${pageContext.request.contextPath}/sic/storeReceipt">입출하조회</a><br /><br />
 		                  <a href="${pageContext.request.contextPath}/delivery/deliveryList">배송조회</a>
 		               </div>
 	          	 	 </li>
@@ -77,7 +76,7 @@
 						</tr>
 						<tr>
 							<th>지점명 / 지점코드</th>
-							<td><input type="text" id="storeId" value="1021"/></td>
+							<td><input type="text" id="storeId" value="${loginHewon.hewonStId}" readonly="readonly"/></td>
 							<th>품목</th>
 							<td><input type="text" id="itemNum">&nbsp;<a href="" class="a-button gray search-icon"><i class="fas fa-search"></i></a></td>
 						</tr>
@@ -139,12 +138,13 @@
 	var period=new Date();
 	period.setDate(today.getDate()-14);
 	
-	var storeId=$("#storeId").val();
+	
 	
 	orderReqList(0);
 	
 	// 발주요청목록 출력 함수 : sort기능추가
 	function orderReqList(welcome) {
+		var storeId=$("#storeId").val();
 		if (welcome==0) {
 			var requestDate=period;
 			var requestDatePair=today;

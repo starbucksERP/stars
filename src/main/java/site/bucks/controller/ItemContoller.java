@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+ 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.HtmlUtils;
 
 import site.bucks.dto.Item;
-import site.bucks.dto.OrderItem;
 import site.bucks.service.ItemService;
 
 @Controller
@@ -52,8 +51,8 @@ public class ItemContoller {
 	@RequestMapping(value = "/productModify", method = {RequestMethod.PUT, RequestMethod.PATCH })
 	@ResponseBody
 	public String productModify(@RequestBody Item item) {
-		//item.setItemName(HtmlUtils.htmlEscape(item.getItemName()).trim());
-		//item.setItemVendor(HtmlUtils.htmlEscape(item.getItemVendor()).trim());
+		item.setItemName(HtmlUtils.htmlEscape(item.getItemName()).trim());
+		item.setItemVendor(HtmlUtils.htmlEscape(item.getItemVendor()).trim());
 		itemService.modifyProduct(item);
 		return "success";
 	}
@@ -83,6 +82,28 @@ public class ItemContoller {
 		return "success";
 	}
 	
+	// 구매계획
+	@RequestMapping(value = "/productPlan", method = RequestMethod.GET)
+	public String productPlanList(){
+		return "purchase/purchase_plan";
+	}
+	@RequestMapping(value = "/productPlan", method = RequestMethod.POST)
+	@ResponseBody
+	public List<Item> productPlanList(@RequestBody Item item){
+		return itemService.getItemPlanList(item);
+	}
+	@RequestMapping(value = "/changeItemPlan", method = RequestMethod.PUT)
+	@ResponseBody
+	public String changeItemPlan(@RequestBody  Map<String, Object> param){
+		param.put("itemDm","LoginUser(Session)");
+		itemService.modifyItemMinQty(param);
+		
+		if (((String)param.get("sendType")).equals("del")) {
+			return "successDel";
+		} else {
+			return "successChange";
+		}
+	}
 	
 	
 }

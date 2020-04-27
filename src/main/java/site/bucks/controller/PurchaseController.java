@@ -1,13 +1,9 @@
 package site.bucks.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,7 +25,7 @@ public class PurchaseController {
 	
 	@Autowired
 	ItemHistoryService itemHistoryService;
-	
+	  
 	@Autowired
 	ItemService itemService;
 	
@@ -59,9 +55,9 @@ public class PurchaseController {
 		
 		for (int purchaseSeq : purchase) {
 			purchaseService.purchaseReqConfirm(purchaseSeq);
-			itemHistoryService.updatedPOItemHist(purchaseSeq);
-			
+			itemHistoryService.updatedPOItemHist(purchaseSeq);	
 		}
+		
 		
 		
 		return "success";
@@ -80,6 +76,21 @@ public class PurchaseController {
 		}
 		return "success";
 	}
+	
+	
+	// 이거 시부래 작동 안됨 
+	@RequestMapping(value = "/inserDeliveryFromPurchase", method = RequestMethod.POST)
+	@ResponseBody
+	public String inserDeliveryFromPurchase(@RequestParam(value = "list[]") List<String> uniqueReqNums) {
+		
+		for (String requestNum : uniqueReqNums) {
+			purchaseService.insertDeliveryFromPurchase(requestNum);
+		}
+		return "success";
+	}
+	
+	
+	
 	
 	// 구매완료 처리 메소드 (본사 자동/수동) - 본사 재고 증가 
 		@RequestMapping(value = "/purchaseCompleteHQ", method = RequestMethod.POST)
@@ -106,13 +117,6 @@ public class PurchaseController {
 		}
 		return "success";
 	}
-	
-
-	@RequestMapping(value = "/purchasePlan")
-	public String getDisplayPurchasePlan(){
-		return "purchase/purchase_plan";
-	}
-	
 
 	@RequestMapping(value = "/purchaseAdd", method = RequestMethod.GET)
 	public String insertPurchaseOrder(){

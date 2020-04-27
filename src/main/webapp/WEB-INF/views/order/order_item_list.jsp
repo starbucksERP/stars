@@ -53,7 +53,7 @@
 								<th>진행상태</th>
 								<td>
 									<label class="gLabel"><input type="checkbox" name="states" class="fChk choice" value="40" >배송요청</label>
-									<label class="gLabel"><input type="checkbox" name="states" class="fChk choice" value="30">대기(입고중)</label> <!-- 31,32,33도포함  -->
+									<label class="gLabel"><input type="checkbox" name="states" class="fChk choice" value="30">대기(입고중)</label> 
 									<label class="gLabel"><input type="checkbox" name="states" class="fChk choice" value="50" >배송준비중</label>
 									<label class="gLabel"><input type="checkbox" name="states" class="fChk choice" value="60">출고</label>
 									<label class="gLabel"><input type="checkbox" name="states" class="fChk choice" value="70">종결</label>
@@ -69,37 +69,27 @@
 				</table>
 			</div>
 			
-		   	<div class="right" style="float: right;">
-	            <ul class="order-sta">
-	               <li class="blackgray">전체</li>
-	               <li >진행중</li> <!-- 20<= x <70 -->
-	               <li >미입고</li> <!-- 30<= x <=33 -->
-	               <li >종결</li>   <!-- 70 -->
-	            </ul>
-        	 </div>
-			
-			<br />
 			<hr  style="margin-top: 14px;"/>
 			<br />
 			
-			<div class="date-output right"  id="periodDiv"></div>
-			<div class="right"  id="countDiv"></div>
+			<div class="date-output right"  id="periodDiv"></div> <br/>
+			<div class="right darkgreen-font"  id="countDiv"></div>
 			<br />
 			
 			<div class="information">
 				<table class="table">
-						<thead style="line-height: 20px;">
-							<tr>
-								<th>발주타입</th>
-								<th>발주요청일</th>
-								<th>발주번호</th>
-								<th>지점명(코드)</th>
-								<th>품목</th>
-								<th>진행상태</th>
-							</tr>
-						</thead>
-						<tbody id="resultOrder"></tbody>
-					</table>
+					<thead style="line-height: 20px;">
+						<tr>
+							<th>발주타입</th>
+							<th>발주요청일</th>
+							<th>발주번호</th>
+							<th>지점명(코드)</th>
+							<th>품목</th>
+							<th>진행상태</th>
+						</tr>
+					</thead>
+					<tbody id="resultOrder"></tbody>
+				</table>
 			</div>
 		</div>
 	</div>
@@ -109,6 +99,28 @@
 	var today=new Date();
 	var period=new Date();
 	period.setDate(today.getDate()-14);
+	
+	var dd = today.getDate();
+	var mm = today.getMonth()+1;
+	var yyyy = today.getFullYear();
+	if(dd<10) {
+	    dd='0'+dd
+	} 
+	if(mm<10) {
+	    mm='0'+mm
+	} 
+	today = yyyy+'-'+mm+'-'+dd;
+	
+	dd = period.getDate();
+	mm = period.getMonth()+1; 
+	yyyy = period.getFullYear();
+	if(dd<10) {
+	    dd='0'+dd
+	} 
+	if(mm<10) {
+	    mm='0'+mm
+	} 
+	period = yyyy+'-'+mm+'-'+dd;
 	
 	orderReqList(0);
 	
@@ -132,9 +144,14 @@
 		
 		var states=[];
 		$(".choice:checked").each(function(i) {
-			states.push($(this).val());
+			var checking=$(this).val();
+			states.push(checking);
+			if (checking==30) {
+				states.push(31);
+				states.push(32);
+				states.push(33);
+			}
 		});
-		// 
 		if(states.length==0){
 			states.push(20);
 			states.push(30);
@@ -157,8 +174,12 @@
 			dataType: "json",
 			success: function(json) {
 				$("#resultOrder").empty();
-				//$("#periodDiv").html("[ "+requestDate+" ~ "+requestDatePair+" ]"); // 맨처음, 날짜없는 경우 null
-				$("#countDiv").html("총 검색결과 : "+json.length+"건");
+				if(requestDate=='' || requestDate==null) {
+					$("#periodDiv").html("[ 전체기간 ]");
+				} else { 
+					$("#periodDiv").html("[ "+requestDate+" ~ "+requestDatePair+" ]"); 
+				}
+				$("#countDiv").html("총 검색결과 : "+json.length+"건  ");
 				if(json.length==0) {
 					var html="<tr><td colspan='6'>검색된 발주현황정보가 존재하지않습니다.</td><tr>";
 					$("#resultOrder").html(html);
@@ -172,9 +193,7 @@
 	       				html+="<td>대리점</td>";
 	       			} else if (orderType == 2) {
 	       				html+="<td>본사</td>";
-	       			} else if (orderType == 0) { // DB정리후 삭제
-	       				html+="<td>&nbsp;</td>";
-	       			}
+	       			} 
 	        		html+="<td>"+this.requestDate+"</td>"
 					+"<td>"+this.requestNum+"</td>"
 					+"<td>"+this.storeId+"</td>"
@@ -183,7 +202,7 @@
 						html+="<td class='green-font'>발주완료</td></tr>";
 					} else if(this.requestState==30) {
 						html+="<td class='green-font'>구매요청</td></tr>";
-					} else if(this.requestState>30 && this.requestState<33) {
+					} else if(this.requestState>30 && this.requestState<34) {
 						html+="<td class='green-font'>대기(입고진행중)</td></tr>";
 					} else if(this.requestState==40) {
 						html+="<td class='green-font'>배송요청</td></tr>";
@@ -194,7 +213,8 @@
 					} else if(this.requestState==70 || this.requestState==33) {
 						html+="<td class='red-font'>종결</td></tr>";
 					} 
-				});    
+				}); 
+	       		
 				$("#resultOrder").html(html);
 			},
 			error: function(xhr) {

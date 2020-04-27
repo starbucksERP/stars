@@ -28,7 +28,7 @@
 
 .main{
 	z-index: 999; 
-	background: black; 
+	background-color: rgba(0, 0, 0, 0.4);  
 	color: white; 
 	padding: 75px;
 }
@@ -86,11 +86,13 @@ function hewonLogin() {
 					     <br />
 						  <br />
 						  <br />
-							<button type="button" class="a-button big yellow" onclick="location.href='${pageContext.request.contextPath }/hewon/list';">회원목록</button>&nbsp;&nbsp;
+						  <div class="center">
+						  	<c:if test="${loginHewon.hewonGrade=='9'}">
+								<button type="button" class="a-button big yellow" onclick="location.href='${pageContext.request.contextPath }/hewon/list';">회원목록</button>&nbsp;&nbsp;
+								<button type="button" class="a-button big sea" onclick="location.href='${pageContext.request.contextPath }/hewon/join';">회원등록</button>&nbsp;&nbsp;
+						  	</c:if>
 							<button type="button" class="a-button big red" onclick="location.href='${pageContext.request.contextPath }/hewon/logout';">로그아웃</button>&nbsp;&nbsp;
-							<c:if test="${loginHewon.hewonGrade=='9'}">
-								<button type="button" class="a-button big sea" onclick="location.href='${pageContext.request.contextPath }/hewon/join';">회원등록</button>
-							</c:if>
+						</div>
 				  </c:otherwise>
 				  </c:choose>
 			</div>

@@ -1,5 +1,7 @@
 package site.bucks.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -22,6 +24,16 @@ public class ItemHistoryDAOImpl implements ItemHistoryDAO{
 	@Override
 	public int updatedPOItemHist(int purchaseSeq) {
 		return sqlSession.getMapper(ItemHistoryMapper.class).updatedPOItemHist(purchaseSeq); 
+	}
+
+	@Override
+	public List<ItemHistory> selectItemHistoryist(ItemHistory history) {
+		return sqlSession.getMapper(ItemHistoryMapper.class).selectItemHistoryist(history);
+	}
+
+	@Override
+	public int insertItemHistory(ItemHistory history) {
+		return sqlSession.getMapper(ItemHistoryMapper.class).insertItemHistory(history);
 	}
 	
 	

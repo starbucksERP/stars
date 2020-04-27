@@ -54,7 +54,7 @@ public class StoreItemController {
 	
 	
 	// 판매삭제
-	@RequestMapping(value = "/saleCancel", method = RequestMethod.PUT)
+	@RequestMapping(value = "/saleCancel", method = RequestMethod.POST)
 	@ResponseBody
 	public String storeOrderReqConfirm(@RequestBody Sale sale) {
 		storeItemService.removeSale(sale);

@@ -22,7 +22,6 @@
 		            <li>
 		               <button class="dropdown-btn">입출하기록<i class="fa fa-caret-down"></i></button>
 		               <div class="dropdown-container">
-		                  <a href="${pageContext.request.contextPath}/sic/storeReceipt">입출하조회</a><br /><br />
 		                  <a href="${pageContext.request.contextPath}/delivery/deliveryList">배송조회</a>
 		               </div>
 	          	  </li>
@@ -43,7 +42,7 @@
 								<th>요청번호</th>
 								<td colspan="1"><input type="search" name="requestNum" id="requestNumInput" value=""/>&nbsp;<a href="${pageContext.request.contextPath }/delivery/choice_store_code.jsp" onClick="window.open(this.href, '', 'width=400, height=430'); return false;" class="a-button white" style="font-size: 15px;"><i class="fas fa-file-alt"></i></a></td>
 								<th>매장코드</th>
-								<td colspan="1"><input type="search" name="storeId" id="storeIdInput" value="${hewon.hewonStId}" readonly="readonly"/>&nbsp;<a href="" class="a-button white" style="font-size: 15px;"><i class="fas fa-file-alt"></i></a></td>
+								<td colspan="1"><input type="search" name="storeId" id="storeIdInput" value="${loginHewon.hewonStId} " readonly="readonly"/>&nbsp;<a href="" class="a-button white" style="font-size: 15px;"><i class="fas fa-file-alt"></i></a></td>
 							</tr>
 							<tr>
 								<th>배송 시작일</th>

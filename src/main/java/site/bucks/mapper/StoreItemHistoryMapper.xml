@@ -12,7 +12,7 @@
 		update order_num set ORDER_NUM_QTY=0
 	</update>
 	<insert id="orerNumInsertStore">
-		insert into order_num values(#{storeId}, 0)
+		insert into order_num values(concat(store_number_seq.nextval,SUBSTR(#{storePhone},0,3)), 0)
 	</insert>
 
 <!-- 지점에서 발주 입력시 	+  지점에서 입고 확인시 storeItemHistory 테이블에서 일어나는 일련의 메소드 -->
