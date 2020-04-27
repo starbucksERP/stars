@@ -1,10 +1,13 @@
 eclipse.preferences.version=1
+encoding//src/main/java/site/bucks/controller/AccountController.java=UTF-8
 encoding//src/main/java/site/bucks/controller/StoreController.java=UTF-8
 encoding//src/main/java/site/bucks/controller/StoreItemController.java=UTF-8
 encoding//src/main/java/site/bucks/controller/StoreItemHistoryController.java=UTF-8
 encoding//src/main/java/site/bucks/dao/DeliveryDAO.java=UTF-8
 encoding//src/main/java/site/bucks/dto/Item.java=UTF-8
 encoding//src/main/java/site/bucks/dto/OrderItem.java=UTF-8
+encoding//src/main/java/site/bucks/dto/Purchase.java=UTF-8
+encoding//src/main/java/site/bucks/mapper/AccountMapper.java=UTF-8
 encoding//src/main/java/site/bucks/mapper/DeliveryMapper.java=UTF-8
 encoding//src/main/java/site/bucks/mapper/OrderItemMapper.java=UTF-8
 encoding//src/main/java/site/bucks/service/StoreItemHistoryServiceImpl.java=UTF-8

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import site.bucks.dao.StoreItemDAO;
 import site.bucks.dto.ProductRecipe;
 import site.bucks.dto.Sale;
+import site.bucks.dto.StoreItem;
 
 @Service
 public class StoreItemServiceImpl implements StoreItemService{
@@ -107,6 +108,80 @@ public class StoreItemServiceImpl implements StoreItemService{
 	public List<Sale> getSaleList(Sale sale) {
 		return storeItemDAO.selectSaleList(sale);
 	}
+	
+	
+//	판매 상품 카테고리검색	saleProductCategory
+	@Override
+	public List<ProductRecipe> getProductCategory(String category) {
+		return  storeItemDAO.selectCategory(category);
+	}
+	
+//	판매 상품 검색		saleProduct
+	@Override
+	public ProductRecipe getProductName(String saleProduct) {
+		return  storeItemDAO.selectProduct(saleProduct);
+	}
+	
+//	판매상품명검색
+	@Override
+	public ProductRecipe getProductName2(String category) {
+		return storeItemDAO.selectProductName(category);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	@Override
+	public List<StoreItem> getStoreItemList(StoreItem storeItem) {
+		return storeItemDAO.selectStoreItemList(storeItem);
+	}
+
+	@Override
+	public StoreItem getStoreItem(StoreItem storeItem) {
+		return storeItemDAO.selectStoreItem(storeItem);
+	}
+
+	@Override
+	public void removeStoreItem(StoreItem storeItem) {
+		storeItemDAO.deleteStoreItem(storeItem);
+	}
+
+	@Override
+	public void modifyStoreItem(StoreItem storeItem) {
+		storeItemDAO.updateStoreItem(storeItem);
+	}
+
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 
 

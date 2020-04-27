@@ -300,7 +300,7 @@
 			<br />
 			
 			<hr>
-			<div class="right"  id="countDiv"></div>
+			<div class="right darkgreen-font"  id="countDiv"></div>
 			<br />
 			
 			<div>
@@ -658,8 +658,6 @@
 					$(".val1").prop("checked", true);
 				} else if(json.itemUsage==9) {
 					$(".val9").prop("checked", true);
-				} else if(json.itemUsage==0) { // DB정리후 삭제 
-					$(".val1").prop("checked", true);
 				} 
 			},
 			error: function(xhr) {

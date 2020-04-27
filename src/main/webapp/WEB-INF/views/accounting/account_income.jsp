@@ -36,8 +36,20 @@
 					<tr>
 						<th>기준일자</th>
 						<td>
-							<label class="gLabel"><input type="date" />&nbsp;<i class="far fa-calendar-alt"></i></label>
-							&nbsp;-&nbsp;<label class="gLabel"><input type="date" />&nbsp;<i class="far fa-calendar-alt"></i></label>
+							<select id="month">
+								<option value="01">1월</option>
+								<option value="02">2월</option>
+								<option value="03">3월</option>
+								<option value="04">4월</option>
+								<option value="05">5월</option>
+								<option value="06">6월</option>
+								<option value="07">7월</option>
+								<option value="08">8월</option>
+								<option value="09">9월</option>
+								<option value="10">10월</option>
+								<option value="11">11월</option>
+								<option value="12">12월</option>
+							</select>
 						</td>
 					</tr>
 				</thead>
@@ -54,36 +66,6 @@
 							<th>2월</th>
 							<th>3월</th>
 						</tr>
-						<tr class="blue">
-							<td>매출액</td>
-							<td>1234234</td>
-							<td>1235</td>
-							<td>40,000</td>
-						</tr>
-						<tr>
-							<td>매출원가</td>
-							<td>1221341243</td>
-							<td>12342341</td>
-							<td>40,000</td>
-						</tr>
-						<tr class="beige">
-							<td>매출원가율(%)</td>
-							<td>1234123512</td>
-							<td>123412341</td>
-							<td>40,000</td>
-						</tr>
-						<tr class="pink">
-							<td>매출총이익</td>
-							<td>1234123424</td>
-							<td>1232351235</td>
-							<td>40,000</td>
-						</tr>
-						<tr class="beige">
-							<td>매출총익율(%)</td>
-							<td>215123532</td>
-							<td>125325235</td>
-							<td>40,000</td>
-						</tr>
 					</tbody>
 				</table>
 			</div>
@@ -92,3 +74,66 @@
 
 	</div>
 </div>
+
+
+<script type="text/javascript">
+/* var today = new Date();
+var mm = today.getMonth()+1; //January is 0!
+var yyyy = today.getFullYear();
+
+
+
+var historyDate=[];
+
+histroyDate.put(yyyy+'-'+mm) */
+
+	accountIncome(); 
+	
+	var month = new Date().getMonth()+1;
+
+	function accountIncome() {
+		if($("#month").val()!=''){
+			month=$("#month").val();
+		}
+		
+		$.ajax({
+			type: "POST",
+			url: "accountIncome2",
+			headers: {"content-type":"application/json"},
+			data: JSON.stringify({"histroyDate":month}),
+			dateType: "json",
+			success: function(json) {
+				var pPriceSum=0;
+				var sPriceSum=0;;
+				
+				$(json.mainPurchase).each(function(i) {
+					var pPrice = $(json.mainPurchase[i].ih).itemQty
+					pPriceSum+=pPrice;
+				});
+				/* $(json.mainSell).each(function(i) {
+					var sPrice = Number(($(this.item).itemSprice)*($(this.ih).itemQty));
+					sPriceSum+=sPrice;
+				});  */
+				
+				/* console.log($(json.mainPurchase[0].i.itemPprice));
+				console.log($(json.mainPurchase[0].ih.itemQty));
+				console.log(typeof(Number($(json.mainPurchase[0].ih.itemQty))));
+				console.log(typeof(Number($(json.mainPurchase[0].i.itemPprice))));
+				console.log(parseInt(($(json.mainPurchase[0].i.itemPprice))*($(json.mainPurchase[0].ih.itemQty)))); */
+				console.log(pPriceSum);
+				//console.log(sPriceSum);
+				
+				
+			},
+			error: function(xhr) {
+				alert("에러코드 = "+xhr.status)
+			}
+	    
+		});
+		
+	} 
+
+
+
+
+</script>

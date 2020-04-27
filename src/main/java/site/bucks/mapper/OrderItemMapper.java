@@ -9,6 +9,7 @@ import site.bucks.dto.OrderItem;
 public interface OrderItemMapper {
 	int insertStoreOrder(OrderItem orderItem);
 	List<OrderItem> selectStoreOrderItems(String requestNum, String storeId);
+	int updateOrderCheck(OrderItem orderItem);
 
 	// 본점용
 	int updateOrderItemState(Map<String, Object> numAndStateMap);

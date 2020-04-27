@@ -1,18 +1,19 @@
 package site.bucks.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import site.bucks.dao.StoreItemHistoryDAO;
 import site.bucks.dto.OrderItem;
-import site.bucks.dto.OrderNum;
+import site.bucks.exception.NotSendedFromMainStore;
+import site.bucks.exception.UnCommitedCancelOrder;
 import site.bucks.service.OrderItemService;
 import site.bucks.service.StoreItemHistoryService;
 
@@ -38,7 +39,7 @@ public class StoreItemHistoryController {
 		return "storeItem/order_input";
 	}
 	
-//	지점 발주 요청
+//	지점 발주 인풋
 	@RequestMapping(value = "/storeOrderInput", method = RequestMethod.POST)
 	@ResponseBody
 	public String storeOrderInput(@RequestBody List<OrderItem> orderItemList) {
@@ -52,15 +53,14 @@ public class StoreItemHistoryController {
 	
 	
 	
-	// 발주요청
+	// 발주요청 조회
 	@RequestMapping(value = "/storeOrderRequestList", method = RequestMethod.GET)
 	public String storeOrderRequestList() {
 //		세션을이용하여 지점코드 넣어야함!
-		
 		return "storeItem/order_req_list";
 	}
 	
-	// 발주요청 조건검색
+	// 발주요청 조회 조건검색
 	@RequestMapping(value = "/storeOrderRequestList", method = RequestMethod.POST)
 	@ResponseBody
 	public List<OrderItem> storeOrderRequestList(@RequestBody OrderItem orderItem) { 
@@ -68,14 +68,22 @@ public class StoreItemHistoryController {
 		return orderItemService.getOrderItemList(orderItem);
 	}
 
-	// 발주요청확인 및 취소
-	@RequestMapping(value = "/storeOrderModify", method = RequestMethod.PUT)
+	// 발주요청 취소 
+	@RequestMapping(value = "/storeOrderCancel", method = RequestMethod.POST)
 	@ResponseBody
-	public String storeOrderReqConfirm(@RequestBody Map<String, Object> param) {
-		orderItemService.modifyOrderItemState(param);
+	public String storeOrderReqCancel(@RequestBody OrderItem orderItem) {
+//		storeid 조건
+		storeItemHistoryService.modifyCancelRecipt(orderItem);
 		return "success";
 	}
 	
+	// 발주요청 확인 
+	@RequestMapping(value = "/storeOrderCheck", method = RequestMethod.POST)
+	@ResponseBody
+	public String storeOrderReqConfirm(@RequestBody List<OrderItem> orderItemList)   {
+		storeItemHistoryService.modifyReceiptProcess(orderItemList);
+		return "success";
+	}
 	
 	
 	// 발주현황
@@ -90,7 +98,23 @@ public class StoreItemHistoryController {
 	@RequestMapping(value = "/storeOrderStateList", method = RequestMethod.POST)
 	@ResponseBody
 	public List<OrderItem> storeOrderStateList(@RequestBody OrderItem orderItem) { 
+//		storeId 조건
 		return orderItemService.getOrderItemList(orderItem);
+	}
+	
+	
+	
+	
+	@ExceptionHandler(UnCommitedCancelOrder.class)
+	public String exceptionHandler(UnCommitedCancelOrder exception, Model model) {
+		model.addAttribute("message", exception.getMessage());
+		return "storeItem/order_req_list";
+	}
+	
+	@ExceptionHandler(NotSendedFromMainStore.class)
+	public String exceptionHandler(NotSendedFromMainStore exception, Model model) {
+		model.addAttribute("message", exception.getMessage());
+		return "storeItem/order_req_list";
 	}
 	
 	

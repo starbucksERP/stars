@@ -11,12 +11,14 @@
 	});
 	
 	
+	
 	$(".numnum").mouseenter(function() {
 		if($(".nav-counter").text()!=0){
 			$(".notifyTri").show();
 			$(".notifyList").show();
 		}
 	});
+
 	
 	$(".notifyList").mouseleave(function() {
 		$(".notifyTri").hide();
@@ -24,21 +26,23 @@
 	});
 	
 	$(".numnum").click(function() {
-		$(".notifyTri").show();
-		$(".notifyList").show();
-		
 		$.ajax({
 			type: "GET",
 			url: "upupNumDel",
 			success: function(json){
-				var num=Number($(".nav-counter").text());
-				$(json).each(function(i) {
-					
-					num+=1;
-				});
-				$(".notifyTri").attr("display", none);
+				
+				$(".notifyTri").attr("display", "none");
 				$(".notifyList").removeChild();
-				$(".nav-counter").text(Number(num));
+				
+				var num=0;
+				$(json).each(function(i) {
+					if(this.orderNumQty!=0){
+						num++;
+					}
+				});
+				alert(num);
+				
+				$(".nav-counter").text(num);
 			},
 			error: function(xhr){
 				alert("에러코드 = "+xhr.status);

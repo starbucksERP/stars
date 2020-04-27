@@ -1,20 +1,20 @@
 package site.bucks.dto;
 
-/*
- 
-이름          널?       유형            
------------ -------- ------------- 
-ITEM_NUM    NOT NULL VARCHAR2(50)  
-ITEM_NAME   NOT NULL VARCHAR2(100) 
-STORE_ID    NOT NULL NUMBER        
-ITEM_QTY    NOT NULL NUMBER        
-MIN_QTY     NOT NULL NUMBER        
-ITEM_PRICE  NOT NULL NUMBER        
-ITEM_USAGE  NOT NULL NUMBER        
-ITEM_MARGIN          NUMBER  
- */
+import java.util.List;
 
+/*이름             널?       유형            
+-------------- -------- ------------- 
+STORE_ITEM_SEQ NOT NULL NUMBER        
+ITEM_NUM       NOT NULL VARCHAR2(50)  
+ITEM_NAME      NOT NULL VARCHAR2(100) 
+STORE_ID       NOT NULL NUMBER        
+ITEM_QTY       NOT NULL NUMBER        
+MIN_QTY                 NUMBER        
+ITEM_PRICE     NOT NULL NUMBER        
+ITEM_USAGE     NOT NULL NUMBER 
+*/
 public class StoreItem {
+	private int storeItemSeq;
 	private String itemNum;
 	private String itemName;
 	private int storeId;
@@ -22,10 +22,45 @@ public class StoreItem {
 	private int minQty;
 	private int itemPrice;
 	private int itemUsage;
-	private int itemMargin;
 	
+	private double itemQtyPair;
+	private int itemPricePair;
+	private List<String> categorys;
+	private List<String> items;
 	public StoreItem() {
 		// TODO Auto-generated constructor stub
+	}
+
+	public List<String> getItems() {
+		return items;
+	}
+
+	public void setItems(List<String> items) {
+		this.items = items;
+	}
+
+	public List<String> getCategorys() {
+		return categorys;
+	}
+
+	public void setCategorys(List<String> categorys) {
+		this.categorys = categorys;
+	}
+
+	public double getItemQtyPair() {
+		return itemQtyPair;
+	}
+
+	public void setItemQtyPair(double itemQtyPair) {
+		this.itemQtyPair = itemQtyPair;
+	}
+
+	public int getItemPricePair() {
+		return itemPricePair;
+	}
+
+	public void setItemPricePair(int itemPricePair) {
+		this.itemPricePair = itemPricePair;
 	}
 
 	public String getItemNum() {
@@ -84,14 +119,14 @@ public class StoreItem {
 		this.itemUsage = itemUsage;
 	}
 
-	public int getItemMargin() {
-		return itemMargin;
+	public int getStoreItemSeq() {
+		return storeItemSeq;
 	}
 
-	public void setItemMargin(int itemMargin) {
-		this.itemMargin = itemMargin;
+	public void setStoreItemSeq(int storeItemSeq) {
+		this.storeItemSeq = storeItemSeq;
 	}
-	
+
 	
 	
 }

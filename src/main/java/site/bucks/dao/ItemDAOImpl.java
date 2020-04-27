@@ -46,8 +46,8 @@ public class ItemDAOImpl implements ItemDAO {
 	}
 
 	@Override
-	public int updateItemMinQty(Item item) {
-		return sqlSession.getMapper(ItemMapper.class).updateItemMinQty(item);
+	public int updateItemMinQty(Map<String, Object> itemNumMap) {
+		return sqlSession.getMapper(ItemMapper.class).updateItemMinQty(itemNumMap);
 	}
 
 	@Override
@@ -74,6 +74,7 @@ public class ItemDAOImpl implements ItemDAO {
 	public int deleteItem(Map<String, Object> itemNumMap) {
 		return sqlSession.getMapper(ItemMapper.class).deleteItem(itemNumMap);
 	}
+
 	
 
 }
