@@ -51,8 +51,12 @@ public class ItemContoller {
 	@RequestMapping(value = "/productModify", method = {RequestMethod.PUT, RequestMethod.PATCH })
 	@ResponseBody
 	public String productModify(@RequestBody Item item) {
-		item.setItemName(HtmlUtils.htmlEscape(item.getItemName()).trim());
-		item.setItemVendor(HtmlUtils.htmlEscape(item.getItemVendor()).trim());
+		if (item.getItemName()!=null) {
+			item.setItemName(HtmlUtils.htmlEscape(item.getItemName()).trim());
+		}
+		if (item.getItemVendor()!=null) {
+			item.setItemVendor(HtmlUtils.htmlEscape(item.getItemVendor()).trim());
+		}
 		itemService.modifyProduct(item);
 		return "success";
 	}

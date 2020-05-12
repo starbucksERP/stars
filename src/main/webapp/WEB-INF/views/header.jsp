@@ -4,7 +4,7 @@
 <div class="header">
 	
 	<div class="nav">
-		<a href="${pageContext.request.contextPath}/star" class="logo"><img src="${pageContext.request.contextPath }/images/logo.png" alt="" ></a>
+		<a href="${pageContext.request.contextPath}/" class="logo"><img src="${pageContext.request.contextPath }/images/logoDrawing.png" alt="" ></a>
 		<c:choose>
 			<c:when test="${loginHewon.hewonGrade=='9'}">
 				<div class="nav-right-list">
