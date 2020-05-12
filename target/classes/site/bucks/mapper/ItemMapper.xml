@@ -7,12 +7,12 @@
 		<selectKey resultType="int" keyProperty="seq" order="BEFORE">
 			select item_seq.nextval from dual
 		</selectKey>
-		insert into item values(concat(#{itemNum},#{seq}),#{itemName},0,0,#{itemPprice},#{itemSprice},0,#{itemVendor},null,#{itemUsage})
+		insert into item values(concat(#{itemNum},#{seq}),#{itemName},0,0,#{itemPprice},#{itemSprice},#{itemVendor},null,#{itemUsage})
 	</insert>
 	<!--  *품목수정 / 재고 등록(수량만 변경) 및 수정 -->
 	<update id="updateProduct">
 		update item 
-		<set >
+		<set>
 			<if test="itemName!=null and itemName!=''">
 				ITEM_NAME=#{itemName},
 			</if>
