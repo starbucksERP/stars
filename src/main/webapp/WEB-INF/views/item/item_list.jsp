@@ -24,19 +24,6 @@
 	color: #4C4C4C;
 	font-size: 15px;
 }
-.windowBox {
-	width: 600px;
-	height: 660px;
-	border: 3px solid #4C4C4C;
-	background-color: white;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	padding: 5px;
-	z-index: 100;
-	display: none;
-	border-radius: 50px;
-}
 #popup_mask { 
 	position: fixed;
 	width: 100%;
@@ -45,7 +32,31 @@
 	left: 0px;
 	display: none; 
 	background-color:#000;
-	z-index: 99;
+	z-index: 199;
+	opacity: 0.5;
+}
+.windowBox {
+	width: 600px;
+	height: 700px;
+	border: 3px solid #4C4C4C;
+	background-color: white;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	padding: 5px;
+	z-index: 198;
+	display: none;
+	border-radius: 50px;
+}
+#window_mask { 
+	position: fixed;
+	width: 100%;
+	height: 1000px;
+	top: 0px;
+	left: 0px;
+	display: none; 
+	background-color:#000;
+	z-index: 197;
 	opacity: 0.5;
 }
 .mainBoxDiv {
@@ -56,6 +67,7 @@
 	border-radius: 50px;
 	text-align: center;
 }
+
 </style>
 <div class="container">
 		<div class="row">
@@ -130,20 +142,23 @@
 									</span>
 								</td>
 							</tr>
-							<tr>
-								<td colspan="2">&nbsp;</td>
-							</tr>
-							<tr>
-								<th>품목코드</th><th>품명</th>
-							<tr>
 						</thead>
-						<tbody id="CategoryListDiv">
-							<tr><td colspan="2">품목그룹을 반드시 선택해주세요</td></tr>
-						</tbody>
 					</table>
+					<div style="margin-bottom:25px; height:200px; overflow:auto;">
+						<table class="table" style="margin: 0px; padding: 0px;">
+							<thead>
+								<tr>
+									<th>품목코드</th><th>품명</th>
+								<tr>
+							</thead>
+							<tbody id="CategoryListDiv">
+								<tr><td colspan="2">품목그룹을 반드시 선택해주세요</td></tr>
+							</tbody>
+						</table>
+					</div>
+					<input type="hidden" id="insertNum" class="insert" >
 					<label class="gLabel">품    명 : <input type="search" id="insertName" class="insert" readonly="readonly" placeholder="검색결과 클릭입력만 가능"></label><br/><br/>
 					<label class="gLabel">재고수량 : <input type="search" id="insertQty" class="insert"></label>
-					<!-- <input type="search" id="insertQty" class="insert"/> -->
 					<br/><br/>
 					<button type="button" class="a-button medium green" id="iteminsertBtn" onclick="itemBtn('insert')">저장</button>
 					<button type="button" class="a-button medium brown" onclick="resetBtn()">초기화</button>
@@ -256,16 +271,16 @@
 					<table class="table">
 						<thead>
 							<tr>
-								<th width="5%"><input type="checkbox" class="allChk"></th>
-								<th width="5%">번호</th>
-								<th width="10%" >품목코드</th>
-								<th width="15%" >폼목명(단위)</th>
-								<th width="10%">거래처</th>
-								<th width="8%">매입단가</th>
-								<th width="8%">공급가</th>
-								<th width="10%">총 재고 수량</th>
-								<th width="14%">최소 유지 수량</th>
-								<th width="15%">총 재고액</th>
+								<th style="width: 5px;"><input type="checkbox" class="allChk"></th>
+								<th>번호</th>
+								<th>품목코드</th>
+								<th style="width: 35%;">폼목명(단위)</th>
+								<th>거래처</th>
+								<th>매입단가</th>
+								<th>공급가</th>
+								<th>총 재고 수량</th>
+								<th>최소 유지 수량</th>
+								<th>총 재고액</th>
 							</tr>
 						</thead>
 						<tbody id="resultItem"></tbody>
@@ -314,15 +329,16 @@
 			dataType: "json",
 			success: function(json) {
 				$("#CategoryListDiv").empty();
+				
 				if(json.length==0) {
-					var html="<tr><td colspan='2'>해당품목이 존재하지 않습니다.</td></tr>";
+					var html="<tr><td colspan='2'>재고등록 가능한 품목이 존재하지 않습니다.</td></tr>";
 					$("#CategoryListDiv").html(html);
 					return;
 				}
 			
 				var html="";
 	       		$(json).each(function() {
-	       			html="<tr><td>"+this.itemNum+"</td><td><a onclick=\"pressName('"+this.itemName+"');\">"+this.itemName+"</a></td></tr>";
+	       			html+="<tr><td>"+this.itemNum+"</td><td><a onclick=\"pressName('"+this.itemNum+"','"+this.itemName+"');\">"+this.itemName+"</a></td></tr>";
 				});    
 	       		
 				$("#CategoryListDiv").html(html);
@@ -334,8 +350,10 @@
 		
 	});
 	
-	function pressName(name) {
+	function pressName(num,name) {
+		var num =num;
 		var name =name;
+		$("#insertNum").val(num);
 		$("#insertName").val(name);
 	}
 	
@@ -519,11 +537,13 @@
 			type: "PUT",
 			url: "productModify",
 			headers: {"content-type":"application/json"},
-			data: JSON.stringify({"itemNum":itemNum,"itemQty":itemQty}),
+			data: JSON.stringify({"itemNum":itemNum,"itemQty":itemQty, "itemUsage":0}),
 			dataType: "text", 
 			success: function(text) {
 				if(text=="success") {
-					closeBox("updateItemDiv");
+					closeBox(btn+"ItemDiv");
+					openModal("<br>요청이 <span class='red-font'>성공적으로</span> 완료되었습니다.<br><br><br>");
+					$("#popupBox").show(300); 
 					itemList();
 				}
 			},
@@ -571,7 +591,7 @@
 			"top": (($(window).height()-$("#"+box).outerHeight())/2+$(window).scrollTop())+"px",
 			"left": (($(window).width()-$("#"+box).outerWidth())/2+$(window).scrollLeft())+"px"
 		});
-		$("#popup_mask").show();
+		$("#window_mask").show();
 		$("#"+box).show(300);  
 		$("body").css("overflow","hidden");
 		$("#repMain").prop("checked", true);
@@ -591,8 +611,9 @@
 		$('.category1').removeAttr('checked');
 		$('.category2').removeAttr('checked');
 		$('.usage').removeAttr('checked');
+		$("#CategoryListDiv").html('<tr><td colspan="2">품목그룹을 반드시 선택해주세요</td></tr>');
 		$("#"+box).hide();
-		$("#popup_mask").hide(300); 
+		$("#window_mask").hide(300); 
         $("body").css("overflow","auto");
 	}
 	

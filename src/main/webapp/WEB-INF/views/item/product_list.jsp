@@ -24,6 +24,17 @@
 	color: #4C4C4C;
 	font-size: 15px;
 }
+#popup_mask { 
+	position: fixed;
+	width: 100%;
+	height: 1000px;
+	top: 0px;
+	left: 0px;
+	display: none; 
+	background-color:#000;
+	z-index: 199;
+	opacity: 0.5;
+}
 .windowBox {
 	width: 600px;
 	height: 660px;
@@ -33,11 +44,11 @@
 	top: 50%;
 	left: 50%;
 	padding: 5px;
-	z-index: 100;
+	z-index: 198;
 	display: none;
 	border-radius: 50px;
 }
-#popup_mask { 
+#window_mask { 
 	position: fixed;
 	width: 100%;
 	height: 1000px;
@@ -45,7 +56,7 @@
 	left: 0px;
 	display: none; 
 	background-color:#000;
-	z-index: 99;
+	z-index: 197;
 	opacity: 0.5;
 }
 .mainBoxDiv {
@@ -79,6 +90,7 @@
 		</div>
 		
 		<div id="popup_mask"></div>
+		<div id="window_mask"></div>
 		<div id="popupBox">
 			<div class="innerMessage"></div>
 			<div><button type='button' class='a-button green inner-button' onclick="closeModal()">확인</button></div>
@@ -312,16 +324,16 @@
 				<table class="table">
 					<thead>
 						<tr>
-							<th><input type="checkbox" class="allChk"></th>
-							<th>번호</th>
+							<th style="width: 5px;"><input type="checkbox" class="allChk"></th>
+							<th style="width: 100px;">번호</th>
 							<th>품목구분</th>
 							<th>품목코드</th>
-							<th>폼목명</th>
+							<th style="width: 35%;">폼목명</th>
 							<th>단위</th>
-							<th>매입단가</th>
-							<th>공급단가</th>
-							<th>거래처</th>
-							<th>취급여부</th>
+							<th >매입단가</th>
+							<th >공급단가</th>
+							<th >거래처</th>
+							<th style="width: 100px;">취급여부</th>
 						</tr>
 					</thead>
 					<tbody id="resultProduct"></tbody>
@@ -455,8 +467,8 @@
 	       				html+="[기타]</td>";
 	       			}
 	        		html+="<td>"+this.itemNum+"</td>"
-					+"<td>"+this.itemName.split("_")[0]+"</td>"
-					+"<td>"+this.itemName.split("_")[1]+"</td>"
+					+"<td>"+this.itemName.split("-")[0]+"</td>"
+					+"<td>"+this.itemName.split("-")[1]+"</td>"
 					+"<td>"+this.itemPprice+"</td>"
 					+"<td>"+this.itemSprice+"</td>"
 					+"<td>"+this.itemVendor+"</td>";
@@ -464,8 +476,6 @@
 						html+="<td class='green-font'>O</td></tr>";
 					} else if(this.itemUsage==9) {
 						html+="<td class='red-font'>X</td></tr>";
-					} else if(this.itemUsage==0) { // DB정리후 삭제 
-						html+="<td class='red-font'>O</td></tr>";
 					} 
 					
 				});    
@@ -481,8 +491,8 @@
 
 	$("#productInsertBtn").click(function() {
 		var cate=$(".category1:checked").val();
-		var itemNum=cate+$(".category"+cate+":checked").val()+"Q"; // DB정리후 Q삭제
-		var itemName=$("#insertName").val()+"_"+$("#insertUnitNum").val()+$(".insertUnit").val();
+		var itemNum=cate+$(".category"+cate+":checked").val(); 
+		var itemName=$("#insertName").val()+"-"+$("#insertUnitNum").val()+$(".insertUnit").val();
 		var itemPprice=$("#insertPprice").val();
 		var itemSprice=$("#insertSprice").val();
 		var itemVendor=$("#insertVendor").val();
@@ -521,6 +531,8 @@
 			success: function(text) {
 				if(text=="success") {
 					closeBox("insertProductDiv");
+					openModal("<br>성공적으로 품목을 <span class='red-font'>등록</span>했습니다.<br><br><br>");
+					$("#popupBox").show(300); 
 					productList();
 				}
 			},
@@ -533,7 +545,7 @@
 	
 	$("#productUpdateBtn").click(function() {
 		var itemNum=$("#updateNum").val();
-		var itemName=$("#updateName").val()+"_"+$("#updateUnitNum").val();
+		var itemName=$("#updateName").val()+"-"+$("#updateUnitNum").val();
 		var itemPprice=$("#updatePprice").val();
 		var itemSprice=$("#updateSprice").val();
 		var itemVendor=$("#updateVendor").val();
@@ -567,6 +579,8 @@
 			success: function(text) {
 				if(text=="success") {
 					closeBox("updateProductDiv");
+					openModal("<br>성공적으로 품목을 <span class='red-font'>수정</span>했습니다.<br><br><br>");
+					$("#popupBox").show(300); 
 					productList();
 				}
 			},
@@ -649,8 +663,8 @@
        				$("#itemNum2").text('*');
        			}
 				$("#updateNum").val(json.itemNum);
-				$("#updateName").val(json.itemName.split("_")[0]);
-				$("#updateUnitNum").val(json.itemName.split("_")[1]);
+				$("#updateName").val(json.itemName.split("-")[0]);
+				$("#updateUnitNum").val(json.itemName.split("-")[1]);
 				$("#updatePprice").val(json.itemPprice);
 				$("#updateSprice").val(json.itemSprice);
 				$("#updateVendor").val(json.itemVendor);
@@ -705,7 +719,7 @@
 			"top": (($(window).height()-$("#"+box).outerHeight())/2+$(window).scrollTop())+"px",
 			"left": (($(window).width()-$("#"+box).outerWidth())/2+$(window).scrollLeft())+"px"
 		});
-		$("#popup_mask").show();
+		$("#window_mask").show();
 		$("#"+box).show(300);  
 		$("body").css("overflow","hidden");
 		$("#repMain").prop("checked", true);
@@ -726,7 +740,7 @@
 		$('.category2').removeAttr('checked');
 		$('.usage').removeAttr('checked');
 		$("#"+box).hide();
-		$("#popup_mask").hide(300); 
+		$("#window_mask").hide(300); 
         $("body").css("overflow","auto");
 	}
 	
