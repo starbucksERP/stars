@@ -3,6 +3,8 @@ package site.bucks.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
  
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.HtmlUtils;
 
+import site.bucks.dto.Hewon;
 import site.bucks.dto.Item;
 import site.bucks.service.ItemService;
 
@@ -35,9 +38,11 @@ public class ItemContoller {
 	
 	@RequestMapping(value = "/productEnroll", method = RequestMethod.POST)
 	@ResponseBody
-	public String productEnroll(@RequestBody Item item) {
+	public String productEnroll(@RequestBody Item item, HttpSession session) {
+		Hewon loginHewon=(Hewon)session.getAttribute("loginHewon");
 		item.setItemName(HtmlUtils.htmlEscape(item.getItemName()).trim());
 		item.setItemVendor(HtmlUtils.htmlEscape(item.getItemVendor()).trim());
+		item.setItemDm(loginHewon.getHewonName());
 		itemService.addProduct(item);
 		return "success";
 	}
@@ -50,20 +55,24 @@ public class ItemContoller {
 	
 	@RequestMapping(value = "/productModify", method = {RequestMethod.PUT, RequestMethod.PATCH })
 	@ResponseBody
-	public String productModify(@RequestBody Item item) {
+	public String productModify(@RequestBody Item item, HttpSession session) {
+		Hewon loginHewon=(Hewon)session.getAttribute("loginHewon");
 		if (item.getItemName()!=null) {
 			item.setItemName(HtmlUtils.htmlEscape(item.getItemName()).trim());
 		}
 		if (item.getItemVendor()!=null) {
 			item.setItemVendor(HtmlUtils.htmlEscape(item.getItemVendor()).trim());
 		}
+		item.setItemDm(loginHewon.getHewonName());
 		itemService.modifyProduct(item);
 		return "success";
 	}
 	
 	@RequestMapping(value = "/productPause", method = {RequestMethod.PUT, RequestMethod.PATCH })
 	@ResponseBody
-	public String productPause(@RequestBody Map<String, Object> param) {
+	public String productPause(@RequestBody Map<String, Object> param, HttpSession session) {
+		Hewon loginHewon=(Hewon)session.getAttribute("loginHewon");
+		param.put("itemDm", loginHewon.getHewonName());
 		itemService.removeProduct(param);
 		return "success";
 	}
@@ -81,7 +90,9 @@ public class ItemContoller {
 	
 	@RequestMapping(value = "/itemDelete", method = {RequestMethod.PUT, RequestMethod.PATCH })
 	@ResponseBody
-	public String itemDelete(@RequestBody Map<String, Object> param) {
+	public String itemDelete(@RequestBody Map<String, Object> param, HttpSession session) {
+		Hewon loginHewon=(Hewon)session.getAttribute("loginHewon");
+		param.put("itemDm", loginHewon.getHewonName());
 		itemService.removeItem(param);
 		return "success";
 	}
@@ -96,10 +107,12 @@ public class ItemContoller {
 	public List<Item> productPlanList(@RequestBody Item item){
 		return itemService.getItemPlanList(item);
 	}
+	
 	@RequestMapping(value = "/changeItemPlan", method = RequestMethod.PUT)
 	@ResponseBody
-	public String changeItemPlan(@RequestBody  Map<String, Object> param){
-		param.put("itemDm","LoginUser(Session)");
+	public String changeItemPlan(@RequestBody  Map<String, Object> param, HttpSession session){
+		Hewon loginHewon=(Hewon)session.getAttribute("loginHewon");
+		param.put("itemDm", loginHewon.getHewonName());
 		itemService.modifyItemMinQty(param);
 		
 		if (((String)param.get("sendType")).equals("del")) {

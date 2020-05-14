@@ -8,19 +8,18 @@
 	#{purchaseState}, #{itemQty}, sysdate, #{purchaseType}, 'login사용자') 
 </insert>
 
-<insert id="insertItemHistory" parameterType="ItemHistory">
-	<selectKey resultType="int" keyProperty="historySeq" order="BEFORE">
-		select history_seq.nextval from dual
-	</selectKey>
-		insert into item_history values(#{historySeq}, #{requestNum}, #{itemNum},
-		#{itemState}, #{itemQty}, sysdate, #{purchaseType}, #{historyOwner})
-</insert>
-
-
 <!-- 상태가 변경된 purchase에 대한 히스토리 insert --> 
 <insert id="updatedPOItemHist" parameterType="Purchase">
 	insert into item_history select history_seq.nextval, request_num, item_num, purchase_state, 
 item_qty, sysdate, purchase_type, 'login사용자' from purchase where purchase_seq = #{purchaseSeq}
+</insert>
+
+
+<insert id="insertItemHistory" parameterType="ItemHistory">
+	<selectKey resultType="int" keyProperty="historySeq" order="BEFORE">
+		select history_seq.nextval from dual
+	</selectKey>
+		insert into item_history values(#{historySeq}, #{requestNum}, #{itemNum}, #{itemState}, #{itemQty}, sysdate, #{purchaseType}, #{historyOwner})
 </insert>
 
 

@@ -78,13 +78,13 @@
 							<td width="40%"><label class="gLabel"><input type="date" id="requestDate" />&nbsp;<i class="far fa-calendar-alt"></i></label>
 							&nbsp;-&nbsp;<label class="gLabel"><input type="date" id="requestDatePair" />&nbsp;<i class="far fa-calendar-alt"></i></label></td>
 							<th width="10%">발주요청번호</th>
-							<td width="40%"><input type="search" id="requestNum"/></td>
+							<td width="40%"><input type="search" id="requestNum"  placeholder="15954981516-20"/></td>
 						</tr>
 						<tr>
 							<th>지점명 / 지점코드</th>
-							<td><input type="search" id="storeId"/>&nbsp;<a href="" class="a-button white" style="font-size: 15px;"><i class="fas fa-file-alt"></i></a></td>
-							<th>품목</th>
-							<td><input type="text" id="itemNum">&nbsp;<a href="" class="a-button gray search-icon"><i class="fas fa-search"></i></a></td>
+							<td><input type="search" id="storeId" placeholder="ex)1021"/></td>
+							<th>품목코드</th>
+							<td><input type="text" id="itemNum" placeholder="ex)A01-1"></td>
 						</tr>
 						<tr>
 							<th>진행상태</th>
@@ -108,6 +108,15 @@
 					<div class="innerMessage"></div>
 					<div><button type='button' class='a-button green inner-button' onclick="closeBox()">확인</button></div>
 				</div>
+			<div class="right" style="float: right;">
+	            <ul class="order-sta">
+	               <li id="tapAll" onclick="orderReqList(100)" >전체</li>
+	               <li id="tapRequest"  onclick="orderReqList(10)">발주요청</li>
+	               <li id="tapComplete" onclick="orderReqList(20)">발주종결</li>
+	               <li id="tapCancel" onclick="orderReqList(99)">취소</li>
+	        	</ul>
+        	</div> 
+			<br />
 			<hr  style="margin-top: 14px;"/>
 			
 			<div class="date-output right"  id="periodDiv"></div> <br/>
@@ -115,22 +124,22 @@
 			<br />
 			
 			<div>
-				<button type="button" class="a-button green padding-button" onclick="orderReqConfirm(0); addHistory(20);">발주확인</button>
+				<button type="button" class="a-button green padding-button" onclick="orderReqConfirm(0);">발주확인</button>
 			</div>
 			
 			<div class="information" >
 				<table class="table">
 					<thead style="line-height: 20px;">
 						<tr>
-							<th width="5%"><input type="checkbox" class="allChk"></th>
-							<th width="10%">발주타입</th>
-							<th width="10%">발주요청일</th>
-							<th width="10%">발주번호</th>
-							<th width="10%">지점명(코드)</th>
-							<th width="10%">품목</th>
-							<th width="10%">수량</th>
-							<th width="10%">총 금액</th>
-							<th width="25%">발주확인</th>
+							<th style="width: 5px;"><input type="checkbox" class="allChk"></th>
+							<th>발주주체</th>
+							<th>발주요청일</th>
+							<th>발주번호</th>
+							<th>지점명(코드)</th>
+							<th>품목</th>
+							<th>수량</th>
+							<th>총 금액</th>
+							<th style="width: 15%;">발주확인</th>
 						</tr>
 					</thead>
 					<tbody id="resultOrder"></tbody>
@@ -171,38 +180,55 @@
 	orderReqList(0);
 	
 	function orderReqList(welcome) {
+		var requestDate=$("#requestDate").val();
+		var requestDatePair=$("#requestDatePair").val();
+		if (requestDate=="" && requestDatePair!="") {
+			requestDate=requestDatePair;
+		} else if (requestDatePair=="" && requestDate!="") {
+			requestDatePair=requestDate;
+		}
+		
+		var states=[];
 		if (welcome==0) {
-			var requestDate=period;
-			var requestDatePair=today;
-		} else {
-			var requestDate=$("#requestDate").val();
-			var requestDatePair=$("#requestDatePair").val();
-			if (requestDate=="" && requestDatePair!="") {
-				requestDate=requestDatePair;
-			} else if (requestDatePair=="" && requestDate!="") {
-				requestDatePair=requestDate;
-			} 
+			requestDate=period;
+			requestDatePair=today;
+		} else if (welcome==1) {
+			$(".choice:checked").each(function(i) {
+				var checking=$(this).val();
+				states.push(checking);
+				if (checking==20) {
+					states.push(30);
+					states.push(31);
+					states.push(32);
+					states.push(33);
+					states.push(40);
+					states.push(50);
+					states.push(60);
+					states.push(70);
+				}
+			});
+		} else if (welcome==10) {
+			states.push(10);
+		} else if (welcome==20) {
+			states.push(20);
+			states.push(30);
+			states.push(31);
+			states.push(32);
+			states.push(33);
+			states.push(40);
+			states.push(50);
+			states.push(60);
+			states.push(70);
+			states.push(99);
+		} else if (welcome==99) {
+			states.push(99);
 		}
 		
 		var requestNum=$("#requestNum").val();
 		var itemNum=$("#itemNum").val();
 		var storeId=$("#storeId").val();
+	
 		
-		var states=[];
-		$(".choice:checked").each(function(i) {
-			var checking=$(this).val();
-			states.push(checking);
-			if (checking==20) {
-				states.push(30);
-				states.push(31);
-				states.push(32);
-				states.push(33);
-				states.push(40);
-				states.push(50);
-				states.push(60);
-				states.push(70);
-			}
-		});
 		if(states.length==0){
 			states.push(10);
 			states.push(20);
@@ -216,6 +242,7 @@
 			states.push(70);
 			states.push(99);
 		}
+		
 		
 		var orderType=$(".owner:checked").val(); 
 		
@@ -236,7 +263,7 @@
 				$("#countDiv").html("총 검색결과 : "+json.length+"건");
 				
 				if(json.length==0) {
-					var html="<tr><td colspan='9'>검색된 발주요청정보가 존재하지않습니다.</td><tr>";
+					var html="<tr><td colspan='9' style='font-weight: bold;' class='red-font'>검색된 발주요청정보가 존재하지않습니다.</td><tr>";
 					$("#resultOrder").html(html);
 					return;
 				}
@@ -260,7 +287,7 @@
 					+"<td class='orderQty'>"+this.orderQty+"</td>"
 					+"<td>"+total+"</td>";
 					if(this.requestState==10) {
-						html+="<td class='green-font'><button type='button' class='a-button green inner-button' onclick='orderReqConfirm("+this.requestNum+");'>발주확인</button></td></tr>";
+						html+="<td class='green-font'><button type='button' class='a-button green inner-button' onclick=\"orderReqConfirm('"+this.requestNum+"');\">발주확인</button></td></tr>";
 					} else if(this.requestState>10 && this.requestState<99) {
 						html+="<td class='green-font'>발주완료</td></tr>";
 					} else if(this.requestState==99) {
@@ -314,43 +341,6 @@
 		
 	}
 	
-
-	
-	function addHistory(targetValue) {
-		var historyList=[];
-		var ItemHistory=[];
-		var targetValue=targetValue;
-			
-	    $(".rowChk:checked").each(function(i) {
-	    	ItemHistory = {
-	    		requestNum : $(this).val(),
-	    		itemNum	:  $(this).parents('tr').find(".itemNum").text(),
-	    		itemState : targetValue,
-	    		itemQty : $(this).parents('tr').find(".orderQty").text(),
-	    		purchaseType : $(this).parents('tr').find(".orderType").val(),
-	    	};
-	    	
-	        historyList.push(ItemHistory);
-	    });
-	    
-	    $.ajax({
-			type: "POST",
-			url: "historyAdd",
-			headers: {"content-type":"application/json","X-HTTP-Method-override":"PUT"},
-			data: JSON.stringify(historyList),
-			dataType: "text", 
-			success: function(text) {
-
-			},
-			error: function(xhr) {
-				alert("에러코드 = "+xhr.status)
-			}
-		}); 
-		
-	} 
-	
-
-
 	function openModal(message) {
 		var message=message;
 		$("#popupBox").css({

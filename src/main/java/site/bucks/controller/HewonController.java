@@ -1,5 +1,8 @@
 package site.bucks.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +19,18 @@ import site.bucks.exception.HewonExistsException;
 import site.bucks.exception.HewonNotFoundException;
 import site.bucks.exception.LoginAuthFailException;
 import site.bucks.service.HewonService;
+import site.bucks.service.OrderItemService;
+import site.bucks.service.PurchaseService;
 
 @Controller
 @RequestMapping("/hewon")
 public class HewonController {
 	@Autowired
 	private HewonService hewonService;
+	@Autowired
+	private PurchaseService purchaseService;
+	@Autowired
+	private OrderItemService orderItemService;
 
 	//인터셉터를 이용하여 관리자가 아닌 사용자가 요청한 경우 요청처리 메소드가 호출되지 않도록 설정
 	//인터셉터(Interceptor) : Front Controller에 의해 요청처리 메소드 호출 전 필요한 명령을 실행하는 기능 - 권한 처리 
@@ -49,13 +58,26 @@ public class HewonController {
 		hewonService.loginAuth(hewon);
 		
 		//인증 성공 : 세션에 인증정보(회원정보) 저장 - 권한 
-		session.setAttribute("loginHewon", hewonService.getHewon(hewon.getHewonId()));
+		Hewon loginHewon=hewonService.getHewon(hewon.getHewonId());
+		session.setAttribute("loginHewon", loginHewon);
+		String today= new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+
+		// 자동주문호출
+		if(loginHewon.getHewonGrade().equals("9")) {
+			boolean possible=purchaseService.getPurchseByPlan(today).isEmpty();
+			if(possible) {
+				orderItemService.addOrderByMinQty(today, loginHewon.getHewonName());
+			} else {
+				System.out.println("Already done.");
+			}
+		}
 		
 		if(session.getAttribute("destURI")!=null) {
 			String destURI=(String)session.getAttribute("destURI");
 			session.removeAttribute("destURI");
 			return "redirect:"+destURI;
 		}
+		
 		
 		return "hewon/hewon_login";
 	}

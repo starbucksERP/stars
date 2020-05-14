@@ -18,6 +18,7 @@ public interface ItemMapper {
 	int selectItemQty(String itemNum);
 	List<String> selectItemVendorList(String itemVendor);
 	int updateTotalQty(Double change);
+	List<Item> selectLowQtyItem();
 	
 	
 	Item selectItemInfoOneByName(String itemName);

@@ -95,6 +95,7 @@
 			<div class="innerMessage"></div>
 			<div><button type='button' class='a-button green inner-button' onclick="closeModal()">확인</button></div>
 		</div>
+		
 		<div id="insertProductDiv" class="windowBox">
 			<div class="mainBoxDiv">
 			<h3>품목등록</h3>
@@ -170,7 +171,7 @@
 						</tr>
 						<tr>
 							<th>거래처</th>
-							<td><input type="search" id="insertVendor" class="insert">&nbsp;<a href="" class="a-button gray search-icon"><i class="fas fa-search"></i></a></td>
+							<td><input type="search" id="insertVendor" class="insert"></td>
 						</tr>
 						<tr>
 							<th>취급여부</th>
@@ -226,7 +227,7 @@
 						</tr>
 						<tr>
 							<th>거래처</th>
-							<td><input type="search" id="updateVendor" class="update">&nbsp;<a href="" class="a-button gray search-icon"><i class="fas fa-search"></i></a></td>
+							<td><input type="search" id="updateVendor" class="update"></td>
 						</tr>
 						<tr>
 							<th>취급여부</th>
@@ -252,19 +253,19 @@
 				<thead>
 					<tr>
 						<th width="50%">품목코드</th>
-						<td><input type="search" id="itemNum">&nbsp;<a href="" class="a-button gray search-icon"><i class="fas fa-search"></i></a></td>
+						<td><input type="search" id="itemNum" placeholder="ex)A01-1"></td>
 						<th  width="50%" >품목명</th>
-						<td><input type="search" id="itemName"/></td>
+						<td><input type="search" id="itemName" placeholder="ex)코코넛칩"/></td>
 					</tr>
 					<tr>
 						<th>매입단가</th>
-						<td><input type="search" id="itemPprice">&nbsp;&nbsp;~&nbsp;&nbsp;<input type="search" id="itemPpricePair" ></td>
+						<td><input type="search" id="itemPprice" placeholder="ex)0">&nbsp;&nbsp;~&nbsp;&nbsp;<input type="search" id="itemPpricePair" placeholder="ex)0"></td>
 						<th>공급단가</th>
-						<td><input type="search" id="itemSprice">&nbsp;~&nbsp;<input type="search" id="itemSpricePair" ></td>
+						<td><input type="search" id="itemSprice" placeholder="ex)0">&nbsp;~&nbsp;<input type="search" id="itemSpricePair" placeholder="ex)0"></td>
 					</tr>
 					<tr>
 						<th width="50%">거래처</th>
-						<td><input type="search" id="itemVendor">&nbsp;<a href="" class="a-button gray search-icon"><i class="fas fa-search"></i></a></td>
+						<td><input type="search" id="itemVendor" placeholder="ex)HappyBakery"></td>
 						<th  width="50%">취급여부</th>
 						<td>
 							<label class="gLabel"><input type="radio" class="fChk condition" name="itemUsage" value="0" checked="checked">전체</label>&nbsp;&nbsp;|
@@ -325,15 +326,15 @@
 					<thead>
 						<tr>
 							<th style="width: 5px;"><input type="checkbox" class="allChk"></th>
-							<th style="width: 100px;">번호</th>
-							<th>품목구분</th>
-							<th>품목코드</th>
-							<th style="width: 35%;">폼목명</th>
-							<th>단위</th>
-							<th >매입단가</th>
-							<th >공급단가</th>
-							<th >거래처</th>
-							<th style="width: 100px;">취급여부</th>
+							<th style="width: 8%;">번호</th>
+							<th style="width: 15%;">품목구분</th>
+							<th style="width: 8%;">품목코드</th>
+							<th style="width: 28%;">폼목명</th>
+							<th style="width: 8%;">단위</th>
+							<th style="width: 8%;">매입단가</th>
+							<th style="width: 8%;">공급단가</th>
+							<th style="width: 8%;">거래처</th>
+							<th style="width: 9%;">취급여부</th>
 						</tr>
 					</thead>
 					<tbody id="resultProduct"></tbody>
@@ -366,6 +367,8 @@
 		}
 		
 	});
+	
+	
 	
 	function productList() {
 		// 검색유효성검사추가 : 가격은 큰거작은거 숫자만 문자만 등등
@@ -408,7 +411,7 @@
 				$("#countDiv").html("총 검색결과 : "+json.length+"건");
 				
 				if(json.length==0) {
-					var html="<tr><td colspan='10'>검색된 품목정보가 존재하지않습니다.</td><tr>";
+					var html="<tr><td colspan='10' style='font-weight: bold;' class='red-font'>검색된 품목정보가 존재하지않습니다.</td><tr>";
 					$("#resultProduct").html(html);
 					return;
 				}
@@ -488,39 +491,63 @@
 		});
 		
 	}	
-
+	
 	$("#productInsertBtn").click(function() {
 		var cate=$(".category1:checked").val();
 		var itemNum=cate+$(".category"+cate+":checked").val(); 
-		var itemName=$("#insertName").val()+"-"+$("#insertUnitNum").val()+$(".insertUnit").val();
+		var insertName=$("#insertName").val();
 		var itemPprice=$("#insertPprice").val();
 		var itemSprice=$("#insertSprice").val();
 		var itemVendor=$("#insertVendor").val();
 		var itemUsage=$(".insertUsage:checked").val();
 		
-		// 유효성검사 : 추후추가
-		if(itemName=="") {
-			alert("품목명을 입력해주세요");
+		var numReg=/\d/;
+		if(insertName=="") {
+			openModal("<br><span class='red-font'>품목명</span>을 반드시 입력해주세요.<br><br><br>");
+			$("#popupBox").show(300); 
 			return;
 		}
 		
 		if($('#insertUnitNum').val()=="") {
-			alert("품목단위를 입력해주세요");
+			openModal("<br><span class='red-font'>단위</span>를 반드시 입력해주세요.<br><br><br>");
+			$("#popupBox").show(300); 
+			return;
+		}
+		if(!numReg.test($("#insertUnitNum").val())) {
+			openModal("<br>단위는 <span class='red-font'>숫자</span>만 입력가능합니다.<br><br><br>");
+			$("#popupBox").show(300); 
 			return;
 		}
 		
 		if(itemPprice=="") {
-			alert("매입단가를 입력해 주세요.");
+			openModal("<br><span class='red-font'>매입단가</span>를 반드시 입력해주세요.<br><br><br>");
+			$("#popupBox").show(300); 
 			return;
 		}
+		if(!numReg.test(itemPprice)) {
+			openModal("<br>매입단가는 <span class='red-font'>숫자</span>만 입력가능합니다.<br><br><br>");
+			$("#popupBox").show(300); 
+			return;
+		}
+		
 		if(itemSprice=="") {
-			alert("공급단가를 입력해 주세요.");
+			openModal("<br><span class='red-font'>공급단가</span>를 반드시 입력해주세요.<br><br><br>");
+			$("#popupBox").show(300); 
 			return;
 		}
+		if(!numReg.test(itemSprice)) {
+			openModal("<br>공급단가는 <span class='red-font'>숫자</span>만 입력가능합니다.<br><br><br>");
+			$("#popupBox").show(300); 
+			return;
+		}
+		
 		if(itemVendor=="") {
-			alert("거래처를 입력해 주세요.");
+			openModal("<br><span class='red-font'>거래처</span>를 반드시 입력해주세요.<br><br><br>");
+			$("#popupBox").show(300); 
 			return;
 		}
+		
+		var itemName=insertName+"-"+$("#insertUnitNum").val()+$(".insertUnit").val();
 		
 		$.ajax({
 			type: "POST",
@@ -545,30 +572,49 @@
 	
 	$("#productUpdateBtn").click(function() {
 		var itemNum=$("#updateNum").val();
-		var itemName=$("#updateName").val()+"-"+$("#updateUnitNum").val();
+		var updateName=$("#updateName").val();
 		var itemPprice=$("#updatePprice").val();
 		var itemSprice=$("#updateSprice").val();
 		var itemVendor=$("#updateVendor").val();
 		var itemUsage=$(".updateUsage:checked").val();
 		
-		// 유효성검사 : 추후추가
-		if(itemName=="") {
-			alert("품목명을 입력해주세요");
+		var numReg=/\d/;
+		if(updateName=="") {
+			openModal("<br><span class='red-font'>품목명</span>을 반드시 입력해주세요.<br><br><br>");
+			$("#popupBox").show(300); 
 			return;
 		}
-		
+		if($("#updateUnitNum").val()=="") {
+			openModal("<br><span class='red-font'>단위</span>를 반드시 입력해주세요.<br><br><br>");
+			$("#popupBox").show(300); 
+			return;
+		}
 		if(itemPprice=="") {
-			alert("매입단가를 입력해 주세요.");
+			openModal("<br><span class='red-font'>매입단가</span>를 반드시 입력해주세요.<br><br><br>");
+			$("#popupBox").show(300); 
+			return;
+		}
+		if(!numReg.test(itemPprice)) {
+			openModal("<br>매입단가는 <span class='red-font'>숫자</span>만 입력가능합니다.<br><br><br>");
+			$("#popupBox").show(300); 
 			return;
 		}
 		if(itemSprice=="") {
-			alert("공급단가를 입력해 주세요.");
+			openModal("<br><span class='red-font'>공급단가</span>를 반드시 입력해주세요.<br><br><br>");
+			$("#popupBox").show(300); 
+			return;
+		}
+		if(!numReg.test(itemSprice)) {
+			openModal("<br>공급단가는 <span class='red-font'>숫자</span>만 입력가능합니다.<br><br><br>");
+			$("#popupBox").show(300); 
 			return;
 		}
 		if(itemVendor=="") {
-			alert("거래처를 입력해 주세요.");
+			openModal("<br><span class='red-font'>거래처</span>를 반드시 입력해주세요.<br><br><br>");
+			$("#popupBox").show(300); 
 			return;
 		}
+		var itemName=updateName+"-"+$("#updateUnitNum").val();
 		
 		$.ajax({
 			type: "PUT",

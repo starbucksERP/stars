@@ -64,6 +64,11 @@ public class PurchaseServiceImpl implements PurchaseService{
 	}
 
 	
+	// 자동주문
+	@Override
+	public List<Purchase> getPurchseByPlan(String today) {
+		return purchaseDAO.selectPurchseByPlan(today);
+	}
 	
 
 }

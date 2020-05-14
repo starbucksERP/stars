@@ -3,6 +3,7 @@ package site.bucks.dao;
 import java.util.List;
 import java.util.Map;
 
+import site.bucks.dto.Item;
 import site.bucks.dto.Purchase;
 
 public interface PurchaseDAO {
@@ -14,4 +15,6 @@ public interface PurchaseDAO {
 	int purchaseCancel(int purchaseSeq);
 	int updateQtyFromPurchase(int purchaseSeq);
 	String insertDeliveryFromPurchase(String requestNum);
+	List<Purchase> selectPurchseByPlan(String today);  // 자동주문관련
+	int insertAutoPurchase(Item item);
 }

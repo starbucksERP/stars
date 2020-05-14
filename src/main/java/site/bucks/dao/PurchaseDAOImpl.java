@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import site.bucks.dto.Item;
 import site.bucks.dto.Purchase;
 import site.bucks.mapper.PurchaseMapper;
 
@@ -55,6 +56,16 @@ public class PurchaseDAOImpl implements PurchaseDAO{
 	public String insertDeliveryFromPurchase(String requestNum) {
 		return sqlSession.getMapper(PurchaseMapper.class).insertDeliveryFromPurchase(requestNum);
 	
+	}
+
+	@Override
+	public List<Purchase> selectPurchseByPlan(String today) {
+		return sqlSession.getMapper(PurchaseMapper.class).selectPurchseByPlan(today);
+	}
+
+	@Override
+	public int insertAutoPurchase(Item item) {
+		return sqlSession.getMapper(PurchaseMapper.class).insertAutoPurchase(item);
 	}
 
 	
