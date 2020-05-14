@@ -12,7 +12,7 @@ public interface ItemHistoryMapper {
 	int newPOItemHist(Purchase purchase);
 	
 	// 상태가 변경된 purchase에 대한 히스토리 insert
-	int updatedPOItemHist(int purchaseSeq);
+	int updatedPOItemHist(String requestNum);
 
 	List<ItemHistory> selectItemHistoryist(ItemHistory history);
 	int insertItemHistory(ItemHistory history);

@@ -20,8 +20,8 @@ public class ItemHistoryServiceImpl implements ItemHistoryService{
 	}
 		
 	@Override
-	public void updatedPOItemHist(int purchaseSeq) {
-		itemHistoryDAO.updatedPOItemHist(purchaseSeq);
+	public void updatedPOItemHist(String requestNum) {
+		itemHistoryDAO.updatedPOItemHist(requestNum);
 		
 	}
 

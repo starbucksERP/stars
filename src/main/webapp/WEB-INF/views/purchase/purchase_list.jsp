@@ -299,7 +299,7 @@ function searchPurchaseList(searchType) {
 					html+="<td style='color:green'>구매 요청</td>";
 				} else if(this.purchaseState==31) {
 					html+="<td class='blue-font'>구매중</td>";
-				} else if(this.purchaseState==32) {
+				} else if(this.purchaseState==32 || this.purchaseState==40) {
 					html+="<td class='red-font'>구매 완료</td>";
 				} else if(this.purchaseState==33) {
 					html+="<td class='red-font'>본사 입고완료</td>";
@@ -307,9 +307,9 @@ function searchPurchaseList(searchType) {
 					html+="<td>구매 취소</td>";
 				} 
 				if(this.purchaseType==2 && this.purchaseState==30){
-					html+="<td><button type='button' class='a-button red inner-button' onclick='purCancel("+this.purchaseSeq+")' >취소</button></td>";
+					html+="<td><button type='button' class='a-button red inner-button' onclick='purCancel("+this.requestNum+")' >취소</button></td>";
 				}else if(this.purchaseType==3 && this.purchaseState==30){
-					html+="<td><button type='button' class='a-button red inner-button' onclick='purCancel("+this.purchaseSeq+")' >취소</button></td>";
+					html+="<td><button type='button' class='a-button red inner-button' onclick='purCancel("+this.requestNum+")' >취소</button></td>";
 				}else if(this.purchaseState==99) {
 					html+="<td>취소 완료</td>";
 				}else {
@@ -320,8 +320,6 @@ function searchPurchaseList(searchType) {
 				
 			});    
        			$("#purTbody").html(html);
-       			
-       		
 		},
 		error: function(xhr) {
 			alert("에러코드 = "+xhr.status)
@@ -331,6 +329,7 @@ function searchPurchaseList(searchType) {
 
 // ======================================== 구매요청확인 승인 버튼 
 	$("#pReqConfirmBtn").click(function () {
+		var showReqNum;
 		if($(".rowChk:checked").length==0) {
 			alert("선택된 기록이 없습니다.");
 			return;
@@ -359,11 +358,12 @@ function searchPurchaseList(searchType) {
 				}
 			
 				if(purchaseState != 30) {
-					alert("요청번호 ["+requestNum+"] : 구매요청 승인 오류 ");
+					alert("요청번호 ["+requestNum+"]: 구매요청 승인 오류 ");
 					return;
 					
 				} else {
-						purchase.push(purchaseSeq);
+						purchase.push(requestNum);
+						showReqNum=requestNum;
 					} 
 				
 			});
@@ -378,7 +378,7 @@ function searchPurchaseList(searchType) {
 					dataType: "text", 
 					success: function(text) {
 						if(text=="success") {
-							alert("구매요청이 승인 되었습니다.");
+							alert("구매요청 승인완료");
 							searchPurchaseList(4);
 						}
 					},
@@ -392,54 +392,52 @@ function searchPurchaseList(searchType) {
 	});
 	
 	
-	function reqNumForDeliveryInsert(requestNumList) {
-		
-			var requestCandidateList=[];
-		for(var i = 0; i < requestNumList.length-1; i++) {
-			
-			if(requestNumList[i] != requestNumList[i+1]) {
-				requestCandidateList.push(requestNumList[i]);
-			}
-		}
-		
-		var uniqueReqNums = [];
+	// 구매 완료되면 Delivery에 requestNum 한개만 삽입 되는 메소드 
+	/* function reqNumForDeliveryInsert(requestNumList) {
 
-		$.each(requestCandidateList, function(i, el){
+		var uniqueReqNums = [];
+		
+		$.each(requestNumList, function(i, el){
 			if($.inArray(el, uniqueReqNums) === -1) uniqueReqNums.push(el);
 		});
-		
 		
 			if(uniqueReqNums.legnth!=0) {
 				var param={"list":uniqueReqNums};
 				
 				$.ajax({
 					type: "POST",
-					url: "inserDeliveryFromPurchase",
+					url: "insertDeliveryFromPurchase", 
 					data: param,
 					dataType: "text", 
 					success: function(text) {
 						if(text=="success") {
+							alert("배송 요청이 완료 되었습니다.");
 						}
 					},
 					error: function(xhr) {
 						alert("에러코드 = "+xhr.status);
+						alert("배송 요청이 실패 되었습니다.");
 					}
 					
 				});
 			}
 	}
-	
+	 */
 
 	// ======================================== 구매완료 승인 버튼 
  	$("#pCompleteBtn").click(function () {
+ 		
+		
 		if($(".rowChk:checked").length==0) {
 			alert("선택된 기록이 없습니다.");
 			return;
 		} else {
-			var purchase =[];
-			var requestNumList = [];
-			var purchaseHQ =[];
-			var rowChk = $(".rowChk:checked");
+ 			var showReqNum;
+			var purchase=[];
+			var requestNumList=[];
+			var purchaseHQ=[];
+			var purchaseHQSeqList=[];
+			var rowChk=$(".rowChk:checked");
 			
 			rowChk.each(function(i) {
 				var tr = rowChk.parent().parent().eq(i);
@@ -463,24 +461,27 @@ function searchPurchaseList(searchType) {
 				}
 			
 				if(purchaseState != 31) {
-					alert("요청번호 ["+requestNum+"] : 구매완료 승인 오류 ");
+					alert("요청번호 ["+requestNum+"]: 구매완료 승인 오류 ");
 					return;
 					
 				} else if(purchaseState==31 && purchaseType!='본사 수동' && purchaseType!='본사 자동') {
-					alert(purchaseType);
-					var answer = confirm("요청번호 ["+requestNum+"] : 구매를 완료 하시겠습니까?");
+					var answer = confirm("요청번호 ["+requestNum+"]: 구매완료 하시겠습니까?");
 					if(answer) {
-						purchase.push(purchaseSeq);
+						purchase.push(requestNum);
 						requestNumList.push(requestNum);
+						showReqNum=requestNum;
 						}
 					
 				} else if(purchaseState==31 && purchaseType=='본사 수동' || purchaseType=='본사 자동') {
-						purchaseHQ.push(purchaseSeq);
+						purchaseHQ.push(requestNum);
+						showReqNum=requestNum;
+						purchaseHQSeqList.push(purchaseSeq);
 				}
 				
 				
 			});
 			
+			// 지점 구매가 완료되면 실행
 			if(purchase.legnth!=0) {
 				var param={"list":purchase};
 				
@@ -491,9 +492,39 @@ function searchPurchaseList(searchType) {
 					dataType: "text", 
 					success: function(text) {
 						if(text=="success") {
-							alert("구매완료가 승인 되었습니다.");
-							reqNumForDeliveryInsert(requestNumList);
+							alert("지점구매 완료");
 							searchPurchaseList(5);
+							
+							// 배송요청으로 보내기 위한 ajax 
+							if(requestNumList.length!=0){
+								
+								var uniqueReqNums=[];
+								
+								$.each(requestNumList, function(i, el){
+									if($.inArray(el, uniqueReqNums) === -1) uniqueReqNums.push(el);
+								});
+								
+									if(uniqueReqNums.legnth!=0) {
+										var param={"list":uniqueReqNums};
+										
+							 	$.ajax({
+									type: "POST",
+									url: "insertDeliveryFromPurchase", 
+									data: param,
+									dataType: "text", 
+									success: function(text) {
+										if(text=="success") {
+											alert("배송 요청이 완료 되었습니다.");
+										}
+									},
+									error: function(xhr) {
+										alert("에러코드 = "+xhr.status);
+										alert("배송 요청이 실패 되었습니다.");
+									}
+								
+								});
+							  }
+							}
 						}
 					},
 					error: function(xhr) {
@@ -502,7 +533,9 @@ function searchPurchaseList(searchType) {
 					
 				});
 				
-			} if(purchaseHQ.length!=0) {
+			} 
+			// 본사 구매가 완료되면 실행 
+			if(purchaseHQ.length!=0) {
 				var param={"list":purchaseHQ};
 				
 				$.ajax({
@@ -512,8 +545,30 @@ function searchPurchaseList(searchType) {
 					dataType: "text", 
 					success: function(text) {
 						if(text=="success") {
-							alert("구매완료가 승인 되었습니다.");
+							alert("본사구매 완료");
 							searchPurchaseList(5);
+							
+							if(purchaseHQSeqList.length!=0) {
+								var param={"list":purchaseHQSeqList};
+								
+								$.ajax({
+									type: "POST",
+									url: "updateQtyFromPurchase", 
+									data: param,
+									dataType: "text", 
+									success: function(text) {
+										if(text=="success") {
+											alert("아이템 재고 추가 완료"); 
+										}
+									},
+									error: function(xhr) {
+										alert("에러코드 = "+xhr.status);
+										alert("아이템 재고 추가 실패");
+									}
+									
+								});
+							}
+							
 						}
 					},
 					error: function(xhr) {
@@ -527,13 +582,13 @@ function searchPurchaseList(searchType) {
 	
 	//======================================== 주문 취소 버튼 
 	
-	function purCancel(purchaseSeq) {
+	function purCancel(requestNum) {
 		
 		var purchase =[];
-		var answer = confirm("해당 구매를 취소 하시겠습니까?");
+		var answer = confirm("요청번호 ["+requestNum+"]: 구매요청을 취소 하시겠습니까?");
 		
 		if(answer) {
-			purchase.push(purchaseSeq);
+			purchase.push(requestNum);
 		} else {
 			return;
 		} 

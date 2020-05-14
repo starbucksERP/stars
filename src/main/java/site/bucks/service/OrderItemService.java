@@ -13,5 +13,8 @@ public interface OrderItemService {
 	List<OrderItem> getOrderItemList(OrderItem orderItem);
 	List<OrderItem> getOrderItems(String requestNum);
 	void modifyOrderStateByCheckQty(String requestNum);
-
+	
+	// 근형
+	void updateOrderStateFromPurchase(String requestNum);
+	void updateOrderStateFromDelivery(int deliverySeq);
 }

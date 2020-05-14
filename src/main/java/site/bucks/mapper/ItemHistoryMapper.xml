@@ -20,7 +20,7 @@
 <!-- 상태가 변경된 purchase에 대한 히스토리 insert --> 
 <insert id="updatedPOItemHist" parameterType="Purchase">
 	insert into item_history select history_seq.nextval, request_num, item_num, purchase_state, 
-item_qty, sysdate, purchase_type, 'login사용자' from purchase where purchase_seq = #{purchaseSeq}
+item_qty, sysdate, purchase_type, 'login사용자' from purchase where request_num = #{requestNum}
 </insert>
 
 

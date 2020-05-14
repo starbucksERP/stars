@@ -149,8 +149,8 @@ function requestConfirmation() {
 				data: param,
 				dateType: "text",
 				success: function(text) {
-				alert(delivery +"번 배송 = 배송요청 승인")
-						location.href="${pageContext.request.contextPath }/delivery/deliveryReq"
+				alert("요청번호 ["+delivery+"]: 배송요청 승인");
+				location.href="${pageContext.request.contextPath }/delivery/deliveryReq"
 					
 				},
 				error:function(request,status,error){

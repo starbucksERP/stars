@@ -8,10 +8,10 @@ import site.bucks.dto.Purchase;
 public interface PurchaseDAO {
 	int insertPurchaseOrder (Purchase purchase); // 근형
 	List<Purchase> searchPurchaseList(Purchase purchase); // 근형
-	int purchaseReqConfirm(int purchaseSeq);
-	int purchaseComplete(int purchaseSeq);
-	int purchaseCompleteHQ(int purchaseSeq);
-	int purchaseCancel(int purchaseSeq);
+	int purchaseReqConfirm(String requestNum);
+	int purchaseComplete(String requestNum);
+	int purchaseCompleteHQ(String requestNum);
+	int purchaseCancel(String requestNum);
 	int updateQtyFromPurchase(int purchaseSeq);
-	String insertDeliveryFromPurchase(String requestNum);
+	int insertDeliveryFromPurchase(String requestNum);
 }

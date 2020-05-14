@@ -14,6 +14,7 @@ import org.springframework.web.util.HtmlUtils;
 import site.bucks.dto.Purchase;
 import site.bucks.service.ItemHistoryService;
 import site.bucks.service.ItemService;
+import site.bucks.service.OrderItemService;
 import site.bucks.service.PurchaseService;
 
 @Controller
@@ -28,6 +29,9 @@ public class PurchaseController {
 	  
 	@Autowired
 	ItemService itemService;
+	
+	@Autowired
+	OrderItemService orderItemService;
 	
 	// 구매현황 페이지 링크
 	@RequestMapping(value = "/purchaseList",method = RequestMethod.GET)
@@ -51,78 +55,92 @@ public class PurchaseController {
 	// 구매요청 확인처리 메소드
 	@RequestMapping(value = "/purchaseReqConfirm", method = RequestMethod.POST)
 	@ResponseBody
-	public String purchaseReqConfirm(@RequestParam(value = "list[]") List<Integer> purchase) {
+	public String purchaseReqConfirm(@RequestParam(value = "list[]") List<String> purchase) {
 		
-		for (int purchaseSeq : purchase) {
-			purchaseService.purchaseReqConfirm(purchaseSeq);
-			itemHistoryService.updatedPOItemHist(purchaseSeq);	
+		for (String requestNum : purchase) {
+			purchaseService.purchaseReqConfirm(requestNum);
+			itemHistoryService.updatedPOItemHist(requestNum);	
+			orderItemService.updateOrderStateFromPurchase(requestNum);
+			
 		}
-		
-		
 		
 		return "success";
 	}
 	
-	// 구매완료 처리 메소드 (일반 대리점) - 본사 재고와 상관 없음 / 배송에 insert 되어야 함 한줄만 
-	// history에서 동일한 requestNum의 주문요청 확인(20) 상태의 개수와 
-	// history에서 동일한 requestNum의 상태가 32 동일한 requestNum의 수와 purchase에서 완료된 
+	// 구매완료 처리 메소드 (일반 대리점) 
 	@RequestMapping(value = "/purchaseComplete", method = RequestMethod.POST)
 	@ResponseBody
-	public String purchaseComplete(@RequestParam(value = "list[]") List<Integer> purchase) {
+	public String purchaseComplete(@RequestParam(value = "list[]") List<String> purchase) {
 		
-		for (int purchaseSeq : purchase) {
-			purchaseService.purchaseComplete(purchaseSeq);	
-			itemHistoryService.updatedPOItemHist(purchaseSeq);
+		for (String requestNum : purchase) {
+			purchaseService.purchaseComplete(requestNum);	
+			itemHistoryService.updatedPOItemHist(requestNum);
+			orderItemService.updateOrderStateFromPurchase(requestNum);
 		}
 		return "success";
 	}
 	
 	
-	// 이거 시부래 작동 안됨 
-	@RequestMapping(value = "/inserDeliveryFromPurchase", method = RequestMethod.POST)
+	// 대리점의 구매요청이 완료처리되어 배송요청으로 insert 
+	@RequestMapping(value = "/insertDeliveryFromPurchase", method = RequestMethod.POST)
 	@ResponseBody
 	public String inserDeliveryFromPurchase(@RequestParam(value = "list[]") List<String> uniqueReqNums) {
 		
 		for (String requestNum : uniqueReqNums) {
 			purchaseService.insertDeliveryFromPurchase(requestNum);
+			orderItemService.updateOrderStateFromPurchase(requestNum);
+			
+			
 		}
 		return "success";
 	}
-	
-	
-	
-	
-	// 구매완료 처리 메소드 (본사 자동/수동) - 본사 재고 증가 
+
+	// 구매완료 처리 메소드 (본사 자동/수동)
 		@RequestMapping(value = "/purchaseCompleteHQ", method = RequestMethod.POST)
 		@ResponseBody
-		public String purchaseCompleteHQ(@RequestParam(value = "list[]") List<Integer> purchaseHQ) {
+		public String purchaseCompleteHQ(@RequestParam(value = "list[]") List<String> purchaseHQ) {
 			
-			for (int purchaseSeq : purchaseHQ) {
-				purchaseService.purchaseCompleteHQ(purchaseSeq);	
-				itemHistoryService.updatedPOItemHist(purchaseSeq);
-				purchaseService.updateQtyFromPurchase(purchaseSeq);
+			for (String requestNum : purchaseHQ) {
+				purchaseService.purchaseCompleteHQ(requestNum);	
+				itemHistoryService.updatedPOItemHist(requestNum); 
 				
 			}
 			return "success";
 		}
 	
+	// 본사의 구매요청이 완료 처리되면 재고 아이템 증가 - 본사 재고 증가
+		@RequestMapping(value = "/updateQtyFromPurchase", method = RequestMethod.POST)
+		@ResponseBody
+		public String updateQtyFromPurchase(@RequestParam(value = "list[]") List<Integer> purchaseHQSeqList) {
+			
+			for (int purchaseSeq : purchaseHQSeqList) {
+				purchaseService.updateQtyFromPurchase(purchaseSeq);
+			}
+			return "success";
+		}
+		
+		
+		
 	// 구매취소 처리 메소드
 	@RequestMapping(value = "/purchaseCancel", method = RequestMethod.POST)
 	@ResponseBody
-	public String purchaseCancel(@RequestParam(value = "list[]") List<Integer> purchase) {
+	public String purchaseCancel(@RequestParam(value = "list[]") List<String> purchase) {
 		
-		for (int purchaseSeq : purchase) {
-			purchaseService.purchaseCancel(purchaseSeq);	
-			itemHistoryService.updatedPOItemHist(purchaseSeq);
+		for (String requestNum : purchase) {
+			purchaseService.purchaseCancel(requestNum);	
+			itemHistoryService.updatedPOItemHist(requestNum);
+			orderItemService.updateOrderStateFromPurchase(requestNum);
 		}
 		return "success";
 	}
 
+	
 	@RequestMapping(value = "/purchaseAdd", method = RequestMethod.GET)
 	public String insertPurchaseOrder(){
 		return "purchase/purchase_add";
 	}
 	
+	// 구매 입력을 위한 메소드 
 	@RequestMapping(value = "/purchaseAdd", method = RequestMethod.POST)
 	@ResponseBody
 	public String insertPurchaseOrder(@RequestBody List<Purchase> purchaseInputList){
@@ -130,8 +148,6 @@ public class PurchaseController {
 		for(Purchase purchase:purchaseInputList) {
 			itemHistoryService.newPOItemHist(purchase);
 			purchaseService.insertPurchaseOrder(purchase);
-			
-			
 		}
 		
 		

@@ -8,7 +8,7 @@ import site.bucks.dto.Purchase;
 public interface ItemHistoryService {
 
 	void newPOItemHist(Purchase purchase);
-	void updatedPOItemHist(int purchaseSeq);
+	void updatedPOItemHist(String requestNum);
 	List<ItemHistory> getItemHistoryist(ItemHistory history);
 	void addItemHistory(ItemHistory history);
 	

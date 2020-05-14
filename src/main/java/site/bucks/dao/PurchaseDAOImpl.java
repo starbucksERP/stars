@@ -27,23 +27,23 @@ public class PurchaseDAOImpl implements PurchaseDAO{
 	}
 
 	@Override
-	public int purchaseReqConfirm(int purchaseSeq) {
-		return sqlSession.getMapper(PurchaseMapper.class).purchaseReqConfirm(purchaseSeq);
+	public int purchaseReqConfirm(String requestNum) {
+		return sqlSession.getMapper(PurchaseMapper.class).purchaseReqConfirm(requestNum);
 	}
 	
 	@Override
-	public int purchaseComplete(int purchaseSeq) {
-		return sqlSession.getMapper(PurchaseMapper.class).purchaseComplete(purchaseSeq);
+	public int purchaseComplete(String requestNum) {
+		return sqlSession.getMapper(PurchaseMapper.class).purchaseComplete(requestNum);
 	}
 	
 	@Override
-	public int purchaseCompleteHQ(int purchaseSeq) {
-		return sqlSession.getMapper(PurchaseMapper.class).purchaseCompleteHQ(purchaseSeq);
+	public int purchaseCompleteHQ(String requestNum) {
+		return sqlSession.getMapper(PurchaseMapper.class).purchaseCompleteHQ(requestNum);
 	}
 	
 	@Override
-	public int purchaseCancel(int purchaseSeq) {
-		return sqlSession.getMapper(PurchaseMapper.class).purchaseCancel(purchaseSeq);
+	public int purchaseCancel(String requestNum) {
+		return sqlSession.getMapper(PurchaseMapper.class).purchaseCancel(requestNum);
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class PurchaseDAOImpl implements PurchaseDAO{
 	}
 
 	@Override
-	public String insertDeliveryFromPurchase(String requestNum) {
+	public int insertDeliveryFromPurchase(String requestNum) {
 		return sqlSession.getMapper(PurchaseMapper.class).insertDeliveryFromPurchase(requestNum);
 	
 	}
