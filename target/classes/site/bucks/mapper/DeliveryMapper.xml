@@ -43,38 +43,35 @@
 
 
 
-<!-- 배송시작 승인시 Store_Item_Histroy에 insert 날리는 메소드  -->
-<insert id="insertSihFromDelInProcess">
-	insert into store_item_histry select store_history_seq.nextval, store_id, request_num, item_num, item_name, 
-	60, item_Qty, sydate from item_history where request_num = (select request_num from delivery
-	where delivery_seq = #{deliverySeq})  
-</insert>
+<!-- 배송시작 승인시 Store_Item_Histroy에 update 날리는 메소드 이름 insert에서 update로 바꾸기 귀찮아서 그냥 놔둠  -->
+<update id="insertSihFromDelInProcess">
+	update store_item_history set item_state=60 where request_num = (select request_num from delivery where delivery_seq = #{deliverySeq})
+</update>
 
 
 
 <!-- 배송요청 승인시 사용되는 item히스토리 insert 문  -->
 <insert id="insertDelReqConfimIH" parameterType="Delivery">
-	insert into item_history select history_seq.nextval, request_num, item_num, item_name, 50, item_qty, sysdate,
+	insert into item_history select history_seq.nextval, request_num, item_num, 50, item_qty, sysdate,
 	purchase_type, '로그인사용자' from item_history where request_num = (select request_num from delivery
-	where delivery_seq = #{deliverySeq})  
+	where delivery_seq = #{deliverySeq}) and item_state=40  
 
 </insert>
 
 <!-- 배송 시작 승인시 사용되는 item히스토리 insert 문  -->
 <insert id="insertDelReadyIH" parameterType="Delivery">
-	insert into item_history select history_seq.nextval, request_num, item_num, item_name, 60, item_qty, sysdate,
+	insert into item_history select history_seq.nextval, request_num, item_num, 60, item_qty, sysdate,
 	purchase_type, '로그인사용자' from item_history where request_num = (select request_num from delivery
-	where delivery_seq = #{deliverySeq})  
+	where delivery_seq = #{deliverySeq}) and item_state=50 
 
 </insert>
 
 <!-- 배송중 상태가 되면 재고가 감소하는 update문 ==> 대가리 안돌아감 모르겠음  -->
 <update id="updateQtyFromDelivery">
-	update item set item_qty= (select item_qty from item where item_num = 
-		(select item_num from item_hisotry where request_num = (select request_num from delivery where delivery_seq = #{deliverySeq})
-		and item_state=60)) - 
-		(select item_qty from item_history where request_num = (select request_num from delivery where delivery_seq = #{deliverySeq}) 
-		and item_state=60)
+		update item set item_qty= (select item_qty from item where item_num = 
+		(select distinct  item_num from item_history where request_num = (select request_num from delivery where delivery_seq = #{deliverySeq})
+		and item_state=60)) - (select distinct item_qty from item_history where request_num = (select request_num from delivery where delivery_seq = #{deliverySeq}) 
+		and item_state=60);
 </update>
 
 

@@ -15,5 +15,9 @@ public interface OrderItemDAO {
 	int updateOrderItemState(Map<String, Object> numAndStateMap);
 	List<OrderItem> selectOrderItemList(OrderItem orerItem);
 	List<OrderItem> selectOrderItems(String requestNum);
+	
+	// 근형
+		int updateOrderStateFromPurchase(String requestNum);
+		int updateOrderStateFromDelivery(int deliverySeq);
 
 }

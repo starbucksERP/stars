@@ -83,8 +83,23 @@
 		select * from order_item where request_num=#{requestNum}
 	</select>
 	
-
-
+	
+	
+	
+	<!-- 이근형: 본사에서 지점구매 update 할때마다 order_item 테이블의 상태값 update  -->
+	<update id="updateOrderStateFromPurchase">
+	update order_item set request_state = 
+	(select distinct purchase_state from purchase where request_num = #{requestNum}) 
+	where request_num = #{requestNum}
+	
+	</update>
+	
+	<update id="updateOrderStateFromDelivery">
+	  update order_item set request_state = (select delivery_state from delivery where delivery_seq=#{deliverySeq}) 
+	where request_num = (select request_num from delivery where delivery_seq=#{deliverySeq})
+	
+	</update>
+	<!-- 이근형 끝 -->
 	
 	
 	

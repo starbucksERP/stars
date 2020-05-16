@@ -35,8 +35,11 @@
 </insert>
 
 <insert id="insertDeliveryFromPurchase" parameterType="Purchase">
-	insert into delivery select delivery_seq.nextval, #{requestNum}, (select store_id from order where request_num = #{requestNum}),
-	40, sysdate, null from purchase where purchase_seq = #{purchaseSeq}
+	insert into delivery values(delivery_seq.nextval,#{requestNum}, (select distinct store_id from order_item where request_num = #{requestNum}),
+	40, sysdate, null)
+	
+<!-- 	insert into delivery select delivery_seq.nextval, #{requestNum}, (select store_id from order_item where request_num = #{requestNum}),
+	40, sysdate, null from purchase where request_num = #{requestNum} -->
 	
 </insert>
 
@@ -61,7 +64,7 @@
     	</if>
     	
     	<if test="nowPurchaseState == 3">
-    		p.purchase_state between 32 and 33
+    		p.purchase_state between 32 and 98
     	</if>
     	
     	<if test="purchaseState != null and purchaseState != '' ">
@@ -115,22 +118,22 @@
 </select>
  
 <update id="purchaseReqConfirm" parameterType="Purchase">
-	update purchase set purchase_state = 31 where purchase_seq = #{purchaseSeq}
+	update purchase set purchase_state = 31 where request_num = #{requestNum}
 
 </update>
 
 <update id="purchaseComplete" parameterType="Purchase">
-	update purchase set purchase_state = 32 where purchase_seq = #{purchaseSeq}
+	update purchase set purchase_state = 40 where request_num = #{requestNum}
 
 </update>
 
 <update id="purchaseCompleteHQ" parameterType="Purchase">
-	update purchase set purchase_state = 33 where purchase_seq = #{purchaseSeq}
+	update purchase set purchase_state = 33 where request_num = #{requestNum}
 
 </update>
 
 <update id="purchaseCancel" parameterType="Purchase">
-	update purchase set purchase_state = 99 where purchase_seq = #{purchaseSeq}
+	update purchase set purchase_state = 99 where request_num = #{requestNum}
 
 </update>
 

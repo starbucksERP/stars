@@ -17,4 +17,9 @@ public interface OrderItemService {
 	void addOrderByMinQty(String today, String user);
 	
 
+	// 근형
+	void updateOrderStateFromPurchase(String requestNum);
+	void updateOrderStateFromDelivery(int deliverySeq);
+	
+
 }

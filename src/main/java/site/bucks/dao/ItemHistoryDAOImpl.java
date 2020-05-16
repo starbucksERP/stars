@@ -22,8 +22,8 @@ public class ItemHistoryDAOImpl implements ItemHistoryDAO{
 	}
 
 	@Override
-	public int updatedPOItemHist(int purchaseSeq) {
-		return sqlSession.getMapper(ItemHistoryMapper.class).updatedPOItemHist(purchaseSeq); 
+	public int updatedPOItemHist(String requestNum) {
+		return sqlSession.getMapper(ItemHistoryMapper.class).updatedPOItemHist(requestNum); 
 	}
 
 	@Override
