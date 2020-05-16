@@ -12,6 +12,9 @@ public interface OrderItemService {
 	void modifyOrderItemState(Map<String, Object> numAndStateMap);
 	List<OrderItem> getOrderItemList(OrderItem orderItem);
 	List<OrderItem> getOrderItems(String requestNum);
-	void modifyOrderStateByCheckQty(String requestNum);
+	void modifyOrderStateByCheckQty(String requestNum, String user);
+	void addHistory(String reqNum, int state, String user);
+	void addOrderByMinQty(String today, String user);
+	
 
 }

@@ -99,15 +99,15 @@
 				<thead>
 					<tr>
 						<th width="13%">품목코드</th>
-						<td width="30%"><input type="search" id="itemNum">&nbsp;<a href="" class="a-button gray search-icon"><i class="fas fa-search"></i></a></td>
+						<td width="30%"><input type="search" id="itemNum" placeholder="ex)A01-1"></td>
 						<th  width="13%" >품목명</th>
-						<td width="44%"><input type="search" id="itemName"/></td>
+						<td width="44%"><input type="search" id="itemName" placeholder="ex)코코넛칩"/></td>
 					</tr>
 					<tr>
 						<th width="50%">거래처</th>
-						<td><input type="search" id="itemVendor">&nbsp;<a href="" class="a-button gray search-icon"><i class="fas fa-search"></i></a></td>
+						<td><input type="search" id="itemVendor" placeholder="ex)HappyBakery"></td>
 						<th>최종수정자</th>
-						<td><input type="search" id="itemDm"/></td>
+						<td><input type="search" id="itemDm" placeholder="ex)홍길동"/></td>
 					</tr>
 					<tr>
 						<th>대분류</th>
@@ -153,16 +153,16 @@
 				<table class="table cal">
 				<thead>
 					<tr>
-						<th><input type="checkbox" class="allChk"></th>
-						<th>번호</th>
-						<th>거래처명</th>
-						<th>분류</th>
-						<th>상품코드</th>
-						<th>상품명</th>
-						<th>최소보유량</th>
-						<th>최종수정자</th>
-						<th>수정</th>
-						<th>삭제</th>
+						<th style="width: 3%;"><input type="checkbox" class="allChk"></th>
+						<th style="width: 4%;">번호</th>
+						<th style="width: 7%;">거래처명</th>
+						<th style="width: 15%;">분류</th>
+						<th style="width: 8%;">상품코드</th>
+						<th style="width: 25%;">상품명</th>
+						<th style="width: 10%;">최소보유량</th>
+						<th style="width: 8%;">최종수정자</th>
+						<th style="width: 10%;">수정</th>
+						<th style="width: 10%;">삭제</th>
 					</tr>
 				</thead>
 				<tbody id="resultItemPlan"></tbody>
@@ -201,7 +201,7 @@
 				$("#countDiv").html("총 검색결과 : "+json.length+"건  ");
 				
 				if(json.length==0) {
-					var html="<tr><td colspan='10'>검색된 구매계획 정보가 존재하지않습니다.</td><tr>";
+					var html="<tr><td colspan='10' class='red-font' style='font-weight:bold;'>검색된 구매계획 정보가 존재하지않습니다.</td><tr>";
 					$("#resultItemPlan").html(html);
 					return;
 				}

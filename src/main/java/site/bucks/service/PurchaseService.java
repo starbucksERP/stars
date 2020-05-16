@@ -15,5 +15,5 @@ public interface PurchaseService {
 	void purchaseCancel(int purchaseSeq);
 	void updateQtyFromPurchase(int purchaseSeq);
 	void insertDeliveryFromPurchase(String requestNum);
-	
+	List<Purchase> getPurchseByPlan(String today);
 }

@@ -4,14 +4,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import site.bucks.dao.DeliveryDAO;
 import site.bucks.dao.ItemDAO;
+import site.bucks.dao.ItemHistoryDAO;
 import site.bucks.dao.OrderItemDAO;
 import site.bucks.dao.PurchaseDAO;
 import site.bucks.dto.Delivery;
+import site.bucks.dto.Item;
 import site.bucks.dto.ItemHistory;
 import site.bucks.dto.OrderItem;
 import site.bucks.dto.Purchase;
@@ -26,14 +29,14 @@ public class OrderItemServiceImpl implements OrderItemService {
    private PurchaseDAO purchaseDAO;
    @Autowired
    private DeliveryDAO deliveryDAO;
+   @Autowired
+   private ItemHistoryDAO historyDAO;
    
    @Override
    public List<OrderItem> getStoreOrderItems(String requestNum, String storeId) {
       return oderItemDAO.selectStoreOrderItems(requestNum, storeId);
    }
    
-//   ================================================================
-
 
    @Override
    public void modifyOrderItemState(Map<String, Object> numAndStateMap) {
@@ -52,7 +55,7 @@ public class OrderItemServiceImpl implements OrderItemService {
    }
 
    @Override
-   public void modifyOrderStateByCheckQty(String requestNum) {
+   public void modifyOrderStateByCheckQty(String requestNum, String user) {
       List<OrderItem> oderItems=oderItemDAO.selectOrderItems(requestNum);
       boolean possible=true;
       int StoreId=0;
@@ -82,14 +85,60 @@ public class OrderItemServiceImpl implements OrderItemService {
          goDelivery.put("requestState", 40);
          goDelivery.put("requestNum", requestNum);
          modifyOrderItemState(goDelivery); 
+         addHistory(requestNum, 40, user);
       } else { 
          Map<String, Object> stayDelivery=new HashMap<String, Object>();
          stayDelivery.put("requestState", 30);
          stayDelivery.put("requestNum", requestNum);
          modifyOrderItemState(stayDelivery);
+         addHistory(requestNum, 30, user);
       }
       
    }
+
+	@Override
+	public void addHistory(String reqNum, int state, String user) {
+		if (reqNum.substring(0,1).equals("A")) {
+			List<Purchase> pList=purchaseDAO.selectPurchseByPlan(reqNum.substring(5));
+			for (Purchase p:pList) {
+				ItemHistory history=new ItemHistory();
+				history.setRequestNum(reqNum);
+				history.setItemNum(p.getItemNum());
+				history.setItemState(p.getPurchaseState());
+				history.setItemQty(p.getItemQty());
+				history.setPurchaseType(p.getPurchaseType());
+				history.setHistoryOwner(user);
+				historyDAO.insertItemHistory(history);
+			}
+		} else {
+			List<OrderItem> orders=getOrderItems(reqNum);
+			for (OrderItem order:orders) {
+				ItemHistory history=new ItemHistory();
+				history.setRequestNum(order.getRequestNum());
+				history.setItemNum(order.getItemNum());
+				history.setItemState(order.getRequestState());
+				history.setItemQty(order.getOrderQty());
+				history.setPurchaseType(order.getOrderType());
+				history.setHistoryOwner(user);
+				historyDAO.insertItemHistory(history);
+			}
+		}
+	}
+
+
+	@Override
+	public void addOrderByMinQty(String today, String user) {
+		List<Item> items=itemDAO.selectLowQtyItem();
+		if(!items.isEmpty()) {
+			for(Item item:items) {
+				item.setReqNum("AUTO/"+today);
+				purchaseDAO.insertAutoPurchase(item);
+			}
+			addHistory("AUTO/"+today, 30, user);
+		}
+		
+	}
+
 
 
 

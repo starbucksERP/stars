@@ -143,6 +143,14 @@
 <!-- 200419 이근형 작성 종료 -->
 
 
+<!--  가을이가 추가해요 -->
+<select id="selectPurchseByPlan" parameterType="String" resultType="Purchase">
+	select * from purchase where purchase_Type=2 and to_char(purchase_DATE,'yyyy-mm-dd')=#{purchaseDate}
+</select>
+<insert id="insertAutoPurchase" parameterType="item">
+	insert into purchase values(purchase_seq.nextval, #{reqNum}, 30, sysdate, #{itemNum}, #{minQty}-#{itemQty},#{itemPprice},#{itemVendor},2) 
+</insert>
+
 
 </mapper>
 

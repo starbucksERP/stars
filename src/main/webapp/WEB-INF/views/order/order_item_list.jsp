@@ -41,13 +41,13 @@
 								<td width="40%"><label class="gLabel"><input type="date" id="requestDate" />&nbsp;<i class="far fa-calendar-alt"></i></label>
 								&nbsp;-&nbsp;<label class="gLabel"><input type="date" id="requestDatePair" />&nbsp;<i class="far fa-calendar-alt"></i></label></td>
 								<th width="10%">발주요청번호</th>
-								<td width="40%"><input type="search" id="requestNum"/></td>
+								<td width="40%"><input type="search" id="requestNum" placeholder="15954981516-20"/></td>
 							</tr>
 							<tr>
-								<th>지점명 / 지점코드</th>
-								<td><input type="search" id="storeId"/>&nbsp;<a href="" class="a-button white" style="font-size: 15px;"><i class="fas fa-file-alt"></i></a></td>
-								<th>품목</th>
-								<td><input type="text" id="itemNum">&nbsp;<a href="" class="a-button gray search-icon"><i class="fas fa-search"></i></a></td>
+								<th>지점코드</th>
+								<td><input type="search" id="storeId" placeholder="ex)1021"/>&nbsp;</td>
+								<th>품목코드</th>
+								<td><input type="text" id="itemNum" placeholder="ex)A01-1"/></td>
 							</tr>
 							<tr>
 								<th>진행상태</th>
@@ -181,7 +181,7 @@
 				}
 				$("#countDiv").html("총 검색결과 : "+json.length+"건  ");
 				if(json.length==0) {
-					var html="<tr><td colspan='6'>검색된 발주현황정보가 존재하지않습니다.</td><tr>";
+					var html="<tr><td colspan='6' style='font-weight: bold;' class='red-font'>검색된 발주현황정보가 존재하지않습니다.</td><tr>";
 					$("#resultOrder").html(html);
 					return;
 				}
@@ -201,15 +201,15 @@
 					if(this.requestState==20) {
 						html+="<td class='green-font'>발주완료</td></tr>";
 					} else if(this.requestState==30) {
-						html+="<td class='green-font'>구매요청</td></tr>";
-					} else if(this.requestState>30 && this.requestState<34) {
-						html+="<td class='green-font'>대기(입고진행중)</td></tr>";
+						html+="<td class='green-font'>대기(미입고지연)</td></tr>";
+					} else if(this.requestState==31 || this.requestState==32) {
+						html+="<td class='blue-font'>구매처리중</td></tr>";
 					} else if(this.requestState==40) {
-						html+="<td class='green-font'>배송요청</td></tr>";
+						html+="<td style='color:#f2ae1d;'>배송요청</td></tr>";
 					} else if(this.requestState==50) {
-						html+="<td class='green-font'>배송준비중</td></tr>";
+						html+="<td style='color:#f2ae1d;'>배송준비중</td></tr>";
 					}  else if(this.requestState==60) {
-						html+="<td class='green-font'>출고</td></tr>";
+						html+="<td style='color:#f2ae1d;'>출고</td></tr>";
 					} else if(this.requestState==70 || this.requestState==33) {
 						html+="<td class='red-font'>종결</td></tr>";
 					} 

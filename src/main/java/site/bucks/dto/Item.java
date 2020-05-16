@@ -38,6 +38,7 @@ public class Item {
 	private int itemSpricePair;
 	private double itemQtyPair;
 	private List<String> categorys;
+	private String reqNum;
 	
 	
 	public Item() {
@@ -182,6 +183,14 @@ public class Item {
 		this.itemQtyPair = itemQtyPair;
 	}
 
+	public String getReqNum() {
+		return reqNum;
+	}
+
+	public void setReqNum(String reqNum) {
+		this.reqNum = reqNum;
+	}
+	
 
 	
 }

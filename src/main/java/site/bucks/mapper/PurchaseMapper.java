@@ -3,6 +3,7 @@ package site.bucks.mapper;
 import java.util.List;
 import java.util.Map;
 
+import site.bucks.dto.Item;
 import site.bucks.dto.Purchase;
 
 public interface PurchaseMapper {
@@ -14,5 +15,8 @@ public interface PurchaseMapper {
 	int purchaseCancel (int purchaseSeq); // 근형
 	int updateQtyFromPurchase(int purchaseSeq);
 	String insertDeliveryFromPurchase(String requestNum);
+	// 자동주문관련
+	List<Purchase> selectPurchseByPlan(String today); 
+	int insertAutoPurchase(Item item);
 	
 }

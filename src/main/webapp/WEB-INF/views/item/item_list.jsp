@@ -67,104 +67,106 @@
 	border-radius: 50px;
 	text-align: center;
 }
-
 </style>
-<div class="container">
-		<div class="row">
-			<div class="sidebar">
-				<ul class="side-menu">
-					<li>
-						<button class="dropdown-btn">재고관리<i class="fa fa-caret-down"></i></button>
-						<div class="dropdown-container">
-							<a href="${pageContext.request.contextPath}/item/productList">품목현황</a><br /><br />
-							<a href="${pageContext.request.contextPath}/item/itemList">재고현황</a>
-						</div>
-					</li>
-					<li>
-						<button class="dropdown-btn">판매관리<i class="fa fa-caret-down"></i></button>
-						<div class="dropdown-container">
-							<a href="${pageContext.request.contextPath}/storeItem/sale_list">판매조회</a><br /><br />
-							<a href="${pageContext.request.contextPath}/storeItem/sale_record">판매등록</a>
-						</div>
-					</li>
-				</ul>
-			</div>
 
-			<div id="popup_mask"></div>
-			<div id="popupBox">
-				<div class="innerMessage"></div>
-				<div><button type='button' class='a-button green inner-button' onclick="closeModal()">확인</button></div>
-			</div>
-			<div id="insertItemDiv" class="windowBox">
-				<div class="mainBoxDiv">
-				<h3>재고등록</h3>
-				<hr />
-					<table class="table">
+<div class="container">
+	<div class="row">
+		<div class="sidebar">
+			<ul class="side-menu">
+				<li>
+					<button class="dropdown-btn">재고관리<i class="fa fa-caret-down"></i></button>
+					<div class="dropdown-container">
+						<a href="${pageContext.request.contextPath}/item/productList">품목현황</a><br /><br />
+						<a href="${pageContext.request.contextPath}/item/itemList">재고현황</a>
+					</div>
+				</li>
+				<li>
+					<button class="dropdown-btn">판매관리<i class="fa fa-caret-down"></i></button>
+					<div class="dropdown-container">
+						<a href="${pageContext.request.contextPath}/storeItem/sale_list">판매조회</a><br /><br />
+						<a href="${pageContext.request.contextPath}/storeItem/sale_record">판매등록</a>
+					</div>
+				</li>
+			</ul>
+		</div>
+	
+		<div id="popup_mask"></div>
+		<div id="window_mask"></div>
+		<div id="popupBox">
+			<div class="innerMessage"></div>
+			<div><button type='button' class='a-button green inner-button' onclick="closeModal()">확인</button></div>
+		</div>
+
+		<div id="insertItemDiv" class="windowBox">
+			<div class="mainBoxDiv">
+			<h3>재고등록</h3>
+			<hr />
+				<table class="table">
+					<thead>
+						<tr>
+							<th width="40%">품목그룹1</th>
+							<td width="60%">
+								<label class="gLabel"><input type="radio" class="fChk category1" name="category1" value="A" id="repMain">원재료</label>
+								<label class="gLabel"><input type="radio" class="fChk category1" name="category1" value="B" >푸드</label>
+								<label class="gLabel"><input type="radio" class="fChk category1" name="category1" value="C" >MD상품</label>
+								<label class="gLabel"><input type="radio" class="fChk category1" name="category1" value="D" >기타</label>
+							</td>
+						</tr>
+						<tr>
+							<th>품목그룹2</th>
+							<td>
+								<span id="detailA" class="details">
+								<label class="gLabel"><input type="radio" class="fChk category2 categoryA" name="category2" value="01-" id="repA">원두</label>
+								<label class="gLabel"><input type="radio" class="fChk category2 categoryA" name="category2" value="02-" >티백</label>
+								<label class="gLabel"><input type="radio" class="fChk category2 categoryA" name="category2" value="03-" >부재료</label>
+								<label class="gLabel"><input type="radio" class="fChk category2 categoryA" name="category2" value="04-" >기타</label>
+								</span>
+								<span id="detailB" class="details">
+								<label class="gLabel"><input type="radio" class="fChk category2 categoryB" name="category2" value="05-" id="repB">베이커리</label>
+								<label class="gLabel"><input type="radio" class="fChk category2 categoryB" name="category2" value="06-" >케이크</label>
+								<label class="gLabel"><input type="radio" class="fChk category2 categoryB" name="category2" value="07-" >샌드위치</label>
+								<label class="gLabel"><input type="radio" class="fChk category2 categoryB" name="category2" value="08-" >디저트</label><br>
+								<label class="gLabel"><input type="radio" class="fChk category2 categoryB" name="category2" value="09-" >아이스크림</label>
+								<label class="gLabel"><input type="radio" class="fChk category2 categoryB" name="category2" value="10-" >병음료</label>
+								<label class="gLabel"><input type="radio" class="fChk category2 categoryB" name="category2" value="11-" >기타</label>
+								</span>
+								<span id="detailC" class="details">
+								<label class="gLabel"><input type="radio" class="fChk category2 categoryC" name="category2" value="12-" id="repC">머그컵</label>
+								<label class="gLabel"><input type="radio" class="fChk category2 categoryC" name="category2" value="13-" >글라스컵</label>
+								<label class="gLabel"><input type="radio" class="fChk category2 categoryC" name="category2" value="14-" >텀블러</label>
+								<label class="gLabel"><input type="radio" class="fChk category2 categoryC" name="category2" value="15-" >콜드컵</label><br>
+								<label class="gLabel"><input type="radio" class="fChk category2 categoryC" name="category2" value="16-" >악세서리</label>
+								<label class="gLabel"><input type="radio" class="fChk category2 categoryC" name="category2" value="17-" >커피용품</label>
+								<label class="gLabel"><input type="radio" class="fChk category2 categoryC" name="category2" value="18-" >기타</label>
+								</span>
+								<span id="detailD" class="details">
+									<label class="gLabel"><input type="radio" class="fChk category2 categoryD" name="category2" value="00-" id="repD">선택사항없음</label>
+								</span>
+							</td>
+						</tr>
+					</thead>
+				</table>
+				<div style="margin-bottom:25px; height:200px; overflow:auto;">
+					<table class="table" style="margin: 0px; padding: 0px;">
 						<thead>
 							<tr>
-								<th width="40%">품목그룹1</th>
-								<td width="60%">
-									<label class="gLabel"><input type="radio" class="fChk category1" name="category1" value="A" id="repMain">원재료</label>
-									<label class="gLabel"><input type="radio" class="fChk category1" name="category1" value="B" >푸드</label>
-									<label class="gLabel"><input type="radio" class="fChk category1" name="category1" value="C" >MD상품</label>
-									<label class="gLabel"><input type="radio" class="fChk category1" name="category1" value="D" >기타</label>
-								</td>
-							</tr>
+								<th>품목코드</th><th>품명</th>
 							<tr>
-								<th>품목그룹2</th>
-								<td>
-									<span id="detailA" class="details">
-									<label class="gLabel"><input type="radio" class="fChk category2 categoryA" name="category2" value="01-" id="repA">원두</label>
-									<label class="gLabel"><input type="radio" class="fChk category2 categoryA" name="category2" value="02-" >티백</label>
-									<label class="gLabel"><input type="radio" class="fChk category2 categoryA" name="category2" value="03-" >부재료</label>
-									<label class="gLabel"><input type="radio" class="fChk category2 categoryA" name="category2" value="04-" >기타</label>
-									</span>
-									<span id="detailB" class="details">
-									<label class="gLabel"><input type="radio" class="fChk category2 categoryB" name="category2" value="05-" id="repB">베이커리</label>
-									<label class="gLabel"><input type="radio" class="fChk category2 categoryB" name="category2" value="06-" >케이크</label>
-									<label class="gLabel"><input type="radio" class="fChk category2 categoryB" name="category2" value="07-" >샌드위치</label>
-									<label class="gLabel"><input type="radio" class="fChk category2 categoryB" name="category2" value="08-" >디저트</label><br>
-									<label class="gLabel"><input type="radio" class="fChk category2 categoryB" name="category2" value="09-" >아이스크림</label>
-									<label class="gLabel"><input type="radio" class="fChk category2 categoryB" name="category2" value="10-" >병음료</label>
-									<label class="gLabel"><input type="radio" class="fChk category2 categoryB" name="category2" value="11-" >기타</label>
-									</span>
-									<span id="detailC" class="details">
-									<label class="gLabel"><input type="radio" class="fChk category2 categoryC" name="category2" value="12-" id="repC">머그컵</label>
-									<label class="gLabel"><input type="radio" class="fChk category2 categoryC" name="category2" value="13-" >글라스컵</label>
-									<label class="gLabel"><input type="radio" class="fChk category2 categoryC" name="category2" value="14-" >텀블러</label>
-									<label class="gLabel"><input type="radio" class="fChk category2 categoryC" name="category2" value="15-" >콜드컵</label><br>
-									<label class="gLabel"><input type="radio" class="fChk category2 categoryC" name="category2" value="16-" >악세서리</label>
-									<label class="gLabel"><input type="radio" class="fChk category2 categoryC" name="category2" value="17-" >커피용품</label>
-									<label class="gLabel"><input type="radio" class="fChk category2 categoryC" name="category2" value="18-" >기타</label>
-									</span>
-									<span id="detailD" class="details">
-										<label class="gLabel"><input type="radio" class="fChk category2 categoryD" name="category2" value="00-" id="repD">선택사항없음</label>
-									</span>
-								</td>
-							</tr>
 						</thead>
+						<tbody id="CategoryListDiv">
+							<tr><td colspan="2">품목그룹을 반드시 선택해주세요</td></tr>
+						</tbody>
 					</table>
-					<div style="margin-bottom:25px; height:200px; overflow:auto;">
-						<table class="table" style="margin: 0px; padding: 0px;">
-							<thead>
-								<tr>
-									<th>품목코드</th><th>품명</th>
-								<tr>
-							</thead>
-							<tbody id="CategoryListDiv">
-								<tr><td colspan="2">품목그룹을 반드시 선택해주세요</td></tr>
-							</tbody>
-						</table>
-					</div>
-					<input type="hidden" id="insertNum" class="insert" >
-					<label class="gLabel">품    명 : <input type="search" id="insertName" class="insert" readonly="readonly" placeholder="검색결과 클릭입력만 가능"></label><br/><br/>
-					<label class="gLabel">재고수량 : <input type="search" id="insertQty" class="insert"></label>
-					<br/><br/>
-					<button type="button" class="a-button medium green" id="iteminsertBtn" onclick="itemBtn('insert')">저장</button>
-					<button type="button" class="a-button medium brown" onclick="resetBtn()">초기화</button>
-					<button type="button" class="a-button medium black" onclick="closeBox('insertItemDiv')">닫기</button>
 				</div>
+				<input type="hidden" id="insertNum" class="insert" >
+				<label class="gLabel">품&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;명 : <input type="search" id="insertName" class="insert" readonly="readonly" placeholder="검색결과 클릭시 자동입력"></label><br/><br/>
+				<label class="gLabel">재고수량 : <input type="search" id="insertQty" class="insert" placeholder="0"></label>
+				<br/><br/>
+				<button type="button" class="a-button medium green" id="iteminsertBtn" onclick="itemBtn('insert')">저장</button>
+				<button type="button" class="a-button medium brown" onclick="resetBtn()">초기화</button>
+				<button type="button" class="a-button medium black" onclick="closeBox('insertItemDiv')">닫기</button>
 			</div>
+		</div>
 
 		<div id="updateItemDiv" class="windowBox">
 			<div class="mainBoxDiv">
@@ -200,7 +202,7 @@
 			</div>
 		</div>
 
-			<div class="main">
+		<div class="main">
 				<h3>재고 현황</h3>
 				<div class="right"><button type="button" class="a-button big" onclick="itemList()"><i class="fas fa-search"></i>&nbsp;검색</button></div>
 				<hr />
@@ -208,21 +210,21 @@
 					<thead>
 						<tr>
 							<th width="50%">품목코드</th>
-							<td><input type="search" id="itemNum">&nbsp;<a href="" class="a-button gray search-icon"><i class="fas fa-search"></i></a></td>
+							<td><input type="search" id="itemNum" placeholder="ex)A01-1"></td>
 							<th  width="50%" >품목명</th>
-							<td><input type="search" id="itemName"/></td>
+							<td><input type="search" id="itemName" placeholder="ex)코코넛칩"/></td>
 						</tr>
 						<tr>
 							<th>매입단가</th>
-							<td><input type="search" id="itemPprice">&nbsp;&nbsp;~&nbsp;&nbsp;<input type="search" id="itemPpricePair" ></td>
+							<td><input type="search" id="itemPprice" placeholder="ex)0">&nbsp;&nbsp;~&nbsp;&nbsp;<input type="search" id="itemPpricePair" placeholder="ex)0" ></td>
 							<th>공급단가</th>
-							<td><input type="search" id="itemSprice">&nbsp;~&nbsp;<input type="search" id="itemSpricePair" ></td>
+							<td><input type="search" id="itemSprice" placeholder="ex)0">&nbsp;~&nbsp;<input type="search" id="itemSpricePair" placeholder="ex)0" ></td>
 						</tr>
 						<tr>
 							<th width="50%">거래처</th>
-							<td><input type="search" id="itemVendor">&nbsp;<a href="" class="a-button gray search-icon"><i class="fas fa-search"></i></a></td>
+							<td><input type="search" id="itemVendor" placeholder="ex)HappyBakery"></td>
 							<th  width="50%">재고보유수량</th>
-							<td><input type="search" id="itemQty">&nbsp;~&nbsp;<input type="search" id="itemQtyPair" ></td>
+							<td><input type="search" id="itemQty" placeholder="ex)0">&nbsp;~&nbsp;<input type="search" id="itemQtyPair" placeholder="ex)0"></td>
 						</tr>
 						<tr>
 							<th>대분류</th>
@@ -258,13 +260,14 @@
 				</table>
 				
 				<div class="right">
-					<button type="button" class="a-button brown big" onclick="openBox('insertItemDiv')"><i class="fas fa-plus-circle"></i>&nbsp;재고 등록</button>
+					<button type="button" class="a-button brown big" onclick="openBox('insertItemDiv')"><i class="fas fa-plus-circle"></i>&nbsp;재고 등록 / 수정</button>
 				</div>
 				<br />
 				
 				<hr>
 				<div class="right darkgreen-font"  id="countDiv"></div>
 				<br />
+				
 				<div class="information">
 					<button type="button" class="a-button gray medium" onclick="update(0)"><i class="fas fa-edit"></i>&nbsp;재고 수정</button>
 					<button type="button" class="a-button red medium" onclick="remove()"><i class="fas fa-times"></i>&nbsp;품절 처리</button>
@@ -272,15 +275,15 @@
 						<thead>
 							<tr>
 								<th style="width: 5px;"><input type="checkbox" class="allChk"></th>
-								<th>번호</th>
-								<th>품목코드</th>
-								<th style="width: 35%;">폼목명(단위)</th>
-								<th>거래처</th>
-								<th>매입단가</th>
-								<th>공급가</th>
-								<th>총 재고 수량</th>
-								<th>최소 유지 수량</th>
-								<th>총 재고액</th>
+								<th style="width: 8%;">번호</th>
+								<th style="width: 9%;">품목코드</th>
+								<th style="width: 30%;">폼목명(단위)</th>
+								<th style="width: 10%;">거래처</th>
+								<th style="width: 8%;">매입단가</th>
+								<th style="width: 8%;">공급가</th>
+								<th style="width: 8%;">총 재고 수량</th>
+								<th style="width: 8%;">최소 유지 수량</th>
+								<th style="width: 11%;">총 재고액</th>
 							</tr>
 						</thead>
 						<tbody id="resultItem"></tbody>
@@ -289,7 +292,6 @@
 			</div>
 		</div>
 	</div>
-
 
 <script type="text/javascript">
 	$(".details").hide();
@@ -331,14 +333,14 @@
 				$("#CategoryListDiv").empty();
 				
 				if(json.length==0) {
-					var html="<tr><td colspan='2'>재고등록 가능한 품목이 존재하지 않습니다.</td></tr>";
+					var html="<tr><td colspan='2'>재고 등록 가능 품목이 존재하지 않습니다.</td></tr>";
 					$("#CategoryListDiv").html(html);
 					return;
 				}
 			
 				var html="";
 	       		$(json).each(function() {
-	       			html+="<tr><td>"+this.itemNum+"</td><td><a onclick=\"pressName('"+this.itemNum+"','"+this.itemName+"');\">"+this.itemName+"</a></td></tr>";
+	       			html+="<tr><td>"+this.itemNum+"</td><td><a onclick=\"pressName('"+this.itemNum+"','"+this.itemName+"','"+this.itemQty+"');\">"+this.itemName+"</a></td></tr>";
 				});    
 	       		
 				$("#CategoryListDiv").html(html);
@@ -350,11 +352,13 @@
 		
 	});
 	
-	function pressName(num,name) {
+	function pressName(num,name,qty) {
 		var num =num;
 		var name =name;
+		var qty =qty;
 		$("#insertNum").val(num);
 		$("#insertName").val(name);
+		$("#insertQty").val(qty);
 	}
 	
 	
@@ -389,7 +393,6 @@
 		$(".kind:checked").each(function(i) {
 			categorys.push($(this).val());
 		});
-		 // json편집으로 추후수정
 		if(categorys.length==0){
 			categorys.push('-');
 		}
@@ -405,7 +408,7 @@
 				$("#countDiv").html("총 검색결과 : "+json.length+"건");
 				
 				if(json.length==0) {
-					var html="<tr><td colspan='10'>검색된 재고정보가 존재하지않습니다.</td><tr>";
+					var html="<tr><td colspan='10' style='font-weight: bold;' class='red-font'>검색된 재고정보가 존재하지않습니다.</td><tr>";
 					$("#resultItem").html(html);
 					return;
 				}
@@ -417,7 +420,7 @@
 	       			number++;
 	       			html+="<tr><td><input type='checkbox' class='rowChk' value='"+this.itemNum+"'></td><td>"+number
 		       			+"</td><td>"+this.itemNum+"</td>"
-						+"<td>"+this.itemName.split("_")[0]+" ("+this.itemName.split("_")[1]+")</td>"
+						+"<td>"+this.itemName.split("-")[0]+" ("+this.itemName.split("-")[1]+")</td>"
 						+"<td>"+this.itemVendor+"</td>"
 						+"<td>"+this.itemPprice+"</td>"
 						+"<td>"+this.itemSprice+"</td>";
@@ -636,6 +639,4 @@
 		$("#popup_mask").hide(300); 
         $("body").css("overflow","auto");
 	}
-	
-	
 </script>

@@ -40,19 +40,19 @@
 								<td width="40%"><label class="gLabel"><input type="date" id="historyDate" />&nbsp;<i class="far fa-calendar-alt"></i></label>
 								&nbsp;-&nbsp;<label class="gLabel"><input type="date" id="historyDatePair" />&nbsp;<i class="far fa-calendar-alt"></i></label></td>
 								<th width="10%">발주/구매 요청번호</th>
-								<td width="40%"><input type="search" id="requestNum"/></td>
+								<td width="40%"><input type="search" id="requestNum" placeholder="ex)15849846517-20"/></td>
 							</tr>
 							<tr>
 								<th>품목코드</th>
-								<td><input type="text" id="itemNum">&nbsp;<a href="" class="a-button gray search-icon"><i class="fas fa-search"></i></a></td>
+								<td><input type="text" id="itemNum" placeholder="ex)A01-1"></td>
 								<th>담당자</th>
-								<td><input type="search" id="historyOwner"/></td>
+								<td><input type="search" id="historyOwner" placeholder="ex)홍길동"/></td>
 							</tr>
 							<tr>
 								<th>발주/구매 상태</th>
 								<td>
 									<label class="gLabel"><input type="checkbox" name="states" class="fChk choice" value="20" >발주완료</label>
-									<label class="gLabel"><input type="checkbox" name="states" class="fChk choice" value="30">입고요청</label>
+									<label class="gLabel"><input type="checkbox" name="states" class="fChk choice" value="31">입고요청</label>
 									<label class="gLabel"><input type="checkbox" name="states" class="fChk choice" value="32">입고</label>
 									<label class="gLabel"><input type="checkbox" name="states" class="fChk choice" value="40">출고요청</label>
 									<label class="gLabel"><input type="checkbox" name="states" class="fChk choice" value="60">출고</label>
@@ -79,14 +79,14 @@
 				<table class="table">
 					<thead style="line-height: 20px;">
 						<tr>
-							<th>번호</th>
-							<th>날짜</th>
-							<th>발주/구매 요청번호</th>
-							<th>품목</th>
-							<th>수량</th>
-							<th>발주/구매 타입</th>
-							<th>담당자</th>
-							<th>상태</th>
+							<th style="width: 10%;">번호</th>
+							<th style="width: 15%;">날짜</th>
+							<th style="width: 15%;">발주/구매 요청번호</th>
+							<th style="width: 10%;">품목</th>
+							<th style="width: 10%;">수량</th>
+							<th style="width: 15%;">주체</th>
+							<th style="width: 10%;">담당자</th>
+							<th style="width: 15%;">상태</th>
 						</tr>
 					</thead>
 					<tbody id="resultHistory"></tbody>
@@ -155,7 +155,7 @@
 		 // json편집으로 추후수정
 		if(states.length==0){
 			states.push(20);
-			states.push(30);
+			states.push(31);
 			states.push(32);
 			states.push(33);
 			states.push(40);
@@ -180,7 +180,7 @@
 				$("#countDiv").html("총 검색결과 : "+json.length+"건   ");
 				
 				if(json.length==0) {
-					var html="<tr><td colspan='8'>검색된 입출하정보가 존재하지않습니다.</td><tr>";
+					var html="<tr><td colspan='8' style='font-weight: bold;' class='red-font'>검색된 입출하정보가 존재하지않습니다.</td><tr>";
 					$("#resultHistory").html(html);
 					return;
 				}
@@ -191,8 +191,8 @@
 	       			number++;
 	       			
 	       			if (this.itemState == 20) {
-		       			html+="<tr class='green'>";
-	       			} else if (this.itemState == 30 || this.itemState == 32 || this.itemState == 33) { 
+		       			html+="<tr style='background: #c2deb8;'>";
+	       			} else if (this.itemState == 31 || this.itemState == 32 || this.itemState == 33) { 
 		       			html+="<tr class='blue'>";
 	       			} else if (this.itemState == 40 || this.itemState == 60) { 
 		       			html+="<tr class='pink'>";
@@ -202,19 +202,19 @@
 	       				+"<td>"+this.historyDate+"</td>"
 	       				+"<td>"+this.requestNum+"</td>"
 	       				+"<td>"+this.itemNum+"</td>"
-	       				+"<td>"+this.itemQty+"</td>";
+	       				+"<td>"+this.itemQty+"</td><td>";
 	       				
 	       			if (this.purchaseType == 1) {
-	       				html+="<td class='gray-font'>대리점</td>";
+	       				html+="대리점";
 	       			} else if (this.purchaseType == 2) {
-	       				html+="<td class='gray-font'>본사(자동)</td>";
+	       				html+="본사(자동)";
 	       			} else if (this.purchaseType == 3) { 
-	       				html+="<td class='gray-font'>본사(수동)</td>";
+	       				html+="본사(수동)";
 	       			}
-	        		html+="<td>"+this.historyOwner+"</td>";
+	        		html+="</td><td>"+this.historyOwner+"</td>";
 	        		if (this.itemState == 20) {
 	       				html+="<td class='green-font'>발주완료</td></tr>";
-	       			} else if (this.itemState == 30) {
+	       			} else if (this.itemState == 31) {
 	       				html+="<td class='blue-font'>입고요청</td></tr>";
 	       			} else if (this.itemState == 32 || this.itemState == 33) { 
 	       				html+="<td class='blue-font'>입고</td></tr>";

@@ -33,11 +33,11 @@ legend {
 }
 
 .header{
-	height: 190px;
+	height: 163px;
 }
 
 .nav{
-	height: 145px;
+	height: 118px;
 	padding-bottom: 0px !important;
 	align-items: center;
 	background: #f6f5ef;
@@ -46,13 +46,13 @@ legend {
 
 .logo{
 	position: absolute;
-	width: 132px; 
-	height: 132px;
+	width: 110px; 
+	height: 110px;
 }
 
 .logo>img{
-	width: 130px; 
-	height: 130px; 
+	width: 110px; 
+	height: 110px; 
 }
 
 .nav-right-list{
@@ -466,6 +466,9 @@ legend {
 }
 .coral-font{
 	color: #87817b !important;
+}
+.orange-font{
+	color: rgb(255, 187, 71) !important;
 }
 
 .white-font{

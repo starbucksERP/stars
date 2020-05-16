@@ -7,12 +7,15 @@
 		<selectKey resultType="int" keyProperty="seq" order="BEFORE">
 			select item_seq.nextval from dual
 		</selectKey>
-		insert into item values(concat(#{itemNum},#{seq}),#{itemName},0,0,#{itemPprice},#{itemSprice},#{itemVendor},null,#{itemUsage})
+		insert into item values(concat(#{itemNum},#{seq}),#{itemName},0,0,#{itemPprice},#{itemSprice},#{itemVendor},#{itemDm},#{itemUsage})
 	</insert>
 	<!--  *품목수정 / 재고 등록(수량만 변경) 및 수정 -->
 	<update id="updateProduct">
-		update item 
+		update item
 		<set>
+			<if test="itemDm!=null and itemDm!=''">
+				ITEM_DM=#{itemDm},
+			</if>
 			<if test="itemName!=null and itemName!=''">
 				ITEM_NAME=#{itemName},
 			</if>
@@ -31,20 +34,20 @@
 			<if test="itemQty!=null and itemQty!=0">
 				ITEM_QTY=#{itemQty}
 			</if>
-		</set>	
+		</set>
 		where ITEM_NUM=#{itemNum}
 	</update>
 	
 	<!-- *품목삭제처리 -->
 	<update id="deleteProduct">
-		update item set ITEM_USAGE=9 where ITEM_NUM in
+		update item set ITEM_USAGE=9, ITEM_DM=#{itemDm} where ITEM_NUM in
 		<foreach collection="items" item="itemNum" open="(" close=")" separator=",">
 			#{itemNum}
 		</foreach>
 	</update>
 	<!-- *제고품절처리 -->
 	<update id="deleteItem">
-		update item set ITEM_QTY=0 where ITEM_NUM in
+		update item set ITEM_QTY=0, ITEM_DM=#{itemDm} where ITEM_NUM in
 		<foreach collection="items" item="itemNum" open="(" close=")" separator=",">
 			#{itemNum}
 		</foreach>
@@ -77,9 +80,13 @@
 			<if test="itemUsage!=null and itemUsage!=0">
 				AND ITEM_USAGE=#{itemUsage}
 			</if>
+			<if test="itemQty!=null and itemQty!=0">
+				<![CDATA[AND ITEM_QTY < #{itemQty}]]>
+			</if>
 			<if test="categorys!=null">
-				<foreach collection="categorys" item="category">
-				AND ITEM_NUM LIKE '%'||#{category}||'%' 
+				AND 
+				<foreach collection="categorys" item="category" open="(" close=")" separator="OR" >
+				ITEM_NUM LIKE '%'||#{category}||'%' 
 				</foreach>
 			</if>
 		</where>
@@ -108,8 +115,9 @@
 			AND ITEM_QTY BETWEEN #{itemQty} AND #{itemQtyPair}
 		</if>
 		<if test="categorys!=null">
-			<foreach collection="categorys" item="category">
-			AND ITEM_NUM LIKE '%'||#{category}||'%' 
+			AND 
+			<foreach collection="categorys" item="category" open="(" close=")" separator="OR" >
+			ITEM_NUM LIKE '%'||#{category}||'%' 
 			</foreach>
 		</if>
 	</select>
@@ -136,8 +144,9 @@
 			AND ITEM_DM LIKE '%'||#{itemDm}||'%' 
 		</if>
 		<if test="categorys!=null">
-			<foreach collection="categorys" item="category">
-			AND ITEM_NUM LIKE '%'||#{category}||'%' 
+			AND 
+			<foreach collection="categorys" item="category" open="(" close=")" separator="OR" >
+			ITEM_NUM LIKE '%'||#{category}||'%' 
 			</foreach>
 		</if>
 		order by ITEM_NUM asc
@@ -150,6 +159,11 @@
 			#{itemNum}
 		</foreach>
 	</update>
+	
+	<!-- 보유수량과 구매수량비교 -->
+	<select id="selectLowQtyItem" resultType="Item">
+		<![CDATA[select * from item where item_qty < min_qty]]>
+	</select>
 	
 	<!--거래처목록 및 검색 -->
 	<select id="selectItemVendorList" parameterType="String">
