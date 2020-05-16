@@ -82,6 +82,7 @@ public class StoreItemHistoryServiceImpl implements StoreItemHistoryService{
 	public void modifyReceiptProcess(List<OrderItem> orderItemList) {
 		for(OrderItem orderItem:orderItemList) {
 //				배송중인것만 시행
+				System.out.println(orderItem.getRequestState());
 				if(orderItem.getRequestState()==60) {
 	//				발주상태 입고완료 70으로
 					orderItem.setRequestState(70);

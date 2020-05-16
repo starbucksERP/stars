@@ -48,6 +48,7 @@
 								<label class="gLabel"><input type="checkbox" name="states" class="fChk choice" value="10" >발주요청</label>
 								<label class="gLabel"><input type="checkbox" name="states" class="fChk choice" value="20" >발주완료</label>
 								<label class="gLabel"><input type="checkbox" name="states" class="fChk choice" value="50" >배송준비중</label>
+								<label class="gLabel"><input type="checkbox" name="states" class="fChk choice" value="60" >배송중</label>
 								<label class="gLabel"><input type="checkbox" name="states" class="fChk choice" value="70">입고완료</label>
 							</td> 
 						</tr>
@@ -114,7 +115,9 @@
 		if(states.length==0){
 			states.push(10);
 			states.push(20);
+			states.push(40);
 			states.push(50);
+			states.push(60);
 			states.push(70);
 		}
 		
@@ -144,14 +147,16 @@
 					+"<td>"+this.itemNum+"</td>"
 					if(this.requestState==10) {
 						html+="<td class='green-font'>발주신청</td></tr>";
-					} else if(this.requestState==20) {
-						html+="<td class='darkgreen-font'>발주완료</td></tr>";
-					}  else if(this.requestState<50) {
-						html+="<td class='darkgreen-font'>배송준비중</td></tr>";
+					} else if(this.requestState<=20) {
+						html+="<td class='darkgreen-font'>발주확인</td></tr>";
+					}  else if(this.requestState<60) {
+						html+="<td class='red-font'>배송준비중</td></tr>";
 					}  else if(this.requestState==60) {
 						html+="<td class='darkgreen-font'>배송중</td></tr>";
 					} else if(this.requestState==70 ) {
 						html+="<td class='blue-font'>입고완료</td></tr>";
+					} else if(this.requestState==99 ) {
+						html+="<td class='red-font'>발주취소</td></tr>";
 					} 
 				});    
 				$("#resultOrder").html(html);

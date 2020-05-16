@@ -76,7 +76,11 @@
 
 
 <select id="displayDelReadyList" parameterType="Delivery" resultType="Delivery">
-	select * from delivery where delivery_state >= 50 order by delivery_seq desc
+	select * from delivery where delivery_state >= 50 
+	<if test="storeId != 0 and storeId != null ">
+		and store_id = #{storeId}
+	</if>
+	order by delivery_seq desc
 </select>
 
 <select id="searchDelReadyList" resultType="Delivery">
