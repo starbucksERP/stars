@@ -14,7 +14,6 @@ public interface PurchaseDAO {
 	int purchaseCompleteHQ(String requestNum);
 	int purchaseCancel(String requestNum);
 	int updateQtyFromPurchase(int purchaseSeq);
-	String insertDeliveryFromPurchase(String requestNum);
 	List<Purchase> selectPurchseByPlan(String today);  // 자동주문관련
 	int insertAutoPurchase(Item item);
 	int insertDeliveryFromPurchase(String requestNum);
