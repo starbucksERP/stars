@@ -271,7 +271,18 @@
 				var param = [];
 			 	var sih=[];
 			 	
-			
+			 	
+			    $(".rowChk:checked").each(function(i) {
+			    	var setting=$(this).parents('tr').find(".requestNum").text();
+			    	
+					$(".rowChk").each(function(i) {
+						if($(this).val()== setting){
+							$(this).prop("checked", true);
+						}
+					})
+			    	
+			    });
+			    
 			    $(".rowChk:checked").each(function(i) {
 			    	sih = {
 			    		requestState    : $(this).parents('tr').find(".requestState").find('input[type="hidden"]').val(),
@@ -281,15 +292,6 @@
 		        		itemSprice		: $(this).parents('tr').find(".itemSprice").find('input[type="hidden"]').val(),
 		        		orderQty        : $(this).parents('tr').find(".orderQty").text()
 			        };
-			    	
-			    /* 	console.log($(this).parents('tr').find(".requestState").find('input[type="hidden"]').val());
-			    	console.log($(this).parents('tr').find(".requestNum").text());
-			    	console.log($(this).parents('tr').find(".storeId").text());
-			    	console.log($(this).parents('tr').find(".itemNum").text());
-			    	console.log($(this).parents('tr').find(".itemSprice").find('input[type="hidden"]').val());
-			    	console.log($(this).parents('tr').find(".orderQty").text()); */
-			    	
-			 	// param 배열에 storeOrder 오브젝트를 담는다.
 			        param.push(sih);
 			    });
 			    

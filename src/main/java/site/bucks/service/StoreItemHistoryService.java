@@ -16,7 +16,7 @@ public interface StoreItemHistoryService {
 	Map<String, Object> getStoreOrderView(String requestNum);
 	
 	void modifyCancelRecipt(OrderItem orderItem);
-	void modifyReceiptProcess(List<OrderItem> orderItemList) ;
+	void modifyReceiptProcess(OrderItem orderItem) ;
 //	Map<String, Object> getItem(Item item);
 //	Map<String, Object> getItemName(String itemName);
 }

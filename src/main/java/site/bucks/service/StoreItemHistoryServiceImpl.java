@@ -79,35 +79,33 @@ public class StoreItemHistoryServiceImpl implements StoreItemHistoryService{
 	
 //	지점에 물품 입하시 일어나는 메소드(배송중 상태가 아닌걸 바꾸려면 exception)
 	@Override
-	public void modifyReceiptProcess(List<OrderItem> orderItemList) {
-		for(OrderItem orderItem:orderItemList) {
-//				배송중인것만 시행
-				System.out.println(orderItem.getRequestState());
-				if(orderItem.getRequestState()==60) {
-	//				발주상태 입고완료 70으로
-					orderItem.setRequestState(70);
-					
-	//				지점발주상태바꿔서 삽입
-					storeItemHistoryDAO.insertSIH(orderItem);
-	//				배송상태변경(메소드 그냥 사용하려고 만들)
-					deliveryDAO.updateDeliveryReceiptProcess(orderItem);
-	//				주문상태변경
-					orderItemDAO.updateOrderCheck(orderItem);
-					
-	//				지점재고수량변경
-	//				변경전 재고에 있는지 여부 판단
-					StoreItem si = storeItemDAO.selectExistStoreItem(orderItem);
-				if(si==null) {
-//					재고 없므면 재고 삽입
-					storeItemDAO.insertStoreItemReceiptProcess(orderItem);
-				}else {
-//					재고 있으면 기본 재고에 재고량 증가
-					storeItemDAO.updateStoreItemReceiptProcess(orderItem);
-				}
+	public void modifyReceiptProcess(OrderItem orderItem) {
+//			배송중인것만 시행
+			System.out.println(orderItem.getRequestState());
+			if(orderItem.getRequestState()==60) {
+//				발주상태 입고완료 70으로
+				orderItem.setRequestState(70);
 				
+//				지점발주상태바꿔서 삽입
+				storeItemHistoryDAO.insertSIH(orderItem);
+//				배송상태변경(메소드 그냥 사용하려고 만들)
+				deliveryDAO.updateDeliveryReceiptProcess(orderItem);
+//				주문상태변경
+				orderItemDAO.updateOrderCheck(orderItem);
+				
+//				지점재고수량변경
+//				변경전 재고에 있는지 여부 판단
+				StoreItem si = storeItemDAO.selectExistStoreItem(orderItem);
+			if(si==null) {
+//					재고 없므면 재고 삽입
+				storeItemDAO.insertStoreItemReceiptProcess(orderItem);
 			}else {
-				throw new RuntimeException("아직 본사에서 배송이 시작되지 않았습니다.");
+//					재고 있으면 기본 재고에 재고량 증가
+				storeItemDAO.updateStoreItemReceiptProcess(orderItem);
 			}
+			
+		}else {
+			throw new RuntimeException("아직 본사에서 배송이 시작되지 않았습니다.");
 		}
 	}
 
