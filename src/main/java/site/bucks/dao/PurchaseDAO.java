@@ -1,7 +1,6 @@
 package site.bucks.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import site.bucks.dto.Item;
 import site.bucks.dto.Purchase;
