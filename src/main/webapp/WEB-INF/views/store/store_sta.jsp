@@ -20,7 +20,9 @@
 			
 			<form action="storeSta" id="storeStaForm" method="post">
 				<h3>지점 현황</h3>
-				<div class="right"><button type="button" class="a-button darkgreen big" onclick="startState()"><i class="fas fa-search"></i>&nbsp;검색</button></div>
+				<div class="right">
+				<button type="button" class="a-button darkgreen big" onclick="startState()"><i class="fas fa-search"></i>&nbsp;검색</button>
+				</div>
 				<hr />
 				<table class="table">
 					<thead>
@@ -111,9 +113,7 @@
 
 <script type="text/javascript">
 	function startState(){
-		
 		var states=[];
-			
 		 $(".fChk:checked").each(function(i) {
 			 if($(this).val()=='head'){
 				 states.push(0);
@@ -130,9 +130,10 @@
 			 states.push(9);
 		 }
 		 
-		 $("input[type='hidden']").val(states);
-		 $("#storeStaForm").submit();
+		$("input[type='hidden']").val(states);
+		$("#storeStaForm").submit();
 	}
+	
 </script>
 
 

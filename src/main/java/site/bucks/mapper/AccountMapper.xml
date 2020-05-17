@@ -50,7 +50,7 @@
 	<!-- 본사매출 검색조건  -->
 	<select id="selectMainSaleList" resultMap="accountResultMapOne" >
 		select * from (store_item_history SIH join order_item OI
-				on SIH.request_num=OI.request_num) join store ST on SIH.store_id=ST.store_id
+				on SIH.request_num=OI.request_num and SIH.item_num=OI.item_num) join store ST on SIH.store_id=ST.store_id
 				 where SIH.item_state=70
 				<if test="historyDate!=null and historyDate!=''">
 					and to_char(SIH.history_date,'yyyy-mm-dd') between #{historyDate} and #{historyDate1} 
@@ -87,8 +87,6 @@
 	</resultMap>
 	
 	<select id="selectMainPurchaseList" resultMap="accountResultMapTwo">
-	<!-- 	select * from item_history IH join item I 
-			on IH.item_num=I.item_num where IH.item_state=33  -->
 			select * from purchase P join item I on P.item_num=I.item_num
 			     	 where P.purchase_state between 32 and 33
 				<if test="purchaseDate!=null and purchaseDate!=''">
@@ -97,9 +95,6 @@
 				<if test="itemNum!=null and itemNum!=''">
 					and P.item_num like '%'||#{itemNum}||'%'
 				</if>
-				<!-- <if test="itemName!=null and itemName!=''">
-					and i.item_name like '%'||#{itemName}||'%' 
-				</if>	 -->
 				<if test="itemVendor!=null and itemVendor!=''">
 					and P.item_vendor like '%'||#{itemVendor}||'%'
 				</if>
