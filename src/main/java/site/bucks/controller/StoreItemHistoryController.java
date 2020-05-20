@@ -81,7 +81,9 @@ public class StoreItemHistoryController {
 	@RequestMapping(value = "/storeOrderCheck", method = RequestMethod.POST)
 	@ResponseBody
 	public String storeOrderReqConfirm(@RequestBody List<OrderItem> orderItemList)   {
-		storeItemHistoryService.modifyReceiptProcess(orderItemList);
+		for(OrderItem orderItem:orderItemList) {
+			storeItemHistoryService.modifyReceiptProcess(orderItem);
+		}
 		return "success";
 	}
 	

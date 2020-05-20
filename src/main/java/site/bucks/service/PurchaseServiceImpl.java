@@ -22,26 +22,26 @@ public class PurchaseServiceImpl implements PurchaseService{
 	}
 
 	@Override
-	public void purchaseReqConfirm(int purchaseSeq) {
-		purchaseDAO.purchaseReqConfirm(purchaseSeq);
+	public void purchaseReqConfirm(String requestNum) {
+		purchaseDAO.purchaseReqConfirm(requestNum);
 		
 	}
 	
 	@Override
-	public void purchaseComplete(int purchaseSeq) {
-		purchaseDAO.purchaseComplete(purchaseSeq);
+	public void purchaseComplete(String requestNum) {
+		purchaseDAO.purchaseComplete(requestNum);
 		
 	}
 	
 	@Override
-	public void purchaseCompleteHQ(int purchaseSeq) {
-		purchaseDAO.purchaseCompleteHQ(purchaseSeq);
+	public void purchaseCompleteHQ(String requestNum) {
+		purchaseDAO.purchaseCompleteHQ(requestNum);
 		
 	}
 	
 	@Override
-	public void purchaseCancel(int purchaseSeq) {
-		purchaseDAO.purchaseCancel(purchaseSeq);
+	public void purchaseCancel(String requestNum) {
+		purchaseDAO.purchaseCancel(requestNum);
 		
 	}
 

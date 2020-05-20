@@ -32,7 +32,8 @@
 			<div class="main">
 			
 				<h3>배송조회</h3>
-				<div class="right"><button type="button" class="a-button big" onclick="delReadySearch()">상세 검색</button><button type="button" class="a-button big" onclick="location.href='${pageContext.request.contextPath }/delivery/deliveryList'">검색 초기화</button></div>
+				<div class="right"><button type="button" class="a-button big sea" onclick="delReadySearch()">상세 검색</button>
+				&nbsp;&nbsp;<button type="button" class="a-button big darkgreen" onclick="location.href='${pageContext.request.contextPath }/delivery/deliveryList'">검색 초기화</button></div>
 				<hr />
 				<div class="information">
 				<form action="deliveryList" id="delReadySearchForm" method="post">
@@ -72,12 +73,6 @@
 				</form>
 				</div>
 				
-				<br />
-				<br />
-				<div class="right">
-					<button type="button" class="a-button big black" id="chk" style="float: left;">전체 선택 / 해제</button>
-					<button type="button" class="a-button big" id="deliveryStartBtn">배송 시작</button>
-				</div>
 				<br />
 				<br />
 				<hr >
@@ -160,193 +155,9 @@ function delReadySearch() {
 };
 
 
-
-// 배송시작승인 처리하기 위한 함수 
-$("#deliveryStartBtn").click(function() {
-		
-		
-		if($(".rowChk:checked").length==0) {
-			alert("배송승인: 배송정보를 선택해 주세요.");
-		} else {
-			
-			var delivery =[];
-			var rowChk = $(".rowChk:checked");
-			
-			rowChk.each(function(i) {
-				var tr = rowChk.parent().parent().eq(i);
-				var td = tr.children();
-				
-				var deliverySeq = td.eq(1).text();
-				var deliveryState = td.eq(4).text();
-				if(deliveryState == 60) {			
-				alert(deliverySeq+"번의 배송은 이미 배송중 입니다.");
-				} else{
-				delivery.push(deliverySeq);					
-				}
-			});
-			
-			if(delivery.length!=0) {
-				var param={"list":delivery};
-			 	 $.ajax({
-					type: "POST",
-					url: "deliveryStart",
-					data: param,
-					dateType: "text",
-					success: function(text) {
-							alert(delivery + "번 배송 = 출하승인 완료");
-							location.href="${pageContext.request.contextPath }/delivery/deliveryList"; 
-					},
-					error:function(request,status,error){
-			            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); 
-			          }
-				});  
-			} else {
-				alert("처리할 배송정보가 없습니다.");
-				return;
-			}
-			
-		
-		}
-	});
-			
-
-<%--
-// 배송요청을 확인처리하기 위한 함수 //테스팅 확인용 
-
-delReadyDisplay();
-
-// 배송현황조회 페이지 기본 테이블 출력 메소드 
-function delReadyDisplay() {
-	$.ajax({
-		type: "GET",
-		 url: "deliveryReadyList",
-		 dataType: "json",
-		 success: function(json) {
-			 if(json.deliveryReadyList.length==0) {
-				 var source=$("#delReadyListEmpty").html();
-				 var template=Handlebars.compile(source);
-				 $("#delReadyDisplay").html(template(json.deliveryReadyList));
-				 return;
-			 }
-				 var source=$("#delReadyList").html();
-				 var template=Handlebars.compile(source);
-				 $("#delReadyDisplay").html(template(json.deliveryReadyList));
-		 },
-		 
-		 error: function(xhr) {
-			 alert("에러코드 = "+xhr.status);
-		 }
-	});
-	
-};
-
---%>
-
-<%-- 핸들바스 사용할때 이용되는 다중검색 메소드 
-function delReadySearch() {
-	var deliverySearch;
-	
-		if($("#requestNumInput").val()==''&& $("#storeIdInput").val()==''&&
-			$("#delStartInput1").val()=='' && $("#delStartInput2").val()==''
-			&& $("#delEndInput1").val()=='' && $("#delEndInput2").val()==''
-			&& $("#delReadyCategory").val()=='') {
-			
-			alert("입력된 검색어가 없습니다.");
-			return;
-			
-		} else {
-			
-			deliverySearch={
-					requestNum:$("#requestNumInput").val(),
-					deliveryState:$("#delReadyCategory").val(),
-					storeId:$("#storeIdInput").val(), 
-					deliveryStart:$("#delStartInput1").val(),
-					deliveryStartTwo:$("#delStartInput2").val(),
-					deliveryEnd:$("#delEndInput1").val(),
-					deliveryEndTwo:$("#delEndInput2").val()
-			}
-		}
-	
-	 $.ajax({
-		type: "POST",
-		url: "deliveryReadySearch",  
-		headers: {"content-type":"application/json"},
-		data: JSON.stringify(deliverySearch),
-		dataType:"json",
-		success: function(json) {
-			if(json.readySearchList.length==0) {
-				 var source=$("#delReadyListEmpty").html();
-				 var template=Handlebars.compile(source);
-				 $("#delReadyDisplay").html(template(json.readySearchList));
-				 return;
-			 }
-				 var source=$("#delReadyList").html();
-				 var template=Handlebars.compile(source);
-				 $("#delReadyDisplay").html(template(json.readySearchList));
-		 },
-		 
-		 error:function(request,status,error){
-	            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-				 
-	          }
-	}); 
-};
---%>
-
 			
 
 </script>
-
-
-
-<%--  핸들바스 템플릿 
-<script id="delReadyListEmpty" type="text/x-handlebars-template">
-<table class="table">
-	<tbody>
-		<tr>
-		<th style="width: 10px;"><input type="checkbox" class="allChk"></th>
-		<th>번호</th>
-		<th>요청번호</th>
-		<th>매장코드</th>
-		<th>배송처리현황</th>
-		<th>배송 시작일</th>
-		<th>배송 종료일</th>
-		</tr>
-		<tr>
-			<tr align="center">
-    		<td colspan="7">검색된 배송기록이 없습니다.</td>		
-		</tr>
-	</tbody>
-</table>
-</script>
-
-<script id="delReadyList" type="text/x-handlebars-template">
-<table class="table">
-	<tbody>
-		<tr>
-		<th style="width: 10px;"><input type="checkbox" class="allChk"></th>
-		<th>번호</th>
-		<th>요청번호</th>
-		<th>매장코드</th>
-		<th>배송처리현황</th>
-		<th>배송 시작일</th>
-		<th>배송 종료일</th>
-		</tr>
-		{{#each.}}
-			<tr>
-				<td><input type="checkbox" class="rowChk"  value="{{deliverySeq }}"></td>
-				<td>{{deliverySeq }}</td>
-				<td>{{requestNum }}</td>				
-				<td>{{storeId }}</td>
-				<td>{{deliveryState }}</td>	
-				<td>{{deliveryStart }}</td>	
-				<td>{{deliveryEnd }}</td>	
-			</tr>
-		{{/each}}
-	</tbody>
-</table>
-</script>
-	--%>	
 
 
 			

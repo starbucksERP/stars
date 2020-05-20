@@ -48,11 +48,10 @@
 			<div class="information-right">
 				<!-- 탭 컨텐츠 영역 -->
 				<div class="enroll-div">
-				<!-- 매장정보 -->
 				<%-- 매장정보 입력 영역 --%>
 				<fieldset id="insertArea" class="enroll-fieldset" style="display: block">
 					<label>
-						<span>지점명 </span><input type="text" id="insertName" name="storeName"/>
+						<span>지점명 </span><input type="text" id="insertName" name="storeName" />
 					</label><br />
 					<div class="error nameErrorMsg"  style=" display: none;  padding-left: 163px; ">&nbsp;&nbsp;지점명을 반드시 입력해 주세요.</div>
 					<label>
@@ -64,7 +63,7 @@
 					</label><br />
 					<div class="error ownerErrorMsg"   style="display: none; padding-left: 163px;">&nbsp;&nbsp;점주명을 반드시 입력해 주세요.</div>
 					<label>
-						<span>지점 전화번호 </span><input type="text" id="insertPhone" name="storePhone"/>
+						<span>지점 전화번호 </span><input type="text" id="insertPhone" name="storePhone" />
 					</label><br />		
 					<div class="error phoneErrorMsg"   style="display: none; padding-left: 163px;">&nbsp;&nbsp;전화번호를 반드시 입력해 주세요.</div>			
 					<span class="staff">구분 </span>	
@@ -76,11 +75,11 @@
 					
 					<br />
 					<label>
-						<span>개업일 </span><input type="text" id="insertOpen" name="storeOpen"/>
+						<span>개업일 </span><input type="text" id="insertOpen" name="storeOpen" />
 					</label><br />
 					<div class="error openErrorMsg"   style="display: none; padding-left: 163px;">&nbsp;&nbsp;개업일을 반드시 입력해 주세요.</div>
 					<label>
-						<span>폐업일 </span><input type="text" id="insertClose" name="storeClose" disabled="disabled"  />
+						<span>폐업일 </span><input type="text" id="insertClose" name="storeClose" disabled="disabled"/>
 					</label><br />
 					
 					<div class="center" style="margin-top: 70px;">

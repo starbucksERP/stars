@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import site.bucks.dto.Delivery;
+import site.bucks.dto.Hewon;
 import site.bucks.dto.Item;
 import site.bucks.dto.ProductRecipe;
 import site.bucks.dto.Sale;
@@ -145,11 +146,11 @@ public class StoreItemController {
 	@RequestMapping(value = "/deliveryList", method = RequestMethod.GET)
 	public String getDisplayDelReadyList(@ModelAttribute Delivery delivery, Model model, HttpSession session) throws HewonNotFoundException  {
 		
-		/*
-		 * Hewon loginHewon=(Hewon)session.getAttribute("loginHewon");
-		 * if(!loginHewon.getHewonGrade().equals("9")) {
-		 * delivery.setStoreId(loginHewon.getHewonStId()); }
-		 */
+		 Hewon loginHewon=(Hewon)session.getAttribute("loginHewon");
+		 
+		 if(!loginHewon.getHewonGrade().equals("9")) {
+			 delivery.setStoreId(loginHewon.getHewonStId());
+		 }
 		
 		model.addAttribute("delReadyList", deliveryService.getDisplayDelReadyList(delivery));
 		return "storeItem/delivery_list";
@@ -159,11 +160,10 @@ public class StoreItemController {
 	@RequestMapping(value = "/deliveryList", method = RequestMethod.POST)
 	public String getSearchDelReadyList(@ModelAttribute Delivery delivery, Model model,  HttpSession session) throws HewonNotFoundException  {
 		
-		/*
-		 * Hewon loginHewon=(Hewon)session.getAttribute("loginHewon");
-		 * if(!loginHewon.getHewonGrade().equals("9")) {
-		 * delivery.setStoreId(loginHewon.getHewonStId()); }
-		 */
+		 Hewon loginHewon=(Hewon)session.getAttribute("loginHewon");
+		 if(!loginHewon.getHewonGrade().equals("9")) {
+			 delivery.setStoreId(loginHewon.getHewonStId()); 
+		 }
 		
 		model.addAttribute("delReadyList", deliveryService.getSearchDelReadyList(delivery));
 		return "storeItem/delivery_list";

@@ -18,7 +18,7 @@
 <!-- 지점에서 발주 입력시 	+  지점에서 입고 확인시 storeItemHistory 테이블에서 일어나는 일련의 메소드 -->
 	<!-- store_item_history : 지점 발주 테이블 (주체 :order) -->
 	<insert id="insertSIH" parameterType="OrderItem">
-		insert into store_item_history values(store_history_seq.nextval, #{storeId}, #{requestNum}, #{itemNum}, #{itemName}, #{requestState}, #{orderQty}, sysdate)
+		insert into store_item_history values(store_history_seq.nextval, #{storeId}, #{requestNum}, #{itemNum}, (select item_name from item where item_num=#{itemNum}), #{requestState}, #{orderQty}, sysdate)
 	</insert>
 <!-- 지점에서 발주 입력시 -->	
 

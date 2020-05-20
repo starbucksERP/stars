@@ -17,22 +17,22 @@ public class StoreItemServiceImpl implements StoreItemService{
 	@Autowired
 	private StoreItemDAO storeItemDAO;
 	
-//	판매 기록
+//	��留� 湲곕�
 	@Override
 	public void addSale(Sale sale) {
-//		판매기록시 완제품 분별
+//		��留ㅺ린濡��� ������ 遺�蹂�
 		ProductRecipe pr=storeItemDAO.selectProduct(sale.getSaleProduct());
-//		판매기록
+//		��留ㅺ린濡�
 		storeItemDAO.insertSale(sale);
 		
 		if(pr!=null) {
-//			판매 수량을 소수점화(원재료이기 때문에)
+//			��留� ������ ��������(���щ��닿린 ��臾몄��)
 			sale.setSaleQty(sale.getSaleQty()*0.1);
 			
 			String item1=pr.getItem1();		
 			String item2=pr.getItem2();
 			String item3=pr.getItem3();
-//			기록인걸 지정해주는 숫자
+//			湲곕��멸구 吏����댁＜�� �レ��
 			int num=0;
 			
 			calculator(item1, sale, num);
@@ -44,7 +44,7 @@ public class StoreItemServiceImpl implements StoreItemService{
 			}
 			
 		}else {
-//			판매량 재고 업데이트 
+//			��留ㅻ�� �ш� ���곗�댄�� 
 			storeItemDAO.updateStoreItemRecord(sale);
 		}
 		
@@ -52,38 +52,38 @@ public class StoreItemServiceImpl implements StoreItemService{
 	}
 	
 	public void calculator(String item, Sale sale, int num) {
-//		상품명을 재료 명으로 다시 등록(소수점화)
+//		����紐��� �щ� 紐��쇰� �ㅼ�� �깅�(��������)
 		sale.setSaleProduct(item);
 		
 		if(num==0) {
-//			등록한 개수 그대로 기록
+//			�깅��� 媛��� 洹몃��濡� 湲곕�
 			storeItemDAO.updateStoreItemRecord(sale);
 		}else if(num==9) {
-//			등록한 개수 그대로 롤백
+//			�깅��� 媛��� 洹몃��濡� 濡ㅻ갚
 			storeItemDAO.updateStoreItemBack(sale);
 		}
 		
 	}
 
 	
-//	판매삭제
+//	��留ㅼ����
 	@Override
 	public void removeSale(Sale sale) {
-//		일단 삭제 메소드
+//		�쇰�� ���� 硫�����
 		storeItemDAO.deleteSale(sale);
 		
-//		제품 분류
+//		���� 遺�瑜�
 		ProductRecipe pr=storeItemDAO.selectProduct(sale.getSaleProduct());
 		
 		if(pr!=null) {
-//			판매 수량을 소수점화(원재료이기 때문에)
+//			��留� ������ ��������(���щ��닿린 ��臾몄��)
 			sale.setSaleQty(sale.getSaleQty()*0.1);
 			
 			String item1=pr.getItem1();		
 			String item2=pr.getItem2();
 			String item3=pr.getItem3();
 			
-//			롤백인걸 지정해주는 숫자
+//			濡ㅻ갚�멸구 吏����댁＜�� �レ��
 			int num=9;
 			
 			calculator(item1, sale, num);
@@ -96,33 +96,33 @@ public class StoreItemServiceImpl implements StoreItemService{
 			}
 			
 		}else {
-//			판매량 재고 업데이트 
+//			��留ㅻ�� �ш� ���곗�댄�� 
 			storeItemDAO.updateStoreItemBack(sale);
 		}
 		
 	}
 	
 	
-//	판매조회
+//	��留ㅼ“��
 	@Override
 	public List<Sale> getSaleList(Sale sale) {
 		return storeItemDAO.selectSaleList(sale);
 	}
 	
 	
-//	판매 상품 카테고리검색	saleProductCategory
+//	��留� ���� 移댄��怨�由ш���	saleProductCategory
 	@Override
 	public List<ProductRecipe> getProductCategory(String category) {
 		return  storeItemDAO.selectCategory(category);
 	}
 	
-//	판매 상품 검색		saleProduct
+//	��留� ���� 寃���		saleProduct
 	@Override
 	public ProductRecipe getProductName(String saleProduct) {
 		return  storeItemDAO.selectProduct(saleProduct);
 	}
 	
-//	판매상품명검색
+//	��留ㅼ����紐�寃���
 	@Override
 	public ProductRecipe getProductName2(String category) {
 		return storeItemDAO.selectProductName(category);
@@ -156,33 +156,6 @@ public class StoreItemServiceImpl implements StoreItemService{
 	public void modifyStoreItem(StoreItem storeItem) {
 		storeItemDAO.updateStoreItem(storeItem);
 	}
-
-
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 
 
 }

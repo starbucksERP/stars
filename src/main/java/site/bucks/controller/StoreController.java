@@ -110,7 +110,7 @@ public class StoreController {
 	@ResponseBody
 	public Map<String, Object> storeOwner(@ModelAttribute Hewon hewon ,@PathVariable int storeId) {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
-		System.out.println("hewonStId ="+storeId);
+		//System.out.println("hewonStId ="+storeId);
 		returnMap.put("owner", hewonService.getHewonStIdList(storeId));
 		
 		return returnMap;

@@ -99,9 +99,9 @@
 
 <script id="templateOwner1" type="text/x-handlebars-template">
 	<div class="brown staff-head">[등록된 점주가 없습니다.]</div>
-	<div class="information-left" style="width: 32%">
+	<div class="information-left" style="width: 50%">
 	</div>
-	<div class="information-left" style="width: 60%">
+	<div class="information-left" >
 		<button type="button" class="a-button green medium" style="margin-left: 20px;" disabled="disabled">점주명</button>
 		<div>
 			<div class="staff" style="font-weight: bold;">주소</div><span class="gray-font">주소</span>
@@ -117,12 +117,12 @@
 
 <script id="templateOwner2" type="text/x-handlebars-template">
 	<div class="brown staff-head">[{{storeName}}] 점주 정보</div>
-	<div class="information-left" style="width: 32%">
+	<div class="information-left" style="width: 50%">
 	</div>
-	<div class="information-right" style="width: 60%">
+	<div class="information-left" style="width: 100%">
 		<button type="button" class="a-button green medium owner" style="margin-left: 20px;" disabled="disabled">{{hewonName}}</button>
 		<div>
-			<div class="staff" style="font-weight: bold;">주소</div><span class="gray-font owner">{{hewonAddress}}</span>
+			<div class="staff" style="font-weight: bold;">주소</div><span class="gray-font owner" style="width: ">{{hewonAddress}}</span>
 		</div>
 		<div>
 			<div class="staff" style="font-weight: bold;">연락처</div><span class="gray-font owner">{{hewonPhone}}</span>
@@ -165,9 +165,8 @@
 	
 	//2.검색키워드가 있는 경우 검색하여 출력
  	function storeSearchDisplay() {
-		
 		var storeName=$("#storeName").val();
-		
+
 		$.ajax({
 			type: "GET",
 			 url: "storeStaffList/"+storeName,
@@ -225,9 +224,13 @@
  	    $(this).removeClass('hover');
  	});
  	
-	$("#resetBtn").click(function(){
+ 	$("#resetBtn").click(function(){
 		$("#storeName").val("");
+		ownerDisplay(0);
+			
 	});
+	
+
 		
 </script>
 

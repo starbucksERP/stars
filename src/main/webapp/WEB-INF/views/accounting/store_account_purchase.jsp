@@ -117,15 +117,16 @@
 				<table id="accountTable" >
 					<thead>
 						<tr style="height: 20px; background-color:#D4C9C2; font:bold;">
+							<th>번호</th>
 							<th>일자</th>
 							<th>거래처명</th>
 							<th>품목코드</th>
-							<th>품목명</th>
-							<th>수량</th>
+							<th style="width: 100px">품목명</th>
 							<th>단가</th>
+							<th>수량</th>
 							<th>매입금액</th>
 							<th>세액</th>
-							<th>총금액</th>
+							<th>총 매입금액</th>
 						</tr>
 					 </thead>
 					 <tbody id="listDiv">
@@ -183,43 +184,49 @@
 				success: function(json) {
 					$("#resultLength").html("총 검색결과 : "+json.length+"건");
 					 if(json.length==0) {
-						var html="<tr><td colspan='9'>검색된 결과가 없습니다.</td></tr>";
+						var html="<tr><td colspan='10'>검색된 결과가 없습니다.</td></tr>";
 						$("#listDiv").html(html);
 				   	    $("#totPrice").val("");
 				   	    $("#totVat").val("");
 				   	    $("#total").val("");
 					} else { 
 						var html="";
+						var sumQty=0;
 						var sumPprice=0;
 						var sumVat=0;
 						var sumTot=0;
+						var number=0;
 					
 						$(json).each(function() {
-							 var qty=this.sih.itemQty;
-							 var price=this.oi.itemSprice;
+							 number++;
+							 var qty=(this.sih.itemQty);
+							 var price=(this.oi.itemSprice);
 							 var pPrice=qty*price;
 							 var vat=parseInt((pPrice)*(0.1));
 							 var tot=parseInt((pPrice)*(1.1));
-						
+						console.log(qty);
 						  html+="<tr>"+
+						  			 "<td>"+number+"</td>"+
 						 			 "<td>"+(this.sih.historyDate).substring(0,10)+"</td>"+							
 								 	 "<td>본사</td>"+							
 								     "<td>"+this.sih.itemNum+"</td>"+							
 									 "<td>"+this.sih.itemName+"</td>"+							
-									 "<td>"+qty+"</td>"+							
 									 "<td>￦"+numeral(price).format('0,0')+"</td>"+							
+									 "<td>"+numeral(qty).format('0,0')+"</td>"+							
 								 	 "<td>￦"+numeral(pPrice).format('0,0')+"</td>"+							
 								 	 "<td>￦"+numeral(vat).format('0,0')+"</td>"+							
 								 	 "<td>￦"+numeral(tot).format('0,0')+"</td>"+
 								 	 "</tr>";
 							 	 
+								 	sumQty+=qty;
 							 		sumPprice+=pPrice;
 							 		sumVat+=vat;
 							 		sumTot+=tot;
 						});
 					
 							 html+="<tr style='height: 20px; background-color:#D4C9C2; font:bold; '>"+
-							 	   "<td colspan='6'>합계</td>"+
+							 	   "<td colspan='6'>합계("+json.length+"건)</td>"+
+							 	   "<td>"+numeral(sumQty).format('0,0')+"</td>"+
 							 	   "<td>￦"+numeral(sumPprice).format('0,0')+"</td>"+
 							 	   "<td>￦"+numeral(sumVat).format('0,0')+"</td>"+
 							 	   "<td>￦"+numeral(sumTot).format('0,0')+"</td>"+

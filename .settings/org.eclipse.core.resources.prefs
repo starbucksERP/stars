@@ -11,4 +11,5 @@ encoding//src/main/java/site/bucks/mapper/AccountMapper.java=UTF-8
 encoding//src/main/java/site/bucks/mapper/DeliveryMapper.java=UTF-8
 encoding//src/main/java/site/bucks/mapper/OrderItemMapper.java=UTF-8
 encoding//src/main/java/site/bucks/service/StoreItemHistoryServiceImpl.java=UTF-8
+encoding//src/main/java/site/bucks/service/StoreItemServiceImpl.java=UTF-8
 encoding/<project>=UTF-8

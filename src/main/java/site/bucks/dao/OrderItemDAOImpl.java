@@ -51,6 +51,18 @@ public class OrderItemDAOImpl implements OrderItemDAO {
 	}
 
 	
+	//근형
+	@Override
+	public int updateOrderStateFromPurchase(String requestNum) {
+		return  sqlSession.getMapper(OrderItemMapper.class).updateOrderStateFromPurchase(requestNum);
+	}
+
+	@Override
+	public int updateOrderStateFromDelivery(int deliverySeq) {
+		return  sqlSession.getMapper(OrderItemMapper.class).updateOrderStateFromDelivery(deliverySeq);
+	}
+
+	
 
 
 

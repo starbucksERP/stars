@@ -139,6 +139,19 @@ public class OrderItemServiceImpl implements OrderItemService {
 		
 	}
 
+	   // 근형
+		@Override
+		public void updateOrderStateFromPurchase(String requestNum) {
+			oderItemDAO.updateOrderStateFromPurchase(requestNum);
+			
+		}
+
+		@Override
+		public void updateOrderStateFromDelivery(int deliverySeq) {
+			oderItemDAO.updateOrderStateFromDelivery(deliverySeq);
+			
+		}
+
 
 
 

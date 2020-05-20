@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import site.bucks.dto.Delivery;
 import site.bucks.service.DeliveryService;
+import site.bucks.service.OrderItemService;
 
 @Controller
 @RequestMapping("/delivery")
@@ -21,6 +22,9 @@ public class DeliveryController {
 	
 	@Autowired
 	DeliveryService deliveryService;
+	
+	@Autowired
+	OrderItemService orderItemService;
 	
 	// >>>>>>>>>>>>>>>>>>>>>>>>> 배송요청확인 페이지에서 사용할 메소드 시작 
 	
@@ -47,8 +51,9 @@ public class DeliveryController {
 		 for(int deliverySeq:deliveryList) {
 			 deliveryService.modifyDeliveryReq(deliverySeq);
 			 deliveryService.insertDelReqConfimIH(deliverySeq);
+			 orderItemService.updateOrderStateFromDelivery(deliverySeq);
 		 }	  
-	  return"redirect:delivery/delivery_req_list"; 
+	  return"delivery/delivery_req_list"; 
 	  }
 	  
 	  
@@ -117,11 +122,12 @@ public class DeliveryController {
 			  deliveryService.modifyDeliveryReady(deliverySeq); 
 			  deliveryService.insertDelReadyIH(deliverySeq);
 			  deliveryService.insertSihFromDelInProcess(deliverySeq);
-			  deliveryService.updateQtyFromDelivery(deliverySeq);
+			  //deliveryService.updateQtyFromDelivery(deliverySeq);
+			  orderItemService.updateOrderStateFromDelivery(deliverySeq);
 			  
 			  }
 		   
-	  return"redirect:delivery/delivery_list"; 
+	  return"delivery/delivery_list"; 
 	  }
 	  
 

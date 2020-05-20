@@ -113,8 +113,9 @@
 				<table id="accountTable">
 					<thead>
 						<tr>
+							<th>번호</th>
 							<th>일자</th>
-							<th>판매상품</th>
+							<th style="width: 100px;">판매상품</th>
 							<th>판매가액</th>
 							<th>수량</th>
 							<th>매출금액</th>
@@ -179,7 +180,7 @@
 				$("#resultLength").html("총 검색결과 : "+json.length+"건");
 				
 				if(json.length==0) {
-					var html="<tr><td colspan='9'>검색된 결과가 없습니다.</td></tr>";
+					var html="<tr><td colspan='8'>검색된 결과가 없습니다.</td></tr>";
 					$("#listDiv").html(html);
 			   	    $("#totSrice").val("");
 			   	    $("#totVat").val("");
@@ -190,19 +191,22 @@
 					var sumSprice=0;
 					var sumVat=0;
 					var sumTot=0;
-					
+					var number=0; 
+
 					$(json).each(function () {
+						 number++;
 						 var qty=(this.s.saleQty);
 						 var price=(this.s.salePrice);
-						 var sPrice=qty*price;
-						 var vat=parseInt((sPrice)*(0.1));
-						 var tot=parseInt((sPrice)*(1.1));
+						 var tot=qty*price;
+						 var sPrice=(tot/1.1);
+						 var vat=(sPrice)*(0.1);
 					
 					  html+="<tr>"+
+					  			 "<td>"+number+"</td>"+
 					 			 "<td>"+(this.s.saleDate).substring(0,10)+"</td>"+							
 								 "<td>"+this.s.saleProduct+"</td>"+							
-								 "<td>"+price+"</td>"+							
-								 "<td>"+qty+"</td>"+							
+								 "<td>￦"+numeral(price).format('0,0')+"</td>"+							
+								 "<td>"+numeral(qty).format('0,0')+"</td>"+							
 							 	 "<td>￦"+numeral(sPrice).format('0,0')+"</td>"+							
 							 	 "<td>￦"+numeral(vat).format('0,0')+"</td>"+							
 							 	 "<td>￦"+numeral(tot).format('0,0')+"</td>"+
@@ -211,12 +215,12 @@
 							 	sumQty+=qty;
 						 		sumSprice+=sPrice;
 						 		sumVat+=vat;
-						 		sumTot+=tot;						
+						 		sumTot+=tot;	
 					});
 					
-						 html+="<tr style='height: 20px; background-color:#D4C9C2; font:bold; '>"+
-					 	   "<td colspan='3'>합계</td>"+
-					 	   "<td>"+sumQty+"</td>"+
+						 html+="<tr style='height: 20px; font:bold; background-color:#D4C9C2;'>"+
+					 	   "<td colspan='4'>합계("+json.length+"건)</td>"+
+					 	   "<td>"+numeral(sumQty).format('0,0')+"</td>"+
 					 	   "<td>￦"+numeral(sumSprice).format('0,0')+"</td>"+
 					 	   "<td>￦"+numeral(sumVat).format('0,0')+"</td>"+
 					 	   "<td>￦"+numeral(sumTot).format('0,0')+"</td>"+

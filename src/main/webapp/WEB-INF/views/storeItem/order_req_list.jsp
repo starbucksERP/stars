@@ -85,6 +85,7 @@
 							<td colspan="3">
 								<label class="gLabel"><input type="checkbox" name="states" class="fChk choice" value="10" >발주요청</label>
 								<label class="gLabel"><input type="checkbox" name="states" class="fChk choice" value="20">발주완료</label>
+								<label class="gLabel"><input type="checkbox" name="states" class="fChk choice" value="60">배송중</label>
 								<label class="gLabel"><input type="checkbox" name="states" class="fChk choice" value="70">입고완료</label>
 								<label class="gLabel"><input type="checkbox" name="states" class="fChk choice" value="99">발주취소</label>
 							</td> 
@@ -111,6 +112,7 @@
 				<button type="button" class="a-button green padding-button" onclick="orderReqConfirm(0)">입고확인</button>
 				${message }
 			</div>
+			
 			
 			<div class="information" >
 				<table class="table">
@@ -170,6 +172,9 @@
 		if(states.length==0){
 			states.push(10);
 			states.push(20);
+			states.push(40);
+			states.push(50);
+			states.push(60);
 			states.push(70);
 			states.push(99);
 		}
@@ -196,7 +201,6 @@
 	       			var total=Number(this.orderQty)*Number(this.itemSprice);
 	       			
 	       			html+="<tr><td><input type='checkbox' class='rowChk' value='"+this.requestNum+"'></td>";
-	       			
 	        		html+="<td>"+this.requestDate+"</td>"
 					+"<td class='requestNum'>"+this.requestNum+"</td>"
 					+"<td class='storeId'>"+this.storeId+"</td>"
@@ -204,11 +208,13 @@
 					+"<td class='orderQty'>"+this.orderQty+"</td>"
 					+"<td>"+total+"</td>";
 					if(this.requestState==10) {
-						html+="<td class='green-font'><button type='button' class='a-button blackgray inner-button' onclick='orderReqConfirm("+this.requestNum+")'>취소요청</button><input type='hidden' value='"+this.itemSprice+"' class='itemSprice' /></td></tr>";
+						html+="<td class='green-font itemSprice'><button type='button' class='a-button blackgray inner-button' onclick='orderReqConfirm("+this.requestNum+")'>취소요청</button><input type='hidden' value='"+this.itemSprice+"' /></td></tr>";
 					} else if(this.requestState==70){
 						html+="<td class='blue-font'>입고완료</td></tr>";
-					} else if(this.requestState>10 && this.requestState<99) {
-						html+="<td class='green-font'>발주완료</td></tr>";
+					}else if(this.requestState==60) {
+						html+="<td class='green-font requestState'>배송중 <input type='hidden' value='"+this.requestState+"'/></td></tr>";
+					} else if(this.requestState>10 && this.requestState<99 && this.requestState!=60) {
+						html+="<td class='red-font'>배송준비중</td></tr>";
 					} else if(this.requestState==99) {
 						html+="<td class='red-font'>취소완료</td></tr>";
 					} 
@@ -265,23 +271,27 @@
 				var param = [];
 			 	var sih=[];
 			 	
-			
+			 	
+			    $(".rowChk:checked").each(function(i) {
+			    	var setting=$(this).parents('tr').find(".requestNum").text();
+			    	
+					$(".rowChk").each(function(i) {
+						if($(this).val()== setting){
+							$(this).prop("checked", true);
+						}
+					})
+			    	
+			    });
+			    
 			    $(".rowChk:checked").each(function(i) {
 			    	sih = {
-		    			requestNum	:$(this).parents('tr').find(".requestNum").text(),
-			        	//storeId			: $(this).parents('tr').find(".storeId").text(),
-			        	storeId			: 1021,
-		        		itemNum        : $(this).parents('tr').find(".itemNum").text(),
-		        		itemSprice		: $(this).parents('tr').find(".itemSprice").val(),
+			    		requestState    : $(this).parents('tr').find(".requestState").find('input[type="hidden"]').val(),
+		    			requestNum		: $(this).parents('tr').find(".requestNum").text(),
+			        	storeId			: $(this).parents('tr').find(".storeId").text(),
+		        		itemNum         : $(this).parents('tr').find(".itemNum").text(),
+		        		itemSprice		: $(this).parents('tr').find(".itemSprice").find('input[type="hidden"]').val(),
 		        		orderQty        : $(this).parents('tr').find(".orderQty").text()
 			        };
-			    	
-			    	console.log(sih.storeId)
-			    	console.log(sih.itemNum)
-			    	console.log(sih.itemSprice)
-			    	console.log(sih.orderQty)
-			    	
-			 	// param 배열에 storeOrder 오브젝트를 담는다.
 			        param.push(sih);
 			    });
 			    

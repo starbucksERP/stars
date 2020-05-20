@@ -35,6 +35,9 @@ public class OrderItem {
 	private int price2;             // 검색용
 	private String itemName;
 	
+	// 근형
+	private int deliverySeq; // 검색용 
+	
 	public OrderItem() {
 		// TODO Auto-generated constructor stub
 	}
@@ -166,6 +169,18 @@ public class OrderItem {
 	public void setItemName(String itemName) {
 		this.itemName = itemName;
 	}
+
+	public int getDeliverySeq() {
+		return deliverySeq;
+	}
+
+	public void setDeliverySeq(int deliverySeq) {
+		this.deliverySeq = deliverySeq;
+	}
+
+
+	
+	
 	
 
 }
