@@ -81,11 +81,10 @@
 						<tr>
 							<th style="width: 10%;">번호</th>
 							<th style="width: 15%;">날짜</th>
-							<th style="width: 15%;">발주/구매 요청번호</th>
-							<th style="width: 10%;">품목</th>
-							<th style="width: 10%;">수량</th>
+							<th style="width: 17%;">발주/구매 요청번호</th>
+							<th style="width: 15%;">품목</th>
+							<th style="width: 13%;">수량</th>
 							<th style="width: 15%;">주체</th>
-							<th style="width: 10%;">담당자</th>
 							<th style="width: 15%;">상태</th>
 						</tr>
 					</thead>
@@ -180,7 +179,7 @@
 				$("#countDiv").html("총 검색결과 : "+json.length+"건   ");
 				
 				if(json.length==0) {
-					var html="<tr><td colspan='8' style='font-weight: bold;' class='red-font'>검색된 입출하정보가 존재하지않습니다.</td><tr>";
+					var html="<tr><td colspan='7' style='font-weight: bold;' class='red-font'>검색된 입출하정보가 존재하지않습니다.</td><tr>";
 					$("#resultHistory").html(html);
 					return;
 				}
@@ -211,7 +210,7 @@
 	       			} else if (this.purchaseType == 3) { 
 	       				html+="본사(수동)";
 	       			}
-	        		html+="</td><td>"+this.historyOwner+"</td>";
+	        		html+="</td>";
 	        		if (this.itemState == 20) {
 	       				html+="<td class='green-font'>발주완료</td></tr>";
 	       			} else if (this.itemState == 31) {
