@@ -270,7 +270,7 @@
 				
 				var html="";
 	       		$(json).each(function() {
-	       			var total=Number(this.orderQty)*Number(this.itemPprice);
+	       			var total=Number(this.orderQty)*Number(this.itemSprice);
 	       			
 	       			html+="<tr><td><input type='checkbox' class='rowChk' value='"+this.requestNum+"'></td>";
 	       			
