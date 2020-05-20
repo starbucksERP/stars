@@ -330,7 +330,7 @@
 			success: function(text) {
 				if(text=="success") {
 					$(".rowChk").prop("checked", false); // 체크박스초기화
-					openModal("선택된 발주가 완료되었습니다.<br><br><br>");
+					openModal("선택된 발주가 완료되었습니다. <br><br><br>");
 					orderReqList(1);
 				}
 			},
